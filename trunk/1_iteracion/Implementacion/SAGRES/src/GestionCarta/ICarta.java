@@ -1,9 +1,12 @@
 
 package GestionCarta;
 
+import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
+
 /**
  *
- * @author Ángel Luis Garcia y Carlos Salas
+ * @author Ángel Luis García y Carlos Salas
  */
 public interface ICarta {
 
