@@ -1,11 +1,13 @@
 
 package GestionCarta;
 
+import GestionStock.GestionProductos.Ingrediente;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
  *
- * @author Ángel Luis Garcia y Carlos Salas
+ * @author Ángel Luis García y Carlos Salas
  */
 public interface IPreparaCarta {
 
