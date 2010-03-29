@@ -9,12 +9,14 @@ import javax.swing.ImageIcon;
  *
  * @author Ángel Luis Garcia y Carlos Salas
  */
-public class GestorCarta {
+public class GestorCarta implements IPreparaCarta, ICarta {
 
     ArrayList<Elemento> elemento;
+    Carta carta;
 
     public GestorCarta() {
         this.elemento = new ArrayList<Elemento>();
+        this.carta = new Carta();
     }
 
     private ArrayList<Elemento> buscaElementosInvalidados() {}
@@ -47,5 +49,6 @@ public class GestorCarta {
     public ArrayList<Producto> obtenProductosDeSeccion(Seccion seccion) {}
 
     public ArrayList<Seccion> obtenSecciones() {}
+
 
 }
