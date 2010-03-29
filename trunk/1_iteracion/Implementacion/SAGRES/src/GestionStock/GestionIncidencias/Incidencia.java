@@ -1,4 +1,7 @@
+package GestionStock.GestionIncidencias;
 
+
+import GestionStock.GestionProductos.Producto;
 import java.util.Date;
 
 
