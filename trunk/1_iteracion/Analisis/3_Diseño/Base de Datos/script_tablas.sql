@@ -102,6 +102,9 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`elemento` (
   `descripcion` VARCHAR(180) NULL ,
   `disponible` TINYINT(1) NULL ,
   `foto` VARCHAR(90) NULL ,
+  `divi` INT NULL ,
+  `divi_max` INT NULL ,
+  `precio` FLOAT NULL ,
   PRIMARY KEY (`elemento_id`) )
 ENGINE = InnoDB;
 
@@ -113,7 +116,6 @@ DROP TABLE IF EXISTS `touchteam`.`elementoBebida` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoBebida` (
   `elemento_elemento_id` INT NOT NULL ,
-  `tipo` VARCHAR(45) NULL ,
   PRIMARY KEY (`elemento_elemento_id`) ,
   CONSTRAINT `fk_elementoBebida_elemento1`
     FOREIGN KEY (`elemento_elemento_id` )
@@ -132,7 +134,6 @@ DROP TABLE IF EXISTS `touchteam`.`elementoPlato` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoPlato` (
   `elemento_elemento_id` INT NOT NULL ,
-  `raciones` INT NULL ,
   `tiempo_elaboracion` INT NULL ,
   PRIMARY KEY (`elemento_elemento_id`) ,
   CONSTRAINT `fk_elementoComida_elemento1`
@@ -186,7 +187,6 @@ DROP TABLE IF EXISTS `touchteam`.`productoBebida` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`productoBebida` (
   `producto_producto_id` INT NOT NULL ,
-  `cantidad_por_envase` INT NULL ,
   PRIMARY KEY (`producto_producto_id`) ,
   CONSTRAINT `fk_productoBebida_producto1`
     FOREIGN KEY (`producto_producto_id` )
