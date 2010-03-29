@@ -1,3 +1,5 @@
+package GestionStock.GestionProductos;
+
 
 import javax.swing.ImageIcon;
 
