@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
  * @author Ángel Luis García
  */
 public class Elemento {
-    private int codigo;
+    private int codigoElemento;
     private String descripcion;
     private boolean disponible;
     private int divisiones;
@@ -17,6 +17,19 @@ public class Elemento {
     private String nombre;
     private float precio;
 
+    
+    
+    public Elemento(int codigo, String descripcion, int divisionesMaximas, ImageIcon foto, String nombre, float precio) {
+        this.codigoElemento = codigo;
+        this.descripcion = descripcion;
+        this.divisionesMaximas = divisionesMaximas;
+        this.foto = foto;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.disponible = false; //Hasta que no se comprueben los productos no esta disponible
+        this.divisiones = 1;
+    }
+    
     /**
      * Establece la disponobilidad del elemento.
      *
@@ -44,5 +57,9 @@ public class Elemento {
      */
     public boolean usaProducto(Producto producto){
         return false;
+    }
+
+    public int getCodigoElemento(){
+        return this.codigoElemento;
     }
 }

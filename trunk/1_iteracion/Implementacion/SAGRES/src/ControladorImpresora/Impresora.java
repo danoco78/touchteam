@@ -8,7 +8,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Clase para imprimir.
@@ -18,9 +18,9 @@ import java.util.Vector;
 public class Impresora implements Printable {
 
     /* Synthesise some sample lines of text */
-    private static Vector<String> textLines;
+    private static ArrayList<String> textLines;
 
-    public static void imprime(Vector<String> texto){
+    public static void imprime(ArrayList<String> texto){
 
     	textLines = texto;
 
