@@ -15,11 +15,11 @@ public interface IPreparaCarta {
     public void eliminaElementoCarta(int codigoElemento);
 
     public void modificaElementoBebida(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, float precio, int divisionesMaximas );
+            String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception;
 
     public void modificaElementoPlato(int codigoElemento, String nombre,
             String descripcion, ImageIcon foto, int tiempoPreparacion,
-            float precio, int divisionesMaximas);
+            float precio, int divisionesMaximas) throws Exception;
 
     public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
             Seccion seccion, String nombre, String descripcion, float precio,

@@ -16,4 +16,12 @@ public class ElementoBebida extends Elemento{
         super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
         this.listaBebidas = listaBebidas;
     }
+
+     public void modifica(String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas){
+        this.setNombre(nombre);
+        this.setDescripcion(descripcion);
+        this.setFoto(foto);
+        this.setPrecio(precio);
+        this.setDivisionesMaximas(divisionesMaximas);
+    }
 }

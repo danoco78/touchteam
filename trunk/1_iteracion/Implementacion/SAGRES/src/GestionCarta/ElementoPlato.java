@@ -19,5 +19,23 @@ public class ElementoPlato extends Elemento {
         this.tiempoElaboracion = tiempoElaboracion;
     }
 
+    public void modifica(String nombre, String descripcion, ImageIcon foto, int tiempo, float precio, int divisionesMaximas){
+        this.setNombre(nombre);
+        this.setDescripcion(descripcion);
+        this.setFoto(foto);
+        this.setTiempoElaboracion(tiempo);
+        this.setPrecio(precio);
+        this.setDivisionesMaximas(divisionesMaximas);
+    }
+
+    public int getTiempoElaboracion() {
+        return tiempoElaboracion;
+    }
+
+    public void setTiempoElaboracion(int tiempoElaboracion) {
+        this.tiempoElaboracion = tiempoElaboracion;
+    }
+
+
 
 }
