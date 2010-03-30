@@ -11,7 +11,7 @@ public interface IIncidencia {
      * Añade al Sistema una nueva incidencia.
      * @param tipoIncidencia
      */
-    public abstract void nuevaIncidencia(int tipoIncidencia, 
+    public abstract void nuevaIncidencia(String tipoIncidencia,
             float cantidadAfectada, Producto producto) throws Exception;
 
 }

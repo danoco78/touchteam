@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 public interface IProducto {
 
-    public ArrayList<Bebida> obtenerListaBebidas();
-    public ArrayList<Ingrediente> obtenerListaIngredientes();
-    public ArrayList<Producto> obtenerListaProductos();
-    public ArrayList<Producto> obtenerListaProductosBajoMinimos();
+    public ArrayList<Bebida> obtenListaBebidas();
+    public ArrayList<Ingrediente> obtenListaIngredientes();
+    public ArrayList<Producto> obtenListaProductos();
+    public ArrayList<Producto> obtenListaProductosBajoMinimos();
     
 }

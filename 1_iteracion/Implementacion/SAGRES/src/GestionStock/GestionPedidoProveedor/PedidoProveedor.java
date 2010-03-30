@@ -2,8 +2,10 @@ package GestionStock.GestionPedidoProveedor;
 
 
 
+import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,16 +15,13 @@ public class PedidoProveedor {
 
     private Date fechaPedido;
     private boolean recibido;
-    List listaProductos;
+    HashMap<Producto, Float> listaProductos;
 
-    public PedidoProveedor() {
-        fechaPedido = new Date();
-        this.recibido = false;
-        listaProductos = new ArrayList();
-    }
 
-    @Override
-    public void finalize() throws Throwable {
+    public PedidoProveedor(HashMap<Producto, Float> informacionPedido) {
+        listaProductos = informacionPedido;
+        recibido = false;
+        fechaPedido = java.util.Calendar.getInstance().getTime();
     }
 
     /**

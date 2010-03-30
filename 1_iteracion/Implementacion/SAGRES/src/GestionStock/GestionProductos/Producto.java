@@ -45,6 +45,14 @@ public class Producto {
         return this.nombre;
     }
 
+    public int getCodPro() {
+        return codPro;
+    }
+
+    public ImageIcon getImagen() {
+        return imagen;
+    }
+
     public void restarCantidad(int resta){
         this.cantidad -= resta;
     }
