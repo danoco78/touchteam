@@ -15,7 +15,7 @@ public interface IPreparaCarta {
     public void eliminaElementoCarta(int codigoElemento);
 
     public void modificaElementoBebida(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, float precio, float divisionesMaximas );
+            String descripcion, ImageIcon foto, float precio, int divisionesMaximas );
 
     public void modificaElementoPlato(int codigoElemento, String nombre,
             String descripcion, ImageIcon foto, int tiempoPreparacion,

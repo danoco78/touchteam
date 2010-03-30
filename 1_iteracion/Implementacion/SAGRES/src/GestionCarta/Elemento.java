@@ -31,7 +31,7 @@ public class Elemento {
     }
     
     /**
-     * Establece la disponobilidad del elemento.
+     * Establece la disponibilidad del elemento.
      *
      * @param disponibilidad La nueva disponobilidad del elemento. true: está disponible, false: no está disponible.
      */
@@ -61,5 +61,13 @@ public class Elemento {
 
     public int getCodigoElemento(){
         return this.codigoElemento;
+    }
+
+    public void modifica(String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.precio = precio;
+        this.divisionesMaximas = divisionesMaximas;
     }
 }

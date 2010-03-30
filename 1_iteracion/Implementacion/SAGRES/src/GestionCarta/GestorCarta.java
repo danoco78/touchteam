@@ -15,16 +15,23 @@ import javax.swing.ImageIcon;
  */
 public class GestorCarta implements IPreparaCarta, ICarta {
 
-    ArrayList<Elemento> elemento;
+    ArrayList<Elemento> listaElementos;
     Carta carta;
 
     public GestorCarta() {
-        this.elemento = new ArrayList<Elemento>();
+        this.listaElementos = new ArrayList<Elemento>();
         this.carta = new Carta();
     }
 
-    private ArrayList<Elemento>buscaElemento (int codigoElemento) {
-        return new ArrayList<Elemento>();
+    private Elemento buscaElemento (int codigoElemento) {
+        Iterator iterador = listaElementos.iterator();
+        Elemento elemento;
+        while(iterador.hasNext()){
+            elemento = (Elemento)iterador.next();
+            if (elemento.getCodigoElemento()==codigoElemento)
+                return elemento;
+        }
+        return null;
     }
     private ArrayList<Elemento> buscaElementosInvalidados() {
         return new ArrayList<Elemento>();
@@ -48,19 +55,19 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     public void eliminaElementoCarta(int codigoElemento) {
 
         boolean encontrado = false;
-        Elemento ele = null;
-        Iterator it = elemento.iterator();
+        Elemento elemento = null;
+        Iterator it = listaElementos.iterator();
         // Mientras haya elementos y no encontremos el que buscamos
         while (it.hasNext() && !encontrado) {
-            ele = (Elemento)it.next();
+            elemento = (Elemento)it.next();
             /* Comprobamos si el código del elemento extraido se corresponde
              * con el código recibido como parámetro. Si es así salimos del bucle
              */
-            if (ele.getCodigoElemento() == codigoElemento)
+            if (elemento.getCodigoElemento() == codigoElemento)
                 encontrado = true;
         }
         if (encontrado == true)
-            elemento.remove(ele);
+            listaElementos.remove(elemento);
         /* else
              Lanzar excepción no existe elemento */
 
@@ -76,9 +83,16 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return new ArrayList<Elemento>();
     }
 
-    public void modificaElementoBebida(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, float precio, float divisionesMaximas ) {
+    public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) {
+        Elemento elemento;
 
+        elemento = buscaElemento(codigoElemento);
+        if ( elemento != null){
+            elemento.modifica(nombre, descripcion, foto, precio, divisionesMaximas);
+        }
+        /*else{
+            Lanzar Execpcion
+        }*/
     }
 
     public void modificaElementoPlato(int codigoElemento, String nombre,
@@ -93,8 +107,8 @@ public class GestorCarta implements IPreparaCarta, ICarta {
 
             int codigoElemento = this.generaCodigoElemento();
             ElementoBebida elementoBebida = new ElementoBebida(codigoElemento,
-                    listaBebidas, (SeccionBebida)seccion, nombre, descripcion,foto, precio, divisionesMaximas);
-            elemento.add(elementoBebida);
+                    listaBebidas, nombre, descripcion,foto, precio, divisionesMaximas);
+            listaElementos.add(elementoBebida);
 
             // Acceso a BD para insertar el elemento
     }
@@ -106,9 +120,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Comprobación que el elemento es correcto
             int codigoElemento = this.generaCodigoElemento();
             ElementoPlato elementoPlato = new ElementoPlato(codigoElemento,
-                    listaIngredientes, (SeccionComida)seccion, nombre, descripcion, foto,
+                    listaIngredientes,  nombre, descripcion, foto,
                     tiempoElaboracion, precio, divisionesMaximas);
-            elemento.add(elementoPlato);
+            listaElementos.add(elementoPlato);
 
             // Acceso a BD para insertar elemento
     }
