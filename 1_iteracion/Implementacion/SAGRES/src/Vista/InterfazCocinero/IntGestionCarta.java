@@ -11,6 +11,12 @@
 
 package Vista.InterfazCocinero;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 /**
  *
  * @author Daniel
@@ -21,6 +27,16 @@ public class IntGestionCarta extends javax.swing.JPanel {
     public IntGestionCarta() {
         initComponents();
     }
+
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        Rectangle clip = g2.getClipBounds();
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,0.0f ,getHeight(), new Color(255, 255, 255) ));
+        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+    }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
