@@ -5,9 +5,11 @@
 
 package GestionStock.GestionIncidencias;
 
+import GestionBaseDatos.IAlmacenamiento;
 import GestionCarta.ICarta;
 import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +19,8 @@ public class GestorIncidencia implements IIncidencia {
 
     IGestionarProducto gestorProductos;
     ICarta carta;
+    IAlmacenamiento almacen;
+    ArrayList<Incidencia> incidencias;
 
 
     public GestorIncidencia( IGestionarProducto iGestorProductos, ICarta Carta){
@@ -28,15 +32,21 @@ public class GestorIncidencia implements IIncidencia {
     public void nuevaIncidencia(int tipoIncidencia, float cantidadAfectada, Producto producto) throws Exception {
         boolean datosCorrectos = comprobarCantidadIntroducida(cantidadAfectada);
         if(datosCorrectos){
-            Incidencia incidencia = new Incidencia(producto, cantidadAfectada, tipoIncidencia );
-            this.gestorProductos.actualizarCantidadProdcuto(producto,-cantidadAfectada);
+            int codigo = this.generarCodigoIncidencia();
+            Incidencia incidencia = new Incidencia(codigo, producto, cantidadAfectada, tipoIncidencia);
+            this.gestorProductos.actualizaCantidadProdcuto(producto,-cantidadAfectada);
+            this.almacen.consultaDeModificacion("insert ....");
+            this.incidencias.add(incidencia);
         }else{
             throw new Exception("Los datos introducidos no son correctos");
         }
     }
 
     private boolean comprobarCantidadIntroducida(float cantidad){
-        return true;
+        if( cantidad > 0 )
+            return true;
+        else
+            return false;
     }
 
     private int generarCodigoIncidencia(){

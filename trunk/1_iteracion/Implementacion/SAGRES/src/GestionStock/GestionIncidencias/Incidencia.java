@@ -11,11 +11,11 @@ import java.util.Date;
  */
 public class Incidencia {
 
-    private int cantidadAfectada;
+    private float cantidadAfectada;
     private int codigo;
-    private String descripcion;
+    private int tipoIncidencia;
     private Date fecha;
-    public Producto m_Producto;
+    public Producto producto;
 
     @Override
     public void finalize() throws Throwable {
@@ -28,35 +28,12 @@ public class Incidencia {
      * @param descripcion Descripción del motivo por el cual fueron desechados.
      * @param fecha Fecha de incidencia.
      */
-    public Incidencia(int codigo, int cantidad, String descripcion, Date fecha) {
+    public Incidencia(int codigo, Producto producto, float cantidad, int tipoIncidencia) {
         this.codigo=codigo;
         this.cantidadAfectada=cantidad;
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-    }
-
-    /**
-     * Modifica la cantidad afectada.
-     * @param cantidad
-     */
-    public void setCantidad(int cantidad) {
-        this.cantidadAfectada=cantidad;
-    }
-
-    /**
-     * Modifica la descripción de las causas
-     * @param descripcion
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
-     * Modifica la fecha de la incidencia.
-     * @param fecha
-     */
-    public void setFechaIncidencia(Date fecha) {
-        this.fecha = fecha;
+        this.producto = producto;
+        this.tipoIncidencia = tipoIncidencia;
+        this.fecha = java.util.Calendar.getInstance().getTime();
     }
 
 
