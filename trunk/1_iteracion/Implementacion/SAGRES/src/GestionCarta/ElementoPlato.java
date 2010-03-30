@@ -11,13 +11,11 @@ import javax.swing.ImageIcon;
 public class ElementoPlato extends Elemento {
 
     ArrayList<Ingrediente> listaIngredientes;
-    SeccionComida seccion;
     int tiempoElaboracion;
 
-    public ElementoPlato(int codigo, ArrayList<Ingrediente> listaIngredientes, SeccionComida seccion, String nombre, String descripcion, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
+    public ElementoPlato(int codigo, ArrayList<Ingrediente> listaIngredientes, String nombre, String descripcion, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
         super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
         this.listaIngredientes = listaIngredientes;
-        this.seccion = seccion;
         this.tiempoElaboracion = tiempoElaboracion;
     }
 
