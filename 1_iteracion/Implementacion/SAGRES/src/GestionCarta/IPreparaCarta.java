@@ -1,6 +1,7 @@
 
 package GestionCarta;
 
+import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
