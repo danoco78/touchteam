@@ -5,10 +5,19 @@
 
 package GestionStock.GestionPedidoProveedor;
 
+import GestionCarta.Elemento;
+import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Pair;
+
 /**
  *
  * @author Daniel
  */
 public interface IPedidoProveedor {
+
+    public abstract HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception;
+    public abstract Pair< HashMap<Producto, Float>, ArrayList<Elemento> > notificaRecepcionPedido();
 
 }

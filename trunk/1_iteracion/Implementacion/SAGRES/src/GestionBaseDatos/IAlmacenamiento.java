@@ -8,7 +8,7 @@ import javax.swing.table.TableModel;
  */
 public interface IAlmacenamiento {
 
-    public abstract boolean ConsultarDeModificacion(String SQL);
-    public abstract TableModel RealizarConsulta( String SQL );
+    public abstract boolean consultaDeModificacion(String SQL);
+    public abstract TableModel realizaConsulta( String SQL );
 
 }

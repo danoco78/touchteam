@@ -12,6 +12,7 @@
 package Vista.InterfazCocinero;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,10 +31,18 @@ public class IntGestionCarta extends javax.swing.JPanel {
 
     @Override
     public void paint(Graphics g) {
+        super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,0.0f ,getHeight(), new Color(255, 255, 255) ));
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+        /*Component componentes[] =  this.getComponents();
+        for (int i = 0; i < componentes.length; i++) {
+            componentes[i].paint(g2);
+        }
+        this.jPanel2.paint(g);*/
+        this.paintChildren(g);
+        //this.paintComponents(g);
     }
 
 
@@ -57,7 +66,8 @@ public class IntGestionCarta extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 51, 51));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(50, 50));
