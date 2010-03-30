@@ -1,9 +1,6 @@
 package GestionCarta;
 
 
-import GestionCarta.Carta;
-
-
 /**
  * Divisiones en que se encuentra dividida la carta del restaurante.
  * @author Carlos Salas Morales
@@ -25,4 +22,6 @@ public class Seccion {
     public String getNombre() {
         return this.nombre;
     }
+
+   public void anadeElemento(Elemento elemento){}
 }

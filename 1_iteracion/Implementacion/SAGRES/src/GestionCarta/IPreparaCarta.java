@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  */
 public interface IPreparaCarta {
 
-    public void eliminaElementoCarta(int codigoElemento);
+    public void eliminaElementoCarta(int codigoElemento) throws Exception;
 
     public void modificaElementoBebida(int codigoElemento, String nombre,
             String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception;
@@ -22,11 +22,11 @@ public interface IPreparaCarta {
             float precio, int divisionesMaximas) throws Exception;
 
     public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
-            Seccion seccion, String nombre, String descripcion, float precio,
+            SeccionBebida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int divisionesMaximas);
 
     public void nuevoElementoPlato(ArrayList<Ingrediente> listaIngredientes,
-            Seccion seccion, String nombre, String descripcion, float precio,
+            SeccionComida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int tiempoElaboracion, int divisionesMaximas);
 
 }
