@@ -20,7 +20,7 @@ public interface IPreparaCarta {
             String descripcion, ImageIcon foto, float tiempoPreparacion,
             float precio, int diviMax);
 
-    public void nuevoElementoBebida(ArrayList<ElementoBebida> listaBebidas,
+    public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
             String seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int diviMax);
 
