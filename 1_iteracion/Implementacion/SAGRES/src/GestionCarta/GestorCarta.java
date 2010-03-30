@@ -83,21 +83,29 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return new ArrayList<Elemento>();
     }
 
-    public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) {
+    public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception {
         Elemento elemento;
 
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
-            elemento.modifica(nombre, descripcion, foto, precio, divisionesMaximas);
+            ((ElementoBebida)elemento).modifica(nombre, descripcion, foto, precio, divisionesMaximas);
         }
-        /*else{
-            Lanzar Execpcion
-        }*/
+        else{
+            throw new Exception("El elemento especificado no existe.");
+        }
     }
 
-    public void modificaElementoPlato(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, int tiempoPreparacion,
-            float precio, int divisionesMaximas) {}
+    public void modificaElementoPlato(int codigoElemento, String nombre, String descripcion, ImageIcon foto, int tiempoPreparacion, float precio, int divisionesMaximas) throws Exception {
+        Elemento elemento;
+
+        elemento = buscaElemento(codigoElemento);
+        if ( elemento != null){
+            ((ElementoPlato)elemento).modifica(nombre, descripcion, foto, tiempoPreparacion, precio, divisionesMaximas);
+        }
+        else{
+            throw new Exception("El elemento especificado no existe.");
+        }
+    }
 
     public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
             Seccion seccion, String nombre, String descripcion, float precio,
