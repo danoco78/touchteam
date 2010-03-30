@@ -39,7 +39,7 @@ public class PedidoProveedor {
      * Marca el estado del pedidoProveedor como recibido
      */
     public void fueRecibido() {
-        recibido = true;
+        this.recibido = true;
     }
 
     /*
