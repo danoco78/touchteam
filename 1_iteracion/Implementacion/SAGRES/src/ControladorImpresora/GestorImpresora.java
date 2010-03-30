@@ -1,10 +1,11 @@
 package ControladorImpresora;
 
 import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
+
 
 /**
  *
@@ -18,7 +19,7 @@ public class GestorImpresora implements IImpresion{
      */
     public void imprimePedido(HashMap<Producto, Float> informacionPedido) {
         Iterator iterador = informacionPedido.entrySet().iterator();
-        Vector<String> texto = new <String>Vector();
+        ArrayList<String> texto = new <String>ArrayList();
         String clave;
         String valor;
         String linea = new String();

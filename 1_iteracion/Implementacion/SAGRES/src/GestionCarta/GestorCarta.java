@@ -55,7 +55,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     }
 
     public void modificaElementoBebida(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, float precio, float divisionesMaximas ) {}
+            String descripcion, ImageIcon foto, float precio, float divisionesMaximas ) {
+
+    }
 
     public void modificaElementoPlato(int codigoElemento, String nombre,
             String descripcion, ImageIcon foto, float tiempoPreparacion,
