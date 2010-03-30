@@ -18,15 +18,15 @@ public interface IPreparaCarta {
             String descripcion, ImageIcon foto, float precio, float divisionesMaximas );
 
     public void modificaElementoPlato(int codigoElemento, String nombre,
-            String descripcion, ImageIcon foto, float tiempoPreparacion,
+            String descripcion, ImageIcon foto, int tiempoPreparacion,
             float precio, int divisionesMaximas);
 
     public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
-            String seccion, String nombre, String descripcion, float precio,
+            Seccion seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int divisionesMaximas);
 
     public void nuevoElementoPlato(ArrayList<Ingrediente> listaIngredientes,
-            String seccion, String nombre, String descripcion, float precio,
-            ImageIcon foto, float tiempoElaboracion, int divisionesMaximas);
+            Seccion seccion, String nombre, String descripcion, float precio,
+            ImageIcon foto, int tiempoElaboracion, int divisionesMaximas);
 
 }
