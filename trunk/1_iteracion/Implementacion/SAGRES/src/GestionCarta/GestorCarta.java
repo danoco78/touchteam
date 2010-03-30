@@ -17,6 +17,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
 
     ArrayList<Elemento> listaElementos;
     Carta carta;
+    ArrayList<Seccion> listaSecciones;
 
     public GestorCarta() {
         this.listaElementos = new ArrayList<Elemento>();
@@ -37,40 +38,19 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return new ArrayList<Elemento>();
     }
 
-    private boolean compruebaDatosBebida(String nombre, String descripcion,
-            float precio, ImageIcon foto, int divisionesMaximas) {
-            return true;
-    }
-
-    private boolean compruebaDatosPlato(String nombre, String descripcion,
-            float precio, float tiempoElaboracion, ImageIcon foto,
-            int divisionesMaximas) {
-            return true;
-    }
-
     public ArrayList<Elemento> corrigeElementosInvalidados() {
         return new ArrayList<Elemento>();
     }
 
-    public void eliminaElementoCarta(int codigoElemento) {
+    public void eliminaElementoCarta(int codigoElemento) throws Exception {
 
-        boolean encontrado = false;
         Elemento elemento = null;
-        Iterator it = listaElementos.iterator();
-        // Mientras haya elementos y no encontremos el que buscamos
-        while (it.hasNext() && !encontrado) {
-            elemento = (Elemento)it.next();
-            /* Comprobamos si el código del elemento extraido se corresponde
-             * con el código recibido como parámetro. Si es así salimos del bucle
-             */
-            if (elemento.getCodigoElemento() == codigoElemento)
-                encontrado = true;
-        }
-        if (encontrado == true)
+        elemento = this.buscaElemento(codigoElemento);
+        if (elemento != null)
             listaElementos.remove(elemento);
-        /* else
-             Lanzar excepción no existe elemento */
-
+        else
+            throw new Exception("El elemento especificado no existe.");
+        
         // Eliminar de la BD
 
     }
@@ -108,30 +88,29 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     }
 
     public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
-            Seccion seccion, String nombre, String descripcion, float precio,
+            SeccionBebida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int divisionesMaximas) {
-
-        // Comprobación que el elemento es correcto
 
             int codigoElemento = this.generaCodigoElemento();
             ElementoBebida elementoBebida = new ElementoBebida(codigoElemento,
                     listaBebidas, nombre, descripcion,foto, precio, divisionesMaximas);
             listaElementos.add(elementoBebida);
+            seccion.anadeElemento(elementoBebida);
 
             // Acceso a BD para insertar el elemento
     }
 
     public void nuevoElementoPlato(ArrayList<Ingrediente> listaIngredientes,
-            Seccion seccion, String nombre, String descripcion, float precio,
+            SeccionComida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int tiempoElaboracion, int divisionesMaximas) {
 
-            // Comprobación que el elemento es correcto
             int codigoElemento = this.generaCodigoElemento();
             ElementoPlato elementoPlato = new ElementoPlato(codigoElemento,
                     listaIngredientes,  nombre, descripcion, foto,
                     tiempoElaboracion, precio, divisionesMaximas);
             listaElementos.add(elementoPlato);
-
+            seccion.anadeElemento(elementoPlato);
+           
             // Acceso a BD para insertar elemento
     }
 

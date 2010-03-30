@@ -1,8 +1,7 @@
 package GestionCarta;
 
 
-import GestionCarta.Seccion;
-import GestionCarta.Carta;
+import java.util.ArrayList;
 
 
 /**
@@ -11,7 +10,14 @@ import GestionCarta.Carta;
  */
 public class SeccionComida extends Seccion {
 
+    ArrayList<ElementoPlato> listaElementoPlato;
+
     public SeccionComida(String nombre, Carta carta) {
         super(nombre, carta);
+    }
+
+    @Override
+    public void anadeElemento(Elemento elementoPlato) {
+        listaElementoPlato.add((ElementoPlato) elementoPlato);
     }
 }

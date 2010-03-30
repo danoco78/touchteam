@@ -1,8 +1,7 @@
 package GestionCarta;
 
 
-import GestionCarta.Seccion;
-import GestionCarta.Carta;
+import java.util.ArrayList;
 
 
 /**
@@ -10,8 +9,14 @@ import GestionCarta.Carta;
  * @author Carlos Salas Morales
  */
 public class SeccionBebida extends Seccion {
+    ArrayList<ElementoBebida> listaElementoBebida;
 
     public SeccionBebida(String nombre, Carta carta) {
         super(nombre,carta);
+    }
+
+    @Override
+    public void anadeElemento(Elemento elementoBebida) {
+        listaElementoBebida.add((ElementoBebida) elementoBebida);
     }
 }
