@@ -21,16 +21,17 @@ import java.awt.Rectangle;
  *
  * @author Daniel
  */
-public class IntGestionCarta extends javax.swing.JPanel {
+public class IntGestionIngrediente extends javax.swing.JPanel {
 
     /** Creates new form IntGestionCarta */
-    public IntGestionCarta() {
+    public IntGestionIngrediente() {
         initComponents();
         this.setDoubleBuffered(true);
     }
 
     @Override
     public void paint(Graphics g) {
+        super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
         g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
@@ -57,9 +58,10 @@ public class IntGestionCarta extends javax.swing.JPanel {
         contenedorCentral = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
-        bAnadirElemento = new javax.swing.JButton();
-        bEleminarElemento = new javax.swing.JButton();
-        bModificarElemento = new javax.swing.JButton();
+        bAnadirIngrediente = new javax.swing.JButton();
+        bEleminarIngrediente = new javax.swing.JButton();
+        bModificarIngrediente = new javax.swing.JButton();
+        bNotificarIncidente = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -78,7 +80,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bVolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bVolver.setFont(new java.awt.Font("Arial", 1, 14));
         bVolver.setForeground(new java.awt.Color(80, 98, 143));
         bVolver.setText("Volver");
         bVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,9 +94,6 @@ public class IntGestionCarta extends javax.swing.JPanel {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
         logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
-        logo.setMaximumSize(new java.awt.Dimension(100, 100));
-        logo.setMinimumSize(new java.awt.Dimension(100, 100));
-        logo.setPreferredSize(new java.awt.Dimension(100, 100));
         contenedorCentral.add(logo, new java.awt.GridBagConstraints());
 
         cabecera.add(contenedorCentral, java.awt.BorderLayout.CENTER);
@@ -105,52 +104,64 @@ public class IntGestionCarta extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bAnadirElemento.setForeground(new java.awt.Color(80, 98, 143));
-        bAnadirElemento.setText("Añadir elemento");
-        bAnadirElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bAnadirElemento.setMaximumSize(new java.awt.Dimension(300, 200));
-        bAnadirElemento.setMinimumSize(new java.awt.Dimension(300, 200));
-        bAnadirElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bAnadirIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bAnadirIngrediente.setText("Añadir Ingrediente");
+        bAnadirIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bAnadirIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
+        bAnadirIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
+        bAnadirIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        cuerpo.add(bAnadirElemento, gridBagConstraints);
+        cuerpo.add(bAnadirIngrediente, gridBagConstraints);
 
-        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bEleminarElemento.setForeground(new java.awt.Color(80, 98, 143));
-        bEleminarElemento.setText("Eliminar elemento");
-        bEleminarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bEleminarElemento.setMaximumSize(new java.awt.Dimension(300, 200));
-        bEleminarElemento.setMinimumSize(new java.awt.Dimension(300, 200));
-        bEleminarElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bEleminarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
+        bEleminarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bEleminarIngrediente.setText("Eliminar Ingrediente");
+        bEleminarIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bEleminarIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
+        bEleminarIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
+        bEleminarIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        cuerpo.add(bEleminarElemento, gridBagConstraints);
+        cuerpo.add(bEleminarIngrediente, gridBagConstraints);
 
-        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bModificarElemento.setForeground(new java.awt.Color(80, 98, 143));
-        bModificarElemento.setText("Modificar elemento");
-        bModificarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bModificarElemento.setMaximumSize(new java.awt.Dimension(300, 200));
-        bModificarElemento.setMinimumSize(new java.awt.Dimension(300, 200));
-        bModificarElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bModificarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bModificarIngrediente.setText("Modificar Ingrediente");
+        bModificarIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bModificarIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
+        bModificarIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
+        bModificarIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        cuerpo.add(bModificarElemento, gridBagConstraints);
+        cuerpo.add(bModificarIngrediente, gridBagConstraints);
+
+        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificarIncidente.setForeground(new java.awt.Color(80, 98, 143));
+        bNotificarIncidente.setText("Notificar Incidente");
+        bNotificarIncidente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bNotificarIncidente.setMaximumSize(new java.awt.Dimension(300, 200));
+        bNotificarIncidente.setMinimumSize(new java.awt.Dimension(300, 200));
+        bNotificarIncidente.setPreferredSize(new java.awt.Dimension(300, 200));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        cuerpo.add(bNotificarIncidente, gridBagConstraints);
 
         add(cuerpo, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAnadirElemento;
-    private javax.swing.JButton bEleminarElemento;
-    private javax.swing.JButton bModificarElemento;
+    private javax.swing.JButton bAnadirIngrediente;
+    private javax.swing.JButton bEleminarIngrediente;
+    private javax.swing.JButton bModificarIngrediente;
+    private javax.swing.JButton bNotificarIncidente;
     private javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel contenedorCentral;
