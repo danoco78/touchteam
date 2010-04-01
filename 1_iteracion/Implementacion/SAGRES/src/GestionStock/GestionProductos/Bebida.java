@@ -13,13 +13,19 @@ import javax.swing.ImageIcon;
  * @author Jose David Dionisio Ruiz
  */
 public class Bebida extends Producto{
-    private int cantidadPorEnvase;
 
-    public Bebida(int codPro, String nombre, ImageIcon imagen, int minimo, int maximo, int cantidad,int cantidadPorEnvase){
+    /**
+     * Construye un objeto Bebida con el estado especificado con los parametros.
+     * @param codPro Codigo identificador de la bebida
+     * @param nombre Nombre de la bebida
+     * @param imagen Imagen de la bebida que queremos añadir
+     * @param minimo Minimo de unidades que debe haber en stock de la bebida
+     * @param maximo Maximo de unidades que debe haber en stock de la bebida
+     * @param cantidad Cantidad inicial en stock
+     * @param cantidadPorEnvase Cantidad por envase de la bebida
+
+     */
+    public Bebida(int codPro, String nombre, ImageIcon imagen, float minimo, float maximo, float cantidad){
         super(imagen, nombre, minimo, maximo, cantidad, codPro);
-        this.cantidadPorEnvase = cantidadPorEnvase;
-    }
-    public int getCantidadPorEnvase(){
-        return this.cantidadPorEnvase;
     }
 }
