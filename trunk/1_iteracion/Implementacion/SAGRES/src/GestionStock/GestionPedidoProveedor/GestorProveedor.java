@@ -29,7 +29,7 @@ public class GestorProveedor implements IPedidoProveedor {
 
 
     public HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception {
-        ArrayList<Producto> listaProductos = this.gestionProductos.obtenListaProductosBajoMinimos();
+        ArrayList<Producto> listaProductos = this.gestionProductos.obtenerProductosBajoMinimos();
         if( !(listaProductos.isEmpty()) ){
             HashMap<Producto, Float> informacionPedido = this.calculaCantidadesNecesarias(listaProductos);
             PedidoProveedor pedidoProveedor = new PedidoProveedor(informacionPedido);

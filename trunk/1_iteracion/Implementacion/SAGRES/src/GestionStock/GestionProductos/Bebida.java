@@ -22,8 +22,6 @@ public class Bebida extends Producto{
      * @param minimo Minimo de unidades que debe haber en stock de la bebida
      * @param maximo Maximo de unidades que debe haber en stock de la bebida
      * @param cantidad Cantidad inicial en stock
-     * @param cantidadPorEnvase Cantidad por envase de la bebida
-
      */
     public Bebida(int codPro, String nombre, ImageIcon imagen, float minimo, float maximo, float cantidad){
         super(imagen, nombre, minimo, maximo, cantidad, codPro);
