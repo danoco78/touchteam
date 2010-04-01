@@ -55,18 +55,6 @@ public class GestorProducto implements IGestionarProducto {
         }
     }
 
-    /**
-     * ¿¿??
-     * @param nombre
-     * @param cantidad
-     * @param minimo
-     * @param maximo
-     * @param foto
-     */
-    public boolean comprobarDatosIngrediente(String nombre, int cantidad, int minimo, int maximo, ImageIcon foto){
-    	return false;
-    }
-
     public boolean comprobarHayIngrediente(){
         return false;
     }
@@ -164,14 +152,6 @@ public class GestorProducto implements IGestionarProducto {
                 i.sumarCantidad(cantidad - i.getCantidad());
         }
     }
-
-    /** ¿¿??
-     * Devuelve un par de listas, una de productos y otra con los productos que han
-     * sido habilitados tras el pedido
-     */
-    //public Productos[] notificarRecepcionPedido(){
-    //	return null;
-    //}
 
     /**
      *
