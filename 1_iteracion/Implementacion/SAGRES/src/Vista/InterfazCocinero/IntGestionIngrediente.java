@@ -104,7 +104,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
         bAnadirIngrediente.setForeground(new java.awt.Color(80, 98, 143));
         bAnadirIngrediente.setText("Añadir Ingrediente");
         bAnadirIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -128,7 +128,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarIngrediente, gridBagConstraints);
 
-        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
         bModificarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
         bModificarIngrediente.setText("Modificar Ingrediente");
         bModificarIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -141,7 +141,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bModificarIngrediente, gridBagConstraints);
 
-        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14));
         bNotificarIncidente.setForeground(new java.awt.Color(80, 98, 143));
         bNotificarIncidente.setText("Notificar Incidente");
         bNotificarIncidente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -158,11 +158,11 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAnadirIngrediente;
-    private javax.swing.JButton bEleminarIngrediente;
-    private javax.swing.JButton bModificarIngrediente;
-    private javax.swing.JButton bNotificarIncidente;
-    private javax.swing.JButton bVolver;
+    protected javax.swing.JButton bAnadirIngrediente;
+    protected javax.swing.JButton bEleminarIngrediente;
+    protected javax.swing.JButton bModificarIngrediente;
+    protected javax.swing.JButton bNotificarIncidente;
+    protected javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel contenedorCentral;
     private javax.swing.JPanel contenedorDer;
