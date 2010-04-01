@@ -17,9 +17,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -28,8 +26,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class DialogoNotificarIncidencia extends java.awt.Dialog {
 
-    private final String SUBTITULOPASO1 = "Seleccionar el ingrediente a modificar";
-    private final String SUBTITULOPASO2 = "Cambiar los datos que se deseen";
+    private final String SUBTITULOPASO1 = "Seleccionar el ingrediente afectado";
+    private final String SUBTITULOPASO2 = "detallar el problema ocurrido";
     private final String PASO1 = "Paso 1/2";
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
@@ -408,22 +406,6 @@ public class DialogoNotificarIncidencia extends java.awt.Dialog {
         this.setVisible(false);
     }//GEN-LAST:event_Salir
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DialogoNotificarIncidencia dialog = new DialogoNotificarIncidencia(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

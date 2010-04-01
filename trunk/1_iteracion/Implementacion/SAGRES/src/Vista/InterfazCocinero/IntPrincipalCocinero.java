@@ -80,7 +80,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bSalir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bSalir.setFont(new java.awt.Font("Arial", 1, 14));
         bSalir.setForeground(new java.awt.Color(80, 98, 143));
         bSalir.setText("Salir");
         bSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -104,7 +104,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionCarta.setForeground(new java.awt.Color(80, 98, 143));
         bGestionCarta.setText("Gestión de carta");
         bGestionCarta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -129,7 +129,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
 
-        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         bGestionIngredientes.setText("Gestion de Infredientes");
         bGestionIngredientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -160,11 +160,11 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bGestionCarta;
-    private javax.swing.JButton bGestionIngredientes;
-    private javax.swing.JButton bImprimirProductosaPedir;
-    private javax.swing.JButton bNotificcarPedido;
-    private javax.swing.JButton bSalir;
+    protected javax.swing.JButton bGestionCarta;
+    protected javax.swing.JButton bGestionIngredientes;
+    protected javax.swing.JButton bImprimirProductosaPedir;
+    protected javax.swing.JButton bNotificcarPedido;
+    protected javax.swing.JButton bSalir;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel contenedorCentral;
     private javax.swing.JPanel contenedorDer;

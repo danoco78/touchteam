@@ -78,7 +78,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bVolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bVolver.setFont(new java.awt.Font("Arial", 1, 14));
         bVolver.setForeground(new java.awt.Color(80, 98, 143));
         bVolver.setText("Volver");
         bVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,9 +92,6 @@ public class IntGestionCarta extends javax.swing.JPanel {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
         logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
-        logo.setMaximumSize(new java.awt.Dimension(100, 100));
-        logo.setMinimumSize(new java.awt.Dimension(100, 100));
-        logo.setPreferredSize(new java.awt.Dimension(100, 100));
         contenedorCentral.add(logo, new java.awt.GridBagConstraints());
 
         cabecera.add(contenedorCentral, java.awt.BorderLayout.CENTER);
@@ -105,7 +102,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14));
         bAnadirElemento.setForeground(new java.awt.Color(80, 98, 143));
         bAnadirElemento.setText("Añadir elemento");
         bAnadirElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -116,7 +113,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirElemento, gridBagConstraints);
 
-        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14));
         bEleminarElemento.setForeground(new java.awt.Color(80, 98, 143));
         bEleminarElemento.setText("Eliminar elemento");
         bEleminarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -130,7 +127,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarElemento, gridBagConstraints);
 
-        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14));
         bModificarElemento.setForeground(new java.awt.Color(80, 98, 143));
         bModificarElemento.setText("Modificar elemento");
         bModificarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -148,10 +145,10 @@ public class IntGestionCarta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAnadirElemento;
-    private javax.swing.JButton bEleminarElemento;
-    private javax.swing.JButton bModificarElemento;
-    private javax.swing.JButton bVolver;
+    protected javax.swing.JButton bAnadirElemento;
+    protected javax.swing.JButton bEleminarElemento;
+    protected javax.swing.JButton bModificarElemento;
+    protected javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel contenedorCentral;
     private javax.swing.JPanel contenedorDer;

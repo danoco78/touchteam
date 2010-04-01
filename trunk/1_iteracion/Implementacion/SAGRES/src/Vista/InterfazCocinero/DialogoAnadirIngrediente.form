@@ -431,7 +431,6 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt; &lt;STRONG&gt;Imagen no &lt;br&gt; disponible&lt;/STRONG&gt; &lt;br&gt;&lt;i&gt; (Click sobre la imagen &lt;br&gt; para insertar una)&lt;/i&gt;&lt;/center&gt; &lt;/html&gt;"/>
-            <Property name="toolTipText" type="java.lang.String" value="null"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true" thickness="3">
