@@ -36,7 +36,7 @@ public class GestorIncidencia implements IIncidencia {
         TableModel datos = this.almacen.realizaConsulta("select incidencia_id, descripccion, fecha," +
                 " cantidad_afectada, porducto_id from incidencia , tieneIncidencia  " +
                 "where incidencia_id = incidencia_incidencia_id");
-        ArrayList<Producto> listaProductos = this.almacenProductos.obtenListaProductos();
+        ArrayList<Producto> listaProductos = this.almacenProductos.obtenerListaProductos();
         for (int i = 0; i < datos.getRowCount(); i++) {
             Producto producto = null;
             for (int j = 0; j < listaProductos.size(); j++) {
