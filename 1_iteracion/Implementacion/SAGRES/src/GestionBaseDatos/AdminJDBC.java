@@ -65,6 +65,20 @@ public class AdminJDBC implements IAlmacenamiento{
         }
     }
 
+     /**
+      * Cierra la conexion
+      *
+      * @throws Si tiene problemas con la conexion lo indicara con un objeto exception que incluira un mensaje
+      * con la descripción del problema.
+      */
+    public void desconecta() throws Exception{
+	try {
+            conexion.close();
+	} catch (SQLException ex) {
+            throw ex;
+        }
+    }
+
     /**
     * Indica Si la instancia esta conectada con la base de datos.
     *
