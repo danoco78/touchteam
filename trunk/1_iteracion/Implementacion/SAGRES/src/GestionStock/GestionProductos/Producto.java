@@ -13,14 +13,23 @@ import javax.swing.ImageIcon;
  * @author Jose David Dionisio Ruiz
  */
 public class Producto {
-    private int cantidad;
+    private float cantidad;
     private int codPro;
-    private int maximo;
-    private int minimo;
+    private float maximo;
+    private float minimo;
     private String nombre;
     private ImageIcon imagen;
 
-    public Producto(ImageIcon imagen, String nombre,int minimo, int maximo, int cantidad, int codPro) {
+    /**
+     * Construye un objeto Producto con el estado especificado con los parametros.
+     * @param imagen Imagen del producto que queremos añadir
+     * @param nombre Nombre del producto
+     * @param minimo Minimo de unidades que debe haber en stock del producto
+     * @param maximo Maximo de unidades que debe haber en stock del producto
+     * @param cantidad Cantidad inicial en stock
+     * @param codPro Codigo identificador del producto POSIBLE CONFLICTO - AVISAR EQUIPO DE DISEÑO
+     */
+    public Producto(ImageIcon imagen, String nombre,float minimo, float maximo, float cantidad, int codPro) {
         this.cantidad = cantidad;
         //this.codPro = generarCodigoProducto();
         this.maximo = maximo;
@@ -29,51 +38,92 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public int getCantidad(){
+    /*
+     * Devuelve la cantidad existente en stock de un producto
+     */
+    public float getCantidad(){
         return this.cantidad;
     }
 
-    public int getMaximo(){
+    /*
+     * Devuelve el maximo posible de un producto
+     */
+    public float getMaximo(){
         return this.maximo;
     }
 
-    public int getMinimo(){
+    /*
+     * Devuelve el minimo posible de un producto
+     */
+    public float getMinimo(){
         return this.minimo;
     }
 
+    /*
+     * Devuelve el nombre de un producto
+     */
     public String getNombre(){
         return this.nombre;
     }
 
+    /*
+     * Devuelve el codigo de un producto POSIBLE CONFLICTO - AVISAR EQUIPO DE DISEÑO
+     */
     public int getCodPro() {
         return codPro;
     }
 
+    /*
+     * Devuelve la imagen de un producto
+     */
     public ImageIcon getImagen() {
         return imagen;
     }
-
-    public void restarCantidad(int resta){
+    /*
+     * Disminuye una cantidad resta un producto determinado
+     * @param resta Cantidad a disminuir del stock del producto
+     */
+    public void restarCantidad(float resta){
         this.cantidad -= resta;
     }
 
+    /*
+     * Establece una nueva imagen para un producto
+     * @param foto Nueva imagen del producto
+     */
     public void setFoto(ImageIcon foto){
         this.imagen = foto;
     }
 
-    public void setMaximo(int maximo){
+    /*
+     * Establece un nuevo maximo para un producto
+     * @param maximo Nuevo maximo del producto
+     */
+    public void setMaximo(float maximo){
         this.maximo = maximo;
     }
-    
-    public void setMinimo(int minimo){
+
+    /*
+     * Establece un nuevo minimo para un producto
+     * @param minimo Nuevo minimo del producto
+     */
+    public void setMinimo(float minimo){
         this.minimo = minimo;
     }
-    
+
+    /*
+     * Establece un nuevo nombre para un producto
+     * @param nombre Nuevo nombre del producto
+     */
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
 
-    public void sumarCantidad(int suma){
+    /*
+     * Aumenta una cantidad suma un producto determinado
+     * @param suma Cantidad a aumentar del stock del producto
+     */
+    public void sumarCantidad(float suma){
         this.cantidad += suma;
     }
 }

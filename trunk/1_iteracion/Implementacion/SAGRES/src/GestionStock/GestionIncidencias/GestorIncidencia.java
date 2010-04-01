@@ -53,7 +53,7 @@ public class GestorIncidencia implements IIncidencia {
     public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) throws Exception {
             int codigo = this.generarCodigoIncidencia();
             Incidencia incidencia = new Incidencia(codigo, producto, cantidadAfectada, tipoIncidencia);
-            this.gestorProductos.actualizaCantidadProdcuto(producto,-cantidadAfectada);
+            this.gestorProductos.actualizaCantidadProducto(producto,-cantidadAfectada);
             this.almacen.consultaDeModificacion("insert ....");
             this.incidencias.add(incidencia);
     }
