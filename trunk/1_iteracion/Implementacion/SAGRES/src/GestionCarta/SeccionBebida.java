@@ -19,4 +19,8 @@ public class SeccionBebida extends Seccion {
     public void anadeElemento(Elemento elementoBebida) {
         listaElementoBebida.add((ElementoBebida) elementoBebida);
     }
+
+    public ArrayList<ElementoBebida> getListaElementoBebida() {
+        return this.listaElementoBebida;
+    }
 }

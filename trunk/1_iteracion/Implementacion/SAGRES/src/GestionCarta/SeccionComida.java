@@ -20,4 +20,8 @@ public class SeccionComida extends Seccion {
     public void anadeElemento(Elemento elementoPlato) {
         listaElementoPlato.add((ElementoPlato) elementoPlato);
     }
+
+    public ArrayList<ElementoPlato> getListaElementoPlato() {
+        return this.listaElementoPlato;
+    }
 }
