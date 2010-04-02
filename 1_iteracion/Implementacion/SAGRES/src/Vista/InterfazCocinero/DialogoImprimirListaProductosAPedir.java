@@ -11,12 +11,17 @@
 
 package Vista.InterfazCocinero;
 
+import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
+import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,12 +31,14 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
+    private IPedidoProveedor gestorPedido;
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, boolean modal) {
+    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, boolean modal,IPedidoProveedor GestorPedido) {
         super(parent, modal);
         initComponents();
+        this.gestorPedido = GestorPedido;
     }
 
 
@@ -114,6 +121,11 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -153,9 +165,11 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
+        tTablaProductos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaProductos.setForeground(new java.awt.Color(80, 98, 143));
         tTablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"NO HABILITADO", null}
             },
             new String [] {
                 "Nombre", "Cantidad"
@@ -176,6 +190,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
+        tTablaProductos.setEnabled(false);
         tTablaProductos.setGridColor(new java.awt.Color(211, 223, 253));
         tTablaProductos.setMinimumSize(new java.awt.Dimension(450, 550));
         tTablaProductos.setPreferredSize(new java.awt.Dimension(450, 550));
@@ -189,7 +204,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         gridBagConstraints.ipady = 280;
         cuerpo.add(jScrollPane2, gridBagConstraints);
 
-        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 14));
+        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lProductosAPedir.setForeground(new java.awt.Color(80, 98, 143));
         lProductosAPedir.setText("Se van a pedir los siguientes productos");
         lProductosAPedir.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -214,6 +229,14 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
     }//GEN-LAST:event_Salir
+
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        try {
+            this.gestorPedido.imprimeListaProductosPedido();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Imprimir Productos", "No Hay productos para pedir", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_Aceptar
 
 
 

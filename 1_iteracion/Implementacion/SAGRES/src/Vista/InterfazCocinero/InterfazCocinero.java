@@ -13,7 +13,6 @@ package Vista.InterfazCocinero;
 
 import GestionCarta.ICarta;
 import GestionCarta.IPreparaCarta;
-import Vista.InterfazMetre.*;
 import GestionStock.GestionIncidencias.IIncidencia;
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
 import GestionStock.GestionProductos.IGestionarProducto;
@@ -140,13 +139,13 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
                     break;
                 case ManejaEventos.IMPRIMIRLISTAPRODUCTOS:
-                    dialogo = new DialogoImprimirListaProductosAPedir(padre, true);
+                    dialogo = new DialogoImprimirListaProductosAPedir(padre, true, null);
                     break;
                 case ManejaEventos.NOTIFICARRECEPCION:
-                    dialogo = new DialogoNotificarLlegadaProductos(padre, true);
+                    dialogo = new DialogoNotificarLlegadaProductos(padre, true, null);
                     break;
                 case ManejaEventos.ANADIRINGREDIENTE:
-                    dialogo = new DialogoAnadirIngrediente(padre, true);
+                    dialogo = new DialogoAnadirIngrediente(padre, null);
                     break;
                 case ManejaEventos.ELIMINARINGREDIENTE:
                     dialogo = new DialogoEliminarIngrediente(padre, true);

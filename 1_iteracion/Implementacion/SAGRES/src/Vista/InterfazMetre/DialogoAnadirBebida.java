@@ -36,6 +36,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
+        this.bAceptar.setEnabled(false);
     }
 
 
@@ -179,9 +180,14 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
         cuerpo.add(lNombre, gridBagConstraints);
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 14));
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -206,6 +212,11 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMaximo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMaximo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMaximo);
 
         lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
@@ -222,6 +233,11 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMinimo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMinimo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMinimo);
 
         lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
@@ -309,6 +325,11 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tCantidadPorEnvase.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tCantidadPorEnvase.setMinimumSize(new java.awt.Dimension(60, 10));
         tCantidadPorEnvase.setPreferredSize(new java.awt.Dimension(150, 10));
+        tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -342,6 +363,22 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
             this.lMuestraImagen.setIcon(imagen);
         }
     }//GEN-LAST:event_Seleccionar
+
+    private void ValidarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ValidarFormulario
+        try {
+            if (this.tNombre.getText().length() != 0
+                    && (Integer)this.tCantidadPorEnvase.getValue() != 0
+                    && (Integer)this.tMaximo.getValue() != 0
+                    && (Integer)this.tMinimo.getValue() != 0
+                    && (Integer)this.tMaximo.getValue() > (Integer)this.tMinimo.getValue()) {
+                this.bAceptar.setEnabled(true);
+            } else {
+                this.bAceptar.setEnabled(false);
+            }
+        } catch (Exception ex) {
+            this.bAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_ValidarFormulario
 
 
 

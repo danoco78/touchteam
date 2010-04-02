@@ -6,6 +6,8 @@
 
 package Vista.InterfazCocinero;
 
+import GestionStock.GestionProductos.IGestionarProducto;
+import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -14,6 +16,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -24,13 +27,15 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
-
+    private IGestionarProducto gestorProducto;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirIngrediente(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoAnadirIngrediente(java.awt.Frame parent, IGestionarProducto GestorProducto) {
+        super(parent, true);
         initComponents();
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
+        gestorProducto = GestorProducto;
+        imagen = null;
     }
 
 
@@ -61,13 +66,13 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         tNombre = new javax.swing.JTextField();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
-        tMaximo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMaximo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones = new javax.swing.JLabel();
         lMinimo = new javax.swing.JLabel();
-        tMinimo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMinimo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones1 = new javax.swing.JLabel();
         lMaximo2 = new javax.swing.JLabel();
-        tDisponible = new javax.swing.JFormattedTextField(new Integer(0));
+        tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
@@ -88,7 +93,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Añadir Ingrediente");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -102,7 +107,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Introducir todo los datos necesarios");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -121,12 +126,17 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -135,7 +145,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 14));
         bCancelar.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -163,7 +173,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        lNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lNombre.setFont(new java.awt.Font("Arial", 0, 14));
         lNombre.setForeground(new java.awt.Color(80, 98, 143));
         lNombre.setText("Nombre");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -171,9 +181,14 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
         cuerpo.add(lNombre, gridBagConstraints);
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -189,7 +204,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         pAtributoCantidad.setOpaque(false);
         pAtributoCantidad.setLayout(new java.awt.GridLayout(3, 3, 5, 10));
 
-        lMaximo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lMaximo.setFont(new java.awt.Font("Arial", 0, 14));
         lMaximo.setForeground(new java.awt.Color(80, 98, 143));
         lMaximo.setText("Máximo posible");
         pAtributoCantidad.add(lMaximo);
@@ -198,14 +213,19 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         tMaximo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMaximo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMaximo);
 
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones);
 
-        lMinimo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lMinimo.setFont(new java.awt.Font("Arial", 0, 14));
         lMinimo.setForeground(new java.awt.Color(80, 98, 143));
         lMinimo.setText("Mínimo aceptable");
         pAtributoCantidad.add(lMinimo);
@@ -214,14 +234,19 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         tMinimo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMinimo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMinimo);
 
-        lPorciones1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones1.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones1.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones1);
 
-        lMaximo2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lMaximo2.setFont(new java.awt.Font("Arial", 0, 14));
         lMaximo2.setForeground(new java.awt.Color(80, 98, 143));
         lMaximo2.setText("Disponible actualmente");
         pAtributoCantidad.add(lMaximo2);
@@ -230,9 +255,14 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         tDisponible.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tDisponible.setMinimumSize(new java.awt.Dimension(60, 10));
         tDisponible.setPreferredSize(new java.awt.Dimension(150, 10));
+        tDisponible.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tDisponible);
 
-        lPorciones2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones2.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones2.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones2.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones2);
@@ -246,7 +276,7 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         cuerpo.add(pAtributoCantidad, gridBagConstraints);
 
-        lImagen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lImagen.setFont(new java.awt.Font("Arial", 0, 14));
         lImagen.setForeground(new java.awt.Color(80, 98, 143));
         lImagen.setText("Imagen");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -255,11 +285,10 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         cuerpo.add(lImagen, gridBagConstraints);
 
-        lMuestraImagen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lMuestraImagen.setFont(new java.awt.Font("Arial", 0, 14));
         lMuestraImagen.setForeground(new java.awt.Color(80, 98, 143));
         lMuestraImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lMuestraImagen.setText("<html><center> <STRONG>Imagen no <br> disponible</STRONG> <br><i> (Click sobre la imagen <br> para insertar una)</i></center> </html>");
-        lMuestraImagen.setToolTipText("null");
         lMuestraImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         lMuestraImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lMuestraImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -289,7 +318,8 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
-        this.setVisible(false);
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_Salir
 
     private void Seleccionar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Seleccionar
@@ -302,6 +332,34 @@ public class DialogoAnadirIngrediente extends java.awt.Dialog {
             this.lMuestraImagen.setIcon(imagen);
         }
     }//GEN-LAST:event_Seleccionar
+
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        String subtitulo = this.lSubtitulo.getText();
+        String pregunta = "¿Confirma que desea añadir el siguiente ingrediente?";
+        String texto = "Nombre: "+this.tNombre.getText()+
+                "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+
+                "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+
+                "\nCantidad Mínima: "+((Float)this.tMinimo.getValue());
+        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        confirmar.setLocationRelativeTo(this);
+        confirmar.setVisible(true);
+        if(confirmar.isAceptado()){
+            this.gestorProducto.nuevoIngrediente(this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
+                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_Aceptar
+
+    private void ValidarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ValidarFormulario
+        if( this.tNombre.getText().length() != 0 && ((Float)this.tMaximo.getValue()) > 0 &&
+                ((Float)this.tMinimo.getValue()) > 0 &&
+                ((Float)this.tMaximo.getValue()) > ((Float)this.tMinimo.getValue())){
+            this.bAceptar.setEnabled(true);
+        }else{
+            this.bAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_ValidarFormulario
 
 
 
