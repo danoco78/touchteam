@@ -6,11 +6,16 @@ import ControladorImpresora.IImpresion;
 import GestionBaseDatos.IAlmacenamiento;
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
+import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Pair;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,7 +23,8 @@ import java.util.Pair;
  */
 public class GestorProveedor implements IPedidoProveedor {
 
-    private IProducto gestionProductos;
+    private IProducto intefazProductos;
+    private IGestionarProducto gestionProducto;
     private ICarta gestionCarta;
     private IAlmacenamiento almacen;
     private IImpresion impresora;
@@ -26,15 +32,37 @@ public class GestorProveedor implements IPedidoProveedor {
 
 
     /*FALTA CONSTRUCTO*/
+    private static final String ULTIMOID =
+            "select MAX(pedido_proveedor_id) from pedidoproveedor;";
+    private static final String TABLAPEIDDO =
+            "select  pedido_proveedor_id ,fecha_pedido, recibido  from pedidoproveedor;";
+    private static final String TABLAPRODUCTOSRELACIONADOS =
+            "select producto_producto_id from tienepedido where pedidoProveedor_pedido_proveedor_id =";//+ID
+    private static final String INI_INSERTAR_PEDIDO =
+            "insert into pedidoproveedor(fecha_pedido,recibido) values (";//+DATOS
+    private static final String FIN_INSERTAR = ");";
+    private static final String INI_INSERTAR_RELACION =
+            "insert into tienepedido values (";//+DATOS
 
 
     public HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception {
-        ArrayList<Producto> listaProductos = this.gestionProductos.obtenerProductosBajoMinimos();
+        ArrayList<Producto> listaProductos = this.intefazProductos.obtenerProductosBajoMinimos();
         if( !(listaProductos.isEmpty()) ){
             HashMap<Producto, Float> informacionPedido = this.calculaCantidadesNecesarias(listaProductos);
             PedidoProveedor pedidoProveedor = new PedidoProveedor(informacionPedido);
             pedidos.add(pedidoProveedor);
-            almacen.consultaDeModificacion("insert .....");
+            Calendar c = Calendar.getInstance();
+            almacen.consultaDeModificacion(GestorProveedor.INI_INSERTAR_PEDIDO+
+                    c.get(Calendar.YEAR)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.DAY_OF_MONTH)+"',"+
+                    "false"+GestorProveedor.FIN_INSERTAR);
+            TableModel codigo = this.almacen.realizaConsulta(GestorProveedor.ULTIMOID);
+            Iterator it = informacionPedido.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry aux = (Map.Entry)it.next();
+                almacen.consultaDeModificacion(GestorProveedor.INI_INSERTAR_RELACION+
+                    codigo+", "+ ((Producto) aux.getKey()).getCodPro()+", "+ (Float)aux.getValue()+
+                    GestorProveedor.FIN_INSERTAR);
+            }
             impresora.imprimePedido(informacionPedido);
             return informacionPedido;
         }else{
@@ -42,8 +70,21 @@ public class GestorProveedor implements IPedidoProveedor {
         }
     }
 
-    public Pair<HashMap<Producto, Float>, ArrayList<Elemento>> notificaRecepcionPedido() {
-        return null;
+    public Pair<HashMap<Producto, Float>, ArrayList<Elemento>> notificaRecepcionPedido() throws Exception {
+        PedidoProveedor pedido = this.buscarSiguientePedido();
+        if(pedido != null){
+            HashMap<Producto, Float> infoPedido = pedido.obtenerInfoPedido();
+            Iterator it = infoPedido.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry aux = (Map.Entry)it.next();
+                this.gestionProducto.actualizaCantidadProducto(((Producto)aux.getKey()),((Float)aux.getValue()));
+            }
+            pedido.setRecibido(true);
+            ArrayList<Elemento> listaHabilitados = this.gestionCarta.corrigeElementosInvalidados();
+            return new Pair(infoPedido,listaHabilitados);
+        }else{
+            throw new Exception("No hay ningun pedido pendiente");
+        }
     }
 
     private HashMap<Producto, Float> calculaCantidadesNecesarias(ArrayList<Producto> listaProductos) {
@@ -53,6 +94,14 @@ public class GestorProveedor implements IPedidoProveedor {
             informacionPedido.put(producto, (float)(producto.getMaximo() - producto.getCantidad()) );
         }
         return informacionPedido;
+    }
+
+    private PedidoProveedor buscarSiguientePedido() {
+        for (int i = 0; i < this.pedidos.size(); i++) {
+                if(this.pedidos.get(i).fueRecibido() == false)
+                    return this.pedidos.get(i);
+        }
+        return null;
     }
 
 }

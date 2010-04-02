@@ -56,7 +56,7 @@ public class GestorIncidencia implements IIncidencia {
             Calendar c = Calendar.getInstance();
             this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA
                     +tipoIncidencia+", '"
-                    +c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.MONTH)+"',"+
+                    +c.get(Calendar.YEAR)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.DAY_OF_MONTH)+"',"+
                     cantidadAfectada + GestorIncidencia.FIN_INSERTAR);
             TableModel datos = this.almacen.realizaConsulta(GestorIncidencia.ULTIMOID);
             Incidencia incidencia = new Incidencia((Integer)datos.getValueAt(0,0), producto,

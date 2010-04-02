@@ -18,6 +18,6 @@ import java.util.Pair;
 public interface IPedidoProveedor {
 
     public abstract HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception;
-    public abstract Pair< HashMap<Producto, Float>, ArrayList<Elemento> > notificaRecepcionPedido();
+    public abstract Pair< HashMap<Producto, Float>, ArrayList<Elemento> > notificaRecepcionPedido() throws Exception;
 
 }
