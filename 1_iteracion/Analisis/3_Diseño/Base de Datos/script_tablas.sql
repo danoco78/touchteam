@@ -11,7 +11,7 @@ USE `touchteam`;
 DROP TABLE IF EXISTS `touchteam`.`seccion` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`seccion` (
-  `seccion_id` INT NOT NULL ,
+  `seccion_id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL ,
   PRIMARY KEY (`seccion_id`) )
 ENGINE = InnoDB;
@@ -23,7 +23,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `touchteam`.`carta` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`carta` (
-  `carta_id` INT NOT NULL ,
+  `carta_id` INT NOT NULL AUTO_INCREMENT ,
   `ultima_modificacion` DATE NULL ,
   PRIMARY KEY (`carta_id`) )
 ENGINE = InnoDB;
@@ -41,12 +41,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneSeccion` (
   CONSTRAINT `fk_tieneSeccion_carta`
     FOREIGN KEY (`carta_carta_id` )
     REFERENCES `touchteam`.`carta` (`carta_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneSeccion_seccion1`
     FOREIGN KEY (`seccion_seccion_id` )
     REFERENCES `touchteam`.`seccion` (`seccion_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -66,7 +66,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionComida` (
   CONSTRAINT `fk_seccionComida_seccion1`
     FOREIGN KEY (`seccion_seccion_id` )
     REFERENCES `touchteam`.`seccion` (`seccion_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -84,7 +84,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionBebida` (
   CONSTRAINT `fk_seccionBebida_seccion1`
     FOREIGN KEY (`seccion_seccion_id` )
     REFERENCES `touchteam`.`seccion` (`seccion_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -97,11 +97,11 @@ CREATE INDEX `fk_seccionBebida_seccion1` ON `touchteam`.`seccionBebida` (`seccio
 DROP TABLE IF EXISTS `touchteam`.`elemento` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`elemento` (
-  `elemento_id` INT NOT NULL ,
+  `elemento_id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL ,
   `descripcion` VARCHAR(180) NULL ,
   `disponible` TINYINT(1) NULL ,
-  `foto` VARCHAR(90) NULL ,
+  `foto` BLOB NULL ,
   `divi` INT NULL ,
   `divi_max` INT NULL ,
   `precio` FLOAT NULL ,
@@ -120,7 +120,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoBebida` (
   CONSTRAINT `fk_elementoBebida_elemento1`
     FOREIGN KEY (`elemento_elemento_id` )
     REFERENCES `touchteam`.`elemento` (`elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -139,7 +139,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoPlato` (
   CONSTRAINT `fk_elementoComida_elemento1`
     FOREIGN KEY (`elemento_elemento_id` )
     REFERENCES `touchteam`.`elemento` (`elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -152,12 +152,12 @@ CREATE INDEX `fk_elementoComida_elemento1` ON `touchteam`.`elementoPlato` (`elem
 DROP TABLE IF EXISTS `touchteam`.`producto` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`producto` (
-  `producto_id` INT NOT NULL ,
+  `producto_id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(45) NULL ,
   `cantidad` INT NULL ,
   `maximo` INT NULL ,
   `minimo` INT NULL ,
-  `foto` VARCHAR(45) NULL ,
+  `foto` BLOB NULL ,
   PRIMARY KEY (`producto_id`) )
 ENGINE = InnoDB;
 
@@ -173,7 +173,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`productoIngrediente` (
   CONSTRAINT `fk_productoIngrediente_producto1`
     FOREIGN KEY (`producto_producto_id` )
     REFERENCES `touchteam`.`producto` (`producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -191,7 +191,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`productoBebida` (
   CONSTRAINT `fk_productoBebida_producto1`
     FOREIGN KEY (`producto_producto_id` )
     REFERENCES `touchteam`.`producto` (`producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -210,12 +210,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneBebida` (
   CONSTRAINT `fk_tieneBebida_elementoBebida1`
     FOREIGN KEY (`elementoBebida_elemento_elemento_id` )
     REFERENCES `touchteam`.`elementoBebida` (`elemento_elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneBebida_productoBebida1`
     FOREIGN KEY (`productoBebida_producto_producto_id` )
     REFERENCES `touchteam`.`productoBebida` (`producto_producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -236,12 +236,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneIngrediente` (
   CONSTRAINT `fk_tieneIngrediente_elementoComida1`
     FOREIGN KEY (`elementoComida_elemento_elemento_id` )
     REFERENCES `touchteam`.`elementoPlato` (`elemento_elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneIngrediente_productoIngrediente1`
     FOREIGN KEY (`productoIngrediente_producto_producto_id` )
     REFERENCES `touchteam`.`productoIngrediente` (`producto_producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -256,7 +256,7 @@ CREATE INDEX `fk_tieneIngrediente_productoIngrediente1` ON `touchteam`.`tieneIng
 DROP TABLE IF EXISTS `touchteam`.`incidencia` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`incidencia` (
-  `incidencia_id` INT NOT NULL ,
+  `incidencia_id` INT NOT NULL AUTO_INCREMENT ,
   `descripcion` VARCHAR(45) NULL ,
   `fecha` DATE NULL ,
   `cantidad_afectada` INT NULL ,
@@ -270,7 +270,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `touchteam`.`pedidoProveedor` ;
 
 CREATE  TABLE IF NOT EXISTS `touchteam`.`pedidoProveedor` (
-  `pedido_proveedor_id` INT NOT NULL ,
+  `pedido_proveedor_id` INT NOT NULL AUTO_INCREMENT ,
   `fecha_pedido` DATE NULL ,
   `recibido` TINYINT(1) NULL ,
   PRIMARY KEY (`pedido_proveedor_id`) )
@@ -289,12 +289,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneIncidencia` (
   CONSTRAINT `fk_tieneIncidencia_incidencia1`
     FOREIGN KEY (`incidencia_incidencia_id` )
     REFERENCES `touchteam`.`incidencia` (`incidencia_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneIncidencia_producto1`
     FOREIGN KEY (`producto_producto_id` )
     REFERENCES `touchteam`.`producto` (`producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -315,12 +315,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tienePedido` (
   CONSTRAINT `fk_tienePedido_pedidoProveedor1`
     FOREIGN KEY (`pedidoProveedor_pedido_proveedor_id` )
     REFERENCES `touchteam`.`pedidoProveedor` (`pedido_proveedor_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tienePedido_producto1`
     FOREIGN KEY (`producto_producto_id` )
     REFERENCES `touchteam`.`producto` (`producto_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -341,12 +341,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyeBebida` (
   CONSTRAINT `fk_incluyeBebida_seccionBebida1`
     FOREIGN KEY (`seccionBebida_seccion_seccion_id` )
     REFERENCES `touchteam`.`seccionBebida` (`seccion_seccion_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_incluyeBebida_elementoBebida1`
     FOREIGN KEY (`elementoBebida_elemento_elemento_id` )
     REFERENCES `touchteam`.`elementoBebida` (`elemento_elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -367,12 +367,12 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyePlato` (
   CONSTRAINT `fk_incluyePlato_seccionComida1`
     FOREIGN KEY (`seccionComida_seccion_seccion_id` )
     REFERENCES `touchteam`.`seccionComida` (`seccion_seccion_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_incluyePlato_elementoPlato1`
     FOREIGN KEY (`elementoPlato_elemento_elemento_id` )
     REFERENCES `touchteam`.`elementoPlato` (`elemento_elemento_id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
