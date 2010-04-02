@@ -37,8 +37,8 @@ public class PedidoProveedor {
     /*
      * Marca el estado del pedidoProveedor como recibido
      */
-    public void fueRecibido() {
-        this.recibido = true;
+    public boolean fueRecibido() {
+        return this.recibido;
     }
 
     /*
@@ -55,5 +55,9 @@ public class PedidoProveedor {
      */
     public void setRecibido(boolean recibido) {
         this.recibido = recibido;
+    }
+
+    HashMap<Producto, Float> obtenerInfoPedido() {
+        return this.listaProductos;
     }
 }
