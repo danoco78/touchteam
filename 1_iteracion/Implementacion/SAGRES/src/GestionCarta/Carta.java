@@ -1,7 +1,6 @@
 package GestionCarta;
 
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -10,14 +9,10 @@ import java.util.Calendar;
  * @author Carlos Salas Morales
  */
 public class Carta {
-    //ArrayList<Seccion> seccion;
     private Calendar fechaUltimaModificacion;
 
-    public Carta () {
-        /* Creamos una instancia Calendario con la fecha actual, es decir,
-         * cuando se crea la carta se asigna la fecha actual */
-        this.fechaUltimaModificacion = Calendar.getInstance();
-      //  seccion = new ArrayList<Seccion>();
+    public Carta (java.sql.Date fechaUltimaModificacion) {
+        this.fechaUltimaModificacion.setTime(fechaUltimaModificacion);
     }
 
     /**
