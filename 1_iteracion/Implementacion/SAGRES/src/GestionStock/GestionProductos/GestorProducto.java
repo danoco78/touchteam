@@ -4,6 +4,7 @@
  */
 
 package GestionStock.GestionProductos;
+import GestionBaseDatos.IAlmacenamiento;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,12 +17,21 @@ import javax.swing.table.TableModel;
 public class GestorProducto implements IGestionarProducto,IProducto{
 
     ArrayList<Producto> listaProductos;
+    IAlmacenamiento interfazAlmacenamiento;
 
     /**
      * Construye un objeto GestorProducto
      */
-    public GestorProducto(){
+    public GestorProducto(IAlmacenamiento iAlmacenamiento){
         this.listaProductos = new ArrayList<Producto>();
+        this.interfazAlmacenamiento = iAlmacenamiento;
+        TableModel consulta = this.interfazAlmacenamiento.realizaConsulta("select * from producto");
+        for(int i=0;i<consulta.getRowCount();++i){
+             Producto producto = new Producto((ImageIcon)consulta.getValueAt(i,5),(String)consulta.getValueAt(i,1),
+                                              (Float)consulta.getValueAt(i,4),(Float)consulta.getValueAt(i,3),
+                                              (Float)consulta.getValueAt(i,2),(Integer)consulta.getValueAt(i,0));
+             this.listaProductos.add(producto);
+         }
     }
 
     /**
@@ -34,11 +44,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         Producto p;
         while(it.hasNext()){
             p = (Producto) it.next();
-            if (p == producto){
-                if(cantidad < p.getCantidad())
-                    p.restarCantidad(p.getCantidad() - cantidad);
-                else if(cantidad > p.getCantidad())
-                    p.sumarCantidad(cantidad - p.getCantidad());
+            if (p.getCodPro() == producto.getCodPro()){
+                p.actualizarCantidad(cantidad - p.getCantidad());
+                this.interfazAlmacenamiento.consultaDeModificacion
+                        ("update producto set cantidad="+Float.toString(cantidad)+"where producto_id="+Integer.toString( producto.getCodPro()));
             }
         }
     }
@@ -84,8 +93,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      */
     public void eliminarProducto(int codPro){
 	Producto p = this.buscarProducto(codPro);
-        if(p != null)
+        if(p != null){
             this.listaProductos.remove(p);
+            this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id="+ Integer.toString(codPro));
+        }
     }
 
     /**
@@ -104,10 +115,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             p.setMaximo(maximo);
             p.setMinimo(minimo);
             p.setFoto(imagen);
-            if(cantidad < p.getCantidad())
-                p.restarCantidad(p.getCantidad() - cantidad);
-            else if(cantidad > p.getCantidad())
-                p.sumarCantidad(cantidad - p.getCantidad());
+            p.actualizarCantidad(cantidad - p.getCantidad());
+            this.interfazAlmacenamiento.consultaDeModificacion
+                        ("update producto set "+"cantidad="+Float.toString(cantidad)+", maximo="+Float.toString(maximo)+
+                         ", minimo="+Float.toString(minimo)+", nombre="+nombre+" where producto_id="+Integer.toString(p.getCodPro()));
         }
     }
 
@@ -122,9 +133,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      * @param cantidadPorEnvase
      */
     public void nuevaBebida(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
-        int codPro=0;
+        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0)+1;
         Bebida b = new Bebida(codPro, nombre, foto, minimo, maximo, cantidad);
         this.listaProductos.add(b);
+        this.interfazAlmacenamiento.consultaDeModificacion("Insertar nueva bebiba en tabla de producto y de bebida");
     }
 
     /**
@@ -137,9 +149,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      * @param foto
      */
     public void nuevoIngrediente(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
-        int codPro=0;
+        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0)+1;
         Ingrediente i = new Ingrediente(codPro, nombre, cantidad, maximo, minimo, foto);
         this.listaProductos.add(i);
+        this.interfazAlmacenamiento.consultaDeModificacion("Insertar nueva bebiba en tabla de producto y de ingrediente");
     }
 
     /**

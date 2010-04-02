@@ -39,6 +39,14 @@ public class Producto {
     }
 
     /*
+     * Actualiza la cantidad de un producto determinado
+     * @param cantidad Cantidad a aumentar o disminuir del stock del producto
+     */
+    public void actualizarCantidad(float cantidad){
+        this.cantidad += cantidad;
+    }
+
+    /*
      * Devuelve la cantidad existente en stock de un producto
      */
     public float getCantidad(){
@@ -79,13 +87,6 @@ public class Producto {
     public ImageIcon getImagen() {
         return imagen;
     }
-    /*
-     * Disminuye una cantidad resta un producto determinado
-     * @param resta Cantidad a disminuir del stock del producto
-     */
-    public void restarCantidad(float resta){
-        this.cantidad -= resta;
-    }
 
     /*
      * Establece una nueva imagen para un producto
@@ -117,13 +118,5 @@ public class Producto {
      */
     public void setNombre(String nombre){
         this.nombre = nombre;
-    }
-
-    /*
-     * Aumenta una cantidad suma un producto determinado
-     * @param suma Cantidad a aumentar del stock del producto
-     */
-    public void sumarCantidad(float suma){
-        this.cantidad += suma;
     }
 }
