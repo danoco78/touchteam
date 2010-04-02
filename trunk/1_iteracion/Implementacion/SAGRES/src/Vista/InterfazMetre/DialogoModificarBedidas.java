@@ -41,6 +41,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         initComponents();
         this.estado=1;
         this.bAnterior.setEnabled(false);
+        this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
     }
 
@@ -151,6 +152,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         tTablaBebidasDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
         tTablaBebidasDisponibles.getTableHeader().setReorderingAllowed(false);
+        tTablaBebidasDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ValidarFormulario(evt);
+            }
+        });
         jScrollPane2.setViewportView(tTablaBebidasDisponibles);
 
         pbebidasDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -328,7 +334,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Modificar bebida        ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -342,7 +348,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el bebida a modificar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -482,6 +488,14 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
             this.lMuestraImagen.setIcon(imagen);
         }
 }//GEN-LAST:event_lMuestraImagenSeleccionar
+
+    private void ValidarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidarFormulario
+        if (this.tTablaBebidasDisponibles.getSelectedRow() != -1) {
+            this.bSiguiente.setEnabled(true);
+        } else {
+            this.bSiguiente.setEnabled(false);
+        }
+    }//GEN-LAST:event_ValidarFormulario
 
 
 
