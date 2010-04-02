@@ -311,6 +311,7 @@ DROP TABLE IF EXISTS `touchteam`.`tienePedido` ;
 CREATE  TABLE IF NOT EXISTS `touchteam`.`tienePedido` (
   `pedidoProveedor_pedido_proveedor_id` INT NOT NULL ,
   `producto_producto_id` INT NOT NULL ,
+  `cantidad` FLOAT NULL ,
   PRIMARY KEY (`pedidoProveedor_pedido_proveedor_id`, `producto_producto_id`) ,
   CONSTRAINT `fk_tienePedido_pedidoProveedor1`
     FOREIGN KEY (`pedidoProveedor_pedido_proveedor_id` )
