@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Daniel
+ * @author Daniel y Jose David Dionisio Ruiz
  */
 public class DialogoAnadirBebida extends java.awt.Dialog {
 
@@ -67,19 +67,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tNombre = new javax.swing.JTextField();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
-        tMaximo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMaximo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones = new javax.swing.JLabel();
         lMinimo = new javax.swing.JLabel();
-        tMinimo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMinimo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones1 = new javax.swing.JLabel();
         lMaximo2 = new javax.swing.JLabel();
-        tDisponible = new javax.swing.JFormattedTextField(new Integer(0));
+        tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
         lCantidadPorEnvase = new javax.swing.JLabel();
         lmilitros = new javax.swing.JLabel();
-        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Integer(0));
+        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Float(0));
 
         dSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -183,11 +183,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+<<<<<<< .mine
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
+=======
         tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 ValidarFormulario(evt);
             }
         });
+>>>>>>> .r173
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -212,11 +220,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMaximo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMaximo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
+<<<<<<< .mine
+        tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
+=======
         tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 ValidarFormulario(evt);
             }
         });
+>>>>>>> .r173
         pAtributoCantidad.add(tMaximo);
 
         lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
@@ -233,11 +249,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMinimo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMinimo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
+<<<<<<< .mine
+        tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
+=======
         tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 ValidarFormulario(evt);
             }
         });
+>>>>>>> .r173
         pAtributoCantidad.add(tMinimo);
 
         lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
@@ -325,11 +349,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tCantidadPorEnvase.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tCantidadPorEnvase.setMinimumSize(new java.awt.Dimension(60, 10));
         tCantidadPorEnvase.setPreferredSize(new java.awt.Dimension(150, 10));
+<<<<<<< .mine
+        tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
+=======
         tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 ValidarFormulario(evt);
             }
         });
+>>>>>>> .r173
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -364,6 +396,13 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         }
     }//GEN-LAST:event_Seleccionar
 
+<<<<<<< .mine
+    private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
+        if(this.tNombre.getText().length() > 0 && (Float)this.tMinimo.getValue() > 0 && (Float)this.tMaximo.getValue() > 0)
+            this.bAceptar.setEnabled(true);
+        else this.bAceptar.setEnabled(false);
+    }//GEN-LAST:event_validarFormulario
+=======
     private void ValidarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ValidarFormulario
         try {
             if (this.tNombre.getText().length() != 0
@@ -379,6 +418,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
             this.bAceptar.setEnabled(false);
         }
     }//GEN-LAST:event_ValidarFormulario
+>>>>>>> .r173
 
 
 
