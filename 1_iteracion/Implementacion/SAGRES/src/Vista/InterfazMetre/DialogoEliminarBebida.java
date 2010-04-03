@@ -79,7 +79,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Eliminar Bebida");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -93,7 +93,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el bebida a eliminar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
