@@ -11,6 +11,8 @@
 
 package Vista.InterfazMetre;
 
+import GestionStock.GestionIncidencias.IIncidencia;
+import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -21,7 +23,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Daniel
+ * @author Daniel y Jose David Dionisio Ruiz
  */
 public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
 
@@ -31,6 +33,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
+    private IIncidencia gestorIncidencias;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoNotificarIncidenciaBebida(java.awt.Frame parent, boolean modal) {
@@ -136,6 +139,11 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
         tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
         tTablaIngredientesDisponibles.getTableHeader().setReorderingAllowed(false);
+        tTablaIngredientesDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         jScrollPane2.setViewportView(tTablaIngredientesDisponibles);
 
         pIngredientesDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -257,7 +265,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Notificar incidencia con bebidas   ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -273,7 +281,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
 
         lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lSubtitulo.setText("Seleccionar el bebida afectado");
+        lSubtitulo.setText("Seleccionar la bebida afectada");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -370,16 +378,31 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
         CardLayout cl = (CardLayout)(this.cuerpo.getLayout());
         switch(this.estado){
             case 1:
-                //Validar Datos
                 this.lSubtitulo.setText(SUBTITULOPASO2);
                 this.lPaso.setText(PASO2);
                 this.bAnterior.setEnabled(true);
                 this.estado++;
                 cl.next(this.cuerpo);
+                this.bSiguiente.setText("Finalizar");
             break;
             case 2:
-                //Finalizar operacion.
-            break;
+                String subtitulo = this.lSubtitulo.getText();
+                String pregunta = "¿Confirma que desea notificar la siguiente incidencia con la bebia?";
+                String texto = "Bebida afectada: "+
+                               "\nCantidad afectada: "+(Float)this.tCantidadAfectada.getValue()+
+                               "\nDescripción de la incidencia: "+this.tDescripcion.getText();
+                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                confirmar.setLocationRelativeTo(this);
+                confirmar.setVisible(true);
+                if(confirmar.isAceptado()){
+                    try{
+                        this.gestorIncidencias.nuevaIncidencia(this.tDescripcion.getText(),(Float)this.tCantidadAfectada.getValue(), null);
+                    } catch (Exception ex){
+                    }
+                    setVisible(false);
+                    dispose();
+                }
+                break;
         }
 
     }//GEN-LAST:event_siguiente
@@ -393,6 +416,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 this.bAnterior.setEnabled(false);
                 this.estado--;
                 cl.previous(this.cuerpo);
+                this.bSiguiente.setText("Siguiente");
             break;
         }
     }//GEN-LAST:event_anterior
@@ -400,6 +424,14 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
     }//GEN-LAST:event_Salir
+
+    private void validarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validarFormulario
+        if (this.tTablaIngredientesDisponibles.getSelectedRow() != -1) {
+            this.bSiguiente.setEnabled(true);
+        } else {
+            this.bSiguiente.setEnabled(false);
+        }
+    }//GEN-LAST:event_validarFormulario
 
 
 

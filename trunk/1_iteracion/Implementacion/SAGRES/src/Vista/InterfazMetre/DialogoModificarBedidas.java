@@ -11,6 +11,8 @@
 
 package Vista.InterfazMetre;
 
+import GestionStock.GestionProductos.IGestionarProducto;
+import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -24,7 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Daniel
+ * @author Daniel y Jose David Dionisio Ruiz
  */
 public class DialogoModificarBedidas extends java.awt.Dialog {
 
@@ -34,6 +36,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
+    private IGestionarProducto gestorProducto;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarBedidas(java.awt.Frame parent, boolean modal) {
@@ -41,7 +44,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         initComponents();
         this.estado=1;
         this.bAnterior.setEnabled(false);
-        this.bSiguiente.setEnabled(false);
+        this.bSiguiente.setEnabled(true);
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
     }
 
@@ -72,19 +75,19 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tNombre = new javax.swing.JTextField();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
-        tMaximo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMaximo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones = new javax.swing.JLabel();
         lMinimo = new javax.swing.JLabel();
-        tMinimo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMinimo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones1 = new javax.swing.JLabel();
         lMaximo2 = new javax.swing.JLabel();
-        tDisponible = new javax.swing.JFormattedTextField(new Integer(0));
+        tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
         lCantidadPorEnvase = new javax.swing.JLabel();
         lmilitros = new javax.swing.JLabel();
-        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Integer(0));
+        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Float(0));
         cabecera = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
@@ -348,9 +351,9 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lSubtitulo.setText("Seleccionar el bebida a modificar");
+        lSubtitulo.setText("Seleccionar la bebida a modificar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -447,15 +450,31 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         CardLayout cl = (CardLayout)(this.cuerpo.getLayout());
         switch(this.estado){
             case 1:
-                //Validar Datos
                 this.lSubtitulo.setText(SUBTITULOPASO2);
                 this.lPaso.setText(PASO2);
                 this.bAnterior.setEnabled(true);
                 this.estado++;
                 cl.next(this.cuerpo);
+                this.bSiguiente.setText("Finalizar");
+                //this.bSiguiente.setEnabled(false);
             break;
             case 2:
-                //Finalizar operacion.
+                String subtitulo = this.lSubtitulo.getText();
+                String pregunta = "¿Confirma que desea modificar los siguientes datos de la bebida?";
+                String texto = "Nombre: "+this.tNombre.getText()+
+                               "\nCantidad Por Envase: "+((Float)this.tCantidadPorEnvase.getValue())+
+                               "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+
+                               "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+
+                               "\nCantidad Mínima: "+((Float)this.tMinimo.getValue());
+                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                confirmar.setLocationRelativeTo(this);
+                confirmar.setVisible(true);
+                if(confirmar.isAceptado()){
+                    this.gestorProducto.modificarProducto(0,this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
+                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+                    setVisible(false);
+                    dispose();
+                }
             break;
         }
 
@@ -470,6 +489,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 this.bAnterior.setEnabled(false);
                 this.estado--;
                 cl.previous(this.cuerpo);
+                this.bSiguiente.setText("Siguiente");
             break;
         }
     }//GEN-LAST:event_anterior
