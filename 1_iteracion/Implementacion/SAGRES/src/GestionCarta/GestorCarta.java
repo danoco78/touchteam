@@ -22,7 +22,6 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     ArrayList<Elemento> listaElementos;
     Carta carta;
     ArrayList<Seccion> listaSecciones;
-    Imagen imagen;
     IAlmacenamiento almacen;
 
     public GestorCarta(IAlmacenamiento iAlmacenamiento) {
@@ -106,7 +105,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                 "tieneIngrediente.productoIngrediente_producto_producto_id" +
                 " = producto.producto_id AND tieneIngrediente.elementoIngrediente_elemento_elemento_id ='"+tabla.getValueAt(0,0)+"')";
         tablaPlato = almacen.realizaConsulta(consulta);
-        // Para cada ingrediente obtenido de la BD, creamos el objerto e insertamos en multiobjeto
+        // Para cada ingrediente obtenido de la BD, creamos el objeto e insertamos en multiobjeto
         for (int i=0;i<tablaPlato.getRowCount();i++) {
             Ingrediente ingrediente = new Ingrediente((Integer)tablaPlato.getValueAt(i, 0),(String)tablaPlato.getValueAt(i, 1),
                     (Float)tablaPlato.getValueAt(i, 2),(Float)tablaPlato.getValueAt(i, 3),
@@ -197,8 +196,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Obtenemos el último id que se insertó
             consulta = "SELECT MAX(elemento_id) FROM elemento";
             tabla = almacen.realizaConsulta(consulta);
-            // Sacamos el valor de la tabla
+            // Sacamos el valor de la tabla y creamos un objeto ElementoBebida
             int id_elemento = (Integer)tabla.getValueAt(0,0);
+            ElementoBebida elementoBebida = new ElementoBebida(id_elemento, listaBebidas, nombre, descripcion, foto, precio, divisionesMaximas);
+            seccion.anadeElemento(elementoBebida);
+            listaElementos.add(elementoBebida);
             consulta = "INSERT INTO elementoBebida VALUES("+id_elemento+")";
             almacen.consultaDeModificacion(consulta);
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
@@ -209,11 +211,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                 almacen.consultaDeModificacion(consulta);
             }
             // Obtenemos elemento de la BD para insertarlo en el multiobjeto
-            consulta = "SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento WHERE elemento_id='"+id_elemento+"'";
-            tabla = almacen.realizaConsulta(consulta);
-            ElementoBebida elementoBebida = this.convierteTablaABebida(tabla);
-            seccion.anadeElemento(elementoBebida);
-            listaElementos.add(elementoBebida);
+            // consulta = "SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento WHERE elemento_id='"+id_elemento+"'";
+            //tabla = almacen.realizaConsulta(consulta);
+            //ElementoBebida elementoBebida = this.convierteTablaABebida(tabla);
+            
+            
             
     }
 
@@ -244,8 +246,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Obtenemos el último id que se insertó
             consulta = "SELECT MAX(elemento_id) FROM elemento";
             tabla = almacen.realizaConsulta(consulta);
-            // Sacamos el valor de la tabla
+            // Sacamos el valor de la tabla y creamos un objeto ElementoPlato
             int id_elemento = (Integer)tabla.getValueAt(0,0);
+            ElementoPlato elementoPlato = new ElementoPlato(id_elemento, listaIngredientes, nombre, descripcion, foto, tiempoElaboracion, precio, divisionesMaximas);
+            seccion.anadeElemento(elementoPlato);
+            listaElementos.add(elementoPlato);
             consulta = "INSERT INTO elementoPlato VALUES('"+id_elemento+"','"+tiempoElaboracion+"')";
             almacen.consultaDeModificacion(consulta);
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
@@ -256,13 +261,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                 almacen.consultaDeModificacion(consulta);
             }
             // Obtenemos elemento de la BD para insertarlo en el multiobjeto
-            consulta = "SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.foto, elementoPlato.tiempo_elaboracion, elemento.precio, elemento.divi_max FROM" +
-                    " elemento, elementoPlato WHERE elemento.elemento_id = elementoPlato.elemento_elemento_id AND elemento.elemento_id='"+id_elemento+"'";
-            tabla = almacen.realizaConsulta(consulta);
-            ElementoPlato elementoPlato = this.convierteTablaAPlato(tabla);
-            seccion.anadeElemento(elementoPlato);
-            listaElementos.add(elementoPlato);
-               
+            //consulta = "SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.foto, elementoPlato.tiempo_elaboracion, elemento.precio, elemento.divi_max FROM" +
+            //        " elemento, elementoPlato WHERE elemento.elemento_id = elementoPlato.elemento_elemento_id AND elemento.elemento_id='"+id_elemento+"'";
+            //tabla = almacen.realizaConsulta(consulta);
+            //ElementoPlato elementoPlato = this.convierteTablaAPlato(tabla);
+       
     }
 
     /**
