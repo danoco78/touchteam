@@ -5,6 +5,7 @@
 
 package GestionStock.GestionProductos;
 import GestionBaseDatos.IAlmacenamiento;
+import GestionCarta.ICarta;
 import java.sql.Blob;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
@@ -20,14 +21,16 @@ public class GestorProducto implements IGestionarProducto,IProducto{
     ArrayList<Bebida> listaBebidas;
     ArrayList<Ingrediente> listaIngredientes;
     IAlmacenamiento interfazAlmacenamiento;
+    ICarta carta;
 
     /**
      * Construye un objeto GestorProducto
      */
-    public GestorProducto(IAlmacenamiento iAlmacenamiento){
+    public GestorProducto(IAlmacenamiento iAlmacenamiento, ICarta carta){
         this.listaBebidas = new ArrayList<Bebida>();
         this.listaIngredientes = new ArrayList<Ingrediente>();
         this.interfazAlmacenamiento = iAlmacenamiento;
+        this.carta = carta;
         TableModel consultaBebidas = this.interfazAlmacenamiento.realizaConsulta("select * from productoBebida");
         this.listaBebidas = this.convertirTablaAbebida(consultaBebidas);
         TableModel consultaIngredientes = this.interfazAlmacenamiento.realizaConsulta("select * from productoIngrediente");
@@ -142,18 +145,20 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         while(it.hasNext() && !eliminado){
             b = (Bebida) it.next();
             if (b.getCodPro() == codPro){
-                this.listaBebidas.remove(b);
+                this.carta.invalidaElementoCarta(b);
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
+                this.listaBebidas.remove(b);
             }
         }
         it = listaIngredientes.iterator();
         while(it.hasNext() && !eliminado){
             i = (Ingrediente) it.next();
             if (i.getCodPro() == codPro){
-                this.listaIngredientes.remove(i);
+                this.carta.invalidaElementoCarta(i);
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
+                this.listaIngredientes.remove(i);
             }
         }
     }

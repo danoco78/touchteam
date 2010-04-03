@@ -10,7 +10,7 @@
  */
 
 package Vista.InterfazMetre;
-
+import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import GestionStock.GestionProductos.IGestionarProducto;
 
 /**
  *
@@ -29,6 +30,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
+    private IGestionarProducto gestorProducto;
 
 
     /** Creates new form DialogoAnadirElemento */
@@ -67,19 +69,19 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tNombre = new javax.swing.JTextField();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
-        tMaximo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMaximo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones = new javax.swing.JLabel();
         lMinimo = new javax.swing.JLabel();
-        tMinimo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMinimo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones1 = new javax.swing.JLabel();
         lMaximo2 = new javax.swing.JLabel();
-        tDisponible = new javax.swing.JFormattedTextField(new Integer(0));
+        tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
         lCantidadPorEnvase = new javax.swing.JLabel();
         lmilitros = new javax.swing.JLabel();
-        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Integer(0));
+        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Float(0));
 
         dSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -136,6 +138,11 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -180,12 +187,12 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
         cuerpo.add(lNombre, gridBagConstraints);
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ValidarFormulario(evt);
+                validarFormulario(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -214,7 +221,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
         tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ValidarFormulario(evt);
+                validarFormulario(evt);
             }
         });
         pAtributoCantidad.add(tMaximo);
@@ -235,7 +242,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
         tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ValidarFormulario(evt);
+                validarFormulario(evt);
             }
         });
         pAtributoCantidad.add(tMinimo);
@@ -327,7 +334,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         tCantidadPorEnvase.setPreferredSize(new java.awt.Dimension(150, 10));
         tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                ValidarFormulario(evt);
+                validarFormulario(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -364,13 +371,13 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         }
     }//GEN-LAST:event_Seleccionar
 
-    private void ValidarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ValidarFormulario
+    private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
         try {
             if (this.tNombre.getText().length() != 0
-                    && (Integer)this.tCantidadPorEnvase.getValue() != 0
-                    && (Integer)this.tMaximo.getValue() != 0
-                    && (Integer)this.tMinimo.getValue() != 0
-                    && (Integer)this.tMaximo.getValue() > (Integer)this.tMinimo.getValue()) {
+                    && (Float)this.tCantidadPorEnvase.getValue() != 0
+                    && (Float)this.tMaximo.getValue() != 0
+                    && (Float)this.tMinimo.getValue() != 0
+                    && (Float)this.tMaximo.getValue() > (Float)this.tMinimo.getValue()) {
                 this.bAceptar.setEnabled(true);
             } else {
                 this.bAceptar.setEnabled(false);
@@ -378,7 +385,26 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         } catch (Exception ex) {
             this.bAceptar.setEnabled(false);
         }
-    }//GEN-LAST:event_ValidarFormulario
+    }//GEN-LAST:event_validarFormulario
+
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        String subtitulo = this.lSubtitulo.getText();
+        String pregunta = "¿Confirma que desea añadir la siguiente bebida?";
+        String texto = "Nombre: "+this.tNombre.getText()+
+                "\nCantidad Por Envase: "+((Float)this.tCantidadPorEnvase.getValue())+
+                "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+
+                "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+
+                "\nCantidad Mínima: "+((Float)this.tMinimo.getValue());
+        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        confirmar.setLocationRelativeTo(this);
+        confirmar.setVisible(true);
+        if(confirmar.isAceptado()){
+            this.gestorProducto.nuevaBebida(this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
+                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_Aceptar
 
 
 

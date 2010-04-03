@@ -18,15 +18,19 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import Vista.DialogoComfirmacion;
+import GestionStock.GestionProductos.IGestionarProducto;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Daniel
+ * @author Daniel y Jose David Dionisio Ruiz
  */
 public class DialogoEliminarBebida extends java.awt.Dialog {
 
 
-    private ImageIcon imagen;
+    private IGestionarProducto gestorProducto;
+    private int bebidaSeleccionada;
 
 
     /** Creates new form DialogoAnadirElemento */
@@ -93,9 +97,9 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lSubtitulo.setText("Seleccionar el bebida a eliminar");
+        lSubtitulo.setText("Seleccionar la bebida a eliminar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -118,6 +122,11 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -192,6 +201,11 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         tBebidas.setMinimumSize(new java.awt.Dimension(450, 250));
         tBebidas.setPreferredSize(new java.awt.Dimension(450, 250));
         tBebidas.getTableHeader().setReorderingAllowed(false);
+        tBebidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         jScrollPane2.setViewportView(tBebidas);
 
         pBebidas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -267,6 +281,31 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
     }//GEN-LAST:event_Salir
+
+    private void validarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validarFormulario
+        this.bebidaSeleccionada = this.tBebidas.getSelectedRow();
+        this.tElementosDeshabilitados.removeAll();
+        if (this.bebidaSeleccionada != -1) {
+            this.bAceptar.setEnabled(true);
+        } else {
+            this.bAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_validarFormulario
+
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        String subtitulo = this.lSubtitulo.getText();
+        String pregunta = "¿Confirma que desea eliminar la siguiente bebida?";
+        String texto = "Nombre: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,0)+
+                "\nCantidad: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,1);
+        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        confirmar.setLocationRelativeTo(this);
+        confirmar.setVisible(true);
+        if(confirmar.isAceptado()){
+            this.gestorProducto.eliminarProducto(0);
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_Aceptar
 
 
 
