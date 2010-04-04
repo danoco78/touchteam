@@ -11,10 +11,11 @@ import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Pair;
+import utilidades.Pair;
 import javax.swing.table.TableModel;
 
 /**
@@ -37,12 +38,37 @@ public class GestorProveedor implements IPedidoProveedor {
     private static final String TABLAPEIDDO =
             "select  pedido_proveedor_id ,fecha_pedido, recibido  from pedidoproveedor;";
     private static final String TABLAPRODUCTOSRELACIONADOS =
-            "select producto_producto_id from tienepedido where pedidoProveedor_pedido_proveedor_id =";//+ID
+            "select producto_producto_id from tienepedido where pedidoProveedor_pedido_proveedor_id = ";//+ID
     private static final String INI_INSERTAR_PEDIDO =
             "insert into pedidoproveedor(fecha_pedido,recibido) values (";//+DATOS
     private static final String FIN_INSERTAR = ");";
     private static final String INI_INSERTAR_RELACION =
             "insert into tienepedido values (";//+DATOS
+
+
+    public GestorProveedor( IProducto IntefazProductos, IGestionarProducto GestionProducto, ICarta GestionCarta,
+            IAlmacenamiento almacen , IImpresion Impresora){
+            this.pedidos = new ArrayList<PedidoProveedor>();
+            TableModel datos = this.almacen.realizaConsulta(GestorProveedor.TABLAPEIDDO);
+            ArrayList<Producto> listaProductos = this.intefazProductos.obtenerListaProductos();
+            for (int i = 0; i < datos.getRowCount(); i++) {
+                HashMap<Producto, Float> informacionPedido = new HashMap<Producto, Float>();
+                TableModel codigosProductos =
+                        this.almacen.realizaConsulta(GestorProveedor.TABLAPRODUCTOSRELACIONADOS
+                        +(Integer)datos.getValueAt(i, 0));
+                for (int j = 0; j < codigosProductos.getRowCount(); j++) {
+                    for (int k = 0; k < listaProductos.size(); k++) {
+                        if( (Integer)codigosProductos.getValueAt(j, 0) == listaProductos.get(k).getCodPro()){
+                            informacionPedido.put(listaProductos.get(k),(Float)codigosProductos.getValueAt(j, 1));
+                            k = listaProductos.size();
+                        }
+                    }
+                }
+                this.pedidos.add(new PedidoProveedor(informacionPedido,
+                        (Date)datos.getValueAt(i, 1), (Boolean)datos.getValueAt(i, 2)));
+            }
+
+    }
 
 
     public HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception {

@@ -10,7 +10,7 @@ import java.sql.Blob;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Imagen;
+import utilidades.Imagen;
 import javax.swing.table.TableModel;
 /**
  *

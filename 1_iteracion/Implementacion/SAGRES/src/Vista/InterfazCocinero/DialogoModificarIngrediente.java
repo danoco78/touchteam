@@ -11,6 +11,10 @@
 
 package Vista.InterfazCocinero;
 
+import GestionStock.GestionProductos.IGestionarProducto;
+import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Ingrediente;
+import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -18,15 +22,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import utilidades.ImageRenderer;
 
 /**
  *
  * @author Daniel
  */
-public class DialogoModificarIngrediente extends java.awt.Dialog {
+public class DialogoModificarIngrediente extends javax.swing.JDialog {
 
     private final String SUBTITULOPASO1 = "Seleccionar el ingrediente a modificar";
     private final String SUBTITULOPASO2 = "Cambiar los datos que se deseen";
@@ -34,11 +41,31 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
+    private IProducto almacenProductos;
+    private IGestionarProducto gestorProductos;
+    private Ingrediente aModificar;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarIngrediente(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoModificarIngrediente(java.awt.Frame parent,  IProducto AlmacenProductos, IGestionarProducto GestorProductos ) {
+        super(parent, false);
         initComponents();
+        this.gestorProductos = GestorProductos;
+        this.almacenProductos = AlmacenProductos;
+        ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
+        modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
+        modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(2));
+        modelo.setRowCount(listaIngredientes.size());
+        this.tTablaIngredientesDisponibles.setModel(modelo);
+        this.tTablaIngredientesDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        this.tTablaIngredientesDisponibles.setRowHeight(50);
+        for (int i = 0; i < listaIngredientes.size(); i++) {
+            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getNombre(), i, 0);
+            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
+            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getImagen(), i, 2);
+        }
+        this.bSiguiente.setEnabled(false);
         this.estado=1;
         this.bAnterior.setEnabled(false);
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
@@ -92,7 +119,6 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
 
         dSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -148,6 +174,11 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
         tTablaIngredientesDisponibles.getTableHeader().setReorderingAllowed(false);
+        tTablaIngredientesDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seleccionarIngrediente(evt);
+            }
+        });
         jScrollPane2.setViewportView(tTablaIngredientesDisponibles);
 
         pIngredientesDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -168,7 +199,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         pPaso2.setPreferredSize(new java.awt.Dimension(500, 550));
         pPaso2.setLayout(new java.awt.GridBagLayout());
 
-        lNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lNombre.setFont(new java.awt.Font("Arial", 0, 14));
         lNombre.setForeground(new java.awt.Color(80, 98, 143));
         lNombre.setText("Nombre");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -176,7 +207,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
         pPaso2.add(lNombre, gridBagConstraints);
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -205,12 +236,12 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
         pAtributoCantidad.add(tMaximo);
 
-        lPorciones1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones1.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones1.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones1);
 
-        lMinimo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lMinimo.setFont(new java.awt.Font("Arial", 0, 14));
         lMinimo.setForeground(new java.awt.Color(80, 98, 143));
         lMinimo.setText("Mínimo aceptable");
         pAtributoCantidad.add(lMinimo);
@@ -221,12 +252,12 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
         pAtributoCantidad.add(tMinimo);
 
-        lPorciones2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones2.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones2.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones2.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones2);
 
-        lDisponible.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lDisponible.setFont(new java.awt.Font("Arial", 0, 14));
         lDisponible.setForeground(new java.awt.Color(80, 98, 143));
         lDisponible.setText("Disponible actualmente");
         pAtributoCantidad.add(lDisponible);
@@ -237,7 +268,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         tDisponible.setPreferredSize(new java.awt.Dimension(150, 10));
         pAtributoCantidad.add(tDisponible);
 
-        lPorciones3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones3.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones3.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones3.setText("gramos (gr)");
         pAtributoCantidad.add(lPorciones3);
@@ -251,7 +282,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(pAtributoCantidad, gridBagConstraints);
 
-        lImagen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lImagen.setFont(new java.awt.Font("Arial", 0, 14));
         lImagen.setForeground(new java.awt.Color(80, 98, 143));
         lImagen.setText("Imagen");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -284,7 +315,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
 
         cuerpo.add(pPaso2, "Paso2");
 
-        add(cuerpo, java.awt.BorderLayout.CENTER);
+        getContentPane().add(cuerpo, java.awt.BorderLayout.CENTER);
 
         cabecera.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
@@ -347,7 +378,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         gridBagConstraints.gridheight = 2;
         cabecera.add(bCancelar, gridBagConstraints);
 
-        add(cabecera, java.awt.BorderLayout.NORTH);
+        getContentPane().add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
@@ -391,7 +422,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 9, 9, 80);
         pie.add(bAnterior, gridBagConstraints);
 
-        add(pie, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(pie, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -410,10 +441,39 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
                 this.lPaso.setText(PASO2);
                 this.bAnterior.setEnabled(true);
                 this.estado++;
+                aModificar = this.almacenProductos.obtenerListaIngredientes().get(
+                        this.tTablaIngredientesDisponibles.getSelectedRow());
+                this.tNombre.setText(aModificar.getNombre());
+                this.tMaximo.setValue(aModificar.getMaximo());
+                this.tMinimo.setValue(aModificar.getMinimo());
+                this.tDisponible.setValue(aModificar.getCantidad());
+                this.lMuestraImagen.setIcon(aModificar.getImagen());
+                this.imagen = aModificar.getImagen();
+                if(this.imagen != null){
+                    this.lMuestraImagen.setIcon(this.imagen);
+                    this.lMuestraImagen.setText("");
+                }else{
+                    this.lMuestraImagen.setText("<html><center> <STRONG>Imagen no <br> disponible</STRONG> <br><i> (Click sobre la imagen <br> para insertar una)</i></center> </html>");
+                }
                 cl.next(this.cuerpo);
-            break;
+                break;
             case 2:
-                //Finalizar operacion.
+                String subtitulo = this.lSubtitulo.getText();
+                String pregunta = "¿Confirma que desea Modificar el siguiente ingrediente?";
+                String texto = "Nombre: " + this.tNombre.getText()
+                        + "\nCantidad Disponible: " + ((Float) this.tDisponible.getValue())
+                        + "\nCantidad Máxima: " + ((Float) this.tMaximo.getValue())
+                        + "\nCantidad Mínima: " + ((Float) this.tMinimo.getValue());
+                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                confirmar.setLocationRelativeTo(this);
+                confirmar.setVisible(true);
+                if (confirmar.isAceptado()) {
+                    this.gestorProductos.modificarProducto(aModificar.getCodPro(), this.tNombre.getText(),
+                           ((Float) this.tDisponible.getValue()), ((Float) this.tMinimo.getValue()),
+                           ((Float) this.tMaximo.getValue()), imagen);
+                    setVisible(false);
+                    dispose();
+                }
             break;
         }
 
@@ -434,6 +494,7 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
 
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_Salir
 
     private void lMuestraImagenSeleccionar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lMuestraImagenSeleccionar
@@ -446,6 +507,14 @@ public class DialogoModificarIngrediente extends java.awt.Dialog {
             this.lMuestraImagen.setIcon(imagen);
         }
 }//GEN-LAST:event_lMuestraImagenSeleccionar
+
+    private void seleccionarIngrediente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarIngrediente
+        if(this.tTablaIngredientesDisponibles.getSelectedRow() != -1){
+            this.bSiguiente.setEnabled(true);
+        }else{
+            this.bSiguiente.setEnabled(false);
+        }
+    }//GEN-LAST:event_seleccionarIngrediente
 
 
 

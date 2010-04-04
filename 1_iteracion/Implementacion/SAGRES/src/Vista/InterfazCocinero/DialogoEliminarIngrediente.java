@@ -11,12 +11,18 @@
 
 package Vista.InterfazCocinero;
 
+import GestionStock.GestionProductos.IGestionarProducto;
+import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Ingrediente;
+import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,12 +32,27 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
+    private IProducto almacenProductos;
+    private IGestionarProducto gestorProductos;
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarIngrediente(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoEliminarIngrediente(java.awt.Frame parent, IProducto AlmacenProductos, IGestionarProducto GestorProductos ) {
+        super(parent, true);
         initComponents();
+        this.gestorProductos = GestorProductos;
+        this.almacenProductos = AlmacenProductos;
+        ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
+        this.bAceptar.setEnabled(false);
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn(this.tTablaIngredientes.getColumnName(0));
+        modelo.addColumn(this.tTablaIngredientes.getColumnName(1));
+        modelo.setRowCount(listaIngredientes.size());
+        this.tTablaIngredientes.setModel(modelo);
+        for (int i = 0; i < listaIngredientes.size(); i++) {
+            this.tTablaIngredientes.setValueAt(listaIngredientes.get(i).getNombre(), i, 0);
+            this.tTablaIngredientes.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
+        }
     }
 
 
@@ -59,10 +80,10 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         cuerpo = new javax.swing.JPanel();
         pProductosDisponibles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tTablaIngredientes = new javax.swing.JTable();
         pAtributoPlato2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tTablaDeshabilitados = new javax.swing.JTable();
 
         setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
@@ -92,7 +113,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el ingrediente a eliminar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -111,12 +132,17 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -164,7 +190,9 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tTablaIngredientes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaIngredientes.setForeground(new java.awt.Color(80, 98, 143));
+        tTablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -187,11 +215,16 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(211, 223, 253));
-        jTable1.setMinimumSize(new java.awt.Dimension(450, 250));
-        jTable1.setPreferredSize(new java.awt.Dimension(450, 250));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
+        tTablaIngredientes.setGridColor(new java.awt.Color(211, 223, 253));
+        tTablaIngredientes.setMinimumSize(new java.awt.Dimension(450, 250));
+        tTablaIngredientes.setPreferredSize(new java.awt.Dimension(450, 250));
+        tTablaIngredientes.getTableHeader().setReorderingAllowed(false);
+        tTablaIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seleccionarIngrediente(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tTablaIngredientes);
 
         pProductosDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -213,9 +246,11 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tTablaDeshabilitados.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaDeshabilitados.setForeground(new java.awt.Color(80, 98, 143));
+        tTablaDeshabilitados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"NO HABILITADO", null}
             },
             new String [] {
                 "Nombre", "Sección"
@@ -236,12 +271,12 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setGridColor(new java.awt.Color(211, 223, 253));
-        jTable2.setMinimumSize(new java.awt.Dimension(450, 250));
-        jTable2.setPreferredSize(new java.awt.Dimension(450, 250));
-        jTable2.getTableHeader().setResizingAllowed(false);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable2);
+        tTablaDeshabilitados.setGridColor(new java.awt.Color(211, 223, 253));
+        tTablaDeshabilitados.setMinimumSize(new java.awt.Dimension(450, 250));
+        tTablaDeshabilitados.setPreferredSize(new java.awt.Dimension(450, 250));
+        tTablaDeshabilitados.getTableHeader().setResizingAllowed(false);
+        tTablaDeshabilitados.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tTablaDeshabilitados);
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
@@ -265,7 +300,32 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_Salir
+
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        String subtitulo = this.lSubtitulo.getText();
+        String pregunta = "¿Confirma que desea Elimnar el siguiente ingrediente?";
+        int select = this.tTablaIngredientes.getSelectedRow();
+        String texto = "Nombre: "+(String)this.tTablaIngredientes.getValueAt(select, 0)+
+                "\nCantidad Disponible: "+((Float)this.tTablaIngredientes.getValueAt(select, 1));
+        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        confirmar.setLocationRelativeTo(this);
+        confirmar.setVisible(true);
+        if(confirmar.isAceptado()){
+            this.gestorProductos.eliminarProducto(this.almacenProductos.obtenerListaIngredientes().get(select).getCodPro()  );
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_Aceptar
+
+    private void seleccionarIngrediente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarIngrediente
+        if(this.tTablaIngredientes.getSelectedRow() != -1){
+            this.bAceptar.setEnabled(true);
+        }else{
+            this.bAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_seleccionarIngrediente
 
 
 
@@ -276,13 +336,13 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
     private javax.swing.JPanel cuerpo;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JPanel pAtributoPlato2;
     private javax.swing.JPanel pProductosDisponibles;
     private javax.swing.JPanel pie;
+    private javax.swing.JTable tTablaDeshabilitados;
+    private javax.swing.JTable tTablaIngredientes;
     // End of variables declaration//GEN-END:variables
     
 }

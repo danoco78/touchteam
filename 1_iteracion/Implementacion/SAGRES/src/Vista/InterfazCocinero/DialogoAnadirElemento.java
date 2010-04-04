@@ -4,17 +4,26 @@
  *
  * Created on 31-mar-2010, 11:36:27
  */
-
 package Vista.InterfazCocinero;
 
+import GestionCarta.Elemento;
+import GestionCarta.ElementoPlato;
+import GestionCarta.ICarta;
+import GestionCarta.Seccion;
+import GestionStock.GestionProductos.Producto;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import utilidades.ImageRenderer;
 
 /**
  *
@@ -29,27 +38,32 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/3";
     private final String PASO3 = "Paso 3/3";
     private int estado = 1;
+    private ICarta gestorCarta;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirElemento(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoAnadirElemento(java.awt.Frame parent, ICarta GestorCarta) {
+        super(parent, true);
         initComponents();
-        this.estado=1;
+        this.gestorCarta = GestorCarta;
+        this.estado = 1;
+        ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
+        for (int i = 0; i < listaSecciones.size(); i++) {
+            this.bSeccion.addItem(listaSecciones.get(i).getNombre());
+        }
         this.bAnterior.setEnabled(false);
-        this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
+        this.bSiguiente.setEnabled(false);
+        this.dSelector.setFileFilter(new FileNameExtensionFilter("IMAGEN", "jpg", "jpeg", "png", "gif"));
     }
-
 
     @Override
     public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,0.0f, new Color(255, 255, 255) ));
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249), getWidth(), 0.0f, new Color(255, 255, 255)));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -86,10 +100,10 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pPaso3 = new javax.swing.JPanel();
         pProductosDisponibles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tProductosDisponibles = new javax.swing.JTable();
         pAtributoPlato2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tProductosAsociados = new javax.swing.JTable();
         cabecera = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
@@ -127,11 +141,16 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
         bSeccion.setOpaque(false);
+        bSeccion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                seleccionaSeccion(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -139,9 +158,9 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(bSeccion, gridBagConstraints);
 
-        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lTablaSeccion.setForeground(new java.awt.Color(80, 98, 143));
-        lTablaSeccion.setText("Productos ya asociados a la sección");
+        lTablaSeccion.setText("Elementos ya asociados a la sección");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -158,11 +177,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
             },
             new String [] {
-                "Nombre", "Descripción", "Precio", "Duración"
+                "Nombre", "Descripción", "Precio"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -203,6 +222,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -229,6 +253,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tDescripcion.setRows(2);
         tDescripcion.setAutoscrolls(false);
         tDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tDescripcion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         jScrollPane1.setViewportView(tDescripcion);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -251,7 +280,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(lImagen, gridBagConstraints);
 
-        TImgen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        TImgen.setFont(new java.awt.Font("Arial", 0, 14));
         TImgen.setForeground(new java.awt.Color(80, 98, 143));
         TImgen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         TImgen.setEnabled(false);
@@ -263,7 +292,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(TImgen, gridBagConstraints);
 
-        bImagen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bImagen.setFont(new java.awt.Font("Arial", 0, 14));
         bImagen.setForeground(new java.awt.Color(80, 98, 143));
         bImagen.setText("Examinar");
         bImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -278,7 +307,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(bImagen, gridBagConstraints);
 
-        lPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPrecio.setFont(new java.awt.Font("Arial", 0, 14));
         lPrecio.setForeground(new java.awt.Color(80, 98, 143));
         lPrecio.setText("Precio de venta");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -356,6 +385,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tPorciones.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tPorciones.setMinimumSize(new java.awt.Dimension(60, 20));
         tPorciones.setPreferredSize(new java.awt.Dimension(150, 20));
+        tPorciones.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -375,6 +409,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tPrecio.setMinimumSize(new java.awt.Dimension(150, 20));
         tPrecio.setPreferredSize(new java.awt.Dimension(150, 20));
+        tPrecio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
@@ -385,6 +424,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tTiempo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tTiempo.setMinimumSize(new java.awt.Dimension(150, 20));
         tTiempo.setPreferredSize(new java.awt.Dimension(150, 20));
+        tTiempo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
@@ -411,7 +455,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tProductosDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -434,11 +478,16 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(211, 223, 253));
-        jTable1.setMinimumSize(new java.awt.Dimension(450, 250));
-        jTable1.setPreferredSize(new java.awt.Dimension(450, 250));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
+        tProductosDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
+        tProductosDisponibles.setMinimumSize(new java.awt.Dimension(450, 250));
+        tProductosDisponibles.setPreferredSize(new java.awt.Dimension(450, 250));
+        tProductosDisponibles.getTableHeader().setReorderingAllowed(false);
+        tProductosDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seleccionaProducto(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tProductosDisponibles);
 
         pProductosDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -460,7 +509,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tProductosAsociados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -483,12 +532,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setGridColor(new java.awt.Color(211, 223, 253));
-        jTable2.setMinimumSize(new java.awt.Dimension(450, 250));
-        jTable2.setPreferredSize(new java.awt.Dimension(450, 250));
-        jTable2.getTableHeader().setResizingAllowed(false);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable2);
+        tProductosAsociados.setGridColor(new java.awt.Color(211, 223, 253));
+        tProductosAsociados.setMinimumSize(new java.awt.Dimension(450, 250));
+        tProductosAsociados.setPreferredSize(new java.awt.Dimension(450, 250));
+        tProductosAsociados.getTableHeader().setResizingAllowed(false);
+        tProductosAsociados.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tProductosAsociados);
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
@@ -510,7 +559,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Añadir nuevo elemento a carta");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -524,7 +573,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Sección a la que pertenece");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -547,7 +596,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 11, 6, 11);
         cabecera.add(lPaso, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 12));
         bCancelar.setForeground(new java.awt.Color(150, 172, 229));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -570,7 +619,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bSiguiente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bSiguiente.setFont(new java.awt.Font("Arial", 0, 14));
         bSiguiente.setForeground(new java.awt.Color(80, 98, 143));
         bSiguiente.setText("Siguiente");
         bSiguiente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -589,7 +638,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 14));
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -620,8 +669,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void siguiente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguiente
-        CardLayout cl = (CardLayout)(this.cuerpo.getLayout());
-        switch(this.estado){
+        CardLayout cl = (CardLayout) (this.cuerpo.getLayout());
+        switch (this.estado) {
             case 1:
                 //Validar Datos
                 this.lSubtitulo.setText(SUBTITULOPASO2);
@@ -629,51 +678,97 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.bAnterior.setEnabled(true);
                 this.estado++;
                 cl.next(this.cuerpo);
-            break;
+                this.validarFormulario(null);
+                break;
             case 2:
                 //validar Datos
                 this.lSubtitulo.setText(SUBTITULOPASO3);
                 this.lPaso.setText(PASO3);
                 this.bSiguiente.setText("Finalizar");
                 this.estado++;
+                ArrayList<Producto> listaProductos = this.gestorCarta.obtenProductosDeSeccion(this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+                DefaultTableModel modelo = new DefaultTableModel();
+                modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
+                modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
+                modelo.addColumn(this.tProductosDisponibles.getColumnName(2));
+                modelo.setRowCount(listaProductos.size());
+                this.tProductosDisponibles.setModel(modelo);
+                this.tProductosDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+                this.tProductosDisponibles.setRowHeight(50);
+                for (int i = 0; i < listaProductos.size(); i++) {
+                    this.tProductosDisponibles.setValueAt(listaProductos.get(i).getNombre(), i, 0);
+                    this.tProductosDisponibles.setValueAt(listaProductos.get(i).getCantidad(), i, 1);
+                    this.tProductosDisponibles.setValueAt(listaProductos.get(i).getImagen(), i, 2);
+                }
                 cl.next(this.cuerpo);
-            break;
+                break;
         }
 
     }//GEN-LAST:event_siguiente
 
     private void anterior(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anterior
-        CardLayout cl = (CardLayout)(this.cuerpo.getLayout());
-        switch(this.estado){
+        CardLayout cl = (CardLayout) (this.cuerpo.getLayout());
+        switch (this.estado) {
             case 2:
                 this.lSubtitulo.setText(SUBTITULOPASO1);
                 this.lPaso.setText(PASO1);
                 this.bAnterior.setEnabled(false);
                 this.estado--;
                 cl.previous(this.cuerpo);
-            break;
+                break;
             case 3:
                 this.lSubtitulo.setText(SUBTITULOPASO2);
                 this.lPaso.setText(PASO2);
                 this.bSiguiente.setText("Siguiente");
                 this.estado--;
+                this.validarFormulario(null);
                 cl.previous(this.cuerpo);
-            break;
+                break;
         }
     }//GEN-LAST:event_anterior
 
     private void examinar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_examinar
-        if(this.dSelector.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-            this.TImgen.setText( this.dSelector.getSelectedFile().getAbsolutePath() );
+        if (this.dSelector.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            this.TImgen.setText(this.dSelector.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_examinar
 
     private void Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_Salir
 
-    
+    private void seleccionaSeccion(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_seleccionaSeccion
+        if (this.bSeccion.getSelectedIndex() != -1) {
+            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
+                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
+            modelo.setRowCount(lista.size());
+            this.tProductoSeccion.setModel(modelo);
+            for (int i = 0; i < lista.size(); i++) {
+                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
+                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
+                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
+            }
+            this.bSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_seleccionaSeccion
 
+    private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
+        if (this.tNombre.getText().length() != 0 && this.tDescripcion.getText().length() != 0
+                && ((Float) this.tPrecio.getValue()) != 0) {
+            this.bSiguiente.setEnabled(true);
+        } else {
+            this.bSiguiente.setEnabled(false);
+        }
+    }//GEN-LAST:event_validarFormulario
+
+    private void seleccionaProducto(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionaProducto
+        //TODO Hay que terminar la seleccion del 3 panel, añadir los seleccionados e insertar el nuevo elemento.
+    }//GEN-LAST:event_seleccionaProducto
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
@@ -688,8 +783,6 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lAyudaDivisiones;
     private javax.swing.JLabel lDescripción;
     private javax.swing.JLabel lDivision;
@@ -717,8 +810,9 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private javax.swing.JFormattedTextField tPorciones;
     private javax.swing.JFormattedTextField tPrecio;
     private javax.swing.JTable tProductoSeccion;
+    private javax.swing.JTable tProductosAsociados;
+    private javax.swing.JTable tProductosDisponibles;
     private javax.swing.JFormattedTextField tTiempo;
     private javax.swing.JLabel €;
     // End of variables declaration//GEN-END:variables
-    
 }

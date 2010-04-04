@@ -3,10 +3,8 @@ package GestionStock.GestionPedidoProveedor;
 
 
 import GestionStock.GestionProductos.Producto;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author Daniel Guerrero Martinez
@@ -29,7 +27,8 @@ public class PedidoProveedor {
      * @param recibido booleano que indica si el pedido ha sido recibido.
      * @param fechaHoy
      */
-    public PedidoProveedor(boolean recibido, Date fechaHoy) {
+    protected PedidoProveedor(HashMap<Producto, Float> informacionPedido, Date fechaHoy, boolean recibido) {
+        listaProductos = informacionPedido;
         this.recibido = recibido;
         this.fechaPedido = fechaHoy;
     }

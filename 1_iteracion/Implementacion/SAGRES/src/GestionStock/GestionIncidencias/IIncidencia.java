@@ -12,6 +12,6 @@ public interface IIncidencia {
      * @param tipoIncidencia
      */
     public abstract void nuevaIncidencia(String tipoIncidencia,
-            float cantidadAfectada, Producto producto) throws Exception;
+            float cantidadAfectada, Producto producto);
 
 }

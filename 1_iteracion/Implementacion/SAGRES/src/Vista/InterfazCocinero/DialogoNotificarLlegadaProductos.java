@@ -17,7 +17,10 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -280,9 +283,13 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
     }//GEN-LAST:event_Salir
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
-        this.gestorPedido.notificaRecepcionPedido();
-        this.setVisible(false);
+        try {
+            this.gestorPedido.notificaRecepcionPedido();
+                    this.setVisible(false);
         dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No hay ningun pedido por recibir");
+        }
     }//GEN-LAST:event_Aceptar
 
 

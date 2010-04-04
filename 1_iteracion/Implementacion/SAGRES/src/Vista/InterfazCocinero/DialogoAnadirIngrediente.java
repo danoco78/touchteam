@@ -16,14 +16,13 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Daniel
  */
-public class DialogoAnadirIngrediente extends java.awt.Dialog {
+public class DialogoAnadirIngrediente extends javax.swing.JDialog {
 
 
     private ImageIcon imagen;
