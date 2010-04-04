@@ -52,7 +52,7 @@ public class GestorIncidencia implements IIncidencia {
     }
     
 
-    public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) throws Exception {
+    public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) {
             Calendar c = Calendar.getInstance();
             this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA
                     +tipoIncidencia+", '"

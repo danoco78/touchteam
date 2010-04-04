@@ -9,7 +9,7 @@ import GestionCarta.Elemento;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Pair;
+import utilidades.Pair;
 
 /**
  *

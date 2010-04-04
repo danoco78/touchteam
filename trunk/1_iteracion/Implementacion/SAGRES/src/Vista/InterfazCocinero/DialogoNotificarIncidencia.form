@@ -173,6 +173,9 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="seleccionarIngrediente"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -220,7 +223,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lDescripci&#xf3;n">
+            <Component class="javax.swing.JLabel" name="lDescripcion">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
@@ -346,7 +349,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="8f" green="62" red="50" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Sin Incidencias"/>
+                    <Property name="text" type="java.lang.String" value="No habilitado"/>
                   </Properties>
                 </Component>
               </SubComponents>
