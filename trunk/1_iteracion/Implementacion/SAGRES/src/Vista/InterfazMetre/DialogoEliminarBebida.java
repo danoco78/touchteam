@@ -20,6 +20,9 @@ import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Vista.DialogoComfirmacion;
 import GestionStock.GestionProductos.IGestionarProducto;
+import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Bebida;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,13 +33,15 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
 
 
     private IGestionarProducto gestorProducto;
+    private IProducto interfazProducto;
     private int bebidaSeleccionada;
-
+    private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoEliminarBebida(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.listaBebidas = interfazProducto.obtenerListaBebidas();
     }
 
 
