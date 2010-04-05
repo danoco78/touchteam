@@ -10,11 +10,11 @@ import javax.swing.ImageIcon;
 public interface IGestionarProducto {
 
 
-    public abstract void actualizaCantidadProducto(Producto producto, float cantidad);
+    public abstract void actualizaCantidadProducto(Producto producto, float cantidad) throws Exception;
 
-    public abstract void eliminarProducto( int codigoProducto );
+    public abstract void eliminarProducto( int codigoProducto ) throws Exception;
 
-    public abstract void modificarProducto(int codigoProducto, String nombre , float cantidad, float minimo, float maximo, ImageIcon imagen );
+    public abstract void modificarProducto(int codigoProducto, String nombre , float cantidad, float minimo, float maximo, ImageIcon imagen ) throws Exception;
 
     public abstract void nuevaBebida( String nombre , float cantidad, float minimo, float maximo, ImageIcon imagen);
 
