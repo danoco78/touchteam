@@ -38,7 +38,7 @@ public class GestorProveedor implements IPedidoProveedor {
     private static final String TABLAPEIDDO =
             "select  pedido_proveedor_id ,fecha_pedido, recibido  from pedidoproveedor;";
     private static final String TABLAPRODUCTOSRELACIONADOS =
-            "select producto_producto_id from tienepedido where pedidoProveedor_pedido_proveedor_id = ";//+ID
+            "select producto_producto_id, cantidad from tienepedido where pedidoProveedor_pedido_proveedor_id = ";//+ID
     private static final String INI_INSERTAR_PEDIDO =
             "insert into pedidoproveedor(fecha_pedido,recibido) values (";//+DATOS
     private static final String FIN_INSERTAR = ");";
@@ -53,6 +53,7 @@ public class GestorProveedor implements IPedidoProveedor {
             this.gestionProducto = GestionProducto;
             this.gestionCarta = GestionCarta;
             this.intefazProductos = IntefazProductos;
+            this.impresora = Impresora;
             TableModel datos = this.almacen.realizaConsulta(GestorProveedor.TABLAPEIDDO);
             ArrayList<Producto> listaProductos = this.intefazProductos.obtenerListaProductos();
             for (int i = 0; i < datos.getRowCount(); i++) {
@@ -64,7 +65,6 @@ public class GestorProveedor implements IPedidoProveedor {
                     for (int k = 0; k < listaProductos.size(); k++) {
                         if( (Integer)codigosProductos.getValueAt(j, 0) == listaProductos.get(k).getCodPro()){
                             informacionPedido.put(listaProductos.get(k),(Float)codigosProductos.getValueAt(j, 1));
-                            k = listaProductos.size();
                         }
                     }
                 }
@@ -82,15 +82,15 @@ public class GestorProveedor implements IPedidoProveedor {
             PedidoProveedor pedidoProveedor = new PedidoProveedor(informacionPedido);
             pedidos.add(pedidoProveedor);
             Calendar c = Calendar.getInstance();
-            almacen.consultaDeModificacion(GestorProveedor.INI_INSERTAR_PEDIDO+
-                    c.get(Calendar.YEAR)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.DAY_OF_MONTH)+"',"+
+            almacen.consultaDeModificacion(GestorProveedor.INI_INSERTAR_PEDIDO+" '"+
+                    c.get(Calendar.YEAR)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.DAY_OF_MONTH)+"',"+
                     "false"+GestorProveedor.FIN_INSERTAR);
             TableModel codigo = this.almacen.realizaConsulta(GestorProveedor.ULTIMOID);
             Iterator it = informacionPedido.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry aux = (Map.Entry)it.next();
                 almacen.consultaDeModificacion(GestorProveedor.INI_INSERTAR_RELACION+
-                    codigo+", "+ ((Producto) aux.getKey()).getCodPro()+", "+ (Float)aux.getValue()+
+                    (Integer)codigo.getValueAt(0,0)+", "+ ((Producto) aux.getKey()).getCodPro()+", "+ (Float)aux.getValue()+
                     GestorProveedor.FIN_INSERTAR);
             }
             impresora.imprimePedido(informacionPedido);
