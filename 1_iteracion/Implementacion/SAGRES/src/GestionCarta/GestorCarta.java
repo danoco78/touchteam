@@ -3,11 +3,12 @@ package GestionCarta;
 
 import GestionBaseDatos.IAlmacenamiento;
 import GestionStock.GestionProductos.Bebida;
+import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.Imagen;
+import utilidades.Imagen;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableModel;
@@ -23,10 +24,12 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     Carta carta;
     ArrayList<Seccion> listaSecciones;
     IAlmacenamiento almacen;
+    IProducto producto;
 
-    public GestorCarta(IAlmacenamiento iAlmacenamiento) {
+    public GestorCarta(IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
         TableModel tabla;
         this.almacen = iAlmacenamiento;
+        this.producto = iProducto;
         this.listaSecciones = new ArrayList<Seccion>();
         this.listaElementos = new ArrayList<Elemento>();
         // Construimos el objeto Carta
@@ -59,7 +62,16 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return null;
     }
     private ArrayList<Elemento> buscaElementosInvalidados() {
-        return new ArrayList<Elemento>();
+        ArrayList<Elemento> elementosInvalidos = new ArrayList<Elemento>();
+        TableModel tabla;
+        String consulta;
+        Iterator iterador = listaElementos.iterator();
+
+        while(iterador.hasNext()){
+            //Para cada elemento de la lista hay que ver si es ElementoBebida o ElementoPlato
+            consulta = "SELECT ";
+        }
+        return elementosInvalidos;
     }
 
     /*
