@@ -485,7 +485,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 this.bSiguiente.setEnabled(false);
                 this.tNombre.setText(this.listaBebidas.get(this.bebidaSeleccionada).getNombre());
                 this.tMaximo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMaximo());
-                this.tMinimo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMaximo());
+                this.tMinimo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMinimo());
                 this.tDisponible.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getCantidad());
             break;
             case 2:

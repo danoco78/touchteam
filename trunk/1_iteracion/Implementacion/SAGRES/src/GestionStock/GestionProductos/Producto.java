@@ -31,7 +31,7 @@ public class Producto {
      */
     public Producto(ImageIcon imagen, String nombre,float minimo, float maximo, float cantidad, int codPro) {
         this.cantidad = cantidad;
-        //this.codPro = generarCodigoProducto();
+        this.codPro = codPro;
         this.maximo = maximo;
         this.minimo = minimo;
         this.nombre = nombre;
