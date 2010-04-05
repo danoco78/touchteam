@@ -12,14 +12,11 @@
 package Vista.InterfazCocinero;
 
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
-import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -234,7 +231,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         try {
             this.gestorPedido.imprimeListaProductosPedido();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Imprimir Productos", "No Hay productos para pedir", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_Aceptar
 

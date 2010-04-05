@@ -27,9 +27,9 @@ public class GestorImpresora implements IImpresion{
 		Map.Entry entrada = (Map.Entry)iterador.next(); // Obtenemos cada par del Mapa.
 
                 //Formateamos la linea para imprimirla luego
-                clave = ((Producto)entrada.getKey()).toString();
-                valor = ((Float)entrada.getKey()).toString();
-                linea += clave;
+                clave = ((Producto)entrada.getKey()).getNombre();
+                valor = ((Float)entrada.getValue()).toString();
+                linea = clave;
                 for (int i = 0; i < (35 - clave.length()); i++)
                     linea += ".";
                 linea += valor;
