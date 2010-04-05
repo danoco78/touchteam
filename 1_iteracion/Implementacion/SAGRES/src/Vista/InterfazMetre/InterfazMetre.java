@@ -92,13 +92,13 @@ public class InterfazMetre extends javax.swing.JFrame {
                     dialogo = new DialogoAnadirBebida(padre, true);
                     break;
                 case ManejaEventos.ELIMNARBEBIDA:
-                    dialogo =new DialogoEliminarBebida(padre, true);
+                    dialogo =new DialogoEliminarBebida(padre, true, null, null);
                     break;
                 case ManejaEventos.MODIFICARBEBIDA:
-                    dialogo =new DialogoModificarBedidas(padre, true);
+                    dialogo =new DialogoModificarBedidas(padre, true, null, null);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo =new DialogoNotificarIncidenciaBebida(padre, true);
+                    dialogo =new DialogoNotificarIncidenciaBebida(padre, true, null, null);
                     break;
             }
             if(dialogo != null){
