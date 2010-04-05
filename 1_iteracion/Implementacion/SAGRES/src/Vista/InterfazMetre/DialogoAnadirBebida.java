@@ -34,9 +34,10 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirBebida(java.awt.Frame parent, boolean modal) {
+    public DialogoAnadirBebida(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto) {
         super(parent, modal);
         initComponents();
+        this.gestorProducto = gestorProducto;
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
         this.bAceptar.setEnabled(false);
     }
