@@ -100,13 +100,13 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         tNombre = new javax.swing.JTextField();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
-        tMaximo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMaximo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones1 = new javax.swing.JLabel();
         lMinimo = new javax.swing.JLabel();
-        tMinimo = new javax.swing.JFormattedTextField(new Integer(0));
+        tMinimo = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
         lDisponible = new javax.swing.JLabel();
-        tDisponible = new javax.swing.JFormattedTextField(new Integer(0));
+        tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones3 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
