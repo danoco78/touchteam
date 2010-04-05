@@ -26,11 +26,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
     /**
      * Construye un objeto GestorProducto
      */
-    public GestorProducto(IAlmacenamiento iAlmacenamiento, ICarta carta){
+    public GestorProducto(IAlmacenamiento iAlmacenamiento){
         this.listaBebidas = new ArrayList<Bebida>();
         this.listaIngredientes = new ArrayList<Ingrediente>();
         this.interfazAlmacenamiento = iAlmacenamiento;
-        this.carta = carta;
         // Seleccionamos todos los productos existentes (bebidas e ingredientes) en la base de datos actualmente
         TableModel consultaBebidas = this.interfazAlmacenamiento.realizaConsulta("select * from productoBebida");
         this.listaBebidas = this.convertirTablaAbebida(consultaBebidas);
