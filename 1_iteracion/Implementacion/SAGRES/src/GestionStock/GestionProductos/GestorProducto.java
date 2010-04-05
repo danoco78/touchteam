@@ -108,7 +108,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             if(consultaProducto.getRowCount() != 0){ // Si el codigo de producto existe, recuperamos los datos
             bebida = new Bebida((Integer)consultaProducto.getValueAt(0,0),(String)consultaProducto.getValueAt(0,1),
                     (ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)),(Float)consultaProducto.getValueAt(0,4),
-                    (Float)consultaProducto.getValueAt(0,3),(Float)consultaProducto.getValueAt(0,2));
+                    (Float)consultaProducto.getValueAt(0,2),(Float)consultaProducto.getValueAt(0,3));
             listaB.add(bebida);
             }
         }
@@ -129,8 +129,8 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             TableModel consultaProducto = this.interfazAlmacenamiento.realizaConsulta("select * from producto where producto_id='"+codigoIngrediente+"'");
             if(consultaProducto.getRowCount() != 0){
             ingrediente = new Ingrediente((Integer)consultaProducto.getValueAt(0,0),(String)consultaProducto.getValueAt(0,1),
-                    (Float)consultaProducto.getValueAt(0,4),(Float)consultaProducto.getValueAt(0,3),
-                    (Float)consultaProducto.getValueAt(0,2),(ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)));
+                    (Float)consultaProducto.getValueAt(0,2),(Float)consultaProducto.getValueAt(0,3),
+                    (Float)consultaProducto.getValueAt(0,4),(ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)));
             listaI.add(ingrediente);
             }
         }
@@ -192,7 +192,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.listaBebidas.get(i).actualizarCantidad(cantidad - this.listaBebidas.get(i).getCantidad());
                 this.interfazAlmacenamiento.consultaDeModificacion
                         ("update producto set "+"cantidad='"+cantidad+"', maximo='"+maximo+
-                         "', minimo='"+minimo+"', nombre='"+nombre+"', foto='"+Imagen.imageIconToByteArray(imagen)+"' where producto_id='"+codigoProducto+"'");
+                         "', minimo='"+minimo+"', nombre='"+nombre+"' where producto_id='"+codigoProducto+"'");
+                this.interfazAlmacenamiento.consultaDeModificacionBlob
+                        ("update producto set foto=? where producto_id='"+codigoProducto+"'",Imagen.imageIconToByteArray(imagen));
                 modificado = true;
             }
         }
@@ -205,7 +207,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.listaIngredientes.get(i).actualizarCantidad(cantidad - this.listaIngredientes.get(i).getCantidad());
                 this.interfazAlmacenamiento.consultaDeModificacion
                         ("update producto set "+"cantidad='"+cantidad+"', maximo='"+maximo+
-                         "', minimo='"+minimo+"', nombre='"+nombre+"', foto='"+Imagen.imageIconToByteArray(imagen)+"' where producto_id='"+codigoProducto+"'");
+                         "', minimo='"+minimo+"', nombre='"+nombre+"' where producto_id='"+codigoProducto+"'");
+                this.interfazAlmacenamiento.consultaDeModificacionBlob
+                        ("update producto set foto=? where producto_id='"+codigoProducto+"'",Imagen.imageIconToByteArray(imagen));
                 modificado = true;
             }
         }
@@ -221,12 +225,28 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      * @param foto Imagen de la bebida
      */
     public void nuevaBebida(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
-        this.interfazAlmacenamiento.consultaDeModificacionBlob("insert into producto(nombre,cantidad,maximo,minimo,foto) values " +
-                "('"+nombre+"','"+cantidad+"','"+maximo+"','"+minimo+"')",Imagen.imageIconToByteArray(foto));
-        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0)+1;
-        this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
-        Bebida b = new Bebida(codPro, nombre, foto, minimo, maximo, cantidad);
-        this.listaBebidas.add(b);
+        this.interfazAlmacenamiento.consultaDeModificacion("insert into producto(nombre,cantidad,maximo,minimo) values " +
+                "('"+nombre+"','"+cantidad+"','"+maximo+"','"+minimo+"')");
+        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0);
+        if(foto != null){
+            this.interfazAlmacenamiento.consultaDeModificacionBlob
+                        ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(foto));
+            this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
+            Bebida b = new Bebida(codPro, nombre, foto, minimo, maximo, cantidad);
+            System.out.println(this.listaBebidas.size());
+            this.listaBebidas.add(b);
+            System.out.println(this.listaBebidas.size());
+        }
+        else{
+            ImageIcon defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
+            this.interfazAlmacenamiento.consultaDeModificacionBlob
+                        ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(defaultPhoto));
+            this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
+            Bebida b = new Bebida(codPro, nombre, defaultPhoto, minimo, maximo, cantidad);
+            System.out.println(this.listaBebidas.size());
+            this.listaBebidas.add(b);
+            System.out.println(this.listaBebidas.size());
+        }
     }
 
     /**
@@ -240,7 +260,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
     public void nuevoIngrediente(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
         this.interfazAlmacenamiento.consultaDeModificacionBlob("insert into producto(nombre,cantidad,maximo,minimo,foto) values " +
                 "('"+nombre+"','"+cantidad+"','"+maximo+"','"+minimo+"')",Imagen.imageIconToByteArray(foto));
-        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0)+1;
+        int codPro = (Integer)this.interfazAlmacenamiento.realizaConsulta("select MAX(producto_id) from producto").getValueAt(0,0);
         this.interfazAlmacenamiento.consultaDeModificacion("insert into productoIngrediente values('"+codPro+"')");
         Ingrediente i = new Ingrediente(codPro, nombre, cantidad, maximo, minimo, foto);
         this.listaIngredientes.add(i);
