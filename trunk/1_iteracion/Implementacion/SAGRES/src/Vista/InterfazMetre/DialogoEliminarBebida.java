@@ -16,6 +16,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Vista.DialogoComfirmacion;
@@ -319,7 +321,10 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
-            this.gestorProducto.eliminarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro());
+            try {
+                this.gestorProducto.eliminarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro());
+            } catch (Exception ex) {
+            }
             setVisible(false);
             dispose();
         }
