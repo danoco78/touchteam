@@ -410,11 +410,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @return Lista de elementos de la sección especificada
      */
     public ArrayList obtenElementosDeSeccion(Seccion seccion) {
-        if (seccion instanceof SeccionBebida)
+        if (seccion.getClass()==SeccionBebida.class)
             return ((SeccionBebida)seccion).getListaElementoBebida();
-        else if (seccion instanceof SeccionComida)
+        else if (seccion.getClass()==SeccionBebida.class)
             return ((SeccionComida)seccion).getListaElementoPlato();
-        return null;
+        return new ArrayList();
     }
 
     /**
