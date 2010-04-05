@@ -108,7 +108,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             if(consultaProducto.getRowCount() != 0){ // Si el codigo de producto existe, recuperamos los datos
             bebida = new Bebida((Integer)consultaProducto.getValueAt(0,0),(String)consultaProducto.getValueAt(0,1),
                     (ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)),(Float)consultaProducto.getValueAt(0,4),
-                    (Float)consultaProducto.getValueAt(0,2),(Float)consultaProducto.getValueAt(0,3));
+                    (Float)consultaProducto.getValueAt(0,3),(Float)consultaProducto.getValueAt(0,2));
             listaB.add(bebida);
             }
         }
