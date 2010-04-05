@@ -12,7 +12,7 @@ public interface ICarta {
 
     public ArrayList<Elemento> corrigeElementosInvalidados();
 
-    public ArrayList<Elemento> invalidaElementosCarta(Producto producto);
+    public ArrayList<Elemento> invalidaElementoCarta(Producto producto);
 
     public ArrayList<Elemento> obtenElementosDeSeccion(Seccion seccion);
 
