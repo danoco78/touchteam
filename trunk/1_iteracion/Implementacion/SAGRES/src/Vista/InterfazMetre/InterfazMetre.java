@@ -56,16 +56,6 @@ public class InterfazMetre extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InterfazMetre(null,null,null).setVisible(true);
-            }
-        });
-    }
 
     private class ManejaEventos implements ActionListener {
 
@@ -92,13 +82,13 @@ public class InterfazMetre extends javax.swing.JFrame {
                     dialogo = new DialogoAnadirBebida(padre, true);
                     break;
                 case ManejaEventos.ELIMNARBEBIDA:
-                    dialogo =new DialogoEliminarBebida(padre, true, null, null);
+                    dialogo =new DialogoEliminarBebida(padre, true, iGestorProducto, iProducto);
                     break;
                 case ManejaEventos.MODIFICARBEBIDA:
-                    dialogo =new DialogoModificarBedidas(padre, true, null, null);
+                    dialogo =new DialogoModificarBedidas(padre,true, iGestorProducto, iProducto);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo =new DialogoNotificarIncidenciaBebida(padre, true, null, null);
+                    dialogo =new DialogoNotificarIncidenciaBebida(padre, true, iProducto, iIncidencia);
                     break;
             }
             if(dialogo != null){

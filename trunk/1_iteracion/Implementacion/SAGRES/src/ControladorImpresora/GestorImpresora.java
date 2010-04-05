@@ -19,7 +19,7 @@ public class GestorImpresora implements IImpresion{
      */
     public void imprimePedido(HashMap<Producto, Float> informacionPedido) {
         Iterator iterador = informacionPedido.entrySet().iterator();
-        ArrayList<String> texto = new <String>ArrayList();
+        ArrayList<String> texto = new ArrayList<String>();
         String clave;
         String valor;
         String linea = new String();
