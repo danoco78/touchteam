@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GestionStock.GestionIncidencias;
 
 import GestionBaseDatos.IAlmacenamiento;
@@ -13,6 +12,8 @@ import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
 /**
@@ -26,23 +27,21 @@ public class GestorIncidencia implements IIncidencia {
     IAlmacenamiento almacen;
     IProducto almacenProductos;
     ArrayList<Incidencia> incidencias;
-
     private static final String ULTIMOID =
             "select MAX(incidencia_id) from incidencia;";
     private static final String TABLAINCIDENCIAS =
-            "select incidencia_id, descripcion, fecha, cantidad_afectada, producto_producto_id " +
-            " from incidencia , tieneIncidencia " +
-            " where incidencia_id = incidencia_incidencia_id";
+            "select incidencia_id, descripcion, fecha, cantidad_afectada, producto_producto_id "
+            + " from incidencia , tieneIncidencia "
+            + " where incidencia_id = incidencia_incidencia_id";
     private static final String INI_INSERTAR_INCIDNECIA =
             "insert into incidencia(descripcion,fecha,cantidad_afectada) values (";
-            /*"Caida",10/5/2011,10*/
+    /*"Caida",10/5/2011,10*/
     private static final String FIN_INSERTAR = ");";
     private static final String INI_INSERTAR_RELACION =
             "insert into tieneincidencia(incidencia_incidencia_id,producto_producto_id) values (";
 
-
-    public GestorIncidencia( IGestionarProducto iGestorProductos, ICarta iCarta,
-            IAlmacenamiento iAlmacenamiento, IProducto iProducto ){
+    public GestorIncidencia(IGestionarProducto iGestorProductos, ICarta iCarta,
+            IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
         this.gestorProductos = iGestorProductos;
         this.carta = iCarta;
         this.almacen = iAlmacenamiento;
@@ -50,23 +49,27 @@ public class GestorIncidencia implements IIncidencia {
         TableModel datos = this.almacen.realizaConsulta(GestorIncidencia.TABLAINCIDENCIAS);
         this.incidencias = this.convertirTablaAIncidencia(datos);
     }
-    
 
     public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) {
-            Calendar c = Calendar.getInstance();
-            boolean b = this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA+"'"
-                    +tipoIncidencia+"', '"
-                    +c.get(Calendar.YEAR)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.DAY_OF_MONTH)+"',"+"'"
-                    +cantidadAfectada+"'" + GestorIncidencia.FIN_INSERTAR);
-            TableModel datos = this.almacen.realizaConsulta(GestorIncidencia.ULTIMOID);
-            Incidencia incidencia = new Incidencia((Integer)datos.getValueAt(0,0), producto,
-                    cantidadAfectada, tipoIncidencia, null);
-            this.incidencias.add(incidencia);
-            this.almacen.consultaDeModificacion( GestorIncidencia.INI_INSERTAR_RELACION+
-                    (Integer)datos.getValueAt(0,0)+", "+producto.getCodPro()+GestorIncidencia.FIN_INSERTAR );
+        Calendar c = Calendar.getInstance();
+        boolean b = this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA + "'"
+                + tipoIncidencia + "', '"
+                + c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH) + "'," + "'"
+                + cantidadAfectada + "'" + GestorIncidencia.FIN_INSERTAR);
+        TableModel datos = this.almacen.realizaConsulta(GestorIncidencia.ULTIMOID);
+        Incidencia incidencia = new Incidencia((Integer) datos.getValueAt(0, 0), producto,
+                cantidadAfectada, tipoIncidencia, null);
+        this.incidencias.add(incidencia);
+        this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_RELACION
+                + (Integer) datos.getValueAt(0, 0) + ", " + producto.getCodPro() + GestorIncidencia.FIN_INSERTAR);
+        try {
+            this.gestorProductos.actualizaCantidadProducto(producto, cantidadAfectada);
+        } catch (Exception ex) {
+            Logger.getLogger(GestorIncidencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private ArrayList<Incidencia> convertirTablaAIncidencia(TableModel tabla){
+    private ArrayList<Incidencia> convertirTablaAIncidencia(TableModel tabla) {
         ArrayList<Producto> listaProductos = this.almacenProductos.obtenerListaProductos();
         ArrayList<Incidencia> almacenIncidencias = new ArrayList<Incidencia>();
         for (int i = 0; i < tabla.getRowCount(); i++) {
@@ -82,5 +85,4 @@ public class GestorIncidencia implements IIncidencia {
         }
         return almacenIncidencias;
     }
-
 }
