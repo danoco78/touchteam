@@ -37,12 +37,21 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         // Construimos el objeto Carta
         tabla = this.almacen.realizaConsulta("SELECT ultima_modificacion FROM carta");
         this.carta = new Carta((java.sql.Date)tabla.getValueAt(0,0));
-        // Construimos la lista de Secciones
-        tabla = this.almacen.realizaConsulta("SELECT seccion_id, nombre FROM seccion");
+        
+        // Construimos la lista de Secciones de Bebida
+        tabla = this.almacen.realizaConsulta("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionbebida WHERE seccion.seccion_id = seccionbebida.seccion_seccion_id");
         for (int i=0;i<tabla.getRowCount();i++) {
-            Seccion seccion = new Seccion((String)tabla.getValueAt(i,1),this.carta);
+            SeccionBebida seccion = new SeccionBebida((String)tabla.getValueAt(i,1),this.carta);
             this.listaSecciones.add(seccion);
         }
+        // Construimos la lista de Secciones de Comida
+        tabla = this.almacen.realizaConsulta("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccioncomida WHERE seccion.seccion_id = seccioncomida.seccion_seccion_id");
+        for (int i=0;i<tabla.getRowCount();i++) {
+            SeccionComida seccion = new SeccionComida((String)tabla.getValueAt(i,1),this.carta);
+            this.listaSecciones.add(seccion);
+        }
+
+
         // Construimos la lista de Elementos con Bebidas
         tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
         ArrayList<Bebida> listaBebida = this.producto.obtenerListaBebidas();
@@ -403,8 +412,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     public ArrayList obtenElementosDeSeccion(Seccion seccion) {
         if (seccion instanceof SeccionBebida)
             return ((SeccionBebida)seccion).getListaElementoBebida();
-        else
+        else if (seccion instanceof SeccionComida)
             return ((SeccionComida)seccion).getListaElementoPlato();
+        return null;
     }
 
     /**
