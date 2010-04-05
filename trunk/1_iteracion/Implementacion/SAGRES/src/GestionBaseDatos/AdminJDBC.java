@@ -126,7 +126,7 @@ public class AdminJDBC implements IAlmacenamiento{
         Statement consulta;
         try{
             consulta = (Statement) this.conexion.createStatement();
-            consulta.executeQuery(SQL);
+            consulta.executeUpdate(SQL);
             return true;
         }catch (SQLException ex){
             System.err.println("Error: " + ex.getMessage());
