@@ -11,7 +11,9 @@
 
 package Vista.InterfazMetre;
 
+import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IGestionarProducto;
+import GestionStock.GestionProductos.IProducto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -20,9 +22,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import utilidades.ImageRenderer;
 
 /**
  *
@@ -37,14 +42,33 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private int estado = 1;
     private ImageIcon imagen;
     private IGestionarProducto gestorProducto;
+    private IProducto productos;
+    private int bebidaSeleccionada;
+    private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarBedidas(java.awt.Frame parent, boolean modal) {
+    public DialogoModificarBedidas(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto, IProducto productos) {
         super(parent, modal);
         initComponents();
         this.estado=1;
+        this.gestorProducto = gestorProducto;
+        this.productos = productos;
+        this.listaBebidas = this.productos.obtenerListaBebidas();
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(0));
+        tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(1));
+        tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(2));
+        tableModel.setRowCount(listaBebidas.size());
+        this.tTablaBebidasDisponibles.setModel(tableModel);
+        this.tTablaBebidasDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        this.tTablaBebidasDisponibles.setRowHeight(50);
+        for (int i = 0; i < this.listaBebidas.size(); i++) {
+            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
+            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
+            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getImagen(), i, 2);
+        }
         this.bAnterior.setEnabled(false);
-        this.bSiguiente.setEnabled(true);
+        this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
     }
 
@@ -470,7 +494,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
-                    this.gestorProducto.modificarProducto(0,this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
+                    this.gestorProducto.modificarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro(),this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
                     ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
                     setVisible(false);
                     dispose();
@@ -510,7 +534,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
 }//GEN-LAST:event_lMuestraImagenSeleccionar
 
     private void ValidarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidarFormulario
-        if (this.tTablaBebidasDisponibles.getSelectedRow() != -1) {
+        this.bebidaSeleccionada = this.tTablaBebidasDisponibles.getSelectedRow();
+        if (this.bebidaSeleccionada != -1) {
             this.bSiguiente.setEnabled(true);
         } else {
             this.bSiguiente.setEnabled(false);

@@ -33,15 +33,27 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
 
 
     private IGestionarProducto gestorProducto;
-    private IProducto interfazProducto;
+    private IProducto productos;
     private int bebidaSeleccionada;
     private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarBebida(java.awt.Frame parent, boolean modal) {
+    public DialogoEliminarBebida(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto, IProducto productos) {
         super(parent, modal);
         initComponents();
-        this.listaBebidas = interfazProducto.obtenerListaBebidas();
+        this.gestorProducto = gestorProducto;
+        this.productos = productos;
+        this.listaBebidas = this.productos.obtenerListaBebidas();
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn(this.tBebidas.getColumnName(0));
+        tableModel.addColumn(this.tBebidas.getColumnName(1));
+        tableModel.setRowCount(listaBebidas.size());
+        this.tBebidas.setModel(tableModel);
+        for (int i = 0; i < this.listaBebidas.size(); i++) {
+            this.tBebidas.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
+            this.tBebidas.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
+        }
+        this.bAceptar.setEnabled(false);
     }
 
 
@@ -289,6 +301,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
 
     private void validarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validarFormulario
         this.bebidaSeleccionada = this.tBebidas.getSelectedRow();
+
         this.tElementosDeshabilitados.removeAll();
         if (this.bebidaSeleccionada != -1) {
             this.bAceptar.setEnabled(true);
@@ -306,7 +319,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
-            this.gestorProducto.eliminarProducto(0);
+            this.gestorProducto.eliminarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro());
             setVisible(false);
             dispose();
         }
