@@ -13,7 +13,6 @@ import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.Bebida;
-import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
@@ -160,9 +159,9 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
         bSeccion.setOpaque(false);
-        bSeccion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                seleccionaSeccion(evt);
+        bSeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionarSeccion(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -776,25 +775,6 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         this.dispose();
     }//GEN-LAST:event_Salir
 
-    private void seleccionaSeccion(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_seleccionaSeccion
-        if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
-                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
-            modelo.setRowCount(lista.size());
-            this.tProductoSeccion.setModel(modelo);
-            for (int i = 0; i < lista.size(); i++) {
-                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
-                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
-                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
-            }
-            this.bSiguiente.setEnabled(true);
-        }
-    }//GEN-LAST:event_seleccionaSeccion
-
     private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
         if (this.tNombre.getText().length() != 0 && this.tDescripcion.getText().length() != 0
                 && ((Float) this.tPrecio.getValue()) != 0) {
@@ -867,6 +847,25 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.bSiguiente.setEnabled(false);
         }
     }//GEN-LAST:event_seleccionarElemento
+
+    private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
+        if (this.bSeccion.getSelectedIndex() > 0) {
+            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
+                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
+            modelo.setRowCount(lista.size());
+            this.tProductoSeccion.setModel(modelo);
+            for (int i = 0; i < lista.size(); i++) {
+                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
+                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
+                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
+            }
+            this.bSiguiente.setEnabled(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_seleccionarSeccion
 
     class quitar implements ActionListener {
 

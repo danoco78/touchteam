@@ -48,7 +48,6 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private int estado = 1;
     private ICarta gestorCarta;
     private IPreparaCarta carta;
-
     private ArrayList disponibles;
     private ArrayList seleccionados;
 
@@ -155,14 +154,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
         bSeccion.setOpaque(false);
-        bSeccion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                seleccionaSeccion(evt);
+        bSeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionarSeccion(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -172,7 +171,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(bSeccion, gridBagConstraints);
 
-        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         lTablaSeccion.setForeground(new java.awt.Color(80, 98, 143));
         lTablaSeccion.setText("Elementos ya asociados a la sección");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -185,7 +184,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -721,14 +720,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
                 String texto = "Nombre: " + this.tNombre.getText()
-                        + "\nDescripción: " +  this.tDescripcion.getText()
+                        + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nPrecio: " + ((Float) this.tPrecio.getValue())
                         + "\nPorciones: " + ((Float) this.tPorciones.getValue())
                         + "\nPorciones: " + ((Float) this.tTiempo.getValue());
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n\t Nombre: "+producto.getNombre()+", Cantidad"+producto.getCantidad();
+                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad" + producto.getCantidad();
                 }
 
                 DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
@@ -736,14 +735,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
                     Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
-                    if(seccion.getClass() == SeccionComida.class){
-                        this.carta.nuevoElementoPlato( (ArrayList<Ingrediente>)this.seleccionados, (SeccionComida)seccion,
-                                this.tNombre.getText(), this.tDescripcion.getText(), (Float)this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()),(Integer)this.tTiempo.getValue(),(Integer) this.tPorciones.getValue());
-                    }else{
-                           this.carta.nuevoElementoBebida( (ArrayList<Bebida>)this.seleccionados, (SeccionBebida)seccion,
-                                this.tNombre.getText(), this.tDescripcion.getText(), (Float)this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()),(Integer) this.tPorciones.getValue());
+                    if (seccion.getClass() == SeccionComida.class) {
+                        this.carta.nuevoElementoPlato((ArrayList<Ingrediente>) this.seleccionados, (SeccionComida) seccion,
+                                this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
+                                new ImageIcon(this.TImgen.getText()), (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
+                    } else {
+                        this.carta.nuevoElementoBebida((ArrayList<Bebida>) this.seleccionados, (SeccionBebida) seccion,
+                                this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
+                                new ImageIcon(this.TImgen.getText()), (Integer) this.tPorciones.getValue());
                     }
                     setVisible(false);
                     dispose();
@@ -786,25 +785,6 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         this.dispose();
     }//GEN-LAST:event_Salir
 
-    private void seleccionaSeccion(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_seleccionaSeccion
-        if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
-                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
-            modelo.setRowCount(lista.size());
-            this.tProductoSeccion.setModel(modelo);
-            for (int i = 0; i < lista.size(); i++) {
-                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
-                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
-                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
-            }
-            this.bSiguiente.setEnabled(true);
-        }
-    }//GEN-LAST:event_seleccionaSeccion
-
     private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
         if (this.tNombre.getText().length() != 0 && this.tDescripcion.getText().length() != 0
                 && ((Float) this.tPrecio.getValue()) != 0) {
@@ -833,6 +813,25 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             ((DefaultTableModel) this.tProductosAsociados.getModel()).addRow(obj);
         }
     }//GEN-LAST:event_seleccionaProducto
+
+    private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
+        if (this.bSeccion.getSelectedIndex() > 0) {
+            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
+                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
+            modelo.setRowCount(lista.size());
+            this.tProductoSeccion.setModel(modelo);
+            for (int i = 0; i < lista.size(); i++) {
+                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
+                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
+                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
+            }
+            this.bSiguiente.setEnabled(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_seleccionarSeccion
 
     class quitar implements ActionListener {
 
