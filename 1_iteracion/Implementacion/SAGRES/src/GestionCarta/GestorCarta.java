@@ -225,7 +225,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     }
 
 
-    public ArrayList<Elemento> invalidaElementosCarta(Producto producto) {
+    public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
         return new ArrayList<Elemento>();
     }
 
