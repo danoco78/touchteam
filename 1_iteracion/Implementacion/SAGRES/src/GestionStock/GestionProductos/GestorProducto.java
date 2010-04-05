@@ -31,6 +31,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         this.listaIngredientes = new ArrayList<Ingrediente>();
         this.interfazAlmacenamiento = iAlmacenamiento;
         this.carta = carta;
+        // Seleccionamos todos los productos existentes (bebidas e ingredientes) en la base de datos actualmente
         TableModel consultaBebidas = this.interfazAlmacenamiento.realizaConsulta("select * from productoBebida");
         this.listaBebidas = this.convertirTablaAbebida(consultaBebidas);
         TableModel consultaIngredientes = this.interfazAlmacenamiento.realizaConsulta("select * from productoIngrediente");
@@ -42,26 +43,31 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      * @param producto Producto que queremos actualizar
      * @param cantidad Nueva cantidad del producto en stock
      */
-    public void actualizaCantidadProducto(Producto producto, float cantidad){
+    public void actualizaCantidadProducto(Producto producto, float cantidad) throws Exception{
         Iterator it = listaBebidas.iterator();
         Bebida b;
         Ingrediente i;
         boolean actualizado = false;
+        //Mientras que haya elementos en la lista o bien no se haya actualizado todavia, seguimos buscando
         while(it.hasNext() && !actualizado){
             b = (Bebida) it.next();
             if (b.getCodPro() == producto.getCodPro()){
                 b.actualizarCantidad(cantidad - b.getCantidad());
                 this.interfazAlmacenamiento.consultaDeModificacion("update producto set cantidad='"+cantidad+"' where producto_id='"+producto.getCodPro()+"'");
+                actualizado = true;
             }
         }
+        // Si no esta en la lista de bebidas, buscamos en la de ingredientes
         it = listaIngredientes.iterator();
         while(it.hasNext() && !actualizado){
             i = (Ingrediente) it.next();
             if (i.getCodPro() == producto.getCodPro()){
                 i.actualizarCantidad(cantidad - i.getCantidad());
                 this.interfazAlmacenamiento.consultaDeModificacion("update producto set cantidad='"+cantidad+"' where producto_id='"+producto.getCodPro()+"'");
+                actualizado = true;
             }
         }
+        if(!actualizado) throw new Exception("El producto especificado no existe");
     }
 
     /**
@@ -98,8 +104,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         int codigoBebida;
         for(int i=0;i<t.getRowCount();++i){
             codigoBebida = (Integer) t.getValueAt(i,0);
+            // Recuperamos todos los datos pertenecientes a los productos que tenemos en el tableModel
             TableModel consultaProducto = this.interfazAlmacenamiento.realizaConsulta("select * from producto where producto_id='"+codigoBebida+"'");
-            if(consultaProducto.getRowCount() != 0){
+            if(consultaProducto.getRowCount() != 0){ // Si el codigo de producto existe, recuperamos los datos
             bebida = new Bebida((Integer)consultaProducto.getValueAt(i,0),(String)consultaProducto.getValueAt(i,1),
                     (ImageIcon)Imagen.blobToImageIcon((Blob)consultaProducto.getValueAt(i,5)),(Float)consultaProducto.getValueAt(i,4),
                     (Float)consultaProducto.getValueAt(i,3),(Float)consultaProducto.getValueAt(i,2));
@@ -137,7 +144,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
      * Elimina el producto con el codigo que se le pasa como parametro a la funcion
      * @param codPro Codigo del producto que queremos eliminar
      */
-    public void eliminarProducto(int codPro){
+    public void eliminarProducto(int codPro) throws Exception{
         Iterator it = listaBebidas.iterator();
         Bebida b;
         Ingrediente i;
@@ -149,6 +156,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaBebidas.remove(b);
+                eliminado = true;
             }
         }
         it = listaIngredientes.iterator();
@@ -159,19 +167,22 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaIngredientes.remove(i);
+                eliminado = true;
             }
         }
+        if(!eliminado) throw new Exception("El producto especificado no existe");
     }
 
     /**
-     *
-     * @param nombre
-     * @param cantidad
-     * @param minimo
-     * @param maximo
-     * @param foto
+     * Modifica el producto con el codigo que se le pasa, actualizandolo a los datos que se le pasan como parametros
+     * @param codigoProducto Codigo del producto que queremos modificar
+     * @param nombre Nuevo nombre del producto
+     * @param cantidad Nueva cantidad del producto
+     * @param minimo Nuevo minimo del producto
+     * @param maximo Nuevo maximo del producto
+     * @param foto Nueva foto del producto
      */
-    public void modificarProducto(int codigoProducto, String nombre , float cantidad, float minimo, float maximo, ImageIcon imagen ){
+    public void modificarProducto(int codigoProducto, String nombre , float cantidad, float minimo, float maximo, ImageIcon imagen ) throws Exception{
         boolean modificado = false;
         for(int i=0;i<this.listaBebidas.size() && !modificado;++i){
             if(this.listaBebidas.get(i).getCodPro() == codigoProducto){
@@ -199,17 +210,16 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 modificado = true;
             }
         }
+        if(!modificado) throw new Exception("El producto especificado no existe");
     }
 
     /**
-     *
-     * @param codPro
-     * @param nombre
-     * @param cantidad
-     * @param minimo
-     * @param maximo
-     * @param foto
-     * @param cantidadPorEnvase
+     * Crea una nueva bebida con los parametros que se le pasan y los introduce en la Base de datos
+     * @param nombre Nombre de la bebida
+     * @param cantidad Cantidad disponible actualmente
+     * @param minimo Minimo permitido para la bebida
+     * @param maximo Maximo permitido para la bebida
+     * @param foto Imagen de la bebida
      */
     public void nuevaBebida(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
         this.interfazAlmacenamiento.consultaDeModificacionBlob("insert into producto(nombre,cantidad,maximo,minimo,foto) values " +
@@ -221,13 +231,12 @@ public class GestorProducto implements IGestionarProducto,IProducto{
     }
 
     /**
-     * Añade un nuevo ingrediente a la lista de productos
-     * @param codPro
-     * @param nombre
-     * @param cantidad
-     * @param minimo
-     * @param maximo
-     * @param foto
+     * Crea una nuevo ingrediente con los parametros que se le pasan y los introduce en la Base de datos
+     * @param nombre Nombre del ingrediente
+     * @param cantidad Cantidad disponible actualmente
+     * @param minimo Minimo permitido para el ingrediente
+     * @param maximo Maximo permitido para el ingrediente
+     * @param foto Imagen del ingrediente
      */
     public void nuevoIngrediente(String nombre, float cantidad, float minimo, float maximo, ImageIcon foto){
         this.interfazAlmacenamiento.consultaDeModificacionBlob("insert into producto(nombre,cantidad,maximo,minimo,foto) values " +
