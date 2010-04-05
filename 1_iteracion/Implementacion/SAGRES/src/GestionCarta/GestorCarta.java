@@ -21,16 +21,17 @@ import javax.swing.table.TableModel;
 public class GestorCarta implements IPreparaCarta, ICarta {
 
     ArrayList<Elemento> listaElementos;
-    ArrayList<ElementoBebida> listaElementosBebida;
-    ArrayList<ElementoPlato> listaElementosPlato;
+    //ArrayList<ElementoBebida> listaElementosBebida;
+    //ArrayList<ElementoPlato> listaElementosPlato;
     Carta carta;
     ArrayList<Seccion> listaSecciones;
     IAlmacenamiento almacen;
     IProducto producto;
 
-    public GestorCarta(IAlmacenamiento iAlmacenamiento) {
-        TableModel tabla;
+    public GestorCarta(IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
+        TableModel tabla, tablaProductos;
         this.almacen = iAlmacenamiento;
+        this.producto = iProducto;
         this.listaSecciones = new ArrayList<Seccion>();
         this.listaElementos = new ArrayList<Elemento>();
         // Construimos el objeto Carta
@@ -42,21 +43,47 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             Seccion seccion = new Seccion((String)tabla.getValueAt(i,1),this.carta);
             this.listaSecciones.add(seccion);
         }
-        // Construimos la lista de Elementos
-        tabla = this.almacen.realizaConsulta("SELECT elemento_id, descripcion, divi_max, foto, nombre, precio FROM elemento");
+        // Construimos la lista de Elementos con Bebidas
+        tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
+        ArrayList<Bebida> listaBebida = this.producto.obtenerListaBebidas();
+        Iterator itProducto = listaBebida.iterator();
         for (int i=0;i<tabla.getRowCount();i++) {
-            Elemento elemento = new Elemento((Integer)tabla.getValueAt(i,0), (String)tabla.getValueAt(i, 1), (Integer)tabla.getValueAt(i, 2),
-                 (ImageIcon)Imagen.blobToImageIcon((Blob)tabla.getValueAt(i, 3)), (String)tabla.getValueAt(i, 4), (Float)tabla.getValueAt(i, 5));
-            this.listaElementos.add(elemento);
+            ElementoBebida elementoBebida = new ElementoBebida((Integer)tabla.getValueAt(i,0), new ArrayList<Bebida>(),(String)tabla.getValueAt(i, 1), (String)tabla.getValueAt(i, 2),
+                 (ImageIcon)Imagen.blobToImageIcon((Blob)tabla.getValueAt(i, 3)), (Float)tabla.getValueAt(i, 4), (Integer)tabla.getValueAt(i, 5));
+
+            tablaProductos = almacen.realizaConsulta("SELECT * FROM tienebebida WHERE elementoBebida_elemento_elemento_id ="+elementoBebida.getCodigoElemento());
+            for(int j=0;j<tablaProductos.getRowCount();j++) {
+                while (itProducto.hasNext()) {
+                    if ((Integer)tablaProductos.getValueAt(j,1) == ((Bebida)itProducto.next()).getCodPro())
+                        elementoBebida.listaBebidas.add((Bebida)itProducto.next());
+                }
+            }
+            this.listaElementos.add(elementoBebida);
+        }
+        // Construimos la lista de Elementos con Platos
+        tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, elementoplato.tiempo_elaboracion, precio, divi_max FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id");
+        ArrayList<Ingrediente> listaIngredientes = this.producto.obtenerListaIngredientes();
+        itProducto = listaIngredientes.iterator();
+        for (int i=0;i<tabla.getRowCount();i++) {
+            ElementoPlato elementoPlato = new ElementoPlato((Integer)tabla.getValueAt(i,0), new ArrayList<Ingrediente>(),(String)tabla.getValueAt(i, 1), (String)tabla.getValueAt(i, 2),
+                 (ImageIcon)Imagen.blobToImageIcon((Blob)tabla.getValueAt(i, 3)),(Integer)tabla.getValueAt(i, 4), (Float)tabla.getValueAt(i, 5), (Integer)tabla.getValueAt(i, 6));
+            tablaProductos = almacen.realizaConsulta("SELECT * FROM tieneingrediente WHERE elementoComida_elemento_elemento_id ="+elementoPlato.getCodigoElemento());
+            for(int j=0;j<tablaProductos.getRowCount();j++) {
+                while (itProducto.hasNext()) {
+                    if ((Integer)tablaProductos.getValueAt(j,1) == ((Bebida)itProducto.next()).getCodPro())
+                        elementoPlato.listaIngredientes.add((Ingrediente)itProducto.next());
+                }
+            }
+            this.listaElementos.add(elementoPlato);
         }
 
         // Construimos la lista de ElementoBebida
-        tabla = this.almacen.realizaConsulta("SELECT elemento_elemento_id FROM elementobebida");
-        this.listaElementosBebida = this.convierteTablaABebida(tabla);
+        /*tabla = this.almacen.realizaConsulta("SELECT elemento_elemento_id FROM elementobebida");
+        this.listaElementosBebida = this.convierteTablaABebida(tabla);*/
 
         // Construimos la lista de ElementoPlato
-        tabla = this.almacen.realizaConsulta("SELECT elemento_elemento_id, tiempo_elaboracion FROM elementoplato");
-        this.listaElementosPlato = this.convierteTablaAPlato(tabla);
+        /*tabla = this.almacen.realizaConsulta("SELECT elemento_elemento_id, tiempo_elaboracion FROM elementoplato");
+        this.listaElementosPlato = this.convierteTablaAPlato(tabla);*/
         
     }
 
@@ -87,39 +114,32 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         Iterator iteradorProductos;
         boolean invalido = false;
 
-        iterador = listaElementosBebida.iterator();
-        //Primero probamos con los ElementosBebidas
+        iterador = listaElementos.iterator();
         while(iterador.hasNext()){
             invalido = false;
+            if (iterador.next() instanceof ElementoBebida) {
+                iteradorProductos = ((ElementoBebida)iterador.next()).listaBebidas.iterator();
 
-            iteradorProductos = ((ElementoBebida)iterador.next()).listaBebidas.iterator();
-
-            while (iteradorProductos.hasNext()){
-                if (((Producto)iteradorProductos.next()).getCantidad() == 0){
-                    invalido = true;
-                    break;
+                while (iteradorProductos.hasNext() && !invalido){
+                    if (((Producto)iteradorProductos.next()).getCantidad() == 0){
+                        invalido = true;
+                    }
+                }
+                if (invalido){
+                    elementosInvalidos.add((ElementoBebida)iterador.next());
                 }
             }
-            if (invalido){
-                elementosInvalidos.add((ElementoBebida)iterador.next());
-            }
-        }
+            else if(iterador.next() instanceof ElementoPlato) {
+                iteradorProductos = ((ElementoPlato)iterador.next()).listaIngredientes.iterator();
 
-        //Continuamos con los ElementosPlato
-        iterador = listaElementosPlato.iterator();
-        while(iterador.hasNext()){
-            invalido = false;
-
-            iteradorProductos = ((ElementoPlato)iterador.next()).listaIngredientes.iterator();
-
-            while (iteradorProductos.hasNext()){
-                if (((Producto)iteradorProductos.next()).getCantidad() == 0){
-                    invalido = true;
-                    break;
+                while (iteradorProductos.hasNext() && !invalido){
+                    if (((Producto)iteradorProductos.next()).getCantidad() == 0){
+                        invalido = true;
+                    }
                 }
-            }
-            if (invalido){
-                elementosInvalidos.add((ElementoBebida)iterador.next());
+                if (invalido){
+                    elementosInvalidos.add((ElementoPlato)iterador.next());
+                }
             }
         }
         return elementosInvalidos;
@@ -226,7 +246,29 @@ public class GestorCarta implements IPreparaCarta, ICarta {
 
 
     public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
-        return new ArrayList<Elemento>();
+        Iterator it = this.listaElementos.iterator();
+        Iterator itProducto;
+        while (it.hasNext()) {
+            if (it.next() instanceof ElementoBebida) {
+                itProducto = ((ElementoBebida)it.next()).getListaBebidas().iterator();
+                while (itProducto.hasNext()) {
+                    if (((Producto)itProducto.next()).getCodPro() == producto.getCodPro()) {
+                        ((ElementoBebida)it.next()).setDisponible(false);
+                        this.almacen.consultaDeModificacion("UPDATE elemento SET disponible = 0");
+                    }
+                }
+            }
+            else if (it.next() instanceof ElementoPlato) {
+                itProducto = ((ElementoPlato)it.next()).getListaIngredientes().iterator();
+                while (itProducto.hasNext()) {
+                    if (((Producto)itProducto.next()).getCodPro() == producto.getCodPro()) {
+                        ((ElementoPlato)it.next()).setDisponible(false);
+                        this.almacen.consultaDeModificacion("UPDATE elemento SET disponible = 0");
+                    }
+                }
+            }
+        }
+        return this.listaElementos;
     }
 
     public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception {
@@ -272,7 +314,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Inserción en la tabla elemento
             byte[] imagenByte = Imagen.imageIconToByteArray(foto); // Pasamos la foto a un array de bytes
             consulta = "INSERT INTO elemento(nombre,decripcion,disponible,foto,divi,divi_max,precio)"+
-                    "VALUES ('"+nombre+"','"+descripcion+"','"+false+"','?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
+                    "VALUES ('"+nombre+"','"+descripcion+"',0,'?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
             almacen.consultaDeModificacionBlob(consulta, imagenByte);
 
              // Inserción en la tabla elementoBebida
@@ -284,7 +326,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             ElementoBebida elementoBebida = new ElementoBebida(id_elemento, listaBebidas, nombre, descripcion, foto, precio, divisionesMaximas);
             seccion.anadeElemento(elementoBebida);
             this.listaElementos.add(elementoBebida); // Quitarlo si se elimina
-            this.listaElementosBebida.add(elementoBebida);
+            //this.listaElementosBebida.add(elementoBebida);
             consulta = "INSERT INTO elementoBebida VALUES("+id_elemento+")";
             almacen.consultaDeModificacion(consulta);
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
@@ -323,7 +365,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Inserción en la tabla elemento
             byte[] imagenByte = Imagen.imageIconToByteArray(foto); // Pasamos la foto a un array de bytes
             consulta = "INSERT INTO elemento(nombre,decripcion,disponible,foto,divi,divi_max,precio)"+
-                    "VALUES ('"+nombre+"','"+descripcion+"','"+false+"','?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
+                    "VALUES ('"+nombre+"','"+descripcion+"',0,'?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
             almacen.consultaDeModificacionBlob(consulta, imagenByte);
             
              // Inserción en la tabla elementoPlato
@@ -335,7 +377,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             ElementoPlato elementoPlato = new ElementoPlato(id_elemento, listaIngredientes, nombre, descripcion, foto, tiempoElaboracion, precio, divisionesMaximas);
             seccion.anadeElemento(elementoPlato);
             this.listaElementos.add(elementoPlato); // Quitarlo si se elimina
-            this.listaElementosPlato.add(elementoPlato);
+            //this.listaElementosPlato.add(elementoPlato);
             consulta = "INSERT INTO elementoPlato VALUES('"+id_elemento+"','"+tiempoElaboracion+"')";
             almacen.consultaDeModificacion(consulta);
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
