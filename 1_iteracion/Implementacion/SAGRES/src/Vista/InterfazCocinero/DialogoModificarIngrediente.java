@@ -23,6 +23,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -468,9 +470,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    this.gestorProductos.modificarProducto(aModificar.getCodPro(), this.tNombre.getText(),
-                           ((Float) this.tDisponible.getValue()), ((Float) this.tMinimo.getValue()),
-                           ((Float) this.tMaximo.getValue()), imagen);
+            try {
+                this.gestorProductos.modificarProducto(aModificar.getCodPro(), this.tNombre.getText(), (Float) this.tDisponible.getValue(), (Float) this.tMinimo.getValue(), (Float) this.tMaximo.getValue(), imagen);
+            } catch (Exception ex) {
+                Logger.getLogger(DialogoModificarIngrediente.class.getName()).log(Level.SEVERE, null, ex);
+            }
                     setVisible(false);
                     dispose();
                 }

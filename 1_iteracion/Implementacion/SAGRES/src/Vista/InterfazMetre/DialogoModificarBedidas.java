@@ -23,6 +23,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -494,8 +496,10 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
-                    this.gestorProducto.modificarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro(),this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
-                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+            try {
+                this.gestorProducto.modificarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro(), this.tNombre.getText(), (Float) this.tDisponible.getValue(), (Float) this.tMinimo.getValue(), (Float) this.tMaximo.getValue(), imagen);
+            } catch (Exception ex) {
+            }
                     setVisible(false);
                     dispose();
                 }

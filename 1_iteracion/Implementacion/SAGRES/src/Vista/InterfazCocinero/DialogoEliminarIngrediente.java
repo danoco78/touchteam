@@ -21,6 +21,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
@@ -313,7 +315,10 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
-            this.gestorProductos.eliminarProducto(this.almacenProductos.obtenerListaIngredientes().get(select).getCodPro()  );
+            try {
+                this.gestorProductos.eliminarProducto(this.almacenProductos.obtenerListaIngredientes().get(select).getCodPro());
+            } catch (Exception ex) {
+            }
             setVisible(false);
             dispose();
         }
