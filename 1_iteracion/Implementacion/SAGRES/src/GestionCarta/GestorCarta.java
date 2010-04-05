@@ -413,10 +413,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @return Lista de productos del elemento especificado
      */
     public ArrayList obtenProductosDeElemento(Elemento elemento) {
-       if (elemento instanceof ElementoBebida)
-           return ((ElementoBebida)elemento).getListaBebidas();
-       else
-           return ((ElementoPlato)elemento).getListaIngredientes();
+        return null;
     }
 
     /**
@@ -425,40 +422,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @return Lista de productos existentes en una sección
      */
     public ArrayList obtenProductosDeSeccion(Seccion seccion) {
-        ArrayList productos = new ArrayList();
-        if (seccion instanceof SeccionBebida) {
-            // Obtenemos la lista de Elementos de la SeccionBebida
-            ArrayList<ElementoBebida> listaElementoBebida = ((SeccionBebida)seccion).getListaElementoBebida();
-            Iterator it = listaElementoBebida.iterator();
-            // Para cada uno de los elementos, obtenemos sus Bebidas
-            while (it.hasNext()) {
-                ElementoBebida elementoBebida = (ElementoBebida)it.next();
-                ArrayList<Bebida> listaBebidas = elementoBebida.getListaBebidas();
-                Iterator it2 = listaBebidas.iterator();
-                // Cada bebida la guardamos en la lista de productos (producto == bebida)
-                while (it2.hasNext()) {
-                    Bebida bebida = (Bebida)it2.next();
-                    productos.add(bebida);
-                }
-            }
-        }
-        else {
-            // Obtenemos la lista de Elementos de la SeccionComida
-            ArrayList<ElementoPlato> listaElementoPlato = ((SeccionComida)seccion).getListaElementoPlato();
-            Iterator it = listaElementoPlato.iterator();
-            // Para cada uno de los elementos, obtenemos sus Ingredientes
-            while (it.hasNext()) {
-                ElementoPlato elementoPlato = (ElementoPlato)it.next();
-                ArrayList<Ingrediente> listaIngredientes = elementoPlato.getListaIngredientes();
-                Iterator it2 = listaIngredientes.iterator();
-                // Cada ingrediente lo guardamos en la lista de productos (producto == ingrediente)
-                while (it2.hasNext()) {
-                    Ingrediente ingrediente = (Ingrediente)it2.next();
-                    productos.add(ingrediente);
-                }
-            }
-        }
-        return productos;
+    return null;
     }
 
     /**
