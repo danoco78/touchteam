@@ -13,7 +13,6 @@ import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.Bebida;
-import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
@@ -25,7 +24,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.Object;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -65,6 +63,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
+        this.bSeccion.setSelectedIndex(-1);
         this.bAnterior.setEnabled(false);
         this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter(new FileNameExtensionFilter("IMAGEN", "jpg", "jpeg", "png", "gif"));

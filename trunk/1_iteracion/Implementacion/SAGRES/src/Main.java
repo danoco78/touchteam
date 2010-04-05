@@ -6,6 +6,7 @@ import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
+import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,10 @@ public class Main {
         dCarga.Progreso(90);
         GestorProveedor pedido = new GestorProveedor(producto, producto, carta, baseDeDatos, impresora );
         dCarga.Progreso(100);
-        InterfazMetre interfaz = new InterfazMetre(incidencia, producto, producto);
+        //InterfazMetre interfaz = new InterfazMetre(incidencia, producto, producto);
+        InterfazCocinero interfaz = new InterfazCocinero(incidencia, producto, producto, pedido, carta, carta);
+        dCarga.setVisible(false);
+        dCarga.dispose();
         interfaz.setVisible(true);
     }
 }

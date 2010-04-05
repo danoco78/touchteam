@@ -128,31 +128,31 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
                     break;
                 case ManejaEventos.IMPRIMIRLISTAPRODUCTOS:
-                    dialogo = new DialogoImprimirListaProductosAPedir(padre, true, null);
+                    dialogo = new DialogoImprimirListaProductosAPedir(padre, true, iPedidoProveedor);
                     break;
                 case ManejaEventos.NOTIFICARRECEPCION:
-                    dialogo = new DialogoNotificarLlegadaProductos(padre, true, null);
+                    dialogo = new DialogoNotificarLlegadaProductos(padre, true, iPedidoProveedor);
                     break;
                 case ManejaEventos.ANADIRINGREDIENTE:
-                    dialogo = new DialogoAnadirIngrediente(padre, null);
+                    dialogo = new DialogoAnadirIngrediente(padre, iGestorProducto);
                     break;
                 case ManejaEventos.ELIMINARINGREDIENTE:
-                    dialogo = new DialogoEliminarIngrediente(padre, null,null);
+                    dialogo = new DialogoEliminarIngrediente(padre, iProducto, iGestorProducto);
                     break;
                 case ManejaEventos.MODIFICARINGREDIENTE:
-                    dialogo = new DialogoModificarIngrediente(padre, null,null);
+                    dialogo = new DialogoModificarIngrediente(padre, iProducto, iGestorProducto);
                     break;
                 case ManejaEventos.ANADIRELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, null,null);
+                    dialogo = new DialogoAnadirElemento(padre, iCarta, iPreparaCarta);
                     break;
                 case ManejaEventos.ELIMINARELEMENTO:
-                    dialogo = new DialogoEliminarElemento(padre, null,null);
+                    dialogo = new DialogoEliminarElemento(padre, iCarta, iPreparaCarta);
                     break;
                 case ManejaEventos.MODIFICARELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, null,null);
+                    dialogo = new DialogoAnadirElemento(padre, iCarta, iPreparaCarta);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo = new DialogoNotificarIncidencia(padre,null,null);
+                    dialogo = new DialogoNotificarIncidencia(padre, iProducto, iIncidencia);
                     break;
             }
             if (dialogo != null) {
