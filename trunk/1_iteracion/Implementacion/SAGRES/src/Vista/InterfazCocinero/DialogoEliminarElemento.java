@@ -8,38 +8,55 @@
  *
  * Created on 31-mar-2010, 11:36:27
  */
-
 package Vista.InterfazCocinero;
 
+import GestionCarta.Elemento;
+import GestionCarta.ICarta;
+import GestionCarta.IPreparaCarta;
+import GestionCarta.Seccion;
+import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Daniel
  */
-public class DialogoEliminarElemento extends java.awt.Dialog {
+public class DialogoEliminarElemento extends javax.swing.JDialog {
+
+    private ICarta gestorCarta;
+    private IPreparaCarta carta;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarElemento(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DialogoEliminarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta) {
+        super(parent, true);
         initComponents();
+        this.gestorCarta = GestorCarta;
+        this.carta = Carta;
+        ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
+        for (int i = 0; i < listaSecciones.size(); i++) {
+            this.bSeccion.addItem(listaSecciones.get(i).getNombre());
+        }
+        this.bAceptar.setEnabled(false);
     }
-
 
     @Override
     public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,0.0f, new Color(255, 255, 255) ));
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249), getWidth(), 0.0f, new Color(255, 255, 255)));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,6 +92,11 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
         bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -155,11 +177,16 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         cuerpo.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
         bSeccion.setOpaque(false);
+        bSeccion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                SeleccionarSeccion(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -180,21 +207,28 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Descripción", "Precio", "Duración"
+                "Nombre", "Descripción", "Precio"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tProductoSeccion.setGridColor(new java.awt.Color(211, 223, 253));
@@ -202,6 +236,11 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
         tProductoSeccion.setOpaque(false);
         tProductoSeccion.setPreferredSize(new java.awt.Dimension(300, 400));
         tProductoSeccion.getTableHeader().setReorderingAllowed(false);
+        tProductoSeccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                seleccionarProductos(evt);
+            }
+        });
         scrollTabla.setViewportView(tProductoSeccion);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -223,10 +262,59 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
 
     private void bCancelar1Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelar1Salir
         this.setVisible(false);
+        dispose();
 }//GEN-LAST:event_bCancelar1Salir
 
+    private void SeleccionarSeccion(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_SeleccionarSeccion
+        if (this.bSeccion.getSelectedIndex() != -1) {
+            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
+                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
+            modelo.setRowCount(lista.size());
+            this.tProductoSeccion.setModel(modelo);
+            for (int i = 0; i < lista.size(); i++) {
+                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
+                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
+                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
+            }
+            this.bAceptar.setEnabled(true);
+        }
+    }//GEN-LAST:event_SeleccionarSeccion
 
+    private void seleccionarProductos(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarProductos
+        if (this.tProductoSeccion.getSelectedRow() != -1) {
+            this.bAceptar.setEnabled(true);
+        } else {
+            this.bAceptar.setEnabled(false);
+        }
+    }//GEN-LAST:event_seleccionarProductos
 
+    private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
+        Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
+        Elemento aEliminar = this.gestorCarta.obtenElementosDeSeccion(seccion).get(
+                this.tProductoSeccion.getSelectedRow() );
+        String subtitulo = this.lSubtitulo.getText();
+        String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
+        String texto = "Nombre: " + aEliminar.getNombre()
+                + "\nDescripción: " + aEliminar.getDescripcion()
+                + "\nPrecio: " + aEliminar.getPrecio()
+                + "\nPorciones: " + aEliminar.getDivisionesMaximas();
+        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        confirmar.setLocationRelativeTo(this);
+        confirmar.setVisible(true);
+        if (confirmar.isAceptado()) {
+            try {
+                this.carta.eliminaElementoCarta(aEliminar.getCodigoElemento());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_Aceptar
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar1;
@@ -241,5 +329,4 @@ public class DialogoEliminarElemento extends java.awt.Dialog {
     private javax.swing.JScrollPane scrollTabla;
     private javax.swing.JTable tProductoSeccion;
     // End of variables declaration//GEN-END:variables
-    
 }
