@@ -28,10 +28,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     IAlmacenamiento almacen;
     IProducto producto;
 
-    public GestorCarta(IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
+    public GestorCarta(IAlmacenamiento iAlmacenamiento) {
         TableModel tabla;
         this.almacen = iAlmacenamiento;
-        this.producto = iProducto;
         this.listaSecciones = new ArrayList<Seccion>();
         this.listaElementos = new ArrayList<Elemento>();
         // Construimos el objeto Carta
@@ -61,6 +60,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         
     }
 
+    /**
+     * Método para
+     * @param codigoElemento
+     * @return
+     */
     private Elemento buscaElemento (int codigoElemento) {
         Iterator iterador = listaElementos.iterator();
         Elemento elemento;
@@ -71,15 +75,52 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         }
         return null;
     }
+
+    /**
+     * Método que busca todos los elementos inválidos de la carta
+     * 
+     * @return Un ArrayList con los elementos inválidos.
+     */
     private ArrayList<Elemento> buscaElementosInvalidados() {
         ArrayList<Elemento> elementosInvalidos = new ArrayList<Elemento>();
-        TableModel tabla;
-        String consulta;
-        Iterator iterador = listaElementos.iterator();
+        Iterator iterador;
+        Iterator iteradorProductos;
+        boolean invalido = false;
 
+        iterador = listaElementosBebida.iterator();
+        //Primero probamos con los ElementosBebidas
         while(iterador.hasNext()){
-            //Para cada elemento de la lista hay que ver si es ElementoBebida o ElementoPlato
-            consulta = "SELECT ";
+            invalido = false;
+
+            iteradorProductos = ((ElementoBebida)iterador.next()).listaBebidas.iterator();
+
+            while (iteradorProductos.hasNext()){
+                if (((Producto)iteradorProductos.next()).getCantidad() == 0){
+                    invalido = true;
+                    break;
+                }
+            }
+            if (invalido){
+                elementosInvalidos.add((ElementoBebida)iterador.next());
+            }
+        }
+
+        //Continuamos con los ElementosPlato
+        iterador = listaElementosPlato.iterator();
+        while(iterador.hasNext()){
+            invalido = false;
+
+            iteradorProductos = ((ElementoPlato)iterador.next()).listaIngredientes.iterator();
+
+            while (iteradorProductos.hasNext()){
+                if (((Producto)iteradorProductos.next()).getCantidad() == 0){
+                    invalido = true;
+                    break;
+                }
+            }
+            if (invalido){
+                elementosInvalidos.add((ElementoBebida)iterador.next());
+            }
         }
         return elementosInvalidos;
     }
@@ -155,6 +196,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return listaElementoP;
     }
 
+    /**
+     * Método para habilitar los elementos inválidos después de la llegada del pedido.
+     *
+     * @return Lista de elmentos arreglados.
+     */
     public ArrayList<Elemento> corrigeElementosInvalidados() {
         return new ArrayList<Elemento>();
     }
@@ -178,7 +224,8 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         almacen.consultaDeModificacion(consulta);
     }
 
-    public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
+
+    public ArrayList<Elemento> invalidaElementosCarta(Producto producto) {
         return new ArrayList<Elemento>();
     }
 
