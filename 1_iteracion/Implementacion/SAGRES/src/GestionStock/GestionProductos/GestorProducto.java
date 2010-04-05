@@ -292,4 +292,8 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         return listaProductosBajoMinimos;
     }
 
+    public void setCarta(ICarta carta){
+        this.carta = carta;
+    }
+
 }
