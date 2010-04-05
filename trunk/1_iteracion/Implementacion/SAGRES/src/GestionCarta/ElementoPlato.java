@@ -36,6 +36,7 @@ public class ElementoPlato extends Elemento {
         this.tiempoElaboracion = tiempoElaboracion;
     }
 
-
-
+    public ArrayList<Ingrediente> getListaIngredientes() {
+        return listaIngredientes;
+    }
 }

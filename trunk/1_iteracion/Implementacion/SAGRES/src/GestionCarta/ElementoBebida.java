@@ -24,4 +24,8 @@ public class ElementoBebida extends Elemento{
         this.setPrecio(precio);
         this.setDivisionesMaximas(divisionesMaximas);
     }
+
+    public ArrayList<Bebida> getListaBebidas() {
+        return listaBebidas;
+    }
 }
