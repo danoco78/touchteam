@@ -49,7 +49,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         Iterator itProducto = listaBebida.iterator();
         for (int i=0;i<tabla.getRowCount();i++) {
             ElementoBebida elementoBebida = new ElementoBebida((Integer)tabla.getValueAt(i,0), new ArrayList<Bebida>(),(String)tabla.getValueAt(i, 1), (String)tabla.getValueAt(i, 2),
-                 (ImageIcon)Imagen.blobToImageIcon((Blob)tabla.getValueAt(i, 3)), (Float)tabla.getValueAt(i, 4), (Integer)tabla.getValueAt(i, 5));
+                 (ImageIcon)Imagen.blobToImageIcon((byte [])tabla.getValueAt(i, 3)), (Float)tabla.getValueAt(i, 4), (Integer)tabla.getValueAt(i, 5));
 
             tablaProductos = almacen.realizaConsulta("SELECT * FROM tienebebida WHERE elementoBebida_elemento_elemento_id ="+elementoBebida.getCodigoElemento());
             for(int j=0;j<tablaProductos.getRowCount();j++) {
@@ -66,11 +66,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         itProducto = listaIngredientes.iterator();
         for (int i=0;i<tabla.getRowCount();i++) {
             ElementoPlato elementoPlato = new ElementoPlato((Integer)tabla.getValueAt(i,0), new ArrayList<Ingrediente>(),(String)tabla.getValueAt(i, 1), (String)tabla.getValueAt(i, 2),
-                 (ImageIcon)Imagen.blobToImageIcon((Blob)tabla.getValueAt(i, 3)),(Integer)tabla.getValueAt(i, 4), (Float)tabla.getValueAt(i, 5), (Integer)tabla.getValueAt(i, 6));
+                 (ImageIcon)Imagen.blobToImageIcon((byte [])tabla.getValueAt(i, 3)),(Integer)tabla.getValueAt(i, 4), (Float)tabla.getValueAt(i, 5), (Integer)tabla.getValueAt(i, 6));
             tablaProductos = almacen.realizaConsulta("SELECT * FROM tieneingrediente WHERE elementoComida_elemento_elemento_id ="+elementoPlato.getCodigoElemento());
             for(int j=0;j<tablaProductos.getRowCount();j++) {
                 while (itProducto.hasNext()) {
-                    if ((Integer)tablaProductos.getValueAt(j,1) == ((Bebida)itProducto.next()).getCodPro())
+                    if ((Integer)tablaProductos.getValueAt(j,1) == ((Ingrediente)itProducto.next()).getCodPro())
                         elementoPlato.listaIngredientes.add((Ingrediente)itProducto.next());
                 }
             }
@@ -165,7 +165,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Para cada bebida obtenida de la BD, creamos su objeto e insertamos en multiobjeto
             for (int j=0;j<tablaBebida.getRowCount();j++) {
                 Bebida bebida = new Bebida((Integer)tablaBebida.getValueAt(j, 0),(String)tablaBebida.getValueAt(j, 1),
-                        (ImageIcon)Imagen.blobToImageIcon((Blob)tablaBebida.getValueAt(j, 2)),(Float)tablaBebida.getValueAt(j, 3),
+                        (ImageIcon)Imagen.blobToImageIcon((byte [])tablaBebida.getValueAt(j, 2)),(Float)tablaBebida.getValueAt(j, 3),
                         (Float)tablaBebida.getValueAt(j, 4), (Float)tablaBebida.getValueAt(j, 5));
                 listaBebidas.add(bebida);
             }
@@ -173,7 +173,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             consulta = "SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento WHERE elemento_id='"+tabla.getValueAt(i,0)+"'";
             tablaDatosElemento = almacen.realizaConsulta(consulta);
             elementoBebida = new ElementoBebida((Integer)tablaDatosElemento.getValueAt(0,0), listaBebidas, (String)tablaDatosElemento.getValueAt(0,1),
-                    (String)tablaDatosElemento.getValueAt(0,2), (ImageIcon)Imagen.blobToImageIcon((Blob)tablaDatosElemento.getValueAt(0,3)),
+                    (String)tablaDatosElemento.getValueAt(0,2), (ImageIcon)Imagen.blobToImageIcon((byte [])tablaDatosElemento.getValueAt(0,3)),
                     (Float)tablaDatosElemento.getValueAt(0,4),(Integer)tablaDatosElemento.getValueAt(0,5));
             listaElementosB.add(elementoBebida);
         }
@@ -201,7 +201,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             for (int j=0;j<tablaPlato.getRowCount();j++) {
                 Ingrediente ingrediente = new Ingrediente((Integer)tablaPlato.getValueAt(j, 0),(String)tablaPlato.getValueAt(j, 1),
                         (Float)tablaPlato.getValueAt(j, 2),(Float)tablaPlato.getValueAt(j, 3),
-                        (Float)tablaPlato.getValueAt(j, 5), (ImageIcon)Imagen.blobToImageIcon((Blob)tablaPlato.getValueAt(j, 5)));
+                        (Float)tablaPlato.getValueAt(j, 5), (ImageIcon)Imagen.blobToImageIcon((byte [])tablaPlato.getValueAt(j, 5)));
                 listaIngredientes.add(ingrediente);
             }
             // Obtenemos los datos del elemento
@@ -209,7 +209,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             tablaDatosElemento = almacen.realizaConsulta(consulta);
             // Creamos el objeto elementoPlato e insertamos en la lista de ElementoPlato
             elementoPlato = new ElementoPlato((Integer)tablaDatosElemento.getValueAt(0,0), listaIngredientes, (String)tablaDatosElemento.getValueAt(0,1),
-                    (String)tablaDatosElemento.getValueAt(0,2), (ImageIcon)Imagen.blobToImageIcon((Blob)tablaDatosElemento.getValueAt(0,3)),
+                    (String)tablaDatosElemento.getValueAt(0,2), (ImageIcon)Imagen.blobToImageIcon((byte [])tablaDatosElemento.getValueAt(0,3)),
                     (Integer)tabla.getValueAt(i,1),(Float)tablaDatosElemento.getValueAt(0,5),(Integer)tablaDatosElemento.getValueAt(0,6));
             listaElementoP.add(elementoPlato);
         }

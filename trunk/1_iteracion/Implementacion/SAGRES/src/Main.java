@@ -30,9 +30,9 @@ public class Main {
         /*AdminJDBC baseDeDatos = new AdminJDBC(properties.getProperty("host"),
                 properties.getProperty("user"),
                 properties.getProperty("pass"));*/
-        AdminJDBC baseDeDatos = new AdminJDBC("localhost",
-                "touch",
-                "team");
+        AdminJDBC baseDeDatos = new AdminJDBC("localhost/touchteam",
+                "root",
+                "arthurinz");
         baseDeDatos.conecta();
         dCarga.Progreso(20);
         GestorProducto producto = new GestorProducto(baseDeDatos);

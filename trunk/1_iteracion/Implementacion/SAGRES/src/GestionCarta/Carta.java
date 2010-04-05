@@ -1,7 +1,7 @@
 package GestionCarta;
 
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Almacena, gestiona y controla la información referente a la carta del
@@ -9,17 +9,17 @@ import java.util.Calendar;
  * @author Carlos Salas Morales
  */
 public class Carta {
-    private Calendar fechaUltimaModificacion;
+    private Date fechaUltimaModificacion;
 
     public Carta (java.sql.Date fechaUltimaModificacion) {
-        this.fechaUltimaModificacion.setTime(fechaUltimaModificacion);
+        this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
     /**
      * Método que devuelve la última modificación de la carta.
      * @return Última modificación de la carta
      */
-    public Calendar ultimaModifacion() {
+    public Date ultimaModifacion() {
         return this.fechaUltimaModificacion;
     }
 }
