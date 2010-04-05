@@ -75,7 +75,6 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         scrollTabla = new javax.swing.JScrollPane();
         tProductoSeccion = new javax.swing.JTable();
 
-        setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -125,7 +124,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 9, 9, 80);
         pie.add(bCancelar1, gridBagConstraints);
 
-        add(pie, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(pie, java.awt.BorderLayout.SOUTH);
 
         cabecera.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
@@ -161,7 +160,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
         cabecera.add(lSubtitulo, gridBagConstraints);
 
-        add(cabecera, java.awt.BorderLayout.NORTH);
+        getContentPane().add(cabecera, java.awt.BorderLayout.NORTH);
 
         cuerpo.setBackground(new java.awt.Color(255, 255, 255));
         cuerpo.setMinimumSize(new java.awt.Dimension(500, 550));
@@ -177,14 +176,14 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         cuerpo.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
         bSeccion.setOpaque(false);
-        bSeccion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                SeleccionarSeccion(evt);
+        bSeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionarSeccion(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -207,7 +206,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -250,7 +249,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 10, 10);
         cuerpo.add(scrollTabla, gridBagConstraints);
 
-        add(cuerpo, java.awt.BorderLayout.CENTER);
+        getContentPane().add(cuerpo, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -264,25 +263,6 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         this.setVisible(false);
         dispose();
 }//GEN-LAST:event_bCancelar1Salir
-
-    private void SeleccionarSeccion(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_SeleccionarSeccion
-        if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
-                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
-            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
-            modelo.setRowCount(lista.size());
-            this.tProductoSeccion.setModel(modelo);
-            for (int i = 0; i < lista.size(); i++) {
-                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
-                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
-                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
-            }
-            this.bAceptar.setEnabled(true);
-        }
-    }//GEN-LAST:event_SeleccionarSeccion
 
     private void seleccionarProductos(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarProductos
         if (this.tProductoSeccion.getSelectedRow() != -1) {
@@ -315,6 +295,26 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
             dispose();
         }
     }//GEN-LAST:event_Aceptar
+
+    private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
+        if (this.bSeccion.getSelectedIndex() > 0) {
+            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
+                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn(this.tProductoSeccion.getColumnName(0));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(1));
+            modelo.addColumn(this.tProductoSeccion.getColumnName(2));
+            modelo.setRowCount(lista.size());
+            this.tProductoSeccion.setModel(modelo);
+            for (int i = 0; i < lista.size(); i++) {
+                this.tProductoSeccion.setValueAt(lista.get(i).getNombre(), i, 0);
+                this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
+                this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
+            }
+            this.bAceptar.setEnabled(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_seleccionarSeccion
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar1;
