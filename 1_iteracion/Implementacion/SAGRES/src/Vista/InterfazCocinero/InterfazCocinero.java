@@ -154,13 +154,13 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     dialogo = new DialogoModificarIngrediente(padre, null,null);
                     break;
                 case ManejaEventos.ANADIRELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, null);
+                    dialogo = new DialogoAnadirElemento(padre, null,null);
                     break;
                 case ManejaEventos.ELIMINARELEMENTO:
-                    dialogo = new DialogoEliminarElemento(padre, true);
+                    dialogo = new DialogoEliminarElemento(padre, null,null);
                     break;
                 case ManejaEventos.MODIFICARELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, null);
+                    dialogo = new DialogoAnadirElemento(padre, null,null);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
                     dialogo = new DialogoNotificarIncidencia(padre,null,null);
