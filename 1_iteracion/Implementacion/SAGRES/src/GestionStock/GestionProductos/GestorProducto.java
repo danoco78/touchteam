@@ -106,9 +106,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             // Recuperamos todos los datos pertenecientes a los productos que tenemos en el tableModel
             TableModel consultaProducto = this.interfazAlmacenamiento.realizaConsulta("select * from producto where producto_id='"+codigoBebida+"'");
             if(consultaProducto.getRowCount() != 0){ // Si el codigo de producto existe, recuperamos los datos
-            bebida = new Bebida((Integer)consultaProducto.getValueAt(i,0),(String)consultaProducto.getValueAt(i,1),
-                    (ImageIcon)Imagen.blobToImageIcon((Blob)consultaProducto.getValueAt(i,5)),(Float)consultaProducto.getValueAt(i,4),
-                    (Float)consultaProducto.getValueAt(i,3),(Float)consultaProducto.getValueAt(i,2));
+            bebida = new Bebida((Integer)consultaProducto.getValueAt(0,0),(String)consultaProducto.getValueAt(0,1),
+                    (ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)),(Float)consultaProducto.getValueAt(0,4),
+                    (Float)consultaProducto.getValueAt(0,3),(Float)consultaProducto.getValueAt(0,2));
             listaB.add(bebida);
             }
         }
@@ -128,9 +128,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             codigoIngrediente = (Integer) t.getValueAt(i,0);
             TableModel consultaProducto = this.interfazAlmacenamiento.realizaConsulta("select * from producto where producto_id='"+codigoIngrediente+"'");
             if(consultaProducto.getRowCount() != 0){
-            ingrediente = new Ingrediente((Integer)consultaProducto.getValueAt(i,0),(String)consultaProducto.getValueAt(i,1),
-                    (Float)consultaProducto.getValueAt(i,4),(Float)consultaProducto.getValueAt(i,3),
-                    (Float)consultaProducto.getValueAt(i,2),(ImageIcon)Imagen.blobToImageIcon((Blob)consultaProducto.getValueAt(i,5)));
+            ingrediente = new Ingrediente((Integer)consultaProducto.getValueAt(0,0),(String)consultaProducto.getValueAt(0,1),
+                    (Float)consultaProducto.getValueAt(0,4),(Float)consultaProducto.getValueAt(0,3),
+                    (Float)consultaProducto.getValueAt(0,2),(ImageIcon)Imagen.blobToImageIcon((byte [])consultaProducto.getValueAt(0,5)));
             listaI.add(ingrediente);
             }
         }

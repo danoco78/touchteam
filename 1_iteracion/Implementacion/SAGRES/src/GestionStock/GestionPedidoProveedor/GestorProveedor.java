@@ -49,6 +49,10 @@ public class GestorProveedor implements IPedidoProveedor {
     public GestorProveedor( IProducto IntefazProductos, IGestionarProducto GestionProducto, ICarta GestionCarta,
             IAlmacenamiento almacen , IImpresion Impresora){
             this.pedidos = new ArrayList<PedidoProveedor>();
+            this.almacen = almacen;
+            this.gestionProducto = GestionProducto;
+            this.gestionCarta = GestionCarta;
+            this.intefazProductos = IntefazProductos;
             TableModel datos = this.almacen.realizaConsulta(GestorProveedor.TABLAPEIDDO);
             ArrayList<Producto> listaProductos = this.intefazProductos.obtenerListaProductos();
             for (int i = 0; i < datos.getRowCount(); i++) {

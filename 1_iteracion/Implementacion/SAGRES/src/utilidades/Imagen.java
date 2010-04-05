@@ -45,15 +45,15 @@ public class Imagen {
      * @param blob El Blob a transformar.
      * @return Un ImageIcon obtenido a partir de los datos del Blob.
      */
-    public static ImageIcon blobToImageIcon(Blob blob){
+    public static ImageIcon blobToImageIcon(byte[] blob){
 
         ImageIcon imagen = null;
-        try{
-            imagen = new ImageIcon(blob.getBytes(1, (int) blob.length()));
+        //try{
+            imagen = new ImageIcon(blob);
             return imagen;
-        } catch (SQLException ex) {
+        /*} catch (SQLException ex) {
             System.err.println("Error: " + ex.getMessage());
             return imagen;
-        }
+        }*/
     }
 }

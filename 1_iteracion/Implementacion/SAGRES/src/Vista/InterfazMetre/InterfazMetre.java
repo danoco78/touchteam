@@ -79,7 +79,7 @@ public class InterfazMetre extends javax.swing.JFrame {
                     System.exit(0);
                     break;
                 case ManejaEventos.ANADIRBEBIDA:
-                    dialogo = new DialogoAnadirBebida(padre, true);
+                    dialogo = new DialogoAnadirBebida(padre, true, iGestorProducto);
                     break;
                 case ManejaEventos.ELIMNARBEBIDA:
                     dialogo =new DialogoEliminarBebida(padre, true, iGestorProducto, iProducto);
