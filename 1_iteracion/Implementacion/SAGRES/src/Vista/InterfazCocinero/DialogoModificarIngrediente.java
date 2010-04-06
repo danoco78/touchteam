@@ -68,7 +68,6 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
             this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getImagen(), i, 2);
         }
-        this.tTablaIngredientesDisponibles.setPreferredSize(new Dimension(WIDTH, WIDTH));
         this.bSiguiente.setEnabled(false);
         this.estado=1;
         this.bAnterior.setEnabled(false);
@@ -176,14 +175,9 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
             }
         });
         tTablaIngredientesDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
-<<<<<<< .mine
+        tTablaIngredientesDisponibles.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 3000));
         tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 3000));
-=======
-        tTablaIngredientesDisponibles.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 2000));
-        tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 2000));
->>>>>>> .r242
         tTablaIngredientesDisponibles.getTableHeader().setReorderingAllowed(false);
         tTablaIngredientesDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
