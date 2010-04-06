@@ -259,30 +259,25 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
         Iterator it = this.listaElementos.iterator();
         Iterator itProducto;
-        
-        System.out.println("El tamaño es: "+this.listaElementos.size());
+
         while (it.hasNext()) {
             Elemento elemento = (Elemento)it.next();
 
             if (elemento instanceof ElementoBebida) {
-                System.out.println("Es Elemento Bebida");
                 itProducto = ((ElementoBebida)elemento).getListaBebidas().iterator();
                 while (itProducto.hasNext()) {
                     if (((Producto)itProducto.next()).getCodPro() == producto.getCodPro()) {
                         ((ElementoBebida)elemento).setDisponible(false);
                         this.almacen.consultaDeModificacion("UPDATE elemento SET disponible = 0");
-                        System.out.println("Elemento Bebida Invalidado");
                     }
                 }
             }
             else if (elemento instanceof ElementoPlato) {
-                System.out.println("Es Elemento Plato");
                 itProducto = ((ElementoPlato)elemento).getListaIngredientes().iterator();
                 while (itProducto.hasNext()) {
                     if (((Producto)itProducto.next()).getCodPro() == producto.getCodPro()) {
                         ((ElementoPlato)elemento).setDisponible(false);
                         this.almacen.consultaDeModificacion("UPDATE elemento SET disponible = 0");
-                        System.out.println("Elemento Plato Invalidado");
                     }
                 }
             }
