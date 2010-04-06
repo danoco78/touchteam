@@ -285,24 +285,58 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         return this.listaElementos;
     }
 
+    /**
+     * Modifica un Elemento Bebida.
+     * 
+     * @param codigoElemento El código del elemento a modificar.
+     * @param nombre El nuevo nombre del elemento.
+     * @param descripcion La nueva descripción del elemento.
+     * @param foto La nueva foto del elemento.
+     * @param precio El nuevo precio del elemento.
+     * @param divisionesMaximas Las nuevas divisiones máximas del elemento.
+     * @throws Exception Cuando el elemento no existe.
+     */
     public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception {
         Elemento elemento;
+        String consulta;
 
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
             ((ElementoBebida)elemento).modifica(nombre, descripcion, foto, precio, divisionesMaximas);
-        }
+            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+"WHERE elemento.elemento_id = "+codigoElemento;
+            this.almacen.consultaDeModificacion(consulta);
+            consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+codigoElemento;
+            this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(foto));
+        }   
         else{
             throw new Exception("El elemento especificado no existe.");
         }
     }
 
+    /**
+     * Modifica los datos de un elemento plato.
+     *
+     * @param codigoElemento El código del elemento que queremos modificar.
+     * @param nombre El nuevo nombre del elemento.
+     * @param descripcion La nueva descripción del elemento.
+     * @param foto La nueva foto del elemento.
+     * @param tiempoPreparacion El nuevo tiempo de preparación del elemento.
+     * @param precio El nuevo precio del elemento.
+     * @param divisionesMaximas Las nuevas divisiones másimas del elemento.
+     * @throws Exception Cuando el elemento no existe.
+     */
     public void modificaElementoPlato(int codigoElemento, String nombre, String descripcion, ImageIcon foto, int tiempoPreparacion, float precio, int divisionesMaximas) throws Exception {
         Elemento elemento;
-
+        String consulta;
+        
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
             ((ElementoPlato)elemento).modifica(nombre, descripcion, foto, tiempoPreparacion, precio, divisionesMaximas);
+            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+"WHERE elemento.elemento_id = "+codigoElemento;
+            this.almacen.consultaDeModificacion(consulta);
+            consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+codigoElemento;
+            this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(foto));
+            consulta = "UPDATE elementoplato SET tiempo_eleboracion = "+tiempoPreparacion + "WHERE elementoplato.elemento_elemento_id = "+codigoElemento;
         }
         else{
             throw new Exception("El elemento especificado no existe.");
