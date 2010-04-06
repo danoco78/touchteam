@@ -92,8 +92,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         contenedorCentral.setOpaque(false);
         contenedorCentral.setLayout(new java.awt.GridBagLayout());
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
-        logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
         contenedorCentral.add(logo, new java.awt.GridBagConstraints());
 
         cabecera.add(contenedorCentral, java.awt.BorderLayout.CENTER);
