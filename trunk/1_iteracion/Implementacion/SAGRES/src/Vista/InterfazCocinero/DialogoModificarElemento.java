@@ -10,11 +10,8 @@ import GestionCarta.Elemento;
 import GestionCarta.ICarta;
 import GestionCarta.IPreparaCarta;
 import GestionCarta.Seccion;
-import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
-import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IProducto;
-import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
@@ -28,6 +25,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import utilidades.ImageRenderer;
@@ -51,6 +49,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private ArrayList disponibles;
     private ArrayList seleccionados;
     private ImageIcon imagen;
+    private Elemento elemento;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto) {
@@ -734,13 +733,19 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 if (confirmar.isAceptado()) {
                     Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
                     if (seccion.getClass() == SeccionComida.class) {
-                        this.carta.nuevoElementoPlato((ArrayList<Ingrediente>) this.seleccionados, (SeccionComida) seccion,
-                                this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                this.imagen, (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
+                        try {
+                            this.carta.modificaElementoPlato(elemento.getCodigoElemento(), this.tNombre.getText(),
+                                    this.tDescripcion.getText(), this.imagen, (Integer) this.tTiempo.getValue(),
+                                    (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(lTiempo, ex.getMessage());
+                        }
                     } else {
-                        this.carta.nuevoElementoBebida((ArrayList<Bebida>) this.seleccionados, (SeccionBebida) seccion,
-                                this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                this.imagen, (Integer) this.tPorciones.getValue());
+                        try {
+                            this.carta.modificaElementoBebida(elemento.getCodigoElemento(), this.tNombre.getText(), this.tDescripcion.getText(), this.imagen, (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(lTiempo, ex.getMessage());
+                        }
                     }
                     setVisible(false);
                     dispose();
@@ -778,7 +783,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             File f = new File(this.TImgen.getText());
             if (f.exists()) {
                 imagen = new ImageIcon(f.getPath());
-            }else{
+            } else {
                 this.TImgen.setText("Imagen no valida");
             }
         }
@@ -820,7 +825,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         if (select != -1) {
             this.bSiguiente.setEnabled(true);
             Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
-            Elemento elemento = this.gestorCarta.obtenElementosDeSeccion(seccion).get(select);
+            this.elemento = this.gestorCarta.obtenElementosDeSeccion(seccion).get(select);
             this.tNombre.setText(elemento.getNombre());
             this.tDescripcion.setText(elemento.getDescripcion());
             this.tPorciones.setValue(elemento.getDivisionesMaximas());
