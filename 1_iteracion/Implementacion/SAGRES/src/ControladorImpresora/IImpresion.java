@@ -4,6 +4,7 @@ import GestionStock.GestionProductos.Producto;
 import java.util.HashMap;
 
 /**
+ * Interfaz para la impresión.
  *
  * @author Ángel Luis García
  */

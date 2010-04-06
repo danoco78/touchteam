@@ -8,7 +8,8 @@ import java.util.Map;
 
 
 /**
- *
+ * Clase que implementa el interfaz de impresión.
+ * 
  * @author Ángel Luis García
  */
 public class GestorImpresora implements IImpresion{
@@ -37,5 +38,4 @@ public class GestorImpresora implements IImpresion{
 	}
         Impresora.imprime(texto);
     }
-
 }

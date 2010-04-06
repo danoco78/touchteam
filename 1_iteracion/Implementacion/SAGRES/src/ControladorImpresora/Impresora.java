@@ -11,15 +11,19 @@ import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 
 /**
- * Clase para imprimir.
+ * Clase encargada de la comunicación con la impresora.
  *
  * @author Ángel Luis García
  */
 public class Impresora implements Printable {
 
-    /* Synthesise some sample lines of text */
     private static ArrayList<String> textLines;
 
+    /**
+     * Método encargado de mandar el texto a la impresora.
+     *
+     * @param texto Un ArrayList con las cadenas de texto que deseamos imprimir. Cada cadena se imprimirá en una línea.
+     */
     public static void imprime(ArrayList<String> texto){
 
     	textLines = texto;
@@ -36,7 +40,18 @@ public class Impresora implements Printable {
         }
 
     }
-    
+
+    /**
+     * Implementación del método print de la interfaz Printable.
+     * Imprime la página dada por pageIndex dentro del contexto dado por g.
+     * El formato de la página está especificado en pf.
+     *
+     * @param g Contexto dentro del cual la página se va a pintar.
+     * @param pf Formato de la página.
+     * @param pageIndex Índice de la página que se desea imprimir.
+     * @return PAGE_EXISTS si la página se ha renderizado correctamente o NO_SUCH_PAGE si pageIndex especifica una página que no existe.
+     * @throws PrinterException Cuando la impresión ha terminado.
+     */
     public int print(Graphics g, PageFormat pf, int pageIndex)
              throws PrinterException {
 
