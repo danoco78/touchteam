@@ -134,21 +134,21 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
         lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lTitulo.setText("Elimninar elemento de carta");
+        lTitulo.setText("Eliminar elemento de carta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 250;
+        gridBagConstraints.ipadx = 255;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
         lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lSubtitulo.setText("seleccionar elemento");
+        lSubtitulo.setText("Seleccionar elemento");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -297,7 +297,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
     }//GEN-LAST:event_Aceptar
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
-        if (this.bSeccion.getSelectedIndex() > 0) {
+        if (this.bSeccion.getSelectedIndex() != -1) {
             ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
                     this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
             DefaultTableModel modelo = new DefaultTableModel();
