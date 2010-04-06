@@ -360,17 +360,23 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             String consulta;
             TableModel tabla;
             // Inserción en la tabla elemento
-            byte[] imagenByte = Imagen.imageIconToByteArray(foto); // Pasamos la foto a un array de bytes
-            consulta = "INSERT INTO elemento(nombre,decripcion,disponible,foto,divi,divi_max,precio)"+
-                    "VALUES ('"+nombre+"','"+descripcion+"',0,'?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
-            almacen.consultaDeModificacionBlob(consulta, imagenByte);
-
-             // Inserción en la tabla elementoBebida
+            ImageIcon defaultPhoto;
+            if (foto == null)
+                defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
+            else
+                defaultPhoto = foto;
+            byte[] imagenByte = Imagen.imageIconToByteArray(defaultPhoto); // Pasamos la foto a un array de bytes
+            consulta = "INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"+
+                    "VALUES ('"+nombre+"','"+descripcion+"',0,'"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
+            almacen.consultaDeModificacion(consulta);
+            // Inserción en la tabla elementoBebida
             // Obtenemos el último id que se insertó
             consulta = "SELECT MAX(elemento_id) FROM elemento";
             tabla = almacen.realizaConsulta(consulta);
             // Sacamos el valor de la tabla y creamos un objeto ElementoBebida
             int id_elemento = (Integer)tabla.getValueAt(0,0);
+            almacen.consultaDeModificacionBlob("UPDATE elemento SET foto=? WHERE elemento_id="+id_elemento,imagenByte);
+
             ElementoBebida elementoBebida = new ElementoBebida(id_elemento, listaBebidas, nombre, descripcion, foto, precio, divisionesMaximas);
             seccion.anadeElemento(elementoBebida);
             this.listaElementos.add(elementoBebida); // Quitarlo si se elimina
@@ -380,7 +386,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
             Iterator it = listaBebidas.iterator();
             while (it.hasNext()) {
-                Bebida bebida = (Bebida)it.next();
+                Producto bebida = (Producto)it.next();
                 consulta = "INSERT INTO tienebebida VALUES("+id_elemento+","+bebida.getCodPro()+")";
                 almacen.consultaDeModificacion(consulta);
             }
@@ -411,17 +417,23 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             String consulta;
             TableModel tabla;
             // Inserción en la tabla elemento
-            byte[] imagenByte = Imagen.imageIconToByteArray(foto); // Pasamos la foto a un array de bytes
-            consulta = "INSERT INTO elemento(nombre,decripcion,disponible,foto,divi,divi_max,precio)"+
-                    "VALUES ('"+nombre+"','"+descripcion+"',0,'?','"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
-            almacen.consultaDeModificacionBlob(consulta, imagenByte);
-            
-             // Inserción en la tabla elementoPlato
+            ImageIcon defaultPhoto;
+            if (foto == null)
+                defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
+            else
+                defaultPhoto = foto;
+            byte[] imagenByte = Imagen.imageIconToByteArray(defaultPhoto); // Pasamos la foto a un array de bytes
+            consulta = "INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"+
+                    "VALUES ('"+nombre+"','"+descripcion+"',0,'"+divisionesMaximas+"','"+divisionesMaximas+"','"+precio+"')";
+            almacen.consultaDeModificacion(consulta);
+            // Inserción en la tabla elementoBebida
             // Obtenemos el último id que se insertó
             consulta = "SELECT MAX(elemento_id) FROM elemento";
             tabla = almacen.realizaConsulta(consulta);
-            // Sacamos el valor de la tabla y creamos un objeto ElementoPlato
+            // Sacamos el valor de la tabla y creamos un objeto ElementoBebida
             int id_elemento = (Integer)tabla.getValueAt(0,0);
+            almacen.consultaDeModificacionBlob("UPDATE elemento SET foto=? WHERE elemento_id="+id_elemento,imagenByte);
+
             ElementoPlato elementoPlato = new ElementoPlato(id_elemento, listaIngredientes, nombre, descripcion, foto, tiempoElaboracion, precio, divisionesMaximas);
             seccion.anadeElemento(elementoPlato);
             this.listaElementos.add(elementoPlato); // Quitarlo si se elimina
@@ -431,7 +443,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
             Iterator it = listaIngredientes.iterator();
             while (it.hasNext()) {
-                Ingrediente ingrediente = (Ingrediente)it.next();
+                Producto ingrediente = (Producto)it.next();
                 consulta = "INSERT INTO tieneingrediente VALUES("+id_elemento+","+ingrediente.getCodPro()+")";
                 almacen.consultaDeModificacion(consulta);
             }
