@@ -11,10 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Clase encargada de implementar el interfaz de comunicación con la Base de Datos.
@@ -92,11 +88,13 @@ public class AdminJDBC implements IAlmacenamiento{
         }
     }
 
-     /**
-      * Esta Operación nos permite ejecutar CONSULTAS SQL contra la base de datos.
-      * No olvidemos que para realizar la consulta debe haberse conectado antes con la base de datos.
-      *
-      */
+    /**
+     * Método para ejecutar CONSULTAS SQL contra la base de datos.
+     * No olvidemos que para realizar la consulta debe haberse conectado antes con la base de datos.
+     *
+     * @param SQL La consulta a realizar
+     * @return Un TableModel con el resultado de la consulta.
+     */
     public TableModel realizaConsulta( String SQL ){
         Statement consulta;//Objeto para las consultas
         ResultSet resultado;//Objeto para los resultados
@@ -122,6 +120,13 @@ public class AdminJDBC implements IAlmacenamiento{
         
     }
 
+    /**
+     * Método para realizar una consulta de actualización o inserción a la base de datos.
+     * No se debe utilizar con datos de tipo Blob.
+     *
+     * @param SQL La consulta a realizar.
+     * @return true si la consulta sí ha tenido éxito, false en caso contrario.
+     */
     public boolean consultaDeModificacion(String SQL){
         Statement consulta;
         try{
@@ -134,7 +139,16 @@ public class AdminJDBC implements IAlmacenamiento{
         }
     }
 
-
+    /**
+     * Método para realizar una consulta de tipo actualizacion con un tipo de dato Blob en la base de datos.
+     * Se debe utilizar conjuntamente con consultaDeModificacion(String SQL), después de que está inserte o
+     * actualice todos los datos no Blob se puede insertar o actualizar el dato tipo Blob.
+     *
+     * @param SQL La consulta a realizar.
+     * @param bytes Un array de bytes que representa el campo Blob.
+     *
+     * @return true si la consulta sí ha tenido éxito, false en caso contrario.
+     */
     public boolean consultaDeModificacionBlob(String SQL, byte[] bytes){
         PreparedStatement consulta;
         ImageIcon im;
