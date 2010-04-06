@@ -152,7 +152,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             b = (Bebida) it.next();
             if (b.getCodPro() == codPro){
                 this.carta.invalidaElementoCarta(b);
-                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
+                this.interfazAlmacenamiento.consultaDeModificacion("delete from productobebida where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaBebidas.remove(b);
                 eliminado = true;
@@ -163,7 +163,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             i = (Ingrediente) it.next();
             if (i.getCodPro() == codPro){
                 this.carta.invalidaElementoCarta(i);
-                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
+                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoingrediente where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaIngredientes.remove(i);
                 eliminado = true;
@@ -231,7 +231,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         if(foto != null){
             this.interfazAlmacenamiento.consultaDeModificacionBlob
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(foto));
-            this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
+            this.interfazAlmacenamiento.consultaDeModificacion("insert into productobebida values('"+codPro+"')");
             Bebida b = new Bebida(codPro, nombre, foto, minimo, maximo, cantidad);
             this.listaBebidas.add(b);
         }
@@ -239,7 +239,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             ImageIcon defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
             this.interfazAlmacenamiento.consultaDeModificacionBlob
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(defaultPhoto));
-            this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
+            this.interfazAlmacenamiento.consultaDeModificacion("insert into productobebida values('"+codPro+"')");
             Bebida b = new Bebida(codPro, nombre, defaultPhoto, minimo, maximo, cantidad);
             this.listaBebidas.add(b);
         }
@@ -260,7 +260,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         if(foto != null){
             this.interfazAlmacenamiento.consultaDeModificacionBlob
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(foto));
-        this.interfazAlmacenamiento.consultaDeModificacion("insert into productoIngrediente values('"+codPro+"')");
+        this.interfazAlmacenamiento.consultaDeModificacion("insert into productoingrediente values('"+codPro+"')");
         Ingrediente i = new Ingrediente(codPro, nombre, cantidad, maximo, minimo, foto);
         this.listaIngredientes.add(i);
         }
@@ -268,7 +268,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             ImageIcon defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
             this.interfazAlmacenamiento.consultaDeModificacionBlob
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(defaultPhoto));
-        this.interfazAlmacenamiento.consultaDeModificacion("insert into productoIngrediente values('"+codPro+"')");
+        this.interfazAlmacenamiento.consultaDeModificacion("insert into productoingrediente values('"+codPro+"')");
         Ingrediente i = new Ingrediente(codPro, nombre, cantidad, maximo, minimo, foto);
         this.listaIngredientes.add(i);
         }

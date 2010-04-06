@@ -170,7 +170,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         for (int i=0;i<tabla.getRowCount();i++) {
             // Obtenemos de la BD todas las bebidas del elemento
             consulta = "SELECT producto.producto_id, producto.nombre, producto.foto, producto.minimo, producto.maximo, producto.cantidad FROM tienebebida, producto WHERE" +
-                    " tieneBebida.productoBebida_producto_producto_id" +
+                    " tienebebida.productoBebida_producto_producto_id" +
                     " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
             tablaBebida = almacen.realizaConsulta(consulta);
             // Para cada bebida obtenida de la BD, creamos su objeto e insertamos en multiobjeto
@@ -205,8 +205,8 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         for (int i=0;i<tabla.getRowCount();i++) {
             // Obtenemos de la BD todos los ingredientes del elemento
             consulta = "SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM tieneingrediente, producto WHERE " +
-                    "tieneIngrediente.productoIngrediente_producto_producto_id" +
-                    " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
+                    "tieneingrediente.productoIngrediente_producto_producto_id" +
+                    " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
             tablaPlato = almacen.realizaConsulta(consulta);
             // Para cada ingrediente obtenido de la BD, creamos el objeto e insertamos en multiobjeto
             for (int j=0;j<tablaPlato.getRowCount();j++) {
@@ -491,9 +491,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
        String consulta;
        Producto prod;
        // Obtenemos los productos que tiene el elemento si es un Ingrediente
-       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneIngrediente, producto WHERE " +
-                    "tieneIngrediente.productoIngrediente_producto_producto_id" +
-                    " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
+       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneingrediente, producto WHERE " +
+                    "tieneingrediente.productoIngrediente_producto_producto_id" +
+                    " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
        tablaElemento = this.almacen.realizaConsulta(consulta);
        // Para cada uno de esos elementos lo insertamos en la lista
        if (tablaElemento.getRowCount() > 0) {
@@ -504,9 +504,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
            }
        }
        // Obtenemos todos los productos que tiene el elemento  si es una bebida
-       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneBebida, producto WHERE" +
-                    " tieneBebida.productoBebida_producto_producto_id" +
-                    " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
+       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tienebebida, producto WHERE" +
+                    " tienebebida.productoBebida_producto_producto_id" +
+                    " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
        tablaElemento = this.almacen.realizaConsulta(consulta);
        // Para cada uno de esos elementos lo insertamos en la lista
        if (tablaElemento.getRowCount() > 0) {
