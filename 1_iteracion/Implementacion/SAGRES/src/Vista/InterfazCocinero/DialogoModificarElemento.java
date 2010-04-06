@@ -541,7 +541,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true
@@ -560,6 +560,11 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         tProductosAsociados.setPreferredSize(new java.awt.Dimension(450, 250));
         tProductosAsociados.getTableHeader().setResizingAllowed(false);
         tProductosAsociados.getTableHeader().setReorderingAllowed(false);
+        tProductosAsociados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quitarAsociados(evt);
+            }
+        });
         jScrollPane3.setViewportView(tProductosAsociados);
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -582,7 +587,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Modificar elemento a carta");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -790,21 +795,18 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     }//GEN-LAST:event_validarFormulario
 
     private void seleccionaProducto(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionaProducto
-        if (seleccionados == null) {
-            seleccionados = new ArrayList<Producto>();
-        }
         int select = this.tProductosDisponibles.getSelectedRow();
         if (select != -1) {
             Producto productoSeleccionado = (Producto) this.disponibles.get(select);
             this.disponibles.remove(select);
-            this.tProductosDisponibles.removeRowSelectionInterval(select, select);
+            ((DefaultTableModel) this.tProductosDisponibles.getModel()).removeRow(select);
             this.seleccionados.add(productoSeleccionado);
             Object[] obj = new Object[3];
             JButton eliminar = new JButton("Quitar");
             eliminar.addActionListener(bSeccion);
-            obj[0] = eliminar;
+            obj[0] = "Quitar";
             obj[1] = productoSeleccionado.getNombre();
-            obj[2] = new JFormattedTextField(new Float(0));
+            obj[2] = 0.0;
             ((DefaultTableModel) this.tProductosAsociados.getModel()).addRow(obj);
         }
     }//GEN-LAST:event_seleccionaProducto
@@ -841,9 +843,9 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 Object[] obj = new Object[3];
                 JButton eliminar = new JButton("Quitar");
                 eliminar.addActionListener(bSeccion);
-                obj[0] = eliminar;
+                obj[0] = "Quitar";
                 obj[1] = producto.getNombre();
-                obj[2] = new JFormattedTextField(new Float(producto.getCantidad()));
+                obj[2] = producto.getCantidad();
                 ((DefaultTableModel) this.tProductosAsociados.getModel()).addRow(obj);
                 disponibles.remove(producto);
             }
@@ -871,6 +873,21 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.bSiguiente.setEnabled(true);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_seleccionarSeccion
+
+    private void quitarAsociados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitarAsociados
+        if (this.tProductosAsociados.getSelectedColumn() == 0) {
+            int select = this.tProductosAsociados.getSelectedRow();
+            Producto productoSeleccionado = (Producto) this.seleccionados.get(select);
+            this.seleccionados.remove(select);
+            ((DefaultTableModel) this.tProductosAsociados.getModel()).removeRow(select);
+            this.disponibles.add(productoSeleccionado);
+            Object[] obj = new Object[3];
+            obj[0] = productoSeleccionado.getNombre();
+            obj[1] = productoSeleccionado.getCantidad();
+            obj[2] = productoSeleccionado.getImagen();
+            ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
+        }
+    }//GEN-LAST:event_quitarAsociados
 
     class quitar implements ActionListener {
 

@@ -24,6 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -526,11 +527,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
             },
             new String [] {
-                "Eliminar", "Nombre", "cantidad"
+                "Quitar", "Nombre", "cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true
@@ -549,6 +550,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         tProductosAsociados.setPreferredSize(new java.awt.Dimension(450, 250));
         tProductosAsociados.getTableHeader().setResizingAllowed(false);
         tProductosAsociados.getTableHeader().setReorderingAllowed(false);
+        tProductosAsociados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BorrarAsociados(evt);
+            }
+        });
         jScrollPane3.setViewportView(tProductosAsociados);
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -732,14 +738,20 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
+                File f = new File(this.TImgen.getText());
+                ImageIcon imagen;
+                if(f.exists()){
+                    imagen = new ImageIcon(f.getPath());
+                }else{
+                    imagen = null;
+                }
                 if (confirmar.isAceptado()) {
                     Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
-                    if (seccion instanceof  SeccionComida ) {
+                    if (seccion instanceof SeccionComida) {
                         this.carta.nuevoElementoPlato((ArrayList<Ingrediente>) this.seleccionados, (SeccionComida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
                                 new ImageIcon(this.TImgen.getText()), (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
                     } else {
-                        System.out.println("ES BEBIDAAAAAAAAAAAAAAAA "+seccion.toString());
                         this.carta.nuevoElementoBebida((ArrayList<Bebida>) this.seleccionados, (SeccionBebida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
                                 new ImageIcon(this.TImgen.getText()), (Integer) this.tPorciones.getValue());
@@ -799,16 +811,15 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         if (select != -1) {
             Producto productoSeleccionado = (Producto) this.disponibles.get(select);
             this.disponibles.remove(select);
-            ((DefaultTableModel)this.tProductosDisponibles.getModel()).removeRow(select);
+            ((DefaultTableModel) this.tProductosDisponibles.getModel()).removeRow(select);
             this.seleccionados.add(productoSeleccionado);
             Object[] obj = new Object[3];
             JButton eliminar = new JButton("Quitar");
             eliminar.addActionListener(bSeccion);
-            obj[0] = eliminar;
+            obj[0] = "Quitar";
             obj[1] = productoSeleccionado.getNombre();
-            obj[2] = new JFormattedTextField(new Float(0));
+            obj[2] = 0.0;
             ((DefaultTableModel) this.tProductosAsociados.getModel()).addRow(obj);
-            //this.tProductosDisponibles.repaint();
         }
     }//GEN-LAST:event_seleccionaProducto
 
@@ -831,27 +842,21 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_seleccionarSeccion
 
-    class quitar implements ActionListener {
-
-        private DialogoAnadirElemento padre;
-
-        protected quitar(DialogoAnadirElemento Padre) {
-            this.padre = Padre;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            int select = padre.tProductosAsociados.getSelectedRow();
-            Producto productoSeleccionado = (Producto) padre.seleccionados.get(select);
-            padre.seleccionados.remove(select);
-            padre.tProductosAsociados.removeRowSelectionInterval(select, select);
-            padre.disponibles.add(productoSeleccionado);
+    private void BorrarAsociados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrarAsociados
+        if (this.tProductosAsociados.getSelectedColumn() == 0) {
+            int select = this.tProductosAsociados.getSelectedRow();
+            Producto productoSeleccionado = (Producto) this.seleccionados.get(select);
+            this.seleccionados.remove(select);
+            ((DefaultTableModel) this.tProductosAsociados.getModel()).removeRow(select);
+            this.disponibles.add(productoSeleccionado);
             Object[] obj = new Object[3];
             obj[0] = productoSeleccionado.getNombre();
             obj[1] = productoSeleccionado.getCantidad();
             obj[2] = productoSeleccionado.getImagen();
-            ((DefaultTableModel) padre.tProductosDisponibles.getModel()).addRow(obj);
+            ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
         }
-    }
+    }//GEN-LAST:event_BorrarAsociados
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
     private javax.swing.JButton bAnterior;
