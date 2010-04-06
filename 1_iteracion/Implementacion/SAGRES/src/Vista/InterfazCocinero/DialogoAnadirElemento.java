@@ -154,7 +154,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
@@ -184,7 +184,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -492,8 +492,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             }
         });
         tProductosDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
-        tProductosDisponibles.setMinimumSize(new java.awt.Dimension(450, 250));
-        tProductosDisponibles.setPreferredSize(new java.awt.Dimension(450, 250));
+        tProductosDisponibles.setMinimumSize(new java.awt.Dimension(450, 3000));
+        tProductosDisponibles.setPreferredSize(new java.awt.Dimension(450, 3000));
         tProductosDisponibles.getTableHeader().setReorderingAllowed(false);
         tProductosDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

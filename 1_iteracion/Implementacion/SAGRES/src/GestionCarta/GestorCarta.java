@@ -250,9 +250,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             listaElementos.remove(elemento);
         else
             throw new Exception("El elemento especificado no existe.");
-      
-        consulta = "DELETE FROM elemento WHERE elemento_id='"+codigoElemento+"'";
-        almacen.consultaDeModificacion(consulta);
+
+        consulta = "DELETE FROM elemento WHERE elemento_id="+codigoElemento;
+        this.almacen.consultaDeModificacion(consulta);
     }
 
 
@@ -449,8 +449,6 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @return Lista de elementos de la sección especificada
      */
     public ArrayList<Elemento> obtenElementosDeSeccion(Seccion seccion) {
-        System.out.println(seccion.getCodigoSeccion());
-        System.out.println(seccion.getNombre());
         ArrayList<Elemento> listaElem = new ArrayList<Elemento>();
         TableModel tablaSeccion;
         tablaSeccion = almacen.realizaConsulta("SELECT seccionBebida_seccion_seccion_id, elementoBebida_elemento_elemento_id FROM incluyebebida WHERE seccionBebida_seccion_seccion_id = "+seccion.getCodigoSeccion());
@@ -488,11 +486,39 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @param elemento Elemento del cual queremos obtener sus productos
      * @return Lista de productos del elemento especificado
      */
-    public ArrayList obtenProductosDeElemento(Elemento elemento) {
-       if (elemento instanceof ElementoBebida)
-           return ((ElementoBebida)elemento).getListaBebidas();
-       else
-           return ((ElementoPlato)elemento).getListaIngredientes();
+    public ArrayList<Producto> obtenProductosDeElemento(Elemento elemento) {
+       ArrayList<Producto> listaProd = new ArrayList<Producto>();
+       TableModel tablaElemento;
+       String consulta;
+       Producto prod;
+       // Obtenemos los productos que tiene el elemento si es un Ingrediente
+       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneIngrediente, producto WHERE " +
+                    "tieneIngrediente.productoIngrediente_producto_producto_id" +
+                    " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
+       tablaElemento = this.almacen.realizaConsulta(consulta);
+       // Para cada uno de esos elementos lo insertamos en la lista
+       if (tablaElemento.getRowCount() > 0) {
+           for (int i=0;i<tablaElemento.getRowCount();i++) {
+           prod = new Producto(Imagen.blobToImageIcon((byte [])tablaElemento.getValueAt(i,0)),(String)tablaElemento.getValueAt(i,1), (Float)tablaElemento.getValueAt(i,2),
+                   (Float)tablaElemento.getValueAt(i,3), (Float)tablaElemento.getValueAt(i,4), (Integer)tablaElemento.getValueAt(i,5));
+           listaProd.add(prod);
+           }
+       }
+       // Obtenemos todos los productos que tiene el elemento  si es una bebida
+       consulta = "SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneBebida, producto WHERE" +
+                    " tieneBebida.productoBebida_producto_producto_id" +
+                    " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id ='"+elemento.getCodigoElemento()+"'";
+       tablaElemento = this.almacen.realizaConsulta(consulta);
+       // Para cada uno de esos elementos lo insertamos en la lista
+       if (tablaElemento.getRowCount() > 0) {
+           for (int i=0;i<tablaElemento.getRowCount();i++) {
+           prod = new Producto(Imagen.blobToImageIcon((byte [])tablaElemento.getValueAt(i,0)),(String)tablaElemento.getValueAt(i,1), (Float)tablaElemento.getValueAt(i,2),
+                   (Float)tablaElemento.getValueAt(i,3), (Float)tablaElemento.getValueAt(i,4), (Integer)tablaElemento.getValueAt(i,5));
+           listaProd.add(prod);
+           }
+       }
+
+       return listaProd;
     }
 
     /**
@@ -500,41 +526,42 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @param seccion Sección de la cual queremos obtener los productos
      * @return Lista de productos existentes en una sección
      */
-    public ArrayList obtenProductosDeSeccion(Seccion seccion) {
-        ArrayList productos = new ArrayList();
-        if (seccion instanceof SeccionBebida) {
-            // Obtenemos la lista de Elementos de la SeccionBebida
-            ArrayList<ElementoBebida> listaElementoBebida = ((SeccionBebida)seccion).getListaElementoBebida();
-            Iterator it = listaElementoBebida.iterator();
-            // Para cada uno de los elementos, obtenemos sus Bebidas
-            while (it.hasNext()) {
-                ElementoBebida elementoBebida = (ElementoBebida)it.next();
-                ArrayList<Bebida> listaBebidas = elementoBebida.getListaBebidas();
-                Iterator it2 = listaBebidas.iterator();
-                // Cada bebida la guardamos en la lista de productos (producto == bebida)
-                while (it2.hasNext()) {
-                    Bebida bebida = (Bebida)it2.next();
-                    productos.add(bebida);
-                }
+    public ArrayList<Producto> obtenProductosDeSeccion(Seccion seccion) {
+        ArrayList<Producto> listaProd = new ArrayList<Producto>();
+        TableModel tabla, tablaCodProd, tablaProd;
+        Producto prod;
+        // Comprobamos si la seccion pertenece a una seccionBebida
+        tabla = this.almacen.realizaConsulta("SELECT seccion_seccion_id FROM seccionbebida WHERE seccion_seccion_id ="+seccion.getCodigoSeccion());
+        if (tabla.getRowCount() > 0) {
+            // Obtenemos todos los productos pertenecientes a seccionBebida
+            tablaCodProd = this.almacen.realizaConsulta("SELECT tienebebida.productoBebida_producto_producto_id  FROM incluyebebida, seccionbebida, tienebebida " +
+                    "WHERE incluyebebida.seccionBebida_seccion_seccion_id = seccionbebida.seccion_seccion_id AND incluyebebida.elementoBebida_elemento_elemento_id = tienebebida.elementoBebida_elemento_elemento_id");
+            // Para cada uno de los productos buscamos sus datos e insertamos en la lista
+            for(int i=0;i<tablaCodProd.getRowCount();i++) {
+                tablaProd = this.almacen.realizaConsulta("SELECT foto, nombre, minimo, maximo, cantidad, producto_id FROM producto WHERE producto_id ="+(Integer)tablaCodProd.getValueAt(i,0));
+                prod = new Producto(Imagen.blobToImageIcon((byte [])tablaProd.getValueAt(0,0)), (String)tablaProd.getValueAt(0,1), (Float)tablaProd.getValueAt(0, 2),
+                        (Float)tablaProd.getValueAt(0,3), (Float)tablaProd.getValueAt(0,4), (Integer)tablaProd.getValueAt(0,5));
+                listaProd.add(prod);
             }
         }
-        else {
-            // Obtenemos la lista de Elementos de la SeccionComida
-            ArrayList<ElementoPlato> listaElementoPlato = ((SeccionComida)seccion).getListaElementoPlato();
-            Iterator it = listaElementoPlato.iterator();
-            // Para cada uno de los elementos, obtenemos sus Ingredientes
-            while (it.hasNext()) {
-                ElementoPlato elementoPlato = (ElementoPlato)it.next();
-                ArrayList<Ingrediente> listaIngredientes = elementoPlato.getListaIngredientes();
-                Iterator it2 = listaIngredientes.iterator();
-                // Cada ingrediente lo guardamos en la lista de productos (producto == ingrediente)
-                while (it2.hasNext()) {
-                    Ingrediente ingrediente = (Ingrediente)it2.next();
-                    productos.add(ingrediente);
-                }
+        // Comprobamos si la seccion pertenece a una seccionComida
+        tabla = this.almacen.realizaConsulta("SELECT seccion_seccion_id FROM seccioncomida WHERE seccion_seccion_id ="+seccion.getCodigoSeccion());
+        System.out.println("SECCION = "+seccion.getCodigoSeccion());
+        if (tabla.getRowCount() > 0) {
+            // Obtenemos todos los productos que pertenecen a seccionComida
+            tablaCodProd = this.almacen.realizaConsulta("SELECT DISTINCT tieneingrediente.productoIngrediente_producto_producto_id  FROM incluyeplato, seccioncomida, tieneingrediente " +
+                    "WHERE incluyeplato.seccionComida_seccion_seccion_id = seccionComida.seccion_seccion_id AND incluyeplato.elementoPlato_elemento_elemento_id = tieneingrediente.elementoComida_elemento_elemento_id");
+           // Para cada uno de ellos obtenemos sus datos e insertamos en la lista
+            System.out.println("LONGITUD = "+ tablaCodProd.getRowCount());
+            for(int i=0;i<tablaCodProd.getRowCount();i++) {
+                tablaProd = this.almacen.realizaConsulta("SELECT foto, nombre, minimo, maximo, cantidad, producto_id FROM producto WHERE producto_id ="+(Integer)tablaCodProd.getValueAt(i,0));
+                prod = new Producto(Imagen.blobToImageIcon((byte [])tablaProd.getValueAt(0,0)), (String)tablaProd.getValueAt(0,1), (Float)tablaProd.getValueAt(0, 2),
+                        (Float)tablaProd.getValueAt(0,3), (Float)tablaProd.getValueAt(0,4), (Integer)tablaProd.getValueAt(0,5));
+                listaProd.add(prod);
             }
         }
-        return productos;
+        System.out.println("Longitud = "+ listaProd.size());
+        return listaProd;
     }
 
     /**
