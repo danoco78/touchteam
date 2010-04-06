@@ -51,7 +51,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         while(it.hasNext() && !actualizado){
             b = (Bebida) it.next();
             if (b.getCodPro() == producto.getCodPro()){
-                b.actualizarCantidad(cantidad - b.getCantidad());
+                b.actualizarCantidad(cantidad);
                 this.interfazAlmacenamiento.consultaDeModificacion("update producto set cantidad='"+cantidad+"' where producto_id='"+producto.getCodPro()+"'");
                 actualizado = true;
             }
@@ -61,7 +61,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         while(it.hasNext() && !actualizado){
             i = (Ingrediente) it.next();
             if (i.getCodPro() == producto.getCodPro()){
-                i.actualizarCantidad(cantidad - i.getCantidad());
+                i.actualizarCantidad(cantidad);
                 this.interfazAlmacenamiento.consultaDeModificacion("update producto set cantidad='"+cantidad+"' where producto_id='"+producto.getCodPro()+"'");
                 actualizado = true;
             }
@@ -151,10 +151,13 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         while(it.hasNext() && !eliminado){
             b = (Bebida) it.next();
             if (b.getCodPro() == codPro){
+                System.out.println("Aqui estamos con "+b.getNombre());
                 this.carta.invalidaElementoCarta(b);
-                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
+                System.out.println("Despues de invalidar");
+                //this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaBebidas.remove(b);
+                System.out.println("Despues de remove");
                 eliminado = true;
             }
         }
@@ -163,7 +166,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             i = (Ingrediente) it.next();
             if (i.getCodPro() == codPro){
                 this.carta.invalidaElementoCarta(i);
-                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
+                //this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaIngredientes.remove(i);
                 eliminado = true;
@@ -189,7 +192,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.listaBebidas.get(i).setMaximo(maximo);
                 this.listaBebidas.get(i).setMinimo(minimo);
                 this.listaBebidas.get(i).setFoto(imagen);
-                this.listaBebidas.get(i).actualizarCantidad(cantidad - this.listaBebidas.get(i).getCantidad());
+                this.listaBebidas.get(i).actualizarCantidad(cantidad);
                 this.interfazAlmacenamiento.consultaDeModificacion
                         ("update producto set "+"cantidad='"+cantidad+"', maximo='"+maximo+
                          "', minimo='"+minimo+"', nombre='"+nombre+"' where producto_id='"+codigoProducto+"'");
@@ -204,7 +207,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                 this.listaIngredientes.get(i).setMaximo(maximo);
                 this.listaIngredientes.get(i).setMinimo(minimo);
                 this.listaIngredientes.get(i).setFoto(imagen);
-                this.listaIngredientes.get(i).actualizarCantidad(cantidad - this.listaIngredientes.get(i).getCantidad());
+                this.listaIngredientes.get(i).actualizarCantidad(cantidad);
                 this.interfazAlmacenamiento.consultaDeModificacion
                         ("update producto set "+"cantidad='"+cantidad+"', maximo='"+maximo+
                          "', minimo='"+minimo+"', nombre='"+nombre+"' where producto_id='"+codigoProducto+"'");
