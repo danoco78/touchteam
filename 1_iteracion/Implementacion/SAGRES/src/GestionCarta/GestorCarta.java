@@ -25,6 +25,8 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     //ArrayList<ElementoPlato> listaElementosPlato;
     Carta carta;
     ArrayList<Seccion> listaSecciones;
+    ArrayList<SeccionComida> listaSeccionComida;
+    ArrayList<SeccionBebida> listaSeccionBebida;
     IAlmacenamiento almacen;
     IProducto producto;
 
@@ -41,13 +43,13 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         // Construimos la lista de Secciones de Bebida
         tabla = this.almacen.realizaConsulta("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionbebida WHERE seccion.seccion_id = seccionbebida.seccion_seccion_id");
         for (int i=0;i<tabla.getRowCount();i++) {
-            SeccionBebida seccion = new SeccionBebida((String)tabla.getValueAt(i,1),this.carta);
+            SeccionBebida seccion = new SeccionBebida((Integer)tabla.getValueAt(i,0),(String)tabla.getValueAt(i,1),this.carta);
             this.listaSecciones.add(seccion);
         }
         // Construimos la lista de Secciones de Comida
         tabla = this.almacen.realizaConsulta("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccioncomida WHERE seccion.seccion_id = seccioncomida.seccion_seccion_id");
         for (int i=0;i<tabla.getRowCount();i++) {
-            SeccionComida seccion = new SeccionComida((String)tabla.getValueAt(i,1),this.carta);
+            SeccionComida seccion = new SeccionComida((Integer)tabla.getValueAt(i,0),(String)tabla.getValueAt(i,1),this.carta);
             this.listaSecciones.add(seccion);
         }
 
@@ -409,12 +411,39 @@ public class GestorCarta implements IPreparaCarta, ICarta {
      * @param seccion Sección de la cual queremos sus elementos
      * @return Lista de elementos de la sección especificada
      */
-    public ArrayList obtenElementosDeSeccion(Seccion seccion) {
-        if (seccion.getClass()==SeccionBebida.class)
-            return ((SeccionBebida)seccion).getListaElementoBebida();
-        else if (seccion.getClass()==SeccionBebida.class)
-            return ((SeccionComida)seccion).getListaElementoPlato();
-        return new ArrayList();
+    public ArrayList<Elemento> obtenElementosDeSeccion(Seccion seccion) {
+        System.out.println(seccion.getCodigoSeccion());
+        System.out.println(seccion.getNombre());
+        ArrayList<Elemento> listaElem = new ArrayList<Elemento>();
+        TableModel tablaSeccion;
+        tablaSeccion = almacen.realizaConsulta("SELECT seccionBebida_seccion_seccion_id, elementoBebida_elemento_elemento_id FROM incluyeBebida WHERE seccionBebida_seccion_seccion_id = "+seccion.getCodigoSeccion());
+        Iterator itElemento;
+        Elemento elemento;
+        if (tablaSeccion.getRowCount() > 0) {
+            for(int i=0;i<tablaSeccion.getRowCount();i++) {
+                itElemento = this.listaElementos.iterator();
+
+                while(itElemento.hasNext()) {
+                    elemento = (Elemento)itElemento.next();
+                    if ((Integer)tablaSeccion.getValueAt(i,1) == elemento.getCodigoElemento())
+                        listaElem.add(elemento);
+                }
+            }
+        }
+        tablaSeccion = almacen.realizaConsulta("SELECT seccionComida_seccion_seccion_id, elementoPlato_elemento_elemento_id FROM incluyePlato WHERE seccionComida_seccion_seccion_id = "+seccion.getCodigoSeccion());
+        if (tablaSeccion.getRowCount() > 0) {
+            for(int i=0;i<tablaSeccion.getRowCount();i++) {
+                itElemento = this.listaElementos.iterator();
+                while(itElemento.hasNext()) {
+                    elemento = (Elemento)itElemento.next();
+                    if ((Integer)tablaSeccion.getValueAt(i,1) == elemento.getCodigoElemento()) {
+                        listaElem.add(elemento);
+                        //System.out.println(((Elemento)itElemento.next()).getCodigoElemento());
+                    }
+                }
+            }
+        }
+        return listaElem;
     }
 
     /**

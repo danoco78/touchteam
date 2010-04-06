@@ -8,11 +8,13 @@ package GestionCarta;
 public class Seccion {
     Carta carta;
     public String nombre;
+    int codigoSeccion;
 
 
-    public Seccion(String nombre, Carta carta) {
+    public Seccion(int codigoSeccion, String nombre, Carta carta) {
         this.nombre = nombre;
         this.carta = carta;
+        this.codigoSeccion = codigoSeccion;
     }
 
     /**
@@ -23,5 +25,9 @@ public class Seccion {
         return this.nombre;
     }
 
-   public void anadeElemento(Elemento elemento){}
+    public int getCodigoSeccion() {
+        return this.codigoSeccion;
+    }
+
+   //public void anadeElemento(Elemento elemento){}
 }

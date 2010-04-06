@@ -12,11 +12,12 @@ public class SeccionComida extends Seccion {
 
     ArrayList<ElementoPlato> listaElementoPlato;
 
-    public SeccionComida(String nombre, Carta carta) {
-        super(nombre, carta);
+    public SeccionComida(int codigoSeccion, String nombre, Carta carta) {
+        super(codigoSeccion, nombre, carta);
+        listaElementoPlato = new ArrayList<ElementoPlato>();
     }
 
-    @Override
+    //@Override
     public void anadeElemento(Elemento elementoPlato) {
         listaElementoPlato.add((ElementoPlato) elementoPlato);
     }
