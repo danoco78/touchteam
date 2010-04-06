@@ -31,7 +31,7 @@ public class Main {
         /*AdminJDBC baseDeDatos = new AdminJDBC(properties.getProperty("host"),
                 properties.getProperty("user"),
                 properties.getProperty("pass"));*/
-        AdminJDBC baseDeDatos = new AdminJDBC("192.168.2.74/touchteam",
+        AdminJDBC baseDeDatos = new AdminJDBC("localhost/touchteam",
                 "touch",
                 "team");
         baseDeDatos.conecta();
