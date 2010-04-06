@@ -324,6 +324,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
             try {
                 this.gestorProducto.eliminarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro());
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
             setVisible(false);
             dispose();

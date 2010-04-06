@@ -63,7 +63,7 @@ public class GestorIncidencia implements IIncidencia {
         this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_RELACION
                 + (Integer) datos.getValueAt(0, 0) + ", " + producto.getCodPro() + GestorIncidencia.FIN_INSERTAR);
         try {
-            this.gestorProductos.actualizaCantidadProducto(producto, cantidadAfectada);
+            this.gestorProductos.actualizaCantidadProducto(producto,producto.getCantidad()-cantidadAfectada);
         } catch (Exception ex) {
             Logger.getLogger(GestorIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }

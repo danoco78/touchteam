@@ -50,7 +50,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarBedidas(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto, IProducto productos) {
-        super(parent, modal);
+        super(parent, false);
         initComponents();
         this.estado=1;
         this.gestorProducto = gestorProducto;
@@ -64,6 +64,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         this.tTablaBebidasDisponibles.setModel(tableModel);
         this.tTablaBebidasDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaBebidasDisponibles.setRowHeight(50);
+        this.tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 50*this.listaBebidas.size()));
+        this.tTablaBebidasDisponibles.setMaximumSize(new java.awt.Dimension(450, 50*this.listaBebidas.size()));
         for (int i = 0; i < this.listaBebidas.size(); i++) {
             this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
             this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
@@ -71,6 +73,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         }
         this.bAnterior.setEnabled(false);
         this.bSiguiente.setEnabled(false);
+        this.imagen = null;
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
     }
 
@@ -178,6 +181,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
             }
         });
         tTablaBebidasDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
+        tTablaBebidasDisponibles.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         tTablaBebidasDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
         tTablaBebidasDisponibles.getTableHeader().setReorderingAllowed(false);
@@ -217,6 +221,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -241,6 +250,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tMaximo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMaximo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMaximo);
 
         lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
@@ -257,6 +271,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tMinimo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMinimo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMinimo);
 
         lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
@@ -273,6 +292,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tDisponible.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tDisponible.setMinimumSize(new java.awt.Dimension(60, 10));
         tDisponible.setPreferredSize(new java.awt.Dimension(150, 10));
+        tDisponible.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tDisponible);
 
         lPorciones2.setFont(new java.awt.Font("Arial", 0, 14));
@@ -377,7 +401,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar la bebida a modificar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -482,7 +506,6 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 this.estado++;
                 cl.next(this.cuerpo);
                 this.bSiguiente.setText("Finalizar");
-                this.bSiguiente.setEnabled(false);
                 this.tNombre.setText(this.listaBebidas.get(this.bebidaSeleccionada).getNombre());
                 this.tMaximo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMaximo());
                 this.tMinimo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMinimo());
@@ -501,6 +524,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
             try {
+                if(this.imagen == null)
+                    this.imagen = this.listaBebidas.get(this.bebidaSeleccionada).getImagen();
                 this.gestorProducto.modificarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro(), this.tNombre.getText(), (Float) this.tDisponible.getValue(), (Float) this.tMinimo.getValue(), (Float) this.tMaximo.getValue(), imagen);
             } catch (Exception ex) {
             }
@@ -549,6 +574,15 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
             this.bSiguiente.setEnabled(false);
         }
     }//GEN-LAST:event_ValidarFormulario
+
+    private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
+            if ((this.tNombre.getText().length() != 0)
+                    && (Float)this.tCantidadPorEnvase.getValue() != 0
+                    && (Float)this.tMaximo.getValue() != 0
+                    && (Float)this.tMinimo.getValue() != 0
+                    && (Float)this.tMaximo.getValue() > (Float)this.tMinimo.getValue())
+                this.bSiguiente.setEnabled(true);
+    }//GEN-LAST:event_validarFormulario
 
 
 

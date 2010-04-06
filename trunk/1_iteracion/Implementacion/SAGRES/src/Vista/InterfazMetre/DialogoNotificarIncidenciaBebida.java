@@ -406,6 +406,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 this.bSiguiente.setText("Finalizar");
             break;
             case 2:
+                this.lNombre.setText(this.listaBebidas.get(this.bebidaSeleccionada).getNombre());
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea notificar la siguiente incidencia con la bebia?";
                 String texto = "Bebida afectada: "+this.lNombre.getText()+

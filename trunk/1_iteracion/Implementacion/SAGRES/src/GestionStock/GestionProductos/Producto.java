@@ -43,7 +43,7 @@ public class Producto {
      * @param cantidad Cantidad a aumentar o disminuir del stock del producto
      */
     public void actualizarCantidad(float cantidad){
-        this.cantidad += cantidad;
+        this.cantidad = cantidad;
     }
 
     /*
