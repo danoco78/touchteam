@@ -473,7 +473,6 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                     elemento = (Elemento)itElemento.next();
                     if ((Integer)tablaSeccion.getValueAt(i,1) == elemento.getCodigoElemento()) {
                         listaElem.add(elemento);
-                        //System.out.println(((Elemento)itElemento.next()).getCodigoElemento());
                     }
                 }
             }
@@ -546,13 +545,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         }
         // Comprobamos si la seccion pertenece a una seccionComida
         tabla = this.almacen.realizaConsulta("SELECT seccion_seccion_id FROM seccioncomida WHERE seccion_seccion_id ="+seccion.getCodigoSeccion());
-        System.out.println("SECCION = "+seccion.getCodigoSeccion());
         if (tabla.getRowCount() > 0) {
             // Obtenemos todos los productos que pertenecen a seccionComida
             tablaCodProd = this.almacen.realizaConsulta("SELECT DISTINCT tieneingrediente.productoIngrediente_producto_producto_id  FROM incluyeplato, seccioncomida, tieneingrediente " +
                     "WHERE incluyeplato.seccionComida_seccion_seccion_id = seccionComida.seccion_seccion_id AND incluyeplato.elementoPlato_elemento_elemento_id = tieneingrediente.elementoComida_elemento_elemento_id");
            // Para cada uno de ellos obtenemos sus datos e insertamos en la lista
-            System.out.println("LONGITUD = "+ tablaCodProd.getRowCount());
             for(int i=0;i<tablaCodProd.getRowCount();i++) {
                 tablaProd = this.almacen.realizaConsulta("SELECT foto, nombre, minimo, maximo, cantidad, producto_id FROM producto WHERE producto_id ="+(Integer)tablaCodProd.getValueAt(i,0));
                 prod = new Producto(Imagen.blobToImageIcon((byte [])tablaProd.getValueAt(0,0)), (String)tablaProd.getValueAt(0,1), (Float)tablaProd.getValueAt(0, 2),
@@ -560,7 +557,6 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                 listaProd.add(prod);
             }
         }
-        System.out.println("Longitud = "+ listaProd.size());
         return listaProd;
     }
 
