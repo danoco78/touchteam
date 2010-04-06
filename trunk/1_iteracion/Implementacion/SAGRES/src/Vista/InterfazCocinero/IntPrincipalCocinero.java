@@ -104,7 +104,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14));
+        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bGestionCarta.setForeground(new java.awt.Color(80, 98, 143));
         bGestionCarta.setText("Gestión de carta");
         bGestionCarta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -131,7 +131,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
 
         bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
-        bGestionIngredientes.setText("Gestion de Ingredientes");
+        bGestionIngredientes.setText("Gestión de Ingredientes");
         bGestionIngredientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bGestionIngredientes.setMaximumSize(new java.awt.Dimension(300, 200));
         bGestionIngredientes.setMinimumSize(new java.awt.Dimension(300, 200));
