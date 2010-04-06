@@ -1,13 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 package Vista.InterfazCocinero;
 
 import GestionCarta.Elemento;
@@ -21,14 +12,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoEliminarElemento extends javax.swing.JDialog {
 

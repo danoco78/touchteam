@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 
 package Vista.InterfazMetre;
 
@@ -27,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Daniel y Jose David Dionisio Ruiz
+ * @author Daniel Guerrero Martinez y Jose David Dionisio Ruiz
  */
 public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
 

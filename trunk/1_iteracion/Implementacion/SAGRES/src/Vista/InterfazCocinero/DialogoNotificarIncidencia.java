@@ -1,13 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 package Vista.InterfazCocinero;
 
 import GestionStock.GestionIncidencias.IIncidencia;
@@ -28,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoNotificarIncidencia extends javax.swing.JDialog {
 

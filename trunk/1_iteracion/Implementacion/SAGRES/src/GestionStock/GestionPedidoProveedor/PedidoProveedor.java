@@ -33,14 +33,15 @@ public class PedidoProveedor {
         this.fechaPedido = fechaHoy;
     }
 
-    /*
-     * Marca el estado del pedidoProveedor como recibido
+    /**
+     * Indica si el pedido fue recibido
+     * @return true si fue recibido, false en caso contrario.
      */
     public boolean fueRecibido() {
         return this.recibido;
     }
 
-    /*
+    /**
      * Obtiene el valor de la fecha que tiene el pedidoProveedor
      * @return Date objeto tipo fecha que contiene la fecha del pedidoProveedor.
      */
@@ -56,6 +57,10 @@ public class PedidoProveedor {
         this.recibido = recibido;
     }
 
+     /**
+     * Obtiene la lista de productos con la cantidad que fue pedida
+     * @return Devuelve un HashMap de productos como key y la cantidad que se pidio como valor.
+     */
     HashMap<Producto, Float> obtenerInfoPedido() {
         return this.listaProductos;
     }

@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 
 package Vista.InterfazCocinero;
 
@@ -33,7 +23,7 @@ import utilidades.ImageRenderer;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoModificarIngrediente extends javax.swing.JDialog {
 

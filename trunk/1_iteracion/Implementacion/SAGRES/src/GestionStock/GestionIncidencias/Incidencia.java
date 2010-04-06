@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class Incidencia {
 

@@ -1,8 +1,4 @@
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
+
 
 package Vista.InterfazCocinero;
 
@@ -20,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoAnadirIngrediente extends javax.swing.JDialog {
 

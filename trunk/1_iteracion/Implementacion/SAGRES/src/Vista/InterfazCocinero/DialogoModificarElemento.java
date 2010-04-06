@@ -1,9 +1,4 @@
 
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 package Vista.InterfazCocinero;
 
 import GestionCarta.Elemento;
@@ -32,7 +27,7 @@ import utilidades.ImageRenderer;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoModificarElemento extends java.awt.Dialog {
 

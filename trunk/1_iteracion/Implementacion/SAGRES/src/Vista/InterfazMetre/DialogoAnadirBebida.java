@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 
 package Vista.InterfazMetre;
 import Vista.DialogoComfirmacion;
@@ -24,7 +14,7 @@ import GestionStock.GestionProductos.IGestionarProducto;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoAnadirBebida extends java.awt.Dialog {
 
