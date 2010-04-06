@@ -93,7 +93,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         contenedorCentral.setLayout(new java.awt.GridBagLayout());
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
-        logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
+        logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
         contenedorCentral.add(logo, new java.awt.GridBagConstraints());
 
         cabecera.add(contenedorCentral, java.awt.BorderLayout.CENTER);
