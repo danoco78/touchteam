@@ -62,9 +62,9 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
-        this.bSeccion.setSelectedIndex(-1);
+        //this.bSeccion.setSelectedIndex(-1);
         this.bAnterior.setEnabled(false);
-        this.bSiguiente.setEnabled(false);
+        //this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter(new FileNameExtensionFilter("IMAGEN", "jpg", "jpeg", "png", "gif"));
     }
 
@@ -722,8 +722,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 String texto = "Nombre: " + this.tNombre.getText()
                         + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nPrecio: " + ((Float) this.tPrecio.getValue())
-                        + "\nPorciones: " + ((Float) this.tPorciones.getValue())
-                        + "\nPorciones: " + ((Float) this.tTiempo.getValue());
+                        + "\nPorciones: " + ((Integer) this.tPorciones.getValue())
+                        + "\nPorciones: " + ((Integer) this.tTiempo.getValue());
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
@@ -815,7 +815,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     }//GEN-LAST:event_seleccionaProducto
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
-        if (this.bSeccion.getSelectedIndex() > 0) {
+        if (this.bSeccion.getSelectedIndex() != -1) {
             ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
                     this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
             DefaultTableModel modelo = new DefaultTableModel();

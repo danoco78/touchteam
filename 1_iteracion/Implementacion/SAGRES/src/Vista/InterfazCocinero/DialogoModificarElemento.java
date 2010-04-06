@@ -67,7 +67,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
         this.bAnterior.setEnabled(false);
-        this.bSiguiente.setEnabled(false);
+        //this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter(new FileNameExtensionFilter("IMAGEN", "jpg", "jpeg", "png", "gif"));
     }
 
@@ -717,8 +717,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 String texto = "Nombre: " + this.tNombre.getText()
                         + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nPrecio: " + ((Float) this.tPrecio.getValue())
-                        + "\nPorciones: " + ((Float) this.tPorciones.getValue())
-                        + "\nPorciones: " + ((Float) this.tTiempo.getValue());
+                        + "\nPorciones: " + ((Integer) this.tPorciones.getValue())
+                        + "\nPorciones: " + ((Integer) this.tTiempo.getValue());
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
