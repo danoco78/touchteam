@@ -30,8 +30,8 @@ public class GestorImpresora implements IImpresion{
                 clave = ((Producto)entrada.getKey()).getNombre();
                 valor = ((Float)entrada.getValue()).toString();
                 linea = clave;
-                for (int i = 0; i < (35 - clave.length()); i++)
-                    linea += ".";
+                for (int i = 0; i < (45 - clave.length()); i++)
+                    linea += "_";
                 linea += valor;
                 texto.add(linea);
 	}

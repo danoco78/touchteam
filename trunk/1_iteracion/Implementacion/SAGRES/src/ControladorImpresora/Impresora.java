@@ -41,7 +41,7 @@ public class Impresora implements Printable {
              throws PrinterException {
 
     	int[] pageBreaks = null;  // array of page break line positions.
-        Font font = new Font("Serif", Font.PLAIN, 10);
+        Font font = new Font("Monospaced", Font.PLAIN, 10);
         FontMetrics metrics = g.getFontMetrics(font);
         int lineHeight = metrics.getHeight();
 
