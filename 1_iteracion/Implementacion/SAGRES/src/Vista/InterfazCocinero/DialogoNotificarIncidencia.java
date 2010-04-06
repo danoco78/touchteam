@@ -161,8 +161,8 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         });
         tTablaIngredientesDisponibles.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tTablaIngredientesDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
-        tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
-        tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
+        tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 3000));
+        tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 3000));
         tTablaIngredientesDisponibles.getTableHeader().setReorderingAllowed(false);
         tTablaIngredientesDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

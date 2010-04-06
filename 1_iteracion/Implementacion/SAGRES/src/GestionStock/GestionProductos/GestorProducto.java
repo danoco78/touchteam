@@ -151,13 +151,10 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         while(it.hasNext() && !eliminado){
             b = (Bebida) it.next();
             if (b.getCodPro() == codPro){
-                System.out.println("Aqui estamos con "+b.getNombre());
                 this.carta.invalidaElementoCarta(b);
-                System.out.println("Despues de invalidar");
-                //this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
+                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoBebida where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaBebidas.remove(b);
-                System.out.println("Despues de remove");
                 eliminado = true;
             }
         }
@@ -166,7 +163,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             i = (Ingrediente) it.next();
             if (i.getCodPro() == codPro){
                 this.carta.invalidaElementoCarta(i);
-                //this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
+                this.interfazAlmacenamiento.consultaDeModificacion("delete from productoIngrediente where producto_producto_id='"+codPro+"'");
                 this.interfazAlmacenamiento.consultaDeModificacion("delete from producto where producto_id='"+codPro+"'");
                 this.listaIngredientes.remove(i);
                 eliminado = true;
@@ -236,9 +233,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(foto));
             this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
             Bebida b = new Bebida(codPro, nombre, foto, minimo, maximo, cantidad);
-            System.out.println(this.listaBebidas.size());
             this.listaBebidas.add(b);
-            System.out.println(this.listaBebidas.size());
         }
         else{
             ImageIcon defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
@@ -246,9 +241,7 @@ public class GestorProducto implements IGestionarProducto,IProducto{
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(defaultPhoto));
             this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
             Bebida b = new Bebida(codPro, nombre, defaultPhoto, minimo, maximo, cantidad);
-            System.out.println(this.listaBebidas.size());
             this.listaBebidas.add(b);
-            System.out.println(this.listaBebidas.size());
         }
     }
 
@@ -275,7 +268,6 @@ public class GestorProducto implements IGestionarProducto,IProducto{
             ImageIcon defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
             this.interfazAlmacenamiento.consultaDeModificacionBlob
                         ("update producto set foto=? where producto_id='"+codPro+"'",Imagen.imageIconToByteArray(defaultPhoto));
-            this.interfazAlmacenamiento.consultaDeModificacion("insert into productoBebida values('"+codPro+"')");
         this.interfazAlmacenamiento.consultaDeModificacion("insert into productoIngrediente values('"+codPro+"')");
         Ingrediente i = new Ingrediente(codPro, nombre, cantidad, maximo, minimo, foto);
         this.listaIngredientes.add(i);
