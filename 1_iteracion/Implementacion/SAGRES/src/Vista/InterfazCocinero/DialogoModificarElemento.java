@@ -13,6 +13,7 @@ import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.Bebida;
+import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
@@ -49,15 +50,17 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private int estado = 1;
     private ICarta gestorCarta;
     private IPreparaCarta carta;
+    private IProducto gestorProducto;
     private ArrayList disponibles;
     private ArrayList seleccionados;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta) {
+    public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta,IProducto GestorProducto) {
         super(parent, true);
         initComponents();
         this.gestorCarta = GestorCarta;
         this.carta = Carta;
+        this.gestorProducto = GestorProducto;
         this.estado = 1;
         ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
         for (int i = 0; i < listaSecciones.size(); i++) {
@@ -184,7 +187,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -201,7 +204,9 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 return types [columnIndex];
             }
         });
+        tProductoSeccion.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tProductoSeccion.setGridColor(new java.awt.Color(211, 223, 253));
+        tProductoSeccion.setMaximumSize(new java.awt.Dimension(2147483647, 2134212));
         tProductoSeccion.setMinimumSize(new java.awt.Dimension(300, 400));
         tProductoSeccion.setOpaque(false);
         tProductoSeccion.setPreferredSize(new java.awt.Dimension(300, 400));
@@ -577,16 +582,16 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lTitulo.setText("Añadir nuevo elemento a carta");
+        lTitulo.setText("Modificar elemento a carta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 130;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
@@ -815,7 +820,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.tPorciones.setValue(elemento.getDivisionesMaximas());
             this.tPrecio.setValue(elemento.getPrecio());
             this.TImgen.setText("Imagen Actual");
-            ArrayList<Producto> listaProductos = this.gestorCarta.obtenProductosDeSeccion(this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            ArrayList<Producto> listaProductos = this.gestorProducto.obtenerListaProductos();
             disponibles = new ArrayList<Producto>(listaProductos);
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
@@ -849,7 +854,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     }//GEN-LAST:event_seleccionarElemento
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
-        if (this.bSeccion.getSelectedIndex() > 0) {
+        if (this.bSeccion.getSelectedIndex() != -1) {
             ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
                     this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
             DefaultTableModel modelo = new DefaultTableModel();

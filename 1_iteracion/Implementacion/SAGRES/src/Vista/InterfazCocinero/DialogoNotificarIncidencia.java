@@ -108,7 +108,6 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
 
         dSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -160,6 +159,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tTablaIngredientesDisponibles.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tTablaIngredientesDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
         tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
@@ -256,7 +256,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pAlertas.setPreferredSize(new java.awt.Dimension(114, 150));
         pAlertas.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        lAlertas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lAlertas.setFont(new java.awt.Font("Arial", 0, 14));
         lAlertas.setForeground(new java.awt.Color(80, 98, 143));
         lAlertas.setText("No habilitado");
         pAlertas.add(lAlertas);
@@ -282,7 +282,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
 
         cuerpo.add(pPaso2, "Paso2");
 
-        add(cuerpo, java.awt.BorderLayout.CENTER);
+        getContentPane().add(cuerpo, java.awt.BorderLayout.CENTER);
 
         cabecera.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
@@ -345,7 +345,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         gridBagConstraints.gridheight = 2;
         cabecera.add(bCancelar, gridBagConstraints);
 
-        add(cabecera, java.awt.BorderLayout.NORTH);
+        getContentPane().add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
@@ -389,7 +389,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 9, 9, 80);
         pie.add(bAnterior, gridBagConstraints);
 
-        add(pie, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(pie, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

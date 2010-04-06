@@ -12,13 +12,19 @@
 package Vista.InterfazCocinero;
 
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
+import GestionStock.GestionProductos.IGestionarProducto;
+import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Producto;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -29,13 +35,23 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
 
     private ImageIcon imagen;
     private IPedidoProveedor gestorPedido;
+    private IProducto gestorProducto;
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, boolean modal,IPedidoProveedor GestorPedido) {
-        super(parent, modal);
+    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, IProducto GestorProducto,IPedidoProveedor GestorPedido) {
+        super(parent, true);
         initComponents();
         this.gestorPedido = GestorPedido;
+        this.gestorProducto = GestorProducto;
+        DefaultTableModel modelo = (DefaultTableModel)this.tTablaProductos.getModel();
+        ArrayList<Producto> lista = this.gestorProducto.obtenerProductosBajoMinimos();
+        for (int i = 0; i < lista.size(); i++) {
+            Object [] obj = new Object[2];
+            obj[0] = lista.get(i).getNombre();
+            obj[1] = lista.get(i).getMaximo()-lista.get(i).getCantidad();
+            modelo.addRow(obj);
+        }
     }
 
 
@@ -166,7 +182,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         tTablaProductos.setForeground(new java.awt.Color(80, 98, 143));
         tTablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"NO HABILITADO", null}
+
             },
             new String [] {
                 "Nombre", "Cantidad"
@@ -201,7 +217,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         gridBagConstraints.ipady = 280;
         cuerpo.add(jScrollPane2, gridBagConstraints);
 
-        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 14));
         lProductosAPedir.setForeground(new java.awt.Color(80, 98, 143));
         lProductosAPedir.setText("Se van a pedir los siguientes productos");
         lProductosAPedir.setPreferredSize(new java.awt.Dimension(175, 50));
