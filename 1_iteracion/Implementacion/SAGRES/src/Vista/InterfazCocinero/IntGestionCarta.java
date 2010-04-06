@@ -102,24 +102,30 @@ public class IntGestionCarta extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bAnadirElemento.setForeground(new java.awt.Color(80, 98, 143));
+        bAnadirElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/anadirElemento.png"))); // NOI18N
         bAnadirElemento.setText("Añadir elemento");
         bAnadirElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bAnadirElemento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAnadirElemento.setMaximumSize(new java.awt.Dimension(300, 200));
         bAnadirElemento.setMinimumSize(new java.awt.Dimension(300, 200));
         bAnadirElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bAnadirElemento.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirElemento, gridBagConstraints);
 
-        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bEleminarElemento.setForeground(new java.awt.Color(80, 98, 143));
+        bEleminarElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/EliminarElemento.png"))); // NOI18N
         bEleminarElemento.setText("Eliminar elemento");
         bEleminarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bEleminarElemento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bEleminarElemento.setMaximumSize(new java.awt.Dimension(300, 200));
         bEleminarElemento.setMinimumSize(new java.awt.Dimension(300, 200));
         bEleminarElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bEleminarElemento.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -127,13 +133,16 @@ public class IntGestionCarta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarElemento, gridBagConstraints);
 
-        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bModificarElemento.setForeground(new java.awt.Color(80, 98, 143));
+        bModificarElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/ModificarElemento.png"))); // NOI18N
         bModificarElemento.setText("Modificar elemento");
         bModificarElemento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bModificarElemento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bModificarElemento.setMaximumSize(new java.awt.Dimension(300, 200));
         bModificarElemento.setMinimumSize(new java.awt.Dimension(300, 200));
         bModificarElemento.setPreferredSize(new java.awt.Dimension(300, 200));
+        bModificarElemento.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
