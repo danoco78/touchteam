@@ -129,9 +129,9 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
 
-        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14));
+        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
-        bGestionIngredientes.setText("Gestion de Infredientes");
+        bGestionIngredientes.setText("Gestion de Ingredientes");
         bGestionIngredientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bGestionIngredientes.setMaximumSize(new java.awt.Dimension(300, 200));
         bGestionIngredientes.setMinimumSize(new java.awt.Dimension(300, 200));
