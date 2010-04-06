@@ -11,13 +11,14 @@ import java.util.ArrayList;
 public class SeccionBebida extends Seccion {
     ArrayList<ElementoBebida> listaElementoBebida;
 
-    public SeccionBebida(String nombre, Carta carta) {
-        super(nombre,carta);
+    public SeccionBebida(int codigoSeccion, String nombre, Carta carta) {
+        super(codigoSeccion, nombre,carta);
+        listaElementoBebida = new ArrayList<ElementoBebida>();
     }
 
-    @Override
-    public void anadeElemento(Elemento elementoBebida) {
-        listaElementoBebida.add((ElementoBebida) elementoBebida);
+    //@Override
+    public void anadeElemento(ElementoBebida elementoBebida) {
+        listaElementoBebida.add(elementoBebida);
     }
 
     public ArrayList<ElementoBebida> getListaElementoBebida() {
