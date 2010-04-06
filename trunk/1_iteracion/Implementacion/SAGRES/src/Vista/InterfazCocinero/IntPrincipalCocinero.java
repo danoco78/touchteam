@@ -92,7 +92,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         contenedorCentral.setOpaque(false);
         contenedorCentral.setLayout(new java.awt.GridBagLayout());
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
         logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/LogoSagres.png"))); // NOI18N
         contenedorCentral.add(logo, new java.awt.GridBagConstraints());
 
@@ -104,7 +104,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionCarta.setForeground(new java.awt.Color(80, 98, 143));
         bGestionCarta.setText("Gestión de carta");
         bGestionCarta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -129,7 +129,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
 
-        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         bGestionIngredientes.setText("Gestión de Ingredientes");
         bGestionIngredientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

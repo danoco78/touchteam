@@ -111,7 +111,7 @@
             <Component class="javax.swing.JLabel" name="logo">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Vista/InterfazCocinero/LogoSagres.png"/>
+                  <Image iconType="3" name="/Vista/InterfazCocinero/imagenes/LogoSagres.png"/>
                 </Property>
                 <Property name="disabledIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Vista/InterfazCocinero/LogoSagres.png"/>
