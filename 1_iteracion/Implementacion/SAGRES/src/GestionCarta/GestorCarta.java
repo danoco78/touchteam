@@ -171,7 +171,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // Obtenemos de la BD todas las bebidas del elemento
             consulta = "SELECT producto.producto_id, producto.nombre, producto.foto, producto.minimo, producto.maximo, producto.cantidad FROM tienebebida, producto WHERE" +
                     " tieneBebida.productoBebida_producto_producto_id" +
-                    " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
+                    " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
             tablaBebida = almacen.realizaConsulta(consulta);
             // Para cada bebida obtenida de la BD, creamos su objeto e insertamos en multiobjeto
             for (int j=0;j<tablaBebida.getRowCount();j++) {
@@ -375,13 +375,13 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             seccion.anadeElemento(elementoBebida);
             this.listaElementos.add(elementoBebida); // Quitarlo si se elimina
             //this.listaElementosBebida.add(elementoBebida);
-            consulta = "INSERT INTO elementoBebida VALUES("+id_elemento+")";
+            consulta = "INSERT INTO elementobebida VALUES("+id_elemento+")";
             almacen.consultaDeModificacion(consulta);
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
             Iterator it = listaBebidas.iterator();
             while (it.hasNext()) {
                 Bebida bebida = (Bebida)it.next();
-                consulta = "INSERT INTO tieneBebida VALUES("+id_elemento+","+bebida.getCodPro()+")";
+                consulta = "INSERT INTO tienebebida VALUES("+id_elemento+","+bebida.getCodPro()+")";
                 almacen.consultaDeModificacion(consulta);
             }
             // Obtenemos elemento de la BD para insertarlo en el multiobjeto
@@ -426,13 +426,13 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             seccion.anadeElemento(elementoPlato);
             this.listaElementos.add(elementoPlato); // Quitarlo si se elimina
             //this.listaElementosPlato.add(elementoPlato);
-            consulta = "INSERT INTO elementoPlato VALUES('"+id_elemento+"','"+tiempoElaboracion+"')";
+            consulta = "INSERT INTO elementoplato VALUES('"+id_elemento+"','"+tiempoElaboracion+"')";
             almacen.consultaDeModificacion(consulta);
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
             Iterator it = listaIngredientes.iterator();
             while (it.hasNext()) {
                 Ingrediente ingrediente = (Ingrediente)it.next();
-                consulta = "INSERT INTO tieneIngrediente VALUES("+id_elemento+","+ingrediente.getCodPro()+")";
+                consulta = "INSERT INTO tieneingrediente VALUES("+id_elemento+","+ingrediente.getCodPro()+")";
                 almacen.consultaDeModificacion(consulta);
             }
             // Obtenemos elemento de la BD para insertarlo en el multiobjeto
