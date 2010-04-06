@@ -47,8 +47,8 @@ public class Main {
         dCarga.Progreso(90);
         GestorProveedor pedido = new GestorProveedor(producto, producto, carta, baseDeDatos, impresora );
         dCarga.Progreso(100);
-        InterfazMetre interfaz = new InterfazMetre(incidencia, producto, producto);
-        //InterfazCocinero interfaz = new InterfazCocinero(incidencia, producto, producto, pedido, carta, carta);
+        //InterfazMetre interfaz = new InterfazMetre(incidencia, producto, producto);
+        InterfazCocinero interfaz = new InterfazCocinero(incidencia, producto, producto, pedido, carta, carta);
         dCarga.setVisible(false);
         dCarga.dispose();
         interfaz.setVisible(true);

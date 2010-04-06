@@ -64,8 +64,6 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         this.tTablaBebidasDisponibles.setModel(tableModel);
         this.tTablaBebidasDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaBebidasDisponibles.setRowHeight(50);
-        this.tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 50*this.listaBebidas.size()));
-        this.tTablaBebidasDisponibles.setMaximumSize(new java.awt.Dimension(450, 50*this.listaBebidas.size()));
         for (int i = 0; i < this.listaBebidas.size(); i++) {
             this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
             this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
@@ -182,8 +180,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         });
         tTablaBebidasDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
         tTablaBebidasDisponibles.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
-        tTablaBebidasDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
+        tTablaBebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 3000));
+        tTablaBebidasDisponibles.setPreferredSize(new java.awt.Dimension(450, 3000));
         tTablaBebidasDisponibles.getTableHeader().setReorderingAllowed(false);
         tTablaBebidasDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

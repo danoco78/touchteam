@@ -115,7 +115,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el ingrediente a eliminar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -134,7 +134,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -218,8 +218,8 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
             }
         });
         tTablaIngredientes.setGridColor(new java.awt.Color(211, 223, 253));
-        tTablaIngredientes.setMinimumSize(new java.awt.Dimension(450, 250));
-        tTablaIngredientes.setPreferredSize(new java.awt.Dimension(450, 250));
+        tTablaIngredientes.setMinimumSize(new java.awt.Dimension(450, 3000));
+        tTablaIngredientes.setPreferredSize(new java.awt.Dimension(450, 3000));
         tTablaIngredientes.getTableHeader().setReorderingAllowed(false);
         tTablaIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -237,6 +237,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(20, 8, 8, 8);
         cuerpo.add(pProductosDisponibles, gridBagConstraints);
+        pProductosDisponibles.getAccessibleContext().setAccessibleName("Ingrediente a eliminar");
 
         pAtributoPlato2.setBackground(new java.awt.Color(255, 255, 255));
         pAtributoPlato2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se deshabilitarán los siguientes elementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
@@ -248,7 +249,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        tTablaDeshabilitados.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaDeshabilitados.setFont(new java.awt.Font("Arial", 0, 14));
         tTablaDeshabilitados.setForeground(new java.awt.Color(80, 98, 143));
         tTablaDeshabilitados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
