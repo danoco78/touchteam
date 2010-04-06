@@ -169,7 +169,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         ElementoBebida elementoBebida;
         for (int i=0;i<tabla.getRowCount();i++) {
             // Obtenemos de la BD todas las bebidas del elemento
-            consulta = "SELECT producto.producto_id, producto.nombre, producto.foto, producto.minimo, producto.maximo, producto.cantidad FROM tieneBebida, producto WHERE" +
+            consulta = "SELECT producto.producto_id, producto.nombre, producto.foto, producto.minimo, producto.maximo, producto.cantidad FROM tienebebida, producto WHERE" +
                     " tieneBebida.productoBebida_producto_producto_id" +
                     " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
             tablaBebida = almacen.realizaConsulta(consulta);
@@ -204,7 +204,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         ElementoPlato elementoPlato;
         for (int i=0;i<tabla.getRowCount();i++) {
             // Obtenemos de la BD todos los ingredientes del elemento
-            consulta = "SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM tieneIngrediente, producto WHERE " +
+            consulta = "SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM tieneingrediente, producto WHERE " +
                     "tieneIngrediente.productoIngrediente_producto_producto_id" +
                     " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id ='"+tabla.getValueAt(i,0)+"')";
             tablaPlato = almacen.realizaConsulta(consulta);
@@ -453,7 +453,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         System.out.println(seccion.getNombre());
         ArrayList<Elemento> listaElem = new ArrayList<Elemento>();
         TableModel tablaSeccion;
-        tablaSeccion = almacen.realizaConsulta("SELECT seccionBebida_seccion_seccion_id, elementoBebida_elemento_elemento_id FROM incluyeBebida WHERE seccionBebida_seccion_seccion_id = "+seccion.getCodigoSeccion());
+        tablaSeccion = almacen.realizaConsulta("SELECT seccionBebida_seccion_seccion_id, elementoBebida_elemento_elemento_id FROM incluyebebida WHERE seccionBebida_seccion_seccion_id = "+seccion.getCodigoSeccion());
         Iterator itElemento;
         Elemento elemento;
         if (tablaSeccion.getRowCount() > 0) {
@@ -467,7 +467,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                 }
             }
         }
-        tablaSeccion = almacen.realizaConsulta("SELECT seccionComida_seccion_seccion_id, elementoPlato_elemento_elemento_id FROM incluyePlato WHERE seccionComida_seccion_seccion_id = "+seccion.getCodigoSeccion());
+        tablaSeccion = almacen.realizaConsulta("SELECT seccionComida_seccion_seccion_id, elementoPlato_elemento_elemento_id FROM incluyeplato WHERE seccionComida_seccion_seccion_id = "+seccion.getCodigoSeccion());
         if (tablaSeccion.getRowCount() > 0) {
             for(int i=0;i<tablaSeccion.getRowCount();i++) {
                 itElemento = this.listaElementos.iterator();
