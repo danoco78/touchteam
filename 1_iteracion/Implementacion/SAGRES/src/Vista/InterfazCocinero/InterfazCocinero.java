@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * InterfazMetre.java
- *
- * Created on 01-abr-2010, 13:32:37
- */
 
 package Vista.InterfazCocinero;
 
@@ -25,7 +15,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class InterfazCocinero extends javax.swing.JFrame {
 

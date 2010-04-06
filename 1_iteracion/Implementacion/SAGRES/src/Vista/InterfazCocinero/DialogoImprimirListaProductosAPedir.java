@@ -1,18 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 
 package Vista.InterfazCocinero;
 
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
-import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.awt.Color;
@@ -24,11 +14,10 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
 

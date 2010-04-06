@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * IntGestionCarta.java
- *
- * Created on 28-mar-2010, 17:14:59
- */
 
 package Vista.InterfazCocinero;
 
@@ -19,7 +9,7 @@ import java.awt.Rectangle;
 
 /**
  *
- * @author Daniel
+ * @author Daniel Guerrero Martinez
  */
 public class IntGestionIngrediente extends javax.swing.JPanel {
 

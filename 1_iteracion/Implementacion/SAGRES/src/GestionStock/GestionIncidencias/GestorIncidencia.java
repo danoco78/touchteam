@@ -50,6 +50,12 @@ public class GestorIncidencia implements IIncidencia {
         this.incidencias = this.convertirTablaAIncidencia(datos);
     }
 
+    /*
+     * Añade al Sistema una nueva incidencia.
+     * @param tipoIncidencia Una descripcion de lo ocurrido.
+     * @param cantidadAfectada Cantidad de producto que fue desperdifiada deberia de ser mayor que 0
+     * @param producto Tipo de producto que sufrio el incidente
+     */
     public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) {
         Calendar c = Calendar.getInstance();
         boolean b = this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA + "'"
@@ -63,12 +69,18 @@ public class GestorIncidencia implements IIncidencia {
         this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_RELACION
                 + (Integer) datos.getValueAt(0, 0) + ", " + producto.getCodPro() + GestorIncidencia.FIN_INSERTAR);
         try {
-            this.gestorProductos.actualizaCantidadProducto(producto,producto.getCantidad()-cantidadAfectada);
+            this.gestorProductos.actualizaCantidadProducto(producto, producto.getCantidad() - cantidadAfectada);
         } catch (Exception ex) {
             Logger.getLogger(GestorIncidencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /*
+     * Dada una tabla con los datos obtenidos con la consulta contenida en la variable TABLAINCIDENCIAS
+     * se contruye una lista de incidencias.
+     * @param tabla La tabla debe contener los datos obtenidos tras realizar la consulta
+     * @return devuelve una lista de objetos incidencias con los datos obtenidos de la tabla.
+     */
     private ArrayList<Incidencia> convertirTablaAIncidencia(TableModel tabla) {
         ArrayList<Producto> listaProductos = this.almacenProductos.obtenerListaProductos();
         ArrayList<Incidencia> almacenIncidencias = new ArrayList<Incidencia>();

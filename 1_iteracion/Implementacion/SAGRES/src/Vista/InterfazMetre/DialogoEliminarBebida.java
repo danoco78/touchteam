@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * DialogoAnadirElemento.java
- *
- * Created on 31-mar-2010, 11:36:27
- */
 
 package Vista.InterfazMetre;
 
@@ -16,10 +6,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import Vista.DialogoComfirmacion;
 import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
@@ -29,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Daniel y Jose David Dionisio Ruiz
+ * @author Daniel Guerrero Martinez y Jose David Dionisio Ruiz
  */
 public class DialogoEliminarBebida extends java.awt.Dialog {
 
