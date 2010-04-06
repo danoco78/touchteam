@@ -23,14 +23,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.Object;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import utilidades.ImageRenderer;
@@ -53,9 +50,10 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private IProducto gestorProducto;
     private ArrayList disponibles;
     private ArrayList seleccionados;
+    private ImageIcon imagen;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta,IProducto GestorProducto) {
+    public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto) {
         super(parent, true);
         initComponents();
         this.gestorCarta = GestorCarta;
@@ -738,11 +736,11 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                     if (seccion.getClass() == SeccionComida.class) {
                         this.carta.nuevoElementoPlato((ArrayList<Ingrediente>) this.seleccionados, (SeccionComida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()), (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
+                                this.imagen, (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
                     } else {
                         this.carta.nuevoElementoBebida((ArrayList<Bebida>) this.seleccionados, (SeccionBebida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()), (Integer) this.tPorciones.getValue());
+                                this.imagen, (Integer) this.tPorciones.getValue());
                     }
                     setVisible(false);
                     dispose();
@@ -777,6 +775,12 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private void examinar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_examinar
         if (this.dSelector.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             this.TImgen.setText(this.dSelector.getSelectedFile().getAbsolutePath());
+            File f = new File(this.TImgen.getText());
+            if (f.exists()) {
+                imagen = new ImageIcon(f.getPath());
+            }else{
+                this.TImgen.setText("Imagen no valida");
+            }
         }
     }//GEN-LAST:event_examinar
 
@@ -822,6 +826,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.tPorciones.setValue(elemento.getDivisionesMaximas());
             this.tPrecio.setValue(elemento.getPrecio());
             this.TImgen.setText("Imagen Actual");
+            this.imagen = elemento.getFoto();
             ArrayList<Producto> listaProductos = this.gestorProducto.obtenerListaProductos();
             disponibles = new ArrayList<Producto>(listaProductos);
             DefaultTableModel modelo = new DefaultTableModel();
@@ -888,28 +893,6 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
         }
     }//GEN-LAST:event_quitarAsociados
-
-    class quitar implements ActionListener {
-
-        private DialogoModificarElemento padre;
-
-        protected quitar(DialogoModificarElemento Padre) {
-            this.padre = Padre;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            int select = padre.tProductosAsociados.getSelectedRow();
-            Producto productoSeleccionado = (Producto) padre.seleccionados.get(select);
-            padre.seleccionados.remove(select);
-            padre.tProductosAsociados.removeRowSelectionInterval(select, select);
-            padre.disponibles.add(productoSeleccionado);
-            Object[] obj = new Object[3];
-            obj[0] = productoSeleccionado.getNombre();
-            obj[1] = productoSeleccionado.getCantidad();
-            obj[2] = productoSeleccionado.getImagen();
-            ((DefaultTableModel) padre.tProductosDisponibles.getModel()).addRow(obj);
-        }
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
     private javax.swing.JButton bAnterior;

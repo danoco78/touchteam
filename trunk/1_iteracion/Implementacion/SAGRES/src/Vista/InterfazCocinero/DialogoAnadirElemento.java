@@ -22,14 +22,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import utilidades.ImageRenderer;
@@ -750,11 +747,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                     if (seccion instanceof SeccionComida) {
                         this.carta.nuevoElementoPlato((ArrayList<Ingrediente>) this.seleccionados, (SeccionComida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()), (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
+                                imagen, (Integer) this.tTiempo.getValue(), (Integer) this.tPorciones.getValue());
                     } else {
                         this.carta.nuevoElementoBebida((ArrayList<Bebida>) this.seleccionados, (SeccionBebida) seccion,
                                 this.tNombre.getText(), this.tDescripcion.getText(), (Float) this.tPrecio.getValue(),
-                                new ImageIcon(this.TImgen.getText()), (Integer) this.tPorciones.getValue());
+                                imagen, (Integer) this.tPorciones.getValue());
                     }
                     setVisible(false);
                     dispose();
