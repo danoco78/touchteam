@@ -17,6 +17,7 @@ import GestionStock.GestionProductos.Ingrediente;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -67,6 +68,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
             this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getImagen(), i, 2);
         }
+        this.tTablaIngredientesDisponibles.setPreferredSize(new Dimension(WIDTH, WIDTH));
         this.bSiguiente.setEnabled(false);
         this.estado=1;
         this.bAnterior.setEnabled(false);
@@ -146,8 +148,9 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         pIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(470, 500));
         pIngredientesDisponibles.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane2.setOpaque(false);
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(2000, 2000));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(2000, 2000));
 
         tTablaIngredientesDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,8 +176,9 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
             }
         });
         tTablaIngredientesDisponibles.setGridColor(new java.awt.Color(211, 223, 253));
-        tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
-        tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 500));
+        tTablaIngredientesDisponibles.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        tTablaIngredientesDisponibles.setMinimumSize(new java.awt.Dimension(450, 2000));
+        tTablaIngredientesDisponibles.setPreferredSize(new java.awt.Dimension(450, 2000));
         tTablaIngredientesDisponibles.getTableHeader().setReorderingAllowed(false);
         tTablaIngredientesDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

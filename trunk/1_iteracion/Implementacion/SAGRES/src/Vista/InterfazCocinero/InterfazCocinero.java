@@ -128,7 +128,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
                     break;
                 case ManejaEventos.IMPRIMIRLISTAPRODUCTOS:
-                    dialogo = new DialogoImprimirListaProductosAPedir(padre, true, iPedidoProveedor);
+                    dialogo = new DialogoImprimirListaProductosAPedir(padre, iProducto, iPedidoProveedor);
                     break;
                 case ManejaEventos.NOTIFICARRECEPCION:
                     dialogo = new DialogoNotificarLlegadaProductos(padre, true, iPedidoProveedor);
@@ -149,7 +149,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     dialogo = new DialogoEliminarElemento(padre, iCarta, iPreparaCarta);
                     break;
                 case ManejaEventos.MODIFICARELEMENTO:
-                    dialogo = new DialogoModificarElemento(padre, iCarta, iPreparaCarta);
+                    dialogo = new DialogoModificarElemento(padre, iCarta, iPreparaCarta, iProducto);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
                     dialogo = new DialogoNotificarIncidencia(padre, iProducto, iIncidencia);
