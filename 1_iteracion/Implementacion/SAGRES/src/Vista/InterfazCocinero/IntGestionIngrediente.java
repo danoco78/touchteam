@@ -104,50 +104,62 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
+        bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bAnadirIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bAnadirIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/AñadirIngrediente.png"))); // NOI18N
         bAnadirIngrediente.setText("Añadir Ingrediente");
         bAnadirIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bAnadirIngrediente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAnadirIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
         bAnadirIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
         bAnadirIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
+        bAnadirIngrediente.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirIngrediente, gridBagConstraints);
 
-        bEleminarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
+        bEleminarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bEleminarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bEleminarIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Eliminar Ingrediente.png"))); // NOI18N
         bEleminarIngrediente.setText("Eliminar Ingrediente");
         bEleminarIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bEleminarIngrediente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bEleminarIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
         bEleminarIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
         bEleminarIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
+        bEleminarIngrediente.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarIngrediente, gridBagConstraints);
 
-        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
+        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bModificarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
+        bModificarIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Modificar Ingrediente.png"))); // NOI18N
         bModificarIngrediente.setText("Modificar Ingrediente");
         bModificarIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bModificarIngrediente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bModificarIngrediente.setMaximumSize(new java.awt.Dimension(300, 200));
         bModificarIngrediente.setMinimumSize(new java.awt.Dimension(300, 200));
         bModificarIngrediente.setPreferredSize(new java.awt.Dimension(300, 200));
+        bModificarIngrediente.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bModificarIngrediente, gridBagConstraints);
 
-        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14));
+        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bNotificarIncidente.setForeground(new java.awt.Color(80, 98, 143));
+        bNotificarIncidente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Incidencia ingrediente.png"))); // NOI18N
         bNotificarIncidente.setText("Notificar Incidente");
         bNotificarIncidente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bNotificarIncidente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bNotificarIncidente.setMaximumSize(new java.awt.Dimension(300, 200));
         bNotificarIncidente.setMinimumSize(new java.awt.Dimension(300, 200));
         bNotificarIncidente.setPreferredSize(new java.awt.Dimension(300, 200));
+        bNotificarIncidente.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
