@@ -303,7 +303,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
             ((ElementoBebida)elemento).modifica(nombre, descripcion, foto, precio, divisionesMaximas);
-            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+"WHERE elemento.elemento_id = "+codigoElemento;
+            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+" WHERE elemento.elemento_id = "+codigoElemento;
             this.almacen.consultaDeModificacion(consulta);
             consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+codigoElemento;
             this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(foto));
@@ -332,11 +332,11 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
             ((ElementoPlato)elemento).modifica(nombre, descripcion, foto, tiempoPreparacion, precio, divisionesMaximas);
-            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+"WHERE elemento.elemento_id = "+codigoElemento;
+            consulta = "UPDATE elemento SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', precio = "+precio+", divi_max="+divisionesMaximas+" WHERE elemento.elemento_id = "+codigoElemento;
             this.almacen.consultaDeModificacion(consulta);
             consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+codigoElemento;
             this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(foto));
-            consulta = "UPDATE elementoplato SET tiempo_eleboracion = "+tiempoPreparacion + "WHERE elementoplato.elemento_elemento_id = "+codigoElemento;
+            consulta = "UPDATE elementoplato SET tiempo_eleboracion = "+tiempoPreparacion + " WHERE elementoplato.elemento_elemento_id = "+codigoElemento;
         }
         else{
             throw new Exception("El elemento especificado no existe.");
