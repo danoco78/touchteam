@@ -31,9 +31,9 @@ public class GestorProducto implements IGestionarProducto,IProducto{
         this.listaIngredientes = new ArrayList<Ingrediente>();
         this.interfazAlmacenamiento = iAlmacenamiento;
         // Seleccionamos todos los productos existentes (bebidas e ingredientes) en la base de datos actualmente
-        TableModel consultaBebidas = this.interfazAlmacenamiento.realizaConsulta("select * from productoBebida");
+        TableModel consultaBebidas = this.interfazAlmacenamiento.realizaConsulta("select * from productobebida");
         this.listaBebidas = this.convertirTablaAbebida(consultaBebidas);
-        TableModel consultaIngredientes = this.interfazAlmacenamiento.realizaConsulta("select * from productoIngrediente");
+        TableModel consultaIngredientes = this.interfazAlmacenamiento.realizaConsulta("select * from productoingrediente");
         this.listaIngredientes = this.convertirTablaAingrediente(consultaIngredientes);
     }
 

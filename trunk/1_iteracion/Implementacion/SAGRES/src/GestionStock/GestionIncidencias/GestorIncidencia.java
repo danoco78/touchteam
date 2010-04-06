@@ -31,7 +31,7 @@ public class GestorIncidencia implements IIncidencia {
             "select MAX(incidencia_id) from incidencia;";
     private static final String TABLAINCIDENCIAS =
             "select incidencia_id, descripcion, fecha, cantidad_afectada, producto_producto_id "
-            + " from incidencia , tieneIncidencia "
+            + " from incidencia , tieneincidencia "
             + " where incidencia_id = incidencia_incidencia_id";
     private static final String INI_INSERTAR_INCIDNECIA =
             "insert into incidencia(descripcion,fecha,cantidad_afectada) values (";
