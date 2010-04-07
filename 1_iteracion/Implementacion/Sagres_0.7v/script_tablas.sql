@@ -32,9 +32,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `touchteam`.`tieneSeccion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`tieneSeccion` ;
+DROP TABLE IF EXISTS `touchteam`.`tieneseccion` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneSeccion` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneseccion` (
   `carta_carta_id` INT NOT NULL ,
   `seccion_seccion_id` INT NOT NULL ,
   PRIMARY KEY (`carta_carta_id`, `seccion_seccion_id`) ,
@@ -50,17 +50,17 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneSeccion` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_tieneSeccion_carta` ON `touchteam`.`tieneSeccion` (`carta_carta_id` ASC) ;
+CREATE INDEX `fk_tieneSeccion_carta` ON `touchteam`.`tieneseccion` (`carta_carta_id` ASC) ;
 
-CREATE INDEX `fk_tieneSeccion_seccion1` ON `touchteam`.`tieneSeccion` (`seccion_seccion_id` ASC) ;
+CREATE INDEX `fk_tieneSeccion_seccion1` ON `touchteam`.`tieneseccion` (`seccion_seccion_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`seccionComida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`seccionComida` ;
+DROP TABLE IF EXISTS `touchteam`.`seccioncomida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionComida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`seccioncomida` (
   `seccion_seccion_id` INT NOT NULL ,
   PRIMARY KEY (`seccion_seccion_id`) ,
   CONSTRAINT `fk_seccionComida_seccion1`
@@ -70,15 +70,15 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionComida` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_seccionComida_seccion1` ON `touchteam`.`seccionComida` (`seccion_seccion_id` ASC) ;
+CREATE INDEX `fk_seccionComida_seccion1` ON `touchteam`.`seccioncomida` (`seccion_seccion_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`seccionBebida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`seccionBebida` ;
+DROP TABLE IF EXISTS `touchteam`.`seccionbebida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionBebida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionbebida` (
   `seccion_seccion_id` INT NOT NULL ,
   PRIMARY KEY (`seccion_seccion_id`) ,
   CONSTRAINT `fk_seccionBebida_seccion1`
@@ -88,7 +88,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`seccionBebida` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_seccionBebida_seccion1` ON `touchteam`.`seccionBebida` (`seccion_seccion_id` ASC) ;
+CREATE INDEX `fk_seccionBebida_seccion1` ON `touchteam`.`seccionbebida` (`seccion_seccion_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -112,9 +112,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `touchteam`.`elementoBebida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`elementoBebida` ;
+DROP TABLE IF EXISTS `touchteam`.`elementobebida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoBebida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`elementobebida` (
   `elemento_elemento_id` INT NOT NULL ,
   PRIMARY KEY (`elemento_elemento_id`) ,
   CONSTRAINT `fk_elementoBebida_elemento1`
@@ -124,15 +124,15 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoBebida` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_elementoBebida_elemento1` ON `touchteam`.`elementoBebida` (`elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_elementoBebida_elemento1` ON `touchteam`.`elementobebida` (`elemento_elemento_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`elementoPlato`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`elementoPlato` ;
+DROP TABLE IF EXISTS `touchteam`.`elementoplato` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoPlato` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoplato` (
   `elemento_elemento_id` INT NOT NULL ,
   `tiempo_elaboracion` INT NULL ,
   PRIMARY KEY (`elemento_elemento_id`) ,
@@ -143,7 +143,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`elementoPlato` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_elementoComida_elemento1` ON `touchteam`.`elementoPlato` (`elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_elementoComida_elemento1` ON `touchteam`.`elementoplato` (`elemento_elemento_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -165,9 +165,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `touchteam`.`productoIngrediente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`productoIngrediente` ;
+DROP TABLE IF EXISTS `touchteam`.`productoingrediente` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`productoIngrediente` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`productoingrediente` (
   `producto_producto_id` INT NOT NULL ,
   PRIMARY KEY (`producto_producto_id`) ,
   CONSTRAINT `fk_productoIngrediente_producto1`
@@ -177,15 +177,15 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`productoIngrediente` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_productoIngrediente_producto1` ON `touchteam`.`productoIngrediente` (`producto_producto_id` ASC) ;
+CREATE INDEX `fk_productoIngrediente_producto1` ON `touchteam`.`productoingrediente` (`producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`productoBebida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`productoBebida` ;
+DROP TABLE IF EXISTS `touchteam`.`productobebida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`productoBebida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`productobebida` (
   `producto_producto_id` INT NOT NULL ,
   PRIMARY KEY (`producto_producto_id`) ,
   CONSTRAINT `fk_productoBebida_producto1`
@@ -195,59 +195,59 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`productoBebida` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_productoBebida_producto1` ON `touchteam`.`productoBebida` (`producto_producto_id` ASC) ;
+CREATE INDEX `fk_productoBebida_producto1` ON `touchteam`.`productobebida` (`producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`tieneBebida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`tieneBebida` ;
+DROP TABLE IF EXISTS `touchteam`.`tienebebida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneBebida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`tienebebida` (
   `elementoBebida_elemento_elemento_id` INT NOT NULL ,
   `productoBebida_producto_producto_id` INT NOT NULL ,
   PRIMARY KEY (`elementoBebida_elemento_elemento_id`, `productoBebida_producto_producto_id`) ,
   CONSTRAINT `fk_tieneBebida_elementoBebida1`
     FOREIGN KEY (`elementoBebida_elemento_elemento_id` )
-    REFERENCES `touchteam`.`elementoBebida` (`elemento_elemento_id` )
+    REFERENCES `touchteam`.`elementobebida` (`elemento_elemento_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneBebida_productoBebida1`
     FOREIGN KEY (`productoBebida_producto_producto_id` )
-    REFERENCES `touchteam`.`productoBebida` (`producto_producto_id` )
+    REFERENCES `touchteam`.`productobebida` (`producto_producto_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_tieneBebida_elementoBebida1` ON `touchteam`.`tieneBebida` (`elementoBebida_elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_tieneBebida_elementoBebida1` ON `touchteam`.`tienebebida` (`elementoBebida_elemento_elemento_id` ASC) ;
 
-CREATE INDEX `fk_tieneBebida_productoBebida1` ON `touchteam`.`tieneBebida` (`productoBebida_producto_producto_id` ASC) ;
+CREATE INDEX `fk_tieneBebida_productoBebida1` ON `touchteam`.`tienebebida` (`productoBebida_producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`tieneIngrediente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`tieneIngrediente` ;
+DROP TABLE IF EXISTS `touchteam`.`tieneingrediente` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneIngrediente` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneingrediente` (
   `elementoComida_elemento_elemento_id` INT NOT NULL ,
   `productoIngrediente_producto_producto_id` INT NOT NULL ,
   PRIMARY KEY (`elementoComida_elemento_elemento_id`, `productoIngrediente_producto_producto_id`) ,
   CONSTRAINT `fk_tieneIngrediente_elementoComida1`
     FOREIGN KEY (`elementoComida_elemento_elemento_id` )
-    REFERENCES `touchteam`.`elementoPlato` (`elemento_elemento_id` )
+    REFERENCES `touchteam`.`elementoplato` (`elemento_elemento_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tieneIngrediente_productoIngrediente1`
     FOREIGN KEY (`productoIngrediente_producto_producto_id` )
-    REFERENCES `touchteam`.`productoIngrediente` (`producto_producto_id` )
+    REFERENCES `touchteam`.`productoingrediente` (`producto_producto_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_tieneIngrediente_elementoComida1` ON `touchteam`.`tieneIngrediente` (`elementoComida_elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_tieneIngrediente_elementoComida1` ON `touchteam`.`tieneingrediente` (`elementoComida_elemento_elemento_id` ASC) ;
 
-CREATE INDEX `fk_tieneIngrediente_productoIngrediente1` ON `touchteam`.`tieneIngrediente` (`productoIngrediente_producto_producto_id` ASC) ;
+CREATE INDEX `fk_tieneIngrediente_productoIngrediente1` ON `touchteam`.`tieneingrediente` (`productoIngrediente_producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -267,9 +267,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `touchteam`.`pedidoProveedor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`pedidoProveedor` ;
+DROP TABLE IF EXISTS `touchteam`.`pedidoproveedor` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`pedidoProveedor` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`pedidoproveedor` (
   `pedido_proveedor_id` INT NOT NULL AUTO_INCREMENT ,
   `fecha_pedido` DATE NULL ,
   `recibido` TINYINT(1) NULL ,
@@ -280,9 +280,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `touchteam`.`tieneIncidencia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`tieneIncidencia` ;
+DROP TABLE IF EXISTS `touchteam`.`tieneincidencia` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneIncidencia` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneincidencia` (
   `incidencia_incidencia_id` INT NOT NULL ,
   `producto_producto_id` INT NOT NULL ,
   PRIMARY KEY (`incidencia_incidencia_id`, `producto_producto_id`) ,
@@ -298,9 +298,9 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tieneIncidencia` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_tieneIncidencia_incidencia1` ON `touchteam`.`tieneIncidencia` (`incidencia_incidencia_id` ASC) ;
+CREATE INDEX `fk_tieneIncidencia_incidencia1` ON `touchteam`.`tieneincidencia` (`incidencia_incidencia_id` ASC) ;
 
-CREATE INDEX `fk_tieneIncidencia_producto1` ON `touchteam`.`tieneIncidencia` (`producto_producto_id` ASC) ;
+CREATE INDEX `fk_tieneIncidencia_producto1` ON `touchteam`.`tieneincidencia` (`producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -308,14 +308,14 @@ CREATE INDEX `fk_tieneIncidencia_producto1` ON `touchteam`.`tieneIncidencia` (`p
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `touchteam`.`tienePedido` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`tienePedido` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`tienepedido` (
   `pedidoProveedor_pedido_proveedor_id` INT NOT NULL ,
   `producto_producto_id` INT NOT NULL ,
   `cantidad` FLOAT NULL ,
   PRIMARY KEY (`pedidoProveedor_pedido_proveedor_id`, `producto_producto_id`) ,
   CONSTRAINT `fk_tienePedido_pedidoProveedor1`
     FOREIGN KEY (`pedidoProveedor_pedido_proveedor_id` )
-    REFERENCES `touchteam`.`pedidoProveedor` (`pedido_proveedor_id` )
+    REFERENCES `touchteam`.`pedidoproveedor` (`pedido_proveedor_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tienePedido_producto1`
@@ -325,61 +325,61 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`tienePedido` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_tienePedido_pedidoProveedor1` ON `touchteam`.`tienePedido` (`pedidoProveedor_pedido_proveedor_id` ASC) ;
+CREATE INDEX `fk_tienePedido_pedidoProveedor1` ON `touchteam`.`tienepedido` (`pedidoProveedor_pedido_proveedor_id` ASC) ;
 
-CREATE INDEX `fk_tienePedido_producto1` ON `touchteam`.`tienePedido` (`producto_producto_id` ASC) ;
+CREATE INDEX `fk_tienePedido_producto1` ON `touchteam`.`tienepedido` (`producto_producto_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`incluyeBebida`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`incluyeBebida` ;
+DROP TABLE IF EXISTS `touchteam`.`incluyebebida` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyeBebida` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyebebida` (
   `seccionBebida_seccion_seccion_id` INT NOT NULL ,
   `elementoBebida_elemento_elemento_id` INT NOT NULL ,
   PRIMARY KEY (`seccionBebida_seccion_seccion_id`, `elementoBebida_elemento_elemento_id`) ,
   CONSTRAINT `fk_incluyeBebida_seccionBebida1`
     FOREIGN KEY (`seccionBebida_seccion_seccion_id` )
-    REFERENCES `touchteam`.`seccionBebida` (`seccion_seccion_id` )
+    REFERENCES `touchteam`.`seccionbebida` (`seccion_seccion_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_incluyeBebida_elementoBebida1`
     FOREIGN KEY (`elementoBebida_elemento_elemento_id` )
-    REFERENCES `touchteam`.`elementoBebida` (`elemento_elemento_id` )
+    REFERENCES `touchteam`.`elementobebida` (`elemento_elemento_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_incluyeBebida_seccionBebida1` ON `touchteam`.`incluyeBebida` (`seccionBebida_seccion_seccion_id` ASC) ;
+CREATE INDEX `fk_incluyeBebida_seccionBebida1` ON `touchteam`.`incluyebebida` (`seccionBebida_seccion_seccion_id` ASC) ;
 
-CREATE INDEX `fk_incluyeBebida_elementoBebida1` ON `touchteam`.`incluyeBebida` (`elementoBebida_elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_incluyeBebida_elementoBebida1` ON `touchteam`.`incluyebebida` (`elementoBebida_elemento_elemento_id` ASC) ;
 
 
 -- -----------------------------------------------------
 -- Table `touchteam`.`incluyePlato`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`incluyePlato` ;
+DROP TABLE IF EXISTS `touchteam`.`incluyeplato` ;
 
-CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyePlato` (
+CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyeplato` (
   `seccionComida_seccion_seccion_id` INT NOT NULL ,
   `elementoPlato_elemento_elemento_id` INT NOT NULL ,
   PRIMARY KEY (`seccionComida_seccion_seccion_id`, `elementoPlato_elemento_elemento_id`) ,
   CONSTRAINT `fk_incluyePlato_seccionComida1`
     FOREIGN KEY (`seccionComida_seccion_seccion_id` )
-    REFERENCES `touchteam`.`seccionComida` (`seccion_seccion_id` )
+    REFERENCES `touchteam`.`seccioncomida` (`seccion_seccion_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_incluyePlato_elementoPlato1`
     FOREIGN KEY (`elementoPlato_elemento_elemento_id` )
-    REFERENCES `touchteam`.`elementoPlato` (`elemento_elemento_id` )
+    REFERENCES `touchteam`.`elementoplato` (`elemento_elemento_id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_incluyePlato_seccionComida1` ON `touchteam`.`incluyePlato` (`seccionComida_seccion_seccion_id` ASC) ;
+CREATE INDEX `fk_incluyePlato_seccionComida1` ON `touchteam`.`incluyeplato` (`seccionComida_seccion_seccion_id` ASC) ;
 
-CREATE INDEX `fk_incluyePlato_elementoPlato1` ON `touchteam`.`incluyePlato` (`elementoPlato_elemento_elemento_id` ASC) ;
+CREATE INDEX `fk_incluyePlato_elementoPlato1` ON `touchteam`.`incluyeplato` (`elementoPlato_elemento_elemento_id` ASC) ;
 
 
 
