@@ -66,6 +66,33 @@ INSERT INTO `elementoplato` VALUES (14, 2);
 -- Volcar la base de datos para la tabla `incidencia`
 -- 
 
+-- 
+-- Volcar la base de datos para la tabla `seccion`
+-- 
+
+INSERT INTO `seccion` VALUES (1, 'Entrantes');
+INSERT INTO `seccion` VALUES (2, 'Carnes');
+INSERT INTO `seccion` VALUES (3, 'Pescados');
+INSERT INTO `seccion` VALUES (4, 'Postres');
+INSERT INTO `seccion` VALUES (5, 'Refrescos');
+INSERT INTO `seccion` VALUES (6, 'Vinos');
+
+-- 
+-- Volcar la base de datos para la tabla `seccionbebida`
+-- 
+
+INSERT INTO `seccionbebida` VALUES (5);
+INSERT INTO `seccionbebida` VALUES (6);
+
+-- 
+-- Volcar la base de datos para la tabla `seccioncomida`
+-- 
+
+INSERT INTO `seccioncomida` VALUES (1);
+INSERT INTO `seccioncomida` VALUES (2);
+INSERT INTO `seccioncomida` VALUES (3);
+INSERT INTO `seccioncomida` VALUES (4);
+
 
 -- 
 -- Volcar la base de datos para la tabla `incluyebebida`
@@ -170,33 +197,6 @@ INSERT INTO `productoingrediente` VALUES (22);
 INSERT INTO `productoingrediente` VALUES (29);
 
 -- 
--- Volcar la base de datos para la tabla `seccion`
--- 
-
-INSERT INTO `seccion` VALUES (1, 'Entrantes');
-INSERT INTO `seccion` VALUES (2, 'Carnes');
-INSERT INTO `seccion` VALUES (3, 'Pescados');
-INSERT INTO `seccion` VALUES (4, 'Postres');
-INSERT INTO `seccion` VALUES (5, 'Refrescos');
-INSERT INTO `seccion` VALUES (6, 'Vinos');
-
--- 
--- Volcar la base de datos para la tabla `seccionbebida`
--- 
-
-INSERT INTO `seccionbebida` VALUES (5);
-INSERT INTO `seccionbebida` VALUES (6);
-
--- 
--- Volcar la base de datos para la tabla `seccioncomida`
--- 
-
-INSERT INTO `seccioncomida` VALUES (1);
-INSERT INTO `seccioncomida` VALUES (2);
-INSERT INTO `seccioncomida` VALUES (3);
-INSERT INTO `seccioncomida` VALUES (4);
-
--- 
 -- Volcar la base de datos para la tabla `tienebebida`
 -- 
 
@@ -222,7 +222,6 @@ INSERT INTO `tieneingrediente` VALUES (7, 3);
 INSERT INTO `tieneingrediente` VALUES (7, 4);
 INSERT INTO `tieneingrediente` VALUES (7, 5);
 INSERT INTO `tieneingrediente` VALUES (8, 5);
-INSERT INTO `tieneingrediente` VALUES (8, 6);
 INSERT INTO `tieneingrediente` VALUES (8, 7);
 INSERT INTO `tieneingrediente` VALUES (8, 8);
 INSERT INTO `tieneingrediente` VALUES (8, 9);
@@ -239,9 +238,7 @@ INSERT INTO `tieneingrediente` VALUES (12, 16);
 INSERT INTO `tieneingrediente` VALUES (12, 18);
 INSERT INTO `tieneingrediente` VALUES (12, 29);
 INSERT INTO `tieneingrediente` VALUES (13, 5);
-INSERT INTO `tieneingrediente` VALUES (13, 19);
 INSERT INTO `tieneingrediente` VALUES (13, 20);
-INSERT INTO `tieneingrediente` VALUES (13, 21);
 INSERT INTO `tieneingrediente` VALUES (14, 22);
 
 -- 
