@@ -1,2 +1,0 @@
-- Revisar la especificación, en cursos alternativos, dar la posibilidad de cancelar al usuario tras el dialogo de confirmacion.
-- Mostrar este punto en los diagramas de secuencia.
