@@ -2,12 +2,15 @@ package GestionCarta;
 
 
 import GestionBaseDatos.IAlmacenamiento;
+import GestionBaseDatos.ICartaBD;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import utilidades.Imagen;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
@@ -18,7 +21,7 @@ import javax.swing.table.TableModel;
  *
  * @author Ángel Luis García y Carlos Salas
  */
-public class GestorCarta implements IPreparaCarta, ICarta {
+public class GestorCarta implements ICarta {
 
     ArrayList<Elemento> listaElementos;
     //ArrayList<ElementoBebida> listaElementosBebida;
@@ -28,11 +31,13 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     ArrayList<SeccionComida> listaSeccionComida;
     ArrayList<SeccionBebida> listaSeccionBebida;
     IAlmacenamiento almacen;
+    ICartaBD iCartaBD;
     IProducto producto;
 
-    public GestorCarta(IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
+    public GestorCarta(IAlmacenamiento iAlmacenamiento, ICartaBD iCartaBD, IProducto iProducto) {
         TableModel tabla, tablaProductos;
         this.almacen = iAlmacenamiento;
+        this.iCartaBD = iCartaBD;
         this.producto = iProducto;
         this.listaSecciones = new ArrayList<Seccion>();
         this.listaElementos = new ArrayList<Elemento>();
@@ -98,6 +103,50 @@ public class GestorCarta implements IPreparaCarta, ICarta {
         
     }
 
+    public void actualizaDisponibilidadElementos() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public HashSet<Elemento> compruebaElementosInvalidados(HashMap<Producto, Float> listaProductosCantidades) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void deshabilitaElementos(HashSet<Elemento> listaElementos) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void eliminaElemento(Elemento elemento) {
+        this.iCartaBD.eliminaElemento(elemento);
+    }
+
+    public void modificaElemento(Elemento elemento) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Método que crea en el sistema un nuevo elemento
+     * @param elemento Elemento que queremos crear
+     */
+    public void nuevoElemento(Elemento elemento) {
+        if (elemento instanceof ElementoBebida)
+            this.iCartaBD.nuevoElementoBebida((ElementoBebida) elemento);
+        else
+            this.iCartaBD.nuevoElementoPlato((ElementoPlato) elemento);
+    }
+
+    public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public HashSet<Seccion> obtieneSecciones() {
+        return this.iCartaBD.obtieneSecciones();
+    }
+
+
+
+
+    // MÉTODOS ANTIGUOS DE LA CLASE
+
     /**
      * Método para
      * @param codigoElemento
@@ -116,7 +165,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
 
     /**
      * Método que busca todos los elementos inválidos de la carta
-     * 
+     *
      * @return Un ArrayList con los elementos inválidos.
      */
     private ArrayList<Elemento> buscaElementosInvalidados() {
@@ -188,7 +237,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
                     (Float)tablaDatosElemento.getValueAt(0,4),(Integer)tablaDatosElemento.getValueAt(0,5));
             listaElementosB.add(elementoBebida);
         }
-        
+
         return listaElementosB;
     }
     /*
@@ -287,7 +336,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
 
     /**
      * Modifica un Elemento Bebida.
-     * 
+     *
      * @param codigoElemento El código del elemento a modificar.
      * @param nombre El nuevo nombre del elemento.
      * @param descripcion La nueva descripción del elemento.
@@ -307,7 +356,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             this.almacen.consultaDeModificacion(consulta);
             consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+codigoElemento;
             this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(foto));
-        }   
+        }
         else{
             throw new Exception("El elemento especificado no existe.");
         }
@@ -328,7 +377,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
     public void modificaElementoPlato(int codigoElemento, String nombre, String descripcion, ImageIcon foto, int tiempoPreparacion, float precio, int divisionesMaximas) throws Exception {
         Elemento elemento;
         String consulta;
-        
+
         elemento = buscaElemento(codigoElemento);
         if ( elemento != null){
             ((ElementoPlato)elemento).modifica(nombre, descripcion, foto, tiempoPreparacion, precio, divisionesMaximas);
@@ -394,9 +443,9 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             // consulta = "SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento WHERE elemento_id='"+id_elemento+"'";
             //tabla = almacen.realizaConsulta(consulta);
             //ElementoBebida elementoBebida = this.convierteTablaABebida(tabla);
-            
-            
-            
+
+
+
     }
 
     /**
@@ -452,7 +501,7 @@ public class GestorCarta implements IPreparaCarta, ICarta {
             //        " elemento, elementoPlato WHERE elemento.elemento_id = elementoPlato.elemento_elemento_id AND elemento.elemento_id='"+id_elemento+"'";
             //tabla = almacen.realizaConsulta(consulta);
             //ElementoPlato elementoPlato = this.convierteTablaAPlato(tabla);
-       
+
     }
 
     /**
