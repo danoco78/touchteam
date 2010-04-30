@@ -6,6 +6,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoBebida;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
+import com.mysql.jdbc.Connection;
 import java.util.HashSet;
 import javax.swing.table.TableModel;
 
@@ -15,6 +16,7 @@ import javax.swing.table.TableModel;
  */
 public class GestorBaseDatos implements ICartaBD {
 
+    Connection Conexion;
     IAlmacenamiento almacen;
 
     public GestorBaseDatos(IAlmacenamiento iAlmacenamiento) {

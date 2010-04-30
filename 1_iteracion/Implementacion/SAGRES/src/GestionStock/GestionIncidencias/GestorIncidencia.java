@@ -4,7 +4,7 @@
  */
 package GestionStock.GestionIncidencias;
 
-import GestionBaseDatos.IAlmacenamiento;
+/*import GestionBaseDatos.IAlmacenamiento;
 import GestionCarta.ICarta;
 import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
@@ -14,7 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableModel;*/
+import GestionBaseDatos.IStockBD;
 
 /**
  *
@@ -22,7 +23,7 @@ import javax.swing.table.TableModel;
  */
 public class GestorIncidencia implements IIncidencia {
 
-    IGestionarProducto gestorProductos;
+    /*IGestionarProducto gestorProductos;
     ICarta carta;
     IAlmacenamiento almacen;
     IProducto almacenProductos;
@@ -34,20 +35,16 @@ public class GestorIncidencia implements IIncidencia {
             + " from incidencia , tieneincidencia "
             + " where incidencia_id = incidencia_incidencia_id";
     private static final String INI_INSERTAR_INCIDNECIA =
-            "insert into incidencia(descripcion,fecha,cantidad_afectada) values (";
+            "insert into incidencia(descripcion,fecha,cantidad_afectada) values (";*/
     /*"Caida",10/5/2011,10*/
-    private static final String FIN_INSERTAR = ");";
+    /*private static final String FIN_INSERTAR = ");";
     private static final String INI_INSERTAR_RELACION =
-            "insert into tieneincidencia(incidencia_incidencia_id,producto_producto_id) values (";
+            "insert into tieneincidencia(incidencia_incidencia_id,producto_producto_id) values (";*/
 
-    public GestorIncidencia(IGestionarProducto iGestorProductos, ICarta iCarta,
-            IAlmacenamiento iAlmacenamiento, IProducto iProducto) {
-        this.gestorProductos = iGestorProductos;
-        this.carta = iCarta;
-        this.almacen = iAlmacenamiento;
-        this.almacenProductos = iProducto;
-        TableModel datos = this.almacen.realizaConsulta(GestorIncidencia.TABLAINCIDENCIAS);
-        this.incidencias = this.convertirTablaAIncidencia(datos);
+    IStockBD iStockBD;
+
+    public GestorIncidencia(IStockBD almacen) {
+        this.iStockBD = almacen;
     }
 
     /*
@@ -56,8 +53,11 @@ public class GestorIncidencia implements IIncidencia {
      * @param cantidadAfectada Cantidad de producto que fue desperdifiada deberia de ser mayor que 0
      * @param producto Tipo de producto que sufrio el incidente
      */
-    public void nuevaIncidencia(String tipoIncidencia, float cantidadAfectada, Producto producto) {
-        Calendar c = Calendar.getInstance();
+    public void nuevaIncidencia(Incidencia in) {
+
+        this.iStockBD.nuevaIncidencia(in);
+
+        /*Calendar c = Calendar.getInstance();
         boolean b = this.almacen.consultaDeModificacion(GestorIncidencia.INI_INSERTAR_INCIDNECIA + "'"
                 + tipoIncidencia + "', '"
                 + c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH) + "'," + "'"
@@ -72,7 +72,7 @@ public class GestorIncidencia implements IIncidencia {
             this.gestorProductos.actualizaCantidadProducto(producto, producto.getCantidad() - cantidadAfectada);
         } catch (Exception ex) {
             Logger.getLogger(GestorIncidencia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /*
@@ -81,7 +81,7 @@ public class GestorIncidencia implements IIncidencia {
      * @param tabla La tabla debe contener los datos obtenidos tras realizar la consulta
      * @return devuelve una lista de objetos incidencias con los datos obtenidos de la tabla.
      */
-    private ArrayList<Incidencia> convertirTablaAIncidencia(TableModel tabla) {
+   /* private ArrayList<Incidencia> convertirTablaAIncidencia(TableModel tabla) {
         ArrayList<Producto> listaProductos = this.almacenProductos.obtenerListaProductos();
         ArrayList<Incidencia> almacenIncidencias = new ArrayList<Incidencia>();
         for (int i = 0; i < tabla.getRowCount(); i++) {
@@ -96,5 +96,5 @@ public class GestorIncidencia implements IIncidencia {
             almacenIncidencias.add(incidencia);
         }
         return almacenIncidencias;
-    }
+    }*/
 }
