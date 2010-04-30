@@ -18,6 +18,7 @@ import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import utilidades.Pair;
 
 /**
  *
@@ -43,7 +44,10 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void nuevaIncidencia(Incidencia in) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.iincidencia.nuevaIncidencia(in);
+        Pair<Producto,Float> prodCantidad = in.getProductoCantidad();
+        this.iproducto.restarCantidadProducto(prodCantidad);
+        this.icarta.compruebaElementosConProducto(prodCantidad.getFirst());
     }
 
     public ArrayList<Bebida> obtenerBebidas() {

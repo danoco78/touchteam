@@ -3,6 +3,7 @@ package GestionStock.GestionIncidencias;
 
 import GestionStock.GestionProductos.Producto;
 import java.util.Date;
+import utilidades.Pair;
 
 
 /**
@@ -49,5 +50,51 @@ public class Incidencia {
         this.tipoIncidencia = tipoIncidencia;
         this.fecha = fecha;
     }
+
+    public Pair<Producto,Float> getProductoCantidad(){
+         return new Pair<Producto,Float>(this.producto,this.cantidadAfectada);
+     }
+
+    public float getCantidadAfectada() {
+        return cantidadAfectada;
+    }
+
+    public void setCantidadAfectada(float cantidadAfectada) {
+        this.cantidadAfectada = cantidadAfectada;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public String getTipoIncidencia() {
+        return tipoIncidencia;
+    }
+
+    public void setTipoIncidencia(String tipoIncidencia) {
+        this.tipoIncidencia = tipoIncidencia;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+
 
 }
