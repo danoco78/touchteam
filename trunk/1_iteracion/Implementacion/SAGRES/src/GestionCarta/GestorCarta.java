@@ -120,7 +120,10 @@ public class GestorCarta implements ICarta {
     }
 
     public void modificaElemento(Elemento elemento) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (elemento instanceof ElementoBebida)
+            this.iCartaBD.modificaElementoBebida((ElementoBebida) elemento);
+        else if (elemento instanceof ElementoPlato)
+            this.iCartaBD.modificaElementoPlato((ElementoPlato) elemento);
     }
 
     /**
