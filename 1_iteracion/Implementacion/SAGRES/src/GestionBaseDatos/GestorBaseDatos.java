@@ -8,6 +8,7 @@ import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import com.mysql.jdbc.Connection;
 import java.util.HashSet;
+import java.util.Iterator;
 import javax.swing.table.TableModel;
 import utilidades.Imagen;
 
@@ -73,7 +74,14 @@ public class GestorBaseDatos implements ICartaBD {
     }
 
     public HashSet<Elemento> obtieneElementosInvalidados() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<Elemento> elementosInvalidos = new HashSet<Elemento>();
+
+        String consulta;
+
+        //Primero vemos las bebidas invalidadas
+        //SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id"
+        consulta = "SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id AND elemento.disponible = 0";
+        return elementosInvalidos;
     }
 
     public HashSet<Seccion> obtieneSecciones() {
