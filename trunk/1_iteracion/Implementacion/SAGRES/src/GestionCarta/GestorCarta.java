@@ -108,6 +108,15 @@ public class GestorCarta implements ICarta {
     }
 
     public HashSet<Elemento> compruebaElementosInvalidados(HashMap<Producto, Float> listaProductosCantidades) {
+        HashSet<Elemento> listaElementos;
+        Elemento elemento;
+        
+        //Obtenemos la lista de elementos invalidados
+        listaElementos = this.iCartaBD.obtieneElementosInvalidados();
+        
+        //Recorremos la lista de elementos
+
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
