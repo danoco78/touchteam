@@ -9,6 +9,7 @@ import GestionCarta.Seccion;
 import com.mysql.jdbc.Connection;
 import java.util.HashSet;
 import javax.swing.table.TableModel;
+import utilidades.Imagen;
 
 /**
  *
@@ -36,11 +37,27 @@ public class GestorBaseDatos implements ICartaBD {
     }
 
     public void modificaElementoBebida(ElementoBebida elemento) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        String consulta;
+
+        if ( elemento != null){
+            consulta = "UPDATE elemento SET nombre = '"+elemento.getNombre()+"', descripcion = '"+elemento.getDescripcion()+"', precio = "+elemento.getPrecio()+", divi_max="+elemento.getDivisionesMaximas()+" WHERE elemento.elemento_id = "+elemento.getCodigoElemento();
+            this.almacen.consultaDeModificacion(consulta);
+            consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+elemento.getCodigoElemento();
+            this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(elemento.getFoto()));
+        }
     }
 
     public void modificaElementoPlato(ElementoPlato elemento) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String consulta;
+
+        if ( elemento != null){
+            consulta = "UPDATE elemento SET nombre = '"+elemento.getNombre()+"', descripcion = '"+elemento.getDescripcion()+"', precio = "+elemento.getPrecio()+", divi_max="+elemento.getDivisionesMaximas()+" WHERE elemento.elemento_id = "+elemento.getCodigoElemento();
+            this.almacen.consultaDeModificacion(consulta);
+            consulta = "UPDATE elemento SET foto = ? WHERE elemento.elemento_id = "+elemento.getCodigoElemento();
+            this.almacen.consultaDeModificacionBlob(consulta, Imagen.imageIconToByteArray(elemento.getFoto()));
+            consulta = "UPDATE elementoplato SET tiempo_eleboracion = "+elemento.getTiempoElaboracion() + " WHERE elementoplato.elemento_elemento_id = "+elemento.getCodigoElemento();
+        }
     }
 
     public void nuevoElementoBebida(ElementoBebida elemento) {
