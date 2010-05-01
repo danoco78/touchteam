@@ -11,6 +11,7 @@ import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
+import java.util.HashSet;
 import utilidades.Pair;
 
 /**
@@ -24,10 +25,10 @@ public interface IStockBD {
     public abstract void nuevoProducto( Producto p );
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract void nuevoPedidoProveedor( PedidoProveedor pedProdveedor);
-    public abstract ArrayList<Bebida> obtieneBebidas();
-    public abstract ArrayList<Ingrediente> obtieneIngredientes();
+    public abstract HashSet<Bebida> obtieneBebidas();
+    public abstract HashSet<Ingrediente> obtieneIngredientes();
     public abstract PedidoProveedor obtienePrimerPedidoPendiente();
-    public abstract ArrayList<Producto> obtieneProductosBajoMinimos();
+    public abstract HashSet<Producto> obtieneProductosBajoMinimos();
     public abstract void pedidoRecibido(PedidoProveedor pedProveedor);
     public abstract void restarCantidadProducto( Pair<Producto,Float> prodCantidad);
 

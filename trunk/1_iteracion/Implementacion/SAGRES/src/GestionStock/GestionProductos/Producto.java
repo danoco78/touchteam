@@ -31,11 +31,11 @@ public class Producto {
      */
     public Producto(ImageIcon imagen, String nombre,float minimo, float maximo, float cantidad, int codPro) {
         this.cantidad = cantidad;
-        this.codPro = codPro;
         this.maximo = maximo;
         this.minimo = minimo;
         this.nombre = nombre;
         this.imagen = imagen;
+        this.codPro = codPro;
     }
 
     /*
@@ -86,6 +86,14 @@ public class Producto {
      */
     public ImageIcon getImagen() {
         return imagen;
+    }
+
+    /*
+     * Establece una nuevo codigo para un producto
+     * @param foto Nuevo codigo del producto
+     */
+    public void setCodPro(int codPro){
+        this.codPro = codPro;
     }
 
     /*

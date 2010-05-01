@@ -21,7 +21,7 @@ import java.util.HashMap;
 public interface ICocinero {
 
     public abstract ArrayList<Elemento> compruebaElementosInvalidos(HashMap<Producto,Float> lista);
-    public abstract void elimnaElemento(Elemento e);
+    public abstract void eliminaElemento(Elemento e);
     public abstract void imprimeListaProductosaPedir();
     public abstract void modificaElemento(Elemento e);
     public abstract void notificaRecepcionPedido(PedidoProveedor ped);

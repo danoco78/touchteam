@@ -18,6 +18,7 @@ import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import utilidades.Pair;
 
 /**
@@ -31,16 +32,18 @@ public class SAGRES implements IMetre, ICocinero {
     IIncidencia iincidencia;
     IPedidoProveedor ipedidoproveedor;
 
-    public void elimnaProducto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void eliminaProducto(Producto pro) {
+        this.iproducto.eliminaProducto(pro);
+        HashSet<Elemento> listaElementos = this.icarta.obtieneElementosConProducto(pro);
+        this.icarta.deshabilitaElementos(listaElementos);
     }
 
     public void modificarProducto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.iproducto.modificaProducto(pro);
     }
 
     public void nuevoProducto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.iproducto.nuevoProducto(pro);
     }
 
     public void nuevaIncidencia(Incidencia in) {
@@ -107,6 +110,10 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public ArrayList<Seccion> obtieneSecciones() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void eliminaElemento(Elemento e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
