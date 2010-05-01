@@ -1,7 +1,9 @@
 
 package GestionStock.GestionProductos;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import utilidades.Pair;
 
 /**
  *
@@ -9,9 +11,13 @@ import java.util.ArrayList;
  */
 public interface IProducto {
 
-    public ArrayList<Bebida> obtenerListaBebidas();
-    public ArrayList<Ingrediente> obtenerListaIngredientes();
-    public ArrayList<Producto> obtenerListaProductos();
-    public ArrayList<Producto> obtenerProductosBajoMinimos();
+    //public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades);
+    public void eliminaProducto(Producto p);
+    public void modificaProducto(Producto p);
+    public void nuevoProducto(Producto p);
+    public HashSet<Bebida> obtieneBebidas();
+    public HashSet<Ingrediente> obtieneIngredientes();
+    public HashSet<Producto> obtieneProductosBajoMinimos();
+    public void restarCantidadProducto(Pair<Producto,Float> prodCantidad);
     
 }

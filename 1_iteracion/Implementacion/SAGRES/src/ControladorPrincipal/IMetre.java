@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public interface IMetre {
 
-    public abstract void elimnaProducto(Producto pro);
+    public abstract void eliminaProducto(Producto pro);
     public abstract void modificarProducto(Producto pro);
     public abstract void nuevoProducto(Producto pro);
     public abstract void nuevaIncidencia(Incidencia in);

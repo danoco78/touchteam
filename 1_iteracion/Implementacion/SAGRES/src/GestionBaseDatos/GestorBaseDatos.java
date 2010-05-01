@@ -10,6 +10,7 @@ import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
+import com.mysql.jdbc.Blob;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -102,15 +103,75 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void eliminaProducto(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            int codPro = p.getCodPro();
+            java.sql.PreparedStatement borrado;
+            /*Preparamos la consulta de borrado del producto*/
+            if(p instanceof Bebida){
+            borrado = this.Conexion.prepareStatement("delete from productobebida where producto_producto_id='"+codPro+"'");
+            borrado.executeUpdate();
+            }
+            else if(p instanceof Ingrediente){
+            borrado = this.Conexion.prepareStatement("delete from productoingrediente where producto_producto_id='"+codPro+"'");
+            borrado.executeUpdate();
+            }
+            java.sql.PreparedStatement borrado2 = this.Conexion.prepareStatement("delete from producto where producto_id='"+codPro+"'");
+            borrado2.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void modificarProducto(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            /*Preparamos la consulta de actualizacion del producto*/
+            int codigoProducto = p.getCodPro();
+            java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("update producto set cantidad=?, maximo=?, minimo=?, nombre=?, foto=? where producto_id='"+codigoProducto+"'");
+            actualizacion.setFloat(1, p.getCantidad());
+            actualizacion.setFloat(2, p.getMaximo());
+            actualizacion.setFloat(3, p.getMinimo());
+            actualizacion.setString(4, p.getNombre());
+            //actualizacion.setBlob(5, (Blob) Imagen.imageIconToByteArray(p.getImagen()));
+            actualizacion.executeUpdate();//Insertamos la incidencia
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void nuevoProducto(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            /*Preparamos la consulta de inserccion del producto*/
+            java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("insert into producto" + "(nombre,cantidad,maximo,minimo,foto)" + " values ( ?, ?, ?, ?, ?)");
+            inserccion.setString(1, p.getNombre());
+            inserccion.setFloat(2, p.getCantidad());
+            inserccion.setFloat(3, p.getMaximo());
+            inserccion.setFloat(4, p.getMinimo());
+            //inserccion.setBlob(5, (Blob) Imagen.imageIconToByteArray(p.getImagen()));
+
+            //Ejecutamos la inserccion
+            Statement ultimo = (Statement) this.Conexion.createStatement();
+            inserccion.executeUpdate();//Insertamos la incidencia
+            ResultSet id = ultimo.executeQuery("select MAX(producto_id) from producto;"); // Sacamos su ID
+            id.next();
+            p.setCodPro(id.getInt(1));
+
+            /*Actualizamos en la tabla de bebidas o de ingredientes segun corresponda*/
+            java.sql.PreparedStatement relacion;
+            if(p instanceof Bebida){
+            relacion = this.Conexion.prepareStatement("insert into productobebida" + "(producto_producto_id) " + "values ( ? )");
+            relacion.setInt(1, p.getCodPro());
+            relacion.executeUpdate();
+            }
+            else if(p instanceof Ingrediente){
+            relacion = this.Conexion.prepareStatement("insert into productoingrediente" + "(producto_producto_id) " + "values ( ? )");
+            relacion.setInt(1, p.getCodPro());
+            relacion.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void nuevaIncidencia(Incidencia in) {
@@ -145,20 +206,70 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ArrayList<Bebida> obtieneBebidas() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Bebida> obtieneBebidas() {
+        int codigoBebida;
+        HashSet<Bebida> listaBebidas = new HashSet<Bebida>();
+        Statement consulta;
+        try {
+        consulta = (Statement) this.Conexion.createStatement();
+        ResultSet tablabebidas = consulta.executeQuery("select producto_producto_id FROM productobebida");
+
+        while(tablabebidas.next()){
+            codigoBebida = tablabebidas.getInt(1);
+            Statement consultaBebidas = (Statement) this.Conexion.createStatement();
+            ResultSet tablaproductos = consultaBebidas.executeQuery("select * from producto where producto_id='"+codigoBebida+"'");
+            tablaproductos.next();
+            Bebida bebida = new Bebida(tablaproductos.getInt(1),tablaproductos.getString(2),Imagen.blobToImageIcon(tablaproductos.getBytes(6)),
+                    tablaproductos.getFloat(5),tablaproductos.getFloat(4),tablaproductos.getFloat(3));
+            listaBebidas.add(bebida);
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaBebidas;
     }
 
-    public ArrayList<Ingrediente> obtieneIngredientes() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Ingrediente> obtieneIngredientes() {
+        int codigoIngrediente;
+        HashSet<Ingrediente> listaIngredientes = new HashSet<Ingrediente>();
+        Statement consulta;
+        try {
+        consulta = (Statement) this.Conexion.createStatement();
+        ResultSet tablaingredientes = consulta.executeQuery("select producto_producto_id FROM productoingrediente");
+
+        while(tablaingredientes.next()){
+            codigoIngrediente = tablaingredientes.getInt(1);
+            Statement consultaBebidas = (Statement) this.Conexion.createStatement();
+            ResultSet tablaproductos = consultaBebidas.executeQuery("select * from producto where producto_id='"+codigoIngrediente+"'");
+            tablaproductos.next();
+            Ingrediente ingrediente = new Ingrediente(tablaproductos.getInt(1),tablaproductos.getString(2),tablaproductos.getFloat(3),tablaproductos.getFloat(4),
+                    tablaproductos.getFloat(5),Imagen.blobToImageIcon(tablaproductos.getBytes(6)));
+            listaIngredientes.add(ingrediente);
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaIngredientes;
     }
 
     public PedidoProveedor obtienePrimerPedidoPendiente() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ArrayList<Producto> obtieneProductosBajoMinimos() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Producto> obtieneProductosBajoMinimos() {
+        HashSet<Producto> listaProductos = new HashSet<Producto>();
+        try {
+            Statement consultaProductos = (Statement) this.Conexion.createStatement();
+            ResultSet tablaproductos = consultaProductos.executeQuery("select * from producto where producto.cantidad < producto.minimo");
+            while(tablaproductos.next()){
+            Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)),tablaproductos.getString(2),
+                    tablaproductos.getFloat(5),tablaproductos.getFloat(4),tablaproductos.getFloat(3),tablaproductos.getInt(1));
+            listaProductos.add(producto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaProductos;
     }
 
     public void pedidoRecibido(PedidoProveedor pedProveedor) {
