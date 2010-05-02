@@ -5,11 +5,8 @@
 
 package GestionStock.GestionPedidoProveedor;
 
-import GestionCarta.Elemento;
 import GestionStock.GestionProductos.Producto;
-import java.util.ArrayList;
 import java.util.HashMap;
-import utilidades.Pair;
 
 /**
  *
@@ -17,7 +14,9 @@ import utilidades.Pair;
  */
 public interface IPedidoProveedor {
 
-    public abstract HashMap<Producto, Float> imprimeListaProductosPedido() throws Exception;
-    public abstract Pair< HashMap<Producto, Float>, ArrayList<Elemento> > notificaRecepcionPedido() throws Exception;
+    public abstract void imprimeListaProductosPedido( HashMap<Producto, Float> listaProductosCantidad );
+    public abstract void NuevoPedidoProveedor( HashMap<Producto, Float> listaProductosCantidad );
+    public abstract PedidoProveedor obtienePrimerPedidoPendiente();
+    public abstract void pedidoRecibido(PedidoProveedor pedProveedor);
 
 }

@@ -10,27 +10,22 @@ import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
-import com.mysql.jdbc.Blob;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.TableModel;
-import utilidades.Imagen;
 import utilidades.Pair;
 import com.mysql.jdbc.Connection;
 import java.io.ByteArrayInputStream;
-import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import javax.sql.rowset.serial.SerialBlob;
-import javax.swing.table.TableModel;
 import utilidades.Imagen;
 
 /**
@@ -372,7 +367,35 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void nuevoPedidoProveedor(PedidoProveedor pedProdveedor) {
-        throw new UnsupportedOperationException("Not supported yet.");
+                try {
+            /*Preparamos la consulta de inserccion del pedido*/
+            java.sql.PreparedStatement insercion = this.Conexion.prepareStatement( "insert into pedidoproveedor" +
+                    "(fecha_pedido,recibido)" +
+                    " values ( ? , ?)");
+            insercion.setBoolean(2, pedProdveedor.fueRecibido());
+            insercion.setDate(1, (Date) pedProdveedor.getFechaPedido());
+
+            /*Preparamos la relacion con los productos pedidos*/
+            Statement ultimo = (Statement) this.Conexion.createStatement();
+            java.sql.PreparedStatement relacion = this.Conexion.prepareStatement("insert into tienepedido " +
+                    "values (?,?,?)");
+            Iterator it = pedProdveedor.obtenerInfoPedido().entrySet().iterator();
+
+            //Ejecutamos las consultas
+            insercion.executeUpdate();//Insertamos la incidencia
+            ResultSet id = ultimo.executeQuery("select MAX(pedido_proveedor_id) from pedidoproveedor"); // Sacamos su ID
+            id.next();
+            pedProdveedor.setCodigo(id.getInt(1));
+            relacion.setInt(1, pedProdveedor.getCodigo()); // Metemeos el ID en la consulta de relacion
+            while(it.hasNext()){
+                Map.Entry data = (Entry) it.next();
+                relacion.setInt(2,((Producto) data.getKey()).getCodPro());
+                relacion.setFloat(3,(Float) data.getValue() );
+                relacion.executeUpdate();// insertamos la relacion.
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public HashSet<Bebida> obtieneBebidas() {
@@ -422,7 +445,27 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public PedidoProveedor obtienePrimerPedidoPendiente() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Statement pedido = (Statement) this.Conexion.createStatement();
+            ResultSet infoPedido = pedido.executeQuery("select pedido_proveedor_id, fecha_pedido, recibido " +
+                    "from pedidoproveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoproveedor where recibido = false) mini " +
+                    "where n.pedido_proveedor_id = mini.min_id;");
+            infoPedido.next();
+            ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienepedido.cantidad"+
+                    "from producto, tienepedido" +
+                    " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1) +
+                    "' and producto_producto_id = producto_id;");
+            HashMap<Producto,Float> productosCantidad = new HashMap<Producto, Float>();
+            while(tablaproductos.next()){
+                    Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)),tablaproductos.getString(2),
+                    tablaproductos.getFloat(5),tablaproductos.getFloat(4),tablaproductos.getFloat(3),tablaproductos.getInt(1));
+                    productosCantidad.put( producto, tablaproductos.getFloat(7) );
+            }
+            return new PedidoProveedor( infoPedido.getInt(1), productosCantidad, infoPedido.getDate(2), infoPedido.getBoolean(3) );
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public HashSet<Producto> obtieneProductosBajoMinimos() {
@@ -442,7 +485,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void pedidoRecibido(PedidoProveedor pedProveedor) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Statement actualiza = (Statement) this.Conexion.createStatement();
+            actualiza.executeUpdate("update pedidoproveedor set recibido= '1' where pedido_proveedor_id = "+pedProveedor.getCodigo() );
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void restarCantidadProducto(Pair<Producto, Float> prodCantidad) {

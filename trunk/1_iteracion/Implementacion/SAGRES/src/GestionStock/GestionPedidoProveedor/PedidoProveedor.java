@@ -11,6 +11,7 @@ import java.util.HashMap;
  */
 public class PedidoProveedor {
 
+    private int codigo;
     private Date fechaPedido;
     private boolean recibido;
     HashMap<Producto, Float> listaProductos;
@@ -27,7 +28,8 @@ public class PedidoProveedor {
      * @param recibido booleano que indica si el pedido ha sido recibido.
      * @param fechaHoy
      */
-    protected PedidoProveedor(HashMap<Producto, Float> informacionPedido, Date fechaHoy, boolean recibido) {
+    public PedidoProveedor(int codigo, HashMap<Producto, Float> informacionPedido, Date fechaHoy, boolean recibido) {
+        this.codigo = codigo;
         listaProductos = informacionPedido;
         this.recibido = recibido;
         this.fechaPedido = fechaHoy;
@@ -61,7 +63,17 @@ public class PedidoProveedor {
      * Obtiene la lista de productos con la cantidad que fue pedida
      * @return Devuelve un HashMap de productos como key y la cantidad que se pidio como valor.
      */
-    HashMap<Producto, Float> obtenerInfoPedido() {
+    public HashMap<Producto, Float> obtenerInfoPedido() {
         return this.listaProductos;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    
 }
