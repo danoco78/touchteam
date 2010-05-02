@@ -79,12 +79,8 @@ public class SAGRES implements IMetre, ICocinero {
         this.icarta.nuevoElemento(e);
     }
 
-    public ArrayList<Elemento> obtieneElementosConProdcuto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public ArrayList<Elemento> obtieneElementosSeccion(Seccion seccion) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Elemento> obtieneElementosConProducto(Producto pro) {
+        return this.icarta.obtieneElementosConProducto(pro);
     }
 
     public ArrayList<Ingrediente> obtieneIngredientes() {
@@ -114,10 +110,6 @@ public class SAGRES implements IMetre, ICocinero {
 
     public void eliminaElemento(Elemento e) {
         this.icarta.eliminaElemento(e);
-    }
-
-    public ArrayList<Elemento> obtieneElementosConProducto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

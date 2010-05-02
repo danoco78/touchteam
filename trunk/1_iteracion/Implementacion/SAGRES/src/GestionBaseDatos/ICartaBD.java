@@ -4,6 +4,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoBebida;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
+import GestionStock.GestionProductos.Producto;
 import java.util.HashSet;
 
 /**
@@ -31,4 +32,6 @@ public interface ICartaBD {
     public HashSet<Elemento> obtieneElementosInvalidados();
 
     public HashSet<Seccion> obtieneSecciones();
+
+    public HashSet<Elemento> obtieneElementosConProducto(Producto producto);
 }

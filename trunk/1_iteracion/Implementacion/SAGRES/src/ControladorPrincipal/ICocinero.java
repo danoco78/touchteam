@@ -28,12 +28,10 @@ public interface ICocinero {
     public abstract void notificaRecepcionPedido(PedidoProveedor ped);
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract void nuevoElemento(Elemento e);
-    public abstract ArrayList<Elemento> obtieneElementosConProdcuto(Producto pro);
-    public abstract ArrayList<Elemento> obtieneElementosSeccion(Seccion seccion);
+    public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
     public abstract ArrayList<Ingrediente> obtieneIngredientes();
     public abstract PedidoProveedor obtienePedidoProveedor();
     public abstract HashMap<Producto,Float> obtieneProductosBajoMinimos();
-    public abstract ArrayList<Producto> obtieneProductosSeccion(Seccion seccion);
     public abstract HashSet<Seccion> obtieneSecciones();
     
 }
