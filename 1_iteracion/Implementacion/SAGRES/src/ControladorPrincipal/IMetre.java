@@ -10,6 +10,7 @@ import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -22,6 +23,6 @@ public interface IMetre {
     public abstract void nuevoProducto(Producto pro);
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract ArrayList<Bebida> obtenerBebidas();
-    public abstract ArrayList<Elemento> obtieneElementosConProducto(Producto pro);
+    public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
 
 }
