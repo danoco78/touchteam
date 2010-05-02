@@ -8,6 +8,8 @@ package ControladorPrincipal;
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
+import GestionCarta.SeccionBebida;
+import GestionCarta.SeccionComida;
 import GestionStock.GestionIncidencias.IIncidencia;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
@@ -57,15 +59,7 @@ public class SAGRES implements IMetre, ICocinero {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ArrayList<Elemento> obtieneElementosConProducto(Producto pro) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public ArrayList<Elemento> compruebaElementosInvalidos(HashMap<Producto, Float> lista) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void elimnaElemento(Elemento e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -82,7 +76,7 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void nuevoElemento(Elemento e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.icarta.nuevoElemento(e);
     }
 
     public ArrayList<Elemento> obtieneElementosConProdcuto(Producto pro) {
@@ -105,18 +99,25 @@ public class SAGRES implements IMetre, ICocinero {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ArrayList<Producto> obtieneProductosSeccion(Seccion seccion) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Producto> obtieneProductosSeccion(Seccion seccion) {
+        if (seccion instanceof SeccionBebida)
+            return this.iproducto.obtieneBebidas();
+        else if (seccion instanceof SeccionComida)
+            return this.iproducto.obtieneIngredientes();
+
+        return null;
     }
 
-    public ArrayList<Seccion> obtieneSecciones() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Seccion> obtieneSecciones() {
+       return this.icarta.obtieneSecciones();
     }
 
     public void eliminaElemento(Elemento e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.icarta.eliminaElemento(e);
     }
 
-
+    public ArrayList<Elemento> obtieneElementosConProducto(Producto pro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 }

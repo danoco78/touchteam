@@ -30,7 +30,8 @@ public interface ICarta {
 
     
     // ANTIGUOS MÉTODOS DE LA INTERFAZ
-     
+
+    /*
     public ArrayList<Elemento> corrigeElementosInvalidados();
 
     public ArrayList<Elemento> invalidaElementoCarta(Producto producto);
@@ -41,6 +42,6 @@ public interface ICarta {
 
     public ArrayList<Producto> obtenProductosDeSeccion(Seccion seccion);
 
-    public ArrayList<Seccion> obtenSecciones();
+    public ArrayList<Seccion> obtenSecciones();*/
 
 }
