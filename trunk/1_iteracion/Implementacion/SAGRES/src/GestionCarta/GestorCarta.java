@@ -57,9 +57,9 @@ public class GestorCarta implements ICarta {
             this.listaSecciones.add(seccion);
         }
 
-
+        // CONSTRUCTORES OBSOLETOS
         // Construimos la lista de Elementos con Bebidas
-        tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
+        /*tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
         ArrayList<Bebida> listaBebida = this.producto.obtenerListaBebidas();
         Iterator itProducto = listaBebida.iterator();
         for (int i=0;i<tabla.getRowCount();i++) {
@@ -74,9 +74,9 @@ public class GestorCarta implements ICarta {
                 }
             }
             this.listaElementos.add(elementoBebida);
-        }
+        }*/
         // Construimos la lista de Elementos con Platos
-        tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, elementoplato.tiempo_elaboracion, precio, divi_max FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id");
+        /*tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, elementoplato.tiempo_elaboracion, precio, divi_max FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id");
         ArrayList<Ingrediente> listaIngredientes = this.producto.obtenerListaIngredientes();
         itProducto = listaIngredientes.iterator();
         for (int i=0;i<tabla.getRowCount();i++) {
@@ -90,7 +90,7 @@ public class GestorCarta implements ICarta {
                 }
             }
             this.listaElementos.add(elementoPlato);
-        }
+        }*/
 
         // Construimos la lista de ElementoBebida
         /*tabla = this.almacen.realizaConsulta("SELECT elemento_elemento_id FROM elementobebida");
@@ -302,7 +302,7 @@ public class GestorCarta implements ICarta {
      * @throws Exception El elemento especificado no existe
      * @throws Exception No se pudo eliminar el elemento de la BD
      */
-    public void eliminaElementoCarta(int codigoElemento) throws Exception {
+    /*public void eliminaElementoCarta(int codigoElemento) throws Exception {
         String consulta;
         Elemento elemento = null;
         elemento = this.buscaElemento(codigoElemento);
@@ -313,7 +313,7 @@ public class GestorCarta implements ICarta {
 
         consulta = "DELETE FROM elemento WHERE elemento_id="+codigoElemento;
         this.almacen.consultaDeModificacion(consulta);
-    }
+    }*/
 
 
     public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
@@ -413,7 +413,7 @@ public class GestorCarta implements ICarta {
      * @param foto Foto del elemento
      * @param divisionesMaximas Divisiones máximas que puede sufrir el elemento
      */
-    public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
+    /*public void nuevoElementoBebida(ArrayList<Bebida> listaBebidas,
             SeccionBebida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int divisionesMaximas) {
 
@@ -456,8 +456,7 @@ public class GestorCarta implements ICarta {
             //ElementoBebida elementoBebida = this.convierteTablaABebida(tabla);
 
 
-
-    }
+    }*/
 
     /**
      * Método que crea en el sistema un nuevo elemento de tipo plato
@@ -470,7 +469,7 @@ public class GestorCarta implements ICarta {
      * @param tiempoElaboracion Tiempo de elaboración estimado del elemento
      * @param divisionesMaximas Divisiones máximas que puede sufrir el elemento
      */
-    public void nuevoElementoPlato(ArrayList<Ingrediente> listaIngredientes,
+    /*public void nuevoElementoPlato(ArrayList<Ingrediente> listaIngredientes,
             SeccionComida seccion, String nombre, String descripcion, float precio,
             ImageIcon foto, int tiempoElaboracion, int divisionesMaximas) {
 
@@ -513,7 +512,7 @@ public class GestorCarta implements ICarta {
             //tabla = almacen.realizaConsulta(consulta);
             //ElementoPlato elementoPlato = this.convierteTablaAPlato(tabla);
 
-    }
+    }*/
 
     /**
      * Método que devuelve los elementos de una sección
@@ -636,8 +635,8 @@ public class GestorCarta implements ICarta {
      * Método que devuelve las secciones de la carta
      * @return Lista de secciones de la carta
      */
-    public ArrayList<Seccion> obtenSecciones() {
+    /*public ArrayList<Seccion> obtenSecciones() {
         return listaSecciones;
-    }
+    }*/
 
 }

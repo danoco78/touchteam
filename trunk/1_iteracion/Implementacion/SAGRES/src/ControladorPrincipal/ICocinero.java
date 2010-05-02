@@ -13,6 +13,7 @@ import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  *
@@ -33,6 +34,6 @@ public interface ICocinero {
     public abstract PedidoProveedor obtienePedidoProveedor();
     public abstract HashMap<Producto,Float> obtieneProductosBajoMinimos();
     public abstract ArrayList<Producto> obtieneProductosSeccion(Seccion seccion);
-    public abstract ArrayList<Seccion> obtieneSecciones();
+    public abstract HashSet<Seccion> obtieneSecciones();
     
 }
