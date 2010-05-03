@@ -2,6 +2,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionStock.GestionProductos.IGestionarProducto;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
@@ -22,14 +23,14 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
 
 
     private ImageIcon imagen;
-    private IGestionarProducto gestorProducto;
+    //private IGestionarProducto gestorProducto;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirIngrediente(java.awt.Frame parent, IGestionarProducto GestorProducto) {
+    public DialogoAnadirIngrediente(java.awt.Frame parent, /*IGestionarProducto GestorProducto*/ ICocinero iCocinero) {
         super(parent, true);
         initComponents();
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
-        gestorProducto = GestorProducto;
+        //gestorProducto = GestorProducto;
         imagen = null;
     }
 

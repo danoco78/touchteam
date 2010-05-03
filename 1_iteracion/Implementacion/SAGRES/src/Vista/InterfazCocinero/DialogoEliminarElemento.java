@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
 import GestionCarta.IPreparaCarta;
@@ -21,15 +22,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DialogoEliminarElemento extends javax.swing.JDialog {
 
-    private ICarta gestorCarta;
-    private IPreparaCarta carta;
+    //private ICarta gestorCarta;
+    //private IPreparaCarta carta;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta) {
+    public DialogoEliminarElemento(java.awt.Frame parent, /*ICarta GestorCarta, IPreparaCarta Carta*/ ICocinero iCocinero) {
         super(parent, true);
         initComponents();
-        this.gestorCarta = GestorCarta;
-        this.carta = Carta;
+        //this.gestorCarta = GestorCarta;
+        //this.carta = Carta;
         ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());

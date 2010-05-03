@@ -22,16 +22,16 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
-    private IProducto almacenProductos;
-    private IGestionarProducto gestorProductos;
+    /*private IProducto almacenProductos;
+    private IGestionarProducto gestorProductos;*/
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarIngrediente(java.awt.Frame parent, IProducto AlmacenProductos, IGestionarProducto GestorProductos ) {
+    public DialogoEliminarIngrediente(java.awt.Frame parent, /*IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero ) {
         super(parent, true);
         initComponents();
-        this.gestorProductos = GestorProductos;
-        this.almacenProductos = AlmacenProductos;
+        //this.gestorProductos = GestorProductos;
+        //this.almacenProductos = AlmacenProductos;
         ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
         this.bAceptar.setEnabled(false);
         DefaultTableModel modelo = new DefaultTableModel();

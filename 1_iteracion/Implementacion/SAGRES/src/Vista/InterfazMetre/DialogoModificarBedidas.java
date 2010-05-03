@@ -1,6 +1,7 @@
 
 package Vista.InterfazMetre;
 
+import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
@@ -31,18 +32,18 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
-    private IGestionarProducto gestorProducto;
-    private IProducto productos;
+    //private IGestionarProducto gestorProducto;
+    //private IProducto productos;
     private int bebidaSeleccionada;
     private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarBedidas(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto, IProducto productos) {
-        super(parent, false);
+    public DialogoModificarBedidas(java.awt.Frame parent,IMetre iMetre) {
+        super(parent, true);
         initComponents();
         this.estado=1;
-        this.gestorProducto = gestorProducto;
-        this.productos = productos;
+        /*this.gestorProducto = gestorProducto;
+        this.productos = productos;*/
         this.listaBebidas = this.productos.obtenerListaBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(0));

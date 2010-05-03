@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -18,11 +19,11 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
-    private IPedidoProveedor gestorPedido;
+    private ICocinero gestorPedido;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoNotificarLlegadaProductos(java.awt.Frame parent, boolean modal,IPedidoProveedor GestorPedido) {
-        super(parent, modal);
+    public DialogoNotificarLlegadaProductos(java.awt.Frame parent,ICocinero GestorPedido) {
+        super(parent, true);
         initComponents();
         this.gestorPedido = GestorPedido;
     }
@@ -272,7 +273,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         try {
-            this.gestorPedido.notificaRecepcionPedido();
+            this.gestorPedido.notificaRecepcionPedido(this.gestorPedido.obtienePedidoProveedor());
                     this.setVisible(false);
         dispose();
         } catch (Exception ex) {
