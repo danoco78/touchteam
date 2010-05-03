@@ -115,5 +115,8 @@ public class Elemento {
         this.precio = precio;
     }
 
+    public boolean getDisponible(){
+        return this.disponible;
+    }
     
 }

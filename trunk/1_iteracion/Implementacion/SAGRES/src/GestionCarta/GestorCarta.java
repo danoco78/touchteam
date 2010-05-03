@@ -113,13 +113,24 @@ public class GestorCarta implements ICarta {
         listaElementos = this.iCartaBD.obtieneElementosInvalidados();
         
         //Recorremos la lista de elementos
+        
 
 
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void deshabilitaElementos(HashSet<Elemento> listaElementos) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Iterator iterador = listaElementos.iterator();
+
+        while (iterador.hasNext()){
+            Elemento elemento = (Elemento)iterador.next();
+
+            elemento.setDisponible(false);
+            if (elemento instanceof ElementoBebida)
+                this.iCartaBD.modificaElementoBebida((ElementoBebida)elemento);
+            else
+                this.iCartaBD.modificaElementoPlato((ElementoPlato)elemento);
+        }
     }
 
     public void eliminaElemento(Elemento elemento) {
@@ -146,6 +157,7 @@ public class GestorCarta implements ICarta {
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
         throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     public HashSet<Seccion> obtieneSecciones() {
