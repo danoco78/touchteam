@@ -1,0 +1,2 @@
+En las clases se debería poner las funciones que (daba por hecho)
+que estaban en el controlador principal.
