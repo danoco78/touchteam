@@ -62,7 +62,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void nuevoElementoBebida(ElementoBebida elemento) {
+    public void nuevoElementoBebida(ElementoBebida elemento, Seccion seccion) {
         try {
             // Insertamos el elemento
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"+
@@ -95,12 +95,17 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 inserccion.setInt(2, bebida.getCodPro());
                 inserccion.executeUpdate();
             }
+            // Insertamos el elemento en su sección
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyebebida VALUES ('?','?')");
+            inserccion.setInt(1, seccion.getCodigoSeccion());
+            inserccion.setInt(2, id_elemento);
+            inserccion.executeUpdate();
         }catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void nuevoElementoPlato(ElementoPlato elemento) {
+    public void nuevoElementoPlato(ElementoPlato elemento, Seccion seccion) {
         try {
             // Insertamos el elemento
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"+
@@ -133,6 +138,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 inserccion.setInt(2, ingrediente.getCodPro());
                 inserccion.executeUpdate();
             }
+            // Insertamos el elemento en su sección
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeplato VALUES ('?','?')");
+            inserccion.setInt(1, seccion.getCodigoSeccion());
+            inserccion.setInt(2, id_elemento);
+            inserccion.executeUpdate();
         }catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,7 +1,6 @@
 package GestionCarta;
 
 
-import GestionBaseDatos.IAlmacenamiento;
 import GestionBaseDatos.ICartaBD;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IProducto;
@@ -29,19 +28,19 @@ public class GestorCarta implements ICarta {
     ArrayList<Seccion> listaSecciones;
     ArrayList<SeccionComida> listaSeccionComida;
     ArrayList<SeccionBebida> listaSeccionBebida;
-    IAlmacenamiento almacen;
     ICartaBD iCartaBD;
     IProducto producto;
 
-    public GestorCarta(IAlmacenamiento iAlmacenamiento, ICartaBD iCartaBD, IProducto iProducto) {
+    public GestorCarta(ICartaBD iCartaBD, IProducto iProducto) {
         TableModel tabla, tablaProductos;
-        this.almacen = iAlmacenamiento;
         this.iCartaBD = iCartaBD;
         this.producto = iProducto;
         this.listaSecciones = new ArrayList<Seccion>();
         this.listaElementos = new ArrayList<Elemento>();
+        // CONSTRUCTORES OBSOLETOS
         // Construimos el objeto Carta
-        tabla = this.almacen.realizaConsulta("SELECT ultima_modificacion FROM carta");
+
+        /*tabla = this.almacen.realizaConsulta("SELECT ultima_modificacion FROM carta");
         this.carta = new Carta((java.sql.Date)tabla.getValueAt(0,0));
         
         // Construimos la lista de Secciones de Bebida
@@ -55,9 +54,9 @@ public class GestorCarta implements ICarta {
         for (int i=0;i<tabla.getRowCount();i++) {
             SeccionComida seccion = new SeccionComida((Integer)tabla.getValueAt(i,0),(String)tabla.getValueAt(i,1),this.carta);
             this.listaSecciones.add(seccion);
-        }
+        }*/
 
-        // CONSTRUCTORES OBSOLETOS
+        
         // Construimos la lista de Elementos con Bebidas
         /*tabla = this.almacen.realizaConsulta("SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
         ArrayList<Bebida> listaBebida = this.producto.obtenerListaBebidas();
@@ -138,11 +137,11 @@ public class GestorCarta implements ICarta {
      * Método que crea en el sistema un nuevo elemento
      * @param elemento Elemento que queremos crear
      */
-    public void nuevoElemento(Elemento elemento) {
+    public void nuevoElemento(Elemento elemento, Seccion seccion) {
         if (elemento instanceof ElementoBebida)
-            this.iCartaBD.nuevoElementoBebida((ElementoBebida) elemento);
+            this.iCartaBD.nuevoElementoBebida((ElementoBebida) elemento, seccion);
         else
-            this.iCartaBD.nuevoElementoPlato((ElementoPlato) elemento);
+            this.iCartaBD.nuevoElementoPlato((ElementoPlato) elemento, seccion);
     }
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
@@ -163,7 +162,7 @@ public class GestorCarta implements ICarta {
      * @param codigoElemento
      * @return
      */
-    private Elemento buscaElemento (int codigoElemento) {
+    /*private Elemento buscaElemento (int codigoElemento) {
         Iterator iterador = listaElementos.iterator();
         Elemento elemento;
         while(iterador.hasNext()){
@@ -172,14 +171,14 @@ public class GestorCarta implements ICarta {
                 return elemento;
         }
         return null;
-    }
+    }*/
 
     /**
      * Método que busca todos los elementos inválidos de la carta
      *
      * @return Un ArrayList con los elementos inválidos.
      */
-    private ArrayList<Elemento> buscaElementosInvalidados() {
+    /*private ArrayList<Elemento> buscaElementosInvalidados() {
         ArrayList<Elemento> elementosInvalidos = new ArrayList<Elemento>();
         Iterator iterador;
         Iterator iteradorProductos;
@@ -214,14 +213,14 @@ public class GestorCarta implements ICarta {
             }
         }
         return elementosInvalidos;
-    }
+    }*/
 
     /*
      * Funcion que convierte una tabla en un objeto ElementoBebida
      * @param tabla Tabla con los datos de la BD
      * @return Un ElementoBebida
      */
-    private ArrayList<ElementoBebida> convierteTablaABebida(TableModel tabla) {
+    /*private ArrayList<ElementoBebida> convierteTablaABebida(TableModel tabla) {
         TableModel tablaBebida, tablaDatosElemento;
         String consulta;
         ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
@@ -250,13 +249,13 @@ public class GestorCarta implements ICarta {
         }
 
         return listaElementosB;
-    }
+    }*/
     /*
      * Funcion que convierte una tabla en un objeto ElementoPlato
      * @param tabla Tabla con los datos de la BD
      * @return Un ElementoPlato
      */
-    private ArrayList<ElementoPlato> convierteTablaAPlato(TableModel tabla) {
+    /*private ArrayList<ElementoPlato> convierteTablaAPlato(TableModel tabla) {
         TableModel tablaPlato, tablaDatosElemento;
         String consulta;
         ArrayList<Ingrediente> listaIngredientes = new ArrayList<Ingrediente>();
@@ -285,16 +284,16 @@ public class GestorCarta implements ICarta {
             listaElementoP.add(elementoPlato);
         }
         return listaElementoP;
-    }
+    }*/
 
     /**
      * Método para habilitar los elementos inválidos después de la llegada del pedido.
      *
      * @return Lista de elmentos arreglados.
      */
-    public ArrayList<Elemento> corrigeElementosInvalidados() {
+    /*public ArrayList<Elemento> corrigeElementosInvalidados() {
         return new ArrayList<Elemento>();
-    }
+    }*/
 
     /**
      * Método que elimina un elemento de la carta
@@ -316,7 +315,7 @@ public class GestorCarta implements ICarta {
     }*/
 
 
-    public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
+    /*public ArrayList<Elemento> invalidaElementoCarta(Producto producto) {
         Iterator it = this.listaElementos.iterator();
         Iterator itProducto;
 
@@ -343,7 +342,7 @@ public class GestorCarta implements ICarta {
             }
         }
         return this.listaElementos;
-    }
+    }*/
 
     /**
      * Modifica un Elemento Bebida.
@@ -356,7 +355,7 @@ public class GestorCarta implements ICarta {
      * @param divisionesMaximas Las nuevas divisiones máximas del elemento.
      * @throws Exception Cuando el elemento no existe.
      */
-    public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception {
+    /*public void modificaElementoBebida(int codigoElemento, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas ) throws Exception {
         Elemento elemento;
         String consulta;
 
@@ -371,7 +370,7 @@ public class GestorCarta implements ICarta {
         else{
             throw new Exception("El elemento especificado no existe.");
         }
-    }
+    }*/
 
     /**
      * Modifica los datos de un elemento plato.
@@ -385,7 +384,7 @@ public class GestorCarta implements ICarta {
      * @param divisionesMaximas Las nuevas divisiones másimas del elemento.
      * @throws Exception Cuando el elemento no existe.
      */
-    public void modificaElementoPlato(int codigoElemento, String nombre, String descripcion, ImageIcon foto, int tiempoPreparacion, float precio, int divisionesMaximas) throws Exception {
+    /*public void modificaElementoPlato(int codigoElemento, String nombre, String descripcion, ImageIcon foto, int tiempoPreparacion, float precio, int divisionesMaximas) throws Exception {
         Elemento elemento;
         String consulta;
 
@@ -401,7 +400,7 @@ public class GestorCarta implements ICarta {
         else{
             throw new Exception("El elemento especificado no existe.");
         }
-    }
+    }*/
 
     /**
      * Método que crea en el sistema un nuevo elemento de tipo bebida
@@ -519,7 +518,7 @@ public class GestorCarta implements ICarta {
      * @param seccion Sección de la cual queremos sus elementos
      * @return Lista de elementos de la sección especificada
      */
-    public ArrayList<Elemento> obtenElementosDeSeccion(Seccion seccion) {
+   /* public ArrayList<Elemento> obtenElementosDeSeccion(Seccion seccion) {
         ArrayList<Elemento> listaElem = new ArrayList<Elemento>();
         TableModel tablaSeccion;
         tablaSeccion = almacen.realizaConsulta("SELECT seccionBebida_seccion_seccion_id, elementoBebida_elemento_elemento_id FROM incluyebebida WHERE seccionBebida_seccion_seccion_id = "+seccion.getCodigoSeccion());
@@ -549,14 +548,14 @@ public class GestorCarta implements ICarta {
             }
         }
         return listaElem;
-    }
+    }*/
 
     /**
      * Método que devuelve los productos de los que está compuesto un elemento
      * @param elemento Elemento del cual queremos obtener sus productos
      * @return Lista de productos del elemento especificado
      */
-    public ArrayList<Producto> obtenProductosDeElemento(Elemento elemento) {
+    /*public ArrayList<Producto> obtenProductosDeElemento(Elemento elemento) {
        ArrayList<Producto> listaProd = new ArrayList<Producto>();
        TableModel tablaElemento;
        String consulta;
@@ -589,14 +588,14 @@ public class GestorCarta implements ICarta {
        }
 
        return listaProd;
-    }
+    }*/
 
     /**
      * Método que devuelve los productos existentes en una sección
      * @param seccion Sección de la cual queremos obtener los productos
      * @return Lista de productos existentes en una sección
      */
-    public ArrayList<Producto> obtenProductosDeSeccion(Seccion seccion) {
+    /*public ArrayList<Producto> obtenProductosDeSeccion(Seccion seccion) {
         ArrayList<Producto> listaProd = new ArrayList<Producto>();
         TableModel tabla, tablaCodProd, tablaProd;
         Producto prod;
@@ -629,7 +628,7 @@ public class GestorCarta implements ICarta {
             }
         }
         return listaProd;
-    }
+    }*/
 
     /**
      * Método que devuelve las secciones de la carta

@@ -75,8 +75,8 @@ public class SAGRES implements IMetre, ICocinero {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void nuevoElemento(Elemento e) {
-        this.icarta.nuevoElemento(e);
+    public void nuevoElemento(Elemento e, Seccion sec) {
+        this.icarta.nuevoElemento(e, sec);
     }
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto pro) {

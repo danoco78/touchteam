@@ -22,7 +22,7 @@ public interface ICarta {
 
     public void modificaElemento(Elemento elemento);
 
-    public void nuevoElemento(Elemento elemento);
+    public void nuevoElemento(Elemento elemento, Seccion sec);
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto);
 
