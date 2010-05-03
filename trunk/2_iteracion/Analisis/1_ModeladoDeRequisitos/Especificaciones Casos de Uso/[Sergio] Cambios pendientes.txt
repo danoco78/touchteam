@@ -1,0 +1,4 @@
+1. getSiguientePedidoCocinaPreparandose() no tiene sentido, se necesita
+una función que obtenga TODOS los pedidos que tengan elementos "Preparandose"
+y ninguno "En cola".
+______________________________________________

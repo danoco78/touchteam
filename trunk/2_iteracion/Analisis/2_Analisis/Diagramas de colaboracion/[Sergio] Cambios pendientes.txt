@@ -1,0 +1,5 @@
+1. getSiguientePedido(Cocina/Bar) se hace al controlador principal,
+de este se hace una llamada exactamente igual pero a Comanda,
+el resto del diagrama se desarrolla desde Comanda.
+Esto significa que es comanda la que tiene la función.
+______________________________________________
