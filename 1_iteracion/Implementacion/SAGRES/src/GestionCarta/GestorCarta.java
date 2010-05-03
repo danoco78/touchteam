@@ -156,8 +156,7 @@ public class GestorCarta implements ICarta {
     }
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
-        throw new UnsupportedOperationException("Not supported yet.");
-        
+        return this.iCartaBD.obtieneElementosConProducto(producto);
     }
 
     public HashSet<Seccion> obtieneSecciones() {
