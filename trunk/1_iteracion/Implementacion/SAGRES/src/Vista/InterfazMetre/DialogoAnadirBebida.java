@@ -1,5 +1,6 @@
 
 package Vista.InterfazMetre;
+import ControladorPrincipal.IMetre;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -20,14 +21,14 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
-    private IGestionarProducto gestorProducto;
+    //private IGestionarProducto gestorProducto;
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirBebida(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto) {
-        super(parent, modal);
+    public DialogoAnadirBebida(java.awt.Frame parent, IMetre iMetre) {
+        super(parent, true);
         initComponents();
-        this.gestorProducto = gestorProducto;
+        //this.gestorProducto = gestorProducto;
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
         this.bAceptar.setEnabled(false);
     }

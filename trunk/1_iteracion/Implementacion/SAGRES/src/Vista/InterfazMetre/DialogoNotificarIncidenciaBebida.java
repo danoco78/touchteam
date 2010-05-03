@@ -1,9 +1,9 @@
 
 package Vista.InterfazMetre;
 
-import GestionStock.GestionIncidencias.IIncidencia;
+import ControladorPrincipal.IMetre;
+import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Bebida;
-import GestionStock.GestionProductos.IProducto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -27,25 +27,23 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
-    private IIncidencia gestorIncidencias;
-    private IProducto productos;
+    private IMetre imetre;
     private int bebidaSeleccionada;
     private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoNotificarIncidenciaBebida(java.awt.Frame parent, boolean modal,IProducto productos, IIncidencia gestorIncidencias) {
-        super(parent, modal);
+    public DialogoNotificarIncidenciaBebida(java.awt.Frame parent,IMetre iMetre) {
+        super(parent, true);
         initComponents();
         this.estado=1;
-        this.gestorIncidencias = gestorIncidencias;
-        this.productos = productos;
-        this.listaBebidas = this.productos.obtenerListaBebidas();
+        this.imetre = iMetre;
+        this.listaBebidas = this.imetre.obtenerBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         tableModel.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
         tableModel.setRowCount(listaBebidas.size());
         this.tTablaIngredientesDisponibles.setModel(tableModel);
-        for (int i = 0; i < this.listaBebidas.size(); i++) {
+        for (int i = 0; i<this.listaBebidas.size(); i++) {
             this.tTablaIngredientesDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
         }
@@ -407,7 +405,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
                     try{
-                        this.gestorIncidencias.nuevaIncidencia(this.tDescripcion.getText(),(Float)this.tCantidadAfectada.getValue(), this.listaBebidas.get(this.bebidaSeleccionada));
+                        this.imetre.nuevaIncidencia( new Incidencia(this.listaBebidas.get(this.bebidaSeleccionada), (Float)this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
                     } catch (Exception ex){
                     }
                     setVisible(false);

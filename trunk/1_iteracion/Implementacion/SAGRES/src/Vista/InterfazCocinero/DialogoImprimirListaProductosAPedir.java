@@ -2,6 +2,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
@@ -11,6 +12,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,22 +27,22 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
 
 
     private ImageIcon imagen;
-    private IPedidoProveedor gestorPedido;
-    private IProducto gestorProducto;
+    private ICocinero icocinero;
 
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, IProducto GestorProducto,IPedidoProveedor GestorPedido) {
+    public DialogoImprimirListaProductosAPedir(java.awt.Frame parent, ICocinero iCocinero) {
         super(parent, true);
         initComponents();
-        this.gestorPedido = GestorPedido;
-        this.gestorProducto = GestorProducto;
+        this.icocinero = iCocinero;
         DefaultTableModel modelo = (DefaultTableModel)this.tTablaProductos.getModel();
-        ArrayList<Producto> lista = this.gestorProducto.obtenerProductosBajoMinimos();
-        for (int i = 0; i < lista.size(); i++) {
+        HashMap<Producto, Float> lista = this.icocinero.obtieneProductosBajoMinimos();
+        Iterator<Entry<Producto,Float> > it = lista.entrySet().iterator();
+        for (int i = 0; it.hasNext(); i++) {
+            Entry<Producto,Float> aux = it.next();
             Object [] obj = new Object[2];
-            obj[0] = lista.get(i).getNombre();
-            obj[1] = lista.get(i).getMaximo()-lista.get(i).getCantidad();
+            obj[0] = aux.getKey().getNombre();
+            obj[1] = aux.getValue();
             modelo.addRow(obj);
         }
     }
@@ -234,7 +238,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         try {
-            this.gestorPedido.imprimeListaProductosPedido();
+            this.icocinero.imprimeListaProductosaPedir();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }

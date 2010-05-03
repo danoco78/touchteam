@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionStock.GestionProductos.IGestionarProducto;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
@@ -33,16 +34,16 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
-    private IProducto almacenProductos;
-    private IGestionarProducto gestorProductos;
+   /* private IProducto almacenProductos;
+    private IGestionarProducto gestorProductos;*/
     private Ingrediente aModificar;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarIngrediente(java.awt.Frame parent,  IProducto AlmacenProductos, IGestionarProducto GestorProductos ) {
+    public DialogoModificarIngrediente(java.awt.Frame parent, /* IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero ) {
         super(parent, false);
         initComponents();
-        this.gestorProductos = GestorProductos;
-        this.almacenProductos = AlmacenProductos;
+        /*this.gestorProductos = GestorProductos;
+        this.almacenProductos = AlmacenProductos;*/
         ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));

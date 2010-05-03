@@ -1,7 +1,9 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionStock.GestionIncidencias.IIncidencia;
+import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import Vista.DialogoComfirmacion;
@@ -12,6 +14,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import utilidades.ImageRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,16 +33,14 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
-    private IProducto almacenProductos;
-    private IIncidencia gestorIncidencias;
+    private ICocinero icocinero;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoNotificarIncidencia(java.awt.Frame parent, IProducto AlmacenProductos, IIncidencia GestorIncidencias) {
+    public DialogoNotificarIncidencia(java.awt.Frame parent, ICocinero iCocinero) {
         super(parent, true);
         initComponents();
-        this.gestorIncidencias = GestorIncidencias;
-        this.almacenProductos = AlmacenProductos;
-        ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
+        this.icocinero = iCocinero;
+        ArrayList<Ingrediente> listaIngredientes = this.icocinero.obtieneIngredientes();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
@@ -47,10 +49,12 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         this.tTablaIngredientesDisponibles.setModel(modelo);
         this.tTablaIngredientesDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaIngredientesDisponibles.setRowHeight(50);
-        for (int i = 0; i < listaIngredientes.size(); i++) {
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getNombre(), i, 0);
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getImagen(), i, 2);
+        Iterator<Ingrediente> it = listaIngredientes.iterator();
+        for (int i = 0; it.hasNext(); i++) {
+            Ingrediente aux = it.next();
+            this.tTablaIngredientesDisponibles.setValueAt(aux.getNombre(), i, 0);
+            this.tTablaIngredientesDisponibles.setValueAt(aux.getCantidad(), i, 1);
+            this.tTablaIngredientesDisponibles.setValueAt(aux.getImagen(), i, 2);
         }
         this.bSiguiente.setEnabled(false);
         this.estado = 1;
@@ -412,7 +416,8 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    this.gestorIncidencias.nuevaIncidencia(this.tDescripcion.getText(), (Float) this.tCantidadAfectada.getValue(), this.almacenProductos.obtenerListaIngredientes().get(this.tTablaIngredientesDisponibles.getSelectedRow()));
+                    this.icocinero.nuevaIncidencia(new Incidencia( this.icocinero.obtieneIngredientes().get(this.tTablaIngredientesDisponibles.getSelectedRow()),
+                            (Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
                     setVisible(false);
                     dispose();
                 }

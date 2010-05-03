@@ -2,9 +2,7 @@
 
 package Vista.InterfazMetre;
 
-import GestionStock.GestionIncidencias.IIncidencia;
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
+import ControladorPrincipal.IMetre;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,17 +14,13 @@ import javax.swing.JFrame;
  */
 public class InterfazMetre extends javax.swing.JFrame {
 
-    private IIncidencia iIncidencia;
-    private IProducto iProducto;
-    private IGestionarProducto iGestorProducto;
+    private IMetre imetre;
     private IntPrincipalMetre panelPrincipal = null;
 
 
-    public InterfazMetre(IIncidencia iIncidencia, IProducto iProducto, IGestionarProducto iGestorProducto) {
+    public InterfazMetre(IMetre iMetre) {
         initComponents();
-        this.iIncidencia = iIncidencia;
-        this.iProducto = iProducto;
-        this.iGestorProducto = iGestorProducto;
+        this.imetre = iMetre;
         this.panelPrincipal = new IntPrincipalMetre();
         getContentPane().add(this.panelPrincipal,java.awt.BorderLayout.CENTER);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -70,16 +64,16 @@ public class InterfazMetre extends javax.swing.JFrame {
                     System.exit(0);
                     break;
                 case ManejaEventos.ANADIRBEBIDA:
-                    dialogo = new DialogoAnadirBebida(padre, true, iGestorProducto);
+                    dialogo = new DialogoAnadirBebida(padre, imetre);
                     break;
                 case ManejaEventos.ELIMNARBEBIDA:
-                    dialogo =new DialogoEliminarBebida(padre, true, iGestorProducto, iProducto);
+                    dialogo =new DialogoEliminarBebida(padre, imetre);
                     break;
                 case ManejaEventos.MODIFICARBEBIDA:
-                    dialogo =new DialogoModificarBedidas(padre,true, iGestorProducto, iProducto);
+                    dialogo =new DialogoModificarBedidas(padre,imetre);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo =new DialogoNotificarIncidenciaBebida(padre, true, iProducto, iIncidencia);
+                    dialogo =new DialogoNotificarIncidenciaBebida(padre, imetre);
                     break;
             }
             if(dialogo != null){

@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
 import GestionCarta.IPreparaCarta;
@@ -39,17 +40,17 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/3";
     private final String PASO3 = "Paso 3/3";
     private int estado = 1;
-    private ICarta gestorCarta;
-    private IPreparaCarta carta;
+    /*private ICarta gestorCarta;
+    private IPreparaCarta carta;*/
     private ArrayList disponibles;
     private ArrayList seleccionados;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoAnadirElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta) {
+    public DialogoAnadirElemento(java.awt.Frame parent,/* ICarta GestorCarta, IPreparaCarta Carta*/ ICocinero iCocinero ) {
         super(parent, true);
         initComponents();
-        this.gestorCarta = GestorCarta;
-        this.carta = Carta;
+        /*this.gestorCarta = GestorCarta;
+        this.carta = Carta;*/
         this.estado = 1;
         ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
         for (int i = 0; i < listaSecciones.size(); i++) {

@@ -1,12 +1,7 @@
 
 package Vista.InterfazCocinero;
 
-import GestionCarta.ICarta;
-import GestionCarta.IPreparaCarta;
-import GestionStock.GestionIncidencias.IIncidencia;
-import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
+import ControladorPrincipal.ICocinero;
 import java.awt.CardLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
@@ -19,12 +14,7 @@ import javax.swing.JFrame;
  */
 public class InterfazCocinero extends javax.swing.JFrame {
 
-    private IIncidencia iIncidencia;
-    private IProducto iProducto;
-    private IGestionarProducto iGestorProducto;
-    private IPedidoProveedor iPedidoProveedor;
-    private ICarta iCarta;
-    private IPreparaCarta iPreparaCarta;
+    protected ICocinero icocinero;
     private IntPrincipalCocinero panelPrincipal = null;
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
@@ -34,16 +24,9 @@ public class InterfazCocinero extends javax.swing.JFrame {
     protected static final String INGREDIENTE = "Ingrediente";
 
 
-    public InterfazCocinero(IIncidencia iIncidencia, IProducto iProducto,
-            IGestionarProducto iGestorProducto ,IPedidoProveedor iPedidoProveedor,
-            ICarta iCarta, IPreparaCarta iPreparaCarta ) {
+    public InterfazCocinero( ICocinero iCocinero ) {
         initComponents();
-        this.iIncidencia = iIncidencia;
-        this.iProducto = iProducto;
-        this.iGestorProducto = iGestorProducto;
-        this.iPedidoProveedor = iPedidoProveedor;
-        this.iCarta = iCarta;
-        this.iPreparaCarta = iPreparaCarta;
+        this.icocinero = iCocinero;
         this.panelPrincipal = new IntPrincipalCocinero();
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
@@ -118,31 +101,31 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
                     break;
                 case ManejaEventos.IMPRIMIRLISTAPRODUCTOS:
-                    dialogo = new DialogoImprimirListaProductosAPedir(padre, iProducto, iPedidoProveedor);
+                    dialogo = new DialogoImprimirListaProductosAPedir(padre, icocinero);
                     break;
                 case ManejaEventos.NOTIFICARRECEPCION:
-                    dialogo = new DialogoNotificarLlegadaProductos(padre, true, iPedidoProveedor);
+                    dialogo = new DialogoNotificarLlegadaProductos(padre, icocinero);
                     break;
                 case ManejaEventos.ANADIRINGREDIENTE:
-                    dialogo = new DialogoAnadirIngrediente(padre, iGestorProducto);
+                    dialogo = new DialogoAnadirIngrediente(padre, icocinero);
                     break;
                 case ManejaEventos.ELIMINARINGREDIENTE:
-                    dialogo = new DialogoEliminarIngrediente(padre, iProducto, iGestorProducto);
+                    dialogo = new DialogoEliminarIngrediente(padre, icocinero);
                     break;
                 case ManejaEventos.MODIFICARINGREDIENTE:
-                    dialogo = new DialogoModificarIngrediente(padre, iProducto, iGestorProducto);
+                    dialogo = new DialogoModificarIngrediente(padre, icocinero);
                     break;
                 case ManejaEventos.ANADIRELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, iCarta, iPreparaCarta);
+                    dialogo = new DialogoAnadirElemento(padre, icocinero);
                     break;
                 case ManejaEventos.ELIMINARELEMENTO:
-                    dialogo = new DialogoEliminarElemento(padre, iCarta, iPreparaCarta);
+                    dialogo = new DialogoEliminarElemento(padre, icocinero);
                     break;
                 case ManejaEventos.MODIFICARELEMENTO:
-                    dialogo = new DialogoModificarElemento(padre, iCarta, iPreparaCarta, iProducto);
+                    dialogo = new DialogoModificarElemento(padre, icocinero);
                     break;
                 case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo = new DialogoNotificarIncidencia(padre, iProducto, iIncidencia);
+                    dialogo = new DialogoNotificarIncidencia(padre, icocinero);
                     break;
             }
             if (dialogo != null) {

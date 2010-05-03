@@ -28,8 +28,7 @@ public class Incidencia {
      * @param descripcion Descripción del motivo por el cual fueron desechados.
      * @param fecha Fecha de incidencia.
      */
-    public Incidencia(int codigo, Producto producto, float cantidad, String tipoIncidencia) {
-        this.codigo=codigo;
+    public Incidencia(Producto producto, float cantidad, String tipoIncidencia) {
         this.cantidadAfectada=cantidad;
         this.producto = producto;
         this.tipoIncidencia = tipoIncidencia;

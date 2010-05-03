@@ -1,6 +1,7 @@
 
 package Vista.InterfazMetre;
 
+import ControladorPrincipal.IMetre;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -20,17 +21,17 @@ import javax.swing.table.DefaultTableModel;
 public class DialogoEliminarBebida extends java.awt.Dialog {
 
 
-    private IGestionarProducto gestorProducto;
-    private IProducto productos;
+    //private IGestionarProducto gestorProducto;
+    //private IProducto productos;
     private int bebidaSeleccionada;
     private ArrayList<Bebida> listaBebidas;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarBebida(java.awt.Frame parent, boolean modal, IGestionarProducto gestorProducto, IProducto productos) {
-        super(parent, modal);
+    public DialogoEliminarBebida(java.awt.Frame parent, IMetre iMetre) {
+        super(parent, true);
         initComponents();
-        this.gestorProducto = gestorProducto;
-        this.productos = productos;
+        /*this.gestorProducto = gestorProducto;
+        this.productos = productos;*/
         this.listaBebidas = this.productos.obtenerListaBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tBebidas.getColumnName(0));

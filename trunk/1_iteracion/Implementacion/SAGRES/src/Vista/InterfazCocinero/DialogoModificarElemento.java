@@ -3,7 +3,6 @@ package Vista.InterfazCocinero;
 
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
-import GestionCarta.IPreparaCarta;
 import GestionCarta.Seccion;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.IProducto;
@@ -38,21 +37,21 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private final String PASO2 = "Paso 2/3";
     private final String PASO3 = "Paso 3/3";
     private int estado = 1;
-    private ICarta gestorCarta;
+    /*private ICarta gestorCarta;
     private IPreparaCarta carta;
-    private IProducto gestorProducto;
+    private IProducto gestorProducto;*/
     private ArrayList disponibles;
     private ArrayList seleccionados;
     private ImageIcon imagen;
     private Elemento elemento;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarElemento(java.awt.Frame parent, ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto) {
+    public DialogoModificarElemento(java.awt.Frame parent,/* ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto*/ ICocinero iCocinero) {
         super(parent, true);
         initComponents();
-        this.gestorCarta = GestorCarta;
+       /* this.gestorCarta = GestorCarta;
         this.carta = Carta;
-        this.gestorProducto = GestorProducto;
+        this.gestorProducto = GestorProducto;*/
         this.estado = 1;
         ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
         for (int i = 0; i < listaSecciones.size(); i++) {
