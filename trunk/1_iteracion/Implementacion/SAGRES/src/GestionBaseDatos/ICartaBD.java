@@ -23,9 +23,9 @@ public interface ICartaBD {
 
     public void modificaElementoPlato(ElementoPlato elemento);
 
-    public void nuevoElementoBebida(ElementoBebida elemento);
+    public void nuevoElementoBebida(ElementoBebida elemento, Seccion seccion);
 
-    public void nuevoElementoPlato(ElementoPlato elemento);
+    public void nuevoElementoPlato(ElementoPlato elemento, Seccion seccion);
 
     public HashSet<Elemento> obtieneElementos();
 

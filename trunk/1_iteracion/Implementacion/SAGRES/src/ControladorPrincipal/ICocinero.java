@@ -27,7 +27,7 @@ public interface ICocinero {
     public abstract void modificaElemento(Elemento e);
     public abstract void notificaRecepcionPedido(PedidoProveedor ped);
     public abstract void nuevaIncidencia(Incidencia in);
-    public abstract void nuevoElemento(Elemento e);
+    public abstract void nuevoElemento(Elemento e, Seccion sec);
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
     public abstract ArrayList<Ingrediente> obtieneIngredientes();
     public abstract PedidoProveedor obtienePedidoProveedor();
