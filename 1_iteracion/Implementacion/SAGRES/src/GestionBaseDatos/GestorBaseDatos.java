@@ -55,11 +55,74 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void modificaElementoBebida(ElementoBebida elemento) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+
+            int codigoElemento = elemento.getCodigoElemento();
+           // Iterator iterador = elemento.getListaBebidas().iterator();
+
+            java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET nombre=?, descripcion=?, disponible=?, foto=?, divi=?, divi_max=?, precio=? where elemento_id='"+codigoElemento+"'");
+            actualizacion.setString(1, elemento.getNombre());
+            actualizacion.setString(2, elemento.getDescripcion());
+            if (elemento.getDisponible())
+                actualizacion.setInt(3, 1);
+            else
+                actualizacion.setInt(3, 0);
+            actualizacion.setBinaryStream(4, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setInt(5, elemento.getDivisiones());
+            actualizacion.setInt(6, elemento.getDivisionesMaximas());
+            actualizacion.setFloat(7, elemento.getPrecio());
+
+            actualizacion.executeUpdate();//Actualizamos el ElementoBebida
+
+          /*  while (iterador.hasNext()) {
+                Producto bebida = (Producto)iterador.next();
+                actualizacion = this.Conexion.prepareStatement("INSERT INTO tienebebida VALUES('?','?')");
+                actualizacion.setInt(1, elemento.getCodigoElemento());
+                actualizacion.setInt(2, bebida.getCodPro());
+                actualizacion.executeUpdate();
+            }
+            */
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void modificaElementoPlato(ElementoPlato elemento) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+
+            int codigoElemento = elemento.getCodigoElemento();
+           // Iterator iterador = elemento.getListaIngredientes().iterator();
+
+            java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET nombre=?, descripcion=?, disponible=?, foto=?, divi=?, divi_max=?, precio=? where elemento_id='"+codigoElemento+"'");
+            actualizacion.setString(1, elemento.getNombre());
+            actualizacion.setString(2, elemento.getDescripcion());
+            if (elemento.getDisponible())
+                actualizacion.setInt(3, 1);
+            else
+                actualizacion.setInt(3, 0);
+            actualizacion.setBinaryStream(4, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setInt(5, elemento.getDivisiones());
+            actualizacion.setInt(6, elemento.getDivisionesMaximas());
+            actualizacion.setFloat(7, elemento.getPrecio());
+
+            actualizacion.executeUpdate();//Actualizamos el ElementoPlato
+
+            actualizacion = this.Conexion.prepareStatement("UPDATE elementoplato SET tiempo_elaboracion=? where elemento_elemento_id='"+codigoElemento+"'");
+            actualizacion.executeUpdate();
+
+          /*  while (iterador.hasNext()) {
+                Producto ingrediente = (Producto)iterador.next();
+                actualizacion = this.Conexion.prepareStatement("INSERT INTO tieneingrediente VALUES('?','?')");
+                actualizacion.setInt(1, elemento.getCodigoElemento());
+                actualizacion.setInt(2, ingrediente.getCodPro());
+                actualizacion.executeUpdate();
+            }
+           */
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void nuevoElementoBebida(ElementoBebida elemento, Seccion seccion) {
@@ -243,12 +306,55 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public HashSet<Elemento> obtieneElementosInvalidados() {
         HashSet<Elemento> elementosInvalidos = new HashSet<Elemento>();
+        java.sql.PreparedStatement consultaElementos, consultaProductos;
+        ElementoBebida elementoBebida = null;
+        ElementoPlato elementoPlato = null;
+        ResultSet elementos, productos;
+        
+        try{
+            //Primero vemos las bebidas invalidadas
+            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id AND elemento.disponible = 0");
+            elementos = consultaElementos.executeQuery();
+            while (elementos.next()){
+                ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tienebebida, producto WHERE " +
+                    "tienebebida.productoBebida_producto_producto_id = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ="+elementos.getInt(1));
+                productos = consultaProductos.executeQuery();
+                while(productos.next()){
+                    Bebida bebida = new Bebida(productos.getInt(6), productos.getString(2), Imagen.blobToImageIcon(new SerialBlob(productos.getBlob(1)).getBytes(1,(int)productos.getBlob(1).length())), productos.getFloat(3), productos.getFloat(4), productos.getFloat(5));
+                    listaBebidas.add(bebida);
+                }
 
-        String consulta;
+                elementoBebida = new ElementoBebida(elementos.getInt(1), listaBebidas, elementos.getString(2), elementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(elementos.getBlob(5)).getBytes(1,(int)elementos.getBlob(1).length())), elementos.getFloat(8), elementos.getInt(7));
+                elementoBebida.setDisponible(false);
+                elementoBebida.setDivisiones(elementos.getInt(6));
+            }
+            
+            elementosInvalidos.add(elementoBebida);
 
-        //Primero vemos las bebidas invalidadas
-        //SELECT elemento_id, nombre, descripcion, foto, precio, divi_max FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id"
-        consulta = "SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id AND elemento.disponible = 0";
+            //Continuamos con los platos invalidados
+            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio, tiempo_elaboracion FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id AND elemento.disponible = 0");
+            elementos = consultaElementos.executeQuery();
+            while (elementos.next()){
+                ArrayList<Ingrediente> listaIngredientes = new ArrayList<Ingrediente>();
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneingrediente, producto WHERE " +
+                    "tieneingrediente.productoIngrediente_producto_producto_id = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ="+elementos.getInt(1));
+                ResultSet datosIngredientes = consultaProductos.executeQuery();
+                while (datosIngredientes.next()) {
+                    Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1,(int)datosIngredientes.getBlob(1).length())) );
+                    listaIngredientes.add(ingrediente);
+                }
+                elementoPlato = new ElementoPlato(elementos.getInt(1), listaIngredientes, elementos.getString(2), elementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(elementos.getBlob(5)).getBytes(1,(int)elementos.getBlob(1).length())), elementos.getInt(9), elementos.getFloat(8), elementos.getInt(7));
+                elementoPlato.setDisponible(false);
+                elementoPlato.setDivisiones(elementos.getInt(6));
+            }
+
+            elementosInvalidos.add(elementoPlato);
+
+        }catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return elementosInvalidos;
     }
 
