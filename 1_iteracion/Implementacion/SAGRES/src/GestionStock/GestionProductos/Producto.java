@@ -129,11 +129,23 @@ public class Producto {
     }
 
     /**
+     * Método para generar el HashCode de un producto.
+     * @return Un entero indicando el HashCode
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + this.codPro;
+        return hash;
+    }
+
+    /**
      * Método para ver si dos productos son iguales.
      * @param objeto Producto con el que se quiere comparar.
      * @return true Si los dos productos son iguales.
      *         false Si los dos productos son distintos.
      */
+    @Override
     public boolean equals( Object objeto ) {
         if (objeto == null) return false;
 
