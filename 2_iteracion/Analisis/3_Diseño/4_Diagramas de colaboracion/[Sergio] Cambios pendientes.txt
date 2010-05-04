@@ -1,0 +1,4 @@
+1. Para reducir la cantidad de cada producto, se llama a getProductos
+ de elemento "elemento->getProductos()"devuelve un hashMap<Producto,float>
+ con producto y cantidad.
+__________________________________________
