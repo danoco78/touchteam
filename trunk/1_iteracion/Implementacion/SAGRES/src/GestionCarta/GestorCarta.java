@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import utilidades.Imagen;
 import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableModel;
 
@@ -106,17 +107,69 @@ public class GestorCarta implements ICarta {
     }
 
     public HashSet<Elemento> compruebaElementosInvalidados(HashMap<Producto, Float> listaProductosCantidades) {
-        HashSet<Elemento> listaElementos;
-        Elemento elemento;
+        HashSet<Elemento> listaElementos = new HashSet<Elemento>();
+        HashSet<Elemento> listaElementosInv;
+        HashSet<Producto> listaProductos = new HashSet<Producto>();
+               
+        //1.- Obtenemos la lista de elementos invalidados
+        listaElementosInv = this.iCartaBD.obtieneElementosInvalidados();
         
-        //Obtenemos la lista de elementos invalidados
-        listaElementos = this.iCartaBD.obtieneElementosInvalidados();
-        
-        //Recorremos la lista de elementos
-        
+        //2.- De cada elemento invalido cogemos su lista de productos
+        Iterator iteradorElementos = listaElementosInv.iterator();
+        while (iteradorElementos.hasNext()){
+            Elemento elemento = (Elemento)iteradorElementos.next();
+            if (elemento instanceof ElementoBebida){
+                HashMap<Bebida, Float> productosElemento = ((ElementoBebida)elemento).getListaBebidas();
+                //3.- Metemos cada producto en conjunto de productos
+                Iterator iteradorProductos = productosElemento.entrySet().iterator();
+                while(iteradorProductos.hasNext()){
+                    Map.Entry entry = (Map.Entry) iteradorProductos.next();
+                    listaProductos.add((Producto)entry.getKey());
+                }
+            }
+            else if (elemento instanceof ElementoPlato){
+                HashMap<Ingrediente, Float> productosElemento = ((ElementoPlato)elemento).getListaIngredientes();
+                //3.- Metemos cada producto en conjunto de productos
+                Iterator iteradorProductos = productosElemento.entrySet().iterator();
+                while(iteradorProductos.hasNext()){
+                    Map.Entry entry = (Map.Entry) iteradorProductos.next();
+                    listaProductos.add((Producto)entry.getKey());
+                }
+            }
+        }
+        //4.- Recorremos listaProductosCantidades para ver si el Producto nuevo se encuentra entre
+        //    los productos de los elementos invalidados, para aumentar su cantidad 
+        Iterator iteradorLPC = listaProductosCantidades.entrySet().iterator();
+        while(iteradorLPC.hasNext()){
+            Map.Entry entrada = (Map.Entry)iteradorLPC.next();
+            Producto productoLPC = (Producto)entrada.getKey();
+            Iterator iteradorProductos = listaProductos.iterator();
+            while (iteradorProductos.hasNext()){
+                Producto producto = (Producto)iteradorProductos.next();
+                if ( producto.equals(productoLPC)){
+                    float cantidad = ((Float)entrada.getValue()).floatValue();
+                    producto.actualizarCantidad(producto.getCantidad() + cantidad);
+                }
+            }
+        }
 
+        //5.- Compruebo si la cantidad pedida afecta a los elementos no disponibles
+        iteradorElementos = listaElementosInv.iterator();
+        while(iteradorElementos.hasNext()){
+            Elemento elemento = (Elemento)iteradorElementos.next();
+            if (elemento instanceof ElementoBebida){
+                if (((ElementoBebida)elemento).tieneProductosSuficientes()){
+                    listaElementos.add(elemento);
+                }
+            }
+            else if (elemento instanceof ElementoPlato){
+                if (((ElementoPlato)elemento).tieneProductosSuficientes() ){
+                    listaElementos.add(elemento);
+                }
+            }
+        }
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        return listaElementos;
     }
 
     public void deshabilitaElementos(HashSet<Elemento> listaElementos) {

@@ -48,7 +48,7 @@ public class Elemento {
         return false;
     }
 
-
+    
     /**
      * Comprueba si el elemento necesita el producto especificado.
      *
@@ -119,4 +119,31 @@ public class Elemento {
         return this.disponible;
     }
     
+    /**
+     * Método para comprobar si dos elementos son iguales
+     * @param objeto El elemento con el que queremos comparar.
+     * @return true Si los dos elementos son iguales
+     *         false En caso contrario.
+     */
+    @Override
+    public boolean equals( Object objeto ) {
+        if (objeto == null) return false;
+
+        Elemento elemento = (Elemento)objeto;
+        if (this.getCodigoElemento() == elemento.getCodigoElemento())
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Método para generar el HashCode de un elemento.
+     * @return Un entero indicando el HashCode.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + this.codigoElemento;
+        return hash;
+    }
 }
