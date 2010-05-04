@@ -127,4 +127,20 @@ public class Producto {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+
+    /**
+     * Método para ver si dos productos son iguales.
+     * @param objeto Producto con el que se quiere comparar.
+     * @return true Si los dos productos son iguales.
+     *         false Si los dos productos son distintos.
+     */
+    public boolean equals( Object objeto ) {
+        if (objeto == null) return false;
+
+        Producto producto = (Producto)objeto;
+        if (this.getCodPro() ==producto.getCodPro())
+            return true;
+
+        return false;
+    }
 }
