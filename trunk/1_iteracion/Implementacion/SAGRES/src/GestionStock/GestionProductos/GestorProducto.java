@@ -23,14 +23,6 @@ public class GestorProducto implements IProducto{
     }
 
     /**
-     * Actualiza la cantidad de un producto que se le pasa como parametro
-     * @param producto Producto que queremos actualizar
-     * @param cantidad Nueva cantidad del producto en stock
-     */
-    //public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades){
-    //}
-
-    /**
      * Elimina el producto que se le pasa como parametro a la funcion
      * @param p Producto que queremos eliminar
      */

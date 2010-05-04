@@ -411,7 +411,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             actualizacion.setFloat(2, p.getMaximo());
             actualizacion.setFloat(3, p.getMinimo());
             actualizacion.setString(4, p.getNombre());
-            //actualizacion.setBlob(5, (Blob) Imagen.imageIconToByteArray(p.getImagen()));
+            actualizacion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(p.getImagen())));
             actualizacion.executeUpdate();//Insertamos la incidencia
 
         } catch (SQLException ex) {
@@ -427,7 +427,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             inserccion.setFloat(2, p.getCantidad());
             inserccion.setFloat(3, p.getMaximo());
             inserccion.setFloat(4, p.getMinimo());
-            //inserccion.setBlob(5, (Blob) Imagen.imageIconToByteArray(p.getImagen()));
+            inserccion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(p.getImagen())));
 
             //Ejecutamos la inserccion
             Statement ultimo = (Statement) this.Conexion.createStatement();
@@ -610,7 +610,16 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void restarCantidadProducto(Pair<Producto, Float> prodCantidad) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            /*Preparamos la consulta de actualizacion del producto*/
+            int codigoProducto = prodCantidad.getFirst().getCodPro();
+            java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("update producto set cantidad=? where producto_id='"+codigoProducto+"'");
+            actualizacion.setFloat(1, prodCantidad.getSecond());
+            actualizacion.executeUpdate();//Insertamos la incidencia
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

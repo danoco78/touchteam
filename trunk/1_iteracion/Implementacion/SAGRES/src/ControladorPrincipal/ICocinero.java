@@ -29,9 +29,9 @@ public interface ICocinero {
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract void nuevoElemento(Elemento e, Seccion sec);
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
-    public abstract ArrayList<Ingrediente> obtieneIngredientes();
+    public abstract HashSet<Ingrediente> obtieneIngredientes();
     public abstract PedidoProveedor obtienePedidoProveedor();
-    public abstract HashMap<Producto,Float> obtieneProductosBajoMinimos();
+    public abstract HashSet<Producto> obtieneProductosBajoMinimos();
     public abstract HashSet<Seccion> obtieneSecciones();
     
 }
