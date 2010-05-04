@@ -20,6 +20,10 @@ public class InterfazCliente extends javax.swing.JFrame {
     /** Creates new form ICliente */
     public InterfazCliente() {
         initComponents();
+        
+        PanelPrincipalCliente PPC = new PanelPrincipalCliente();
+        PPC.setVisible(true);
+        this.getContentPane().add(PPC);
     }
 
     /** This method is called from within the constructor to
