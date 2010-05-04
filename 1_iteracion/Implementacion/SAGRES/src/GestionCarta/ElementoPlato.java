@@ -1,7 +1,10 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Ingrediente;
+import GestionStock.GestionProductos.Producto;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 
 /**
@@ -38,5 +41,26 @@ public class ElementoPlato extends Elemento {
 
     public HashMap<Ingrediente, Float> getListaIngredientes() {
         return listaIngredientes;
+    }
+
+        /**
+     * Comprueba si hay cantidades suficientes en stock de todos los productos que utiliza el elemento.
+     *
+     * @return true: Sí hay la suficiente cantidad de cada producto
+     *         false: La cantidad de algún producto No es suficiente.
+     */
+    public boolean tieneProductosSuficientes(){
+        Iterator iteradorProductos = this.getListaIngredientes().entrySet().iterator();
+        Producto producto;
+        float cantidadNecesaria;
+
+        while(iteradorProductos.hasNext()){
+            Map.Entry entry = (Map.Entry) iteradorProductos.next();
+            producto = (Producto)entry.getKey();
+            cantidadNecesaria = ((Float)entry.getValue()).floatValue();
+            if (producto.getCantidad() < cantidadNecesaria)
+                return false;
+        }
+        return true;
     }
 }
