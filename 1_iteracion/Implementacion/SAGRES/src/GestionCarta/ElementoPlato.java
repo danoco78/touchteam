@@ -1,7 +1,7 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Ingrediente;
-import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 /**
@@ -10,10 +10,10 @@ import javax.swing.ImageIcon;
  */
 public class ElementoPlato extends Elemento {
 
-    ArrayList<Ingrediente> listaIngredientes;
+    HashMap<Ingrediente,Float> listaIngredientes;
     int tiempoElaboracion;
 
-    public ElementoPlato(int codigo, ArrayList<Ingrediente> listaIngredientes, String nombre, String descripcion, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
+    public ElementoPlato(int codigo, HashMap<Ingrediente, Float> listaIngredientes, String nombre, String descripcion, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
         super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
         this.listaIngredientes = listaIngredientes;
         this.tiempoElaboracion = tiempoElaboracion;
@@ -36,7 +36,7 @@ public class ElementoPlato extends Elemento {
         this.tiempoElaboracion = tiempoElaboracion;
     }
 
-    public ArrayList<Ingrediente> getListaIngredientes() {
+    public HashMap<Ingrediente, Float> getListaIngredientes() {
         return listaIngredientes;
     }
 }
