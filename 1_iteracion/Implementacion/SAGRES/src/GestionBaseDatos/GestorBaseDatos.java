@@ -224,13 +224,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public HashSet<Elemento> obtieneElementos() {
        HashSet<Elemento> listaElementos = new HashSet<Elemento>();
-       HashMap<Bebida, Float> listaBebida = new HashMap<Bebida, Float>();
-       HashMap<Ingrediente, Float> listaIngredientes = new HashMap<Ingrediente, Float>();
+       HashMap<Bebida, Float> listaBebida = null;
+       HashMap<Ingrediente, Float> listaIngredientes = null;
        try {
            // Obtenemos todas las bebidas
            java.sql.Statement consulta = this.Conexion.createStatement();
            ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
            while (datosElementosBebida.next()) {
+               listaBebida = new HashMap<Bebida, Float>();
                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE " +
                     "tienebebida.productoBebida_producto_producto_id" +
                     " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ="+datosElementosBebida.getInt(1));
@@ -249,6 +250,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
            consulta = this.Conexion.createStatement();
            ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoplato.tiempo_elaboracion FROM elemento, elementoplato HERE elemento.elemento_id = elementoplato.elemento_elemento_id");
            while (datosElementosPlato.next()) {
+               listaIngredientes = new HashMap<Ingrediente, Float>();
                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE " +
                     "tieneingrediente.productoIngrediente_producto_producto_id" +
                     " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ="+datosElementosPlato.getInt(1));
@@ -270,14 +272,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
      public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
         HashSet<Elemento> listaElementos = new HashSet<Elemento>();
-        HashMap<Bebida, Float> listaBebida = new HashMap<Bebida, Float>();
-        HashMap<Ingrediente, Float> listaIngredientes = new HashMap<Ingrediente, Float>();
+        HashMap<Bebida, Float> listaBebida = null;
+        HashMap<Ingrediente, Float> listaIngredientes = null;
         try {
             if (producto instanceof Bebida) {
                 // Obtenemos los datos del elementoBebida con ese producto
                 java.sql.PreparedStatement consulta = this.Conexion.prepareStatement("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, tienebebida WHERE elemento.elemento_id = tienebebida.elementoBebida_elemento_elemento_id AND productoBebida_producto_producto_id ="+producto.getCodPro());
                 ResultSet datosElementosBebida = consulta.executeQuery();
                 while (datosElementosBebida.next()) {
+                    listaBebida = new HashMap<Bebida, Float>();
                     java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE " +
                     "tienebebida.productoBebida_producto_producto_id" +
                     " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ="+datosElementosBebida.getInt(1));
@@ -298,6 +301,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         "WHERE elemento.elemento_id = elementoplato.elemento_elemento_id AND elemento.elemento_id = elementoComida_elemento_elemento_id AND productoIngrediente_producto_producto_id = "+producto.getCodPro());
                 ResultSet datosElementosPlato = consulta.executeQuery();
                 while (datosElementosPlato.next()) {
+                    listaIngredientes = new HashMap<Ingrediente, Float>();
                     java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE " +
                     "tieneingrediente.productoIngrediente_producto_producto_id" +
                     " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ="+datosElementosPlato.getInt(1));
