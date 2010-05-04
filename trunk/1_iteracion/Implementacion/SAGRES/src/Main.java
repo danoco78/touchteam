@@ -1,12 +1,12 @@
 
 import ControladorImpresora.GestorImpresora;
-import GestionBaseDatos.AdminJDBC;
+import ControladorPrincipal.SAGRES;
+import GestionBaseDatos.GestorBaseDatos;
 import GestionCarta.GestorCarta;
 import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
-import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +30,7 @@ public class Main {
         Properties properties = new Properties();
         FileInputStream ficheroConfiguracion;
         File fichero = new File("./DatosBD.properties");
+        GestorBaseDatos baseDeDatos = null;
         try {
             if (!fichero.exists()) {
                 fichero.createNewFile();
@@ -47,11 +48,11 @@ public class Main {
             ficheroConfiguracion = new FileInputStream(fichero);
             properties.load(ficheroConfiguracion);
             dCarga.Progreso(5);
-            AdminJDBC baseDeDatos = new AdminJDBC((String) properties.getProperty("host"),
+            try {
+                baseDeDatos = new GestorBaseDatos((String) properties.getProperty("host"),
                     (String) properties.getProperty("user"),
                     (String) properties.getProperty("pass"));
-            try {
-                baseDeDatos.conecta();
+            
             } catch (Exception ex) {
                 String texto = "Se Produjo un error al conectar con la base de datos"
                         + "\nError: " + ex.getMessage()
@@ -65,16 +66,19 @@ public class Main {
             GestorProducto producto = new GestorProducto(baseDeDatos);
             dCarga.Progreso(40);
             GestorCarta carta = new GestorCarta(baseDeDatos, producto);
-            producto.setCarta(carta);
-            dCarga.Progreso(60);
+            //producto.setCarta(carta);
+            dCarga.Progreso(50);
             GestorImpresora impresora = new GestorImpresora();
+            dCarga.Progreso(60);
+            GestorIncidencia incidencia = new GestorIncidencia(baseDeDatos);
+            dCarga.Progreso(70);
+            GestorProveedor pedido = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
-            GestorIncidencia incidencia = new GestorIncidencia(producto, carta, baseDeDatos, producto);
+            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido);
             dCarga.Progreso(90);
-            GestorProveedor pedido = new GestorProveedor(producto, producto, carta, baseDeDatos, impresora);
+            InterfazMetre interfaz = new InterfazMetre(controlador);
+            //InterfazCocinero interfaz = new InterfazCocinero(controlador);
             dCarga.Progreso(100);
-            InterfazMetre interfaz = new InterfazMetre(incidencia, producto, producto);
-            //InterfazCocinero interfaz = new InterfazCocinero(incidencia, producto, producto, pedido, carta, carta);
             dCarga.setVisible(false);
             dCarga.dispose();
             interfaz.setVisible(true);
