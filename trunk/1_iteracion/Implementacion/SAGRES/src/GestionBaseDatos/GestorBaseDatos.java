@@ -320,55 +320,92 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public HashSet<Elemento> obtieneElementosInvalidados() {
         HashSet<Elemento> elementosInvalidos = new HashSet<Elemento>();
+        HashSet<Producto> productos = new HashSet<Producto>();
         java.sql.PreparedStatement consultaElementos, consultaProductos;
         ElementoBebida elementoBebida = null;
         ElementoPlato elementoPlato = null;
-        ResultSet elementos, productos;
-        
+        ResultSet rsElementos, rsProductos;
+
+        //1.- Obtengo la lista con todos los productos.
+        //2.- Obtengo todos los elementos no disponibles.
+        //3.- Para cada elemento obtengo los codigos de los productos q necesita y la cantidad de cada uno de ellos.
+        //4.- Compruebo el codigo de los productos de los elementos con el codigo de los productos de la lista que acabo de crear.
+        //5.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
+        //6.- Devuelvo la lista de elementos.
+
+
         try{
-            //Primero vemos las bebidas invalidadas
+
+            // 1.- Obtengo la lista con todos los productos, se obtiene aqui para despues ir introducciendo el producto
+            // en el contenedor del elemento correspondiente, de esta forma los elementos comparten los mismos productos.
+            consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM producto");
+            rsProductos = consultaProductos.executeQuery();
+            while(rsProductos.next()){
+                Producto producto = new Producto(Imagen.blobToImageIcon(new SerialBlob(rsProductos.getBlob(6)).getBytes(1,(int)rsProductos.getBlob(6).length())), rsProductos.getString(2), rsProductos.getInt(5), rsProductos.getInt(4), rsProductos.getInt(3), rsProductos.getInt(1));
+                productos.add(producto);
+            }
+
+            //2.- Obtengo todos los elementos no disponibles
+            //2.a.- Primero obtengo las bebidas no disponibles
             consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id AND elemento.disponible = 0");
-            elementos = consultaElementos.executeQuery();
-            while (elementos.next()){
-                HashMap<Bebida, Float> listaBebidas = new HashMap<Bebida, Float>();
-                consultaProductos = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tienebebida, producto WHERE " +
-                    "tienebebida.productoBebida_producto_producto_id = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ="+elementos.getInt(1));
-                productos = consultaProductos.executeQuery();
-                while(productos.next()){
-                    Bebida bebida = new Bebida(productos.getInt(6), productos.getString(2), Imagen.blobToImageIcon(new SerialBlob(productos.getBlob(1)).getBytes(1,(int)productos.getBlob(1).length())), productos.getFloat(3), productos.getFloat(4), productos.getFloat(5));
-                    //listaBebidas.add(bebida);
+            rsElementos = consultaElementos.executeQuery();
+            while (rsElementos.next()){
+                //3.a.- Para cada elemento obtengo los codigos de los productos que necesita
+                HashMap<Bebida, Float> listaProductosElemento = new HashMap<Bebida, Float>();
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE " +
+                    "tienebebida.productoBebida_producto_producto_id = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id ="+rsElementos.getInt(1));
+                rsProductos = consultaProductos.executeQuery();
+                while(rsProductos.next()){
+                    //4.a.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
+                    Iterator iterador = productos.iterator();
+                    while (iterador.hasNext()){
+                        Bebida bebida = (Bebida)iterador.next();
+                        if (bebida.getCodPro() == rsProductos.getInt(1)){
+                            //5.a.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
+                            listaProductosElemento.put(bebida, new Float(rsProductos.getFloat(2)));
+                        }
+                    }
                 }
 
-                elementoBebida = new ElementoBebida(elementos.getInt(1), listaBebidas, elementos.getString(2), elementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(elementos.getBlob(5)).getBytes(1,(int)elementos.getBlob(1).length())), elementos.getFloat(8), elementos.getInt(7));
+                elementoBebida = new ElementoBebida(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1,(int)rsElementos.getBlob(5).length())), rsElementos.getFloat(8), rsElementos.getInt(7));
                 elementoBebida.setDisponible(false);
-                elementoBebida.setDivisiones(elementos.getInt(6));
+                elementoBebida.setDivisiones(rsElementos.getInt(6));
             }
-            
+            //2.a.- ElementoBebida No Disponible
             elementosInvalidos.add(elementoBebida);
 
-            //Continuamos con los platos invalidados
+            //2.- Obtengo todos los elementos no disponibles
+            //2.b.- Continuo con los platos no disponibles
             consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio, tiempo_elaboracion FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id AND elemento.disponible = 0");
-            elementos = consultaElementos.executeQuery();
-            while (elementos.next()){
-                HashMap<Ingrediente, Float> listaIngredientes = new HashMap<Ingrediente, Float>();
-                consultaProductos = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id FROM tieneingrediente, producto WHERE " +
-                    "tieneingrediente.productoIngrediente_producto_producto_id = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ="+elementos.getInt(1));
-                ResultSet datosIngredientes = consultaProductos.executeQuery();
-                while (datosIngredientes.next()) {
-                    Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1,(int)datosIngredientes.getBlob(1).length())) );
-                    //listaIngredientes.add(ingrediente);
+            rsElementos = consultaElementos.executeQuery();
+            while (rsElementos.next()){
+                //3.b.- Para cada elemento obtengo los codigos de los productos que necesita
+                HashMap<Ingrediente, Float> listaProductosElemento = new HashMap<Ingrediente, Float>();
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE " +
+                    "tieneingrediente.productoIngrediente_producto_producto_id = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id ="+rsElementos.getInt(1));
+                rsProductos = consultaProductos.executeQuery();
+                while (rsProductos.next()) {
+                    //4.b.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
+                    Iterator iterador = productos.iterator();
+                    while(iterador.hasNext()){
+                        Ingrediente ingrediente = (Ingrediente)iterador.next();
+                        if (ingrediente.getCodPro() == rsProductos.getInt(1)){
+                            //5.b.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
+                            listaProductosElemento.put(ingrediente, new Float(rsProductos.getFloat(2)));
+                        }
+                    }
                 }
-                elementoPlato = new ElementoPlato(elementos.getInt(1), listaIngredientes, elementos.getString(2), elementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(elementos.getBlob(5)).getBytes(1,(int)elementos.getBlob(1).length())), elementos.getInt(9), elementos.getFloat(8), elementos.getInt(7));
+                elementoPlato = new ElementoPlato(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1,(int)rsElementos.getBlob(5).length())), rsElementos.getInt(9), rsElementos.getFloat(8), rsElementos.getInt(7));
                 elementoPlato.setDisponible(false);
-                elementoPlato.setDivisiones(elementos.getInt(6));
+                elementoPlato.setDivisiones(rsElementos.getInt(6));
             }
-
+            //2.b.- ElementoPlato No Disponible
             elementosInvalidos.add(elementoPlato);
 
         }catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //6.- Devuelvo la lista de elementos.
         return elementosInvalidos;
     }
 
