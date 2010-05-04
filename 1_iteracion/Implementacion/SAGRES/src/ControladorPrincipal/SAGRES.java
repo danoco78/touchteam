@@ -34,6 +34,14 @@ public class SAGRES implements IMetre, ICocinero {
     IIncidencia iincidencia;
     IPedidoProveedor ipedidoproveedor;
 
+    public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido){
+        this.icarta = iCarta;
+        this.iproducto = iProducto;
+        this.iincidencia = iIncidencia;
+        this.ipedidoproveedor = iPedido;
+    }
+
+
     public void eliminaProducto(Producto pro) {
         this.iproducto.eliminaProducto(pro);
         HashSet<Elemento> listaElementos = this.icarta.obtieneElementosConProducto(pro);
@@ -52,7 +60,7 @@ public class SAGRES implements IMetre, ICocinero {
         this.iincidencia.nuevaIncidencia(in);
         Pair<Producto,Float> prodCantidad = in.getProductoCantidad();
         this.iproducto.restarCantidadProducto(prodCantidad);
-        this.icarta.compruebaElementosConProducto(prodCantidad.getFirst());
+        this.icarta.actualizaDisponibilidadElementos();// compruebaElementosConProducto(prodCantidad.getFirst());
     }
 
     public HashSet<Bebida> obtenerBebidas() {
