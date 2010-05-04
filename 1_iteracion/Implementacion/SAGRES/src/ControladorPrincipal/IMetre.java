@@ -22,7 +22,7 @@ public interface IMetre {
     public abstract void modificarProducto(Producto pro);
     public abstract void nuevoProducto(Producto pro);
     public abstract void nuevaIncidencia(Incidencia in);
-    public abstract ArrayList<Bebida> obtenerBebidas();
+    public abstract HashSet<Bebida> obtenerBebidas();
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
 
 }
