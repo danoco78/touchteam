@@ -1,7 +1,7 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Bebida;
-import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 
@@ -10,9 +10,9 @@ import javax.swing.ImageIcon;
  * @author Ángel Luis García
  */
 public class ElementoBebida extends Elemento{
-    public ArrayList<Bebida> listaBebidas;
+    public HashMap<Bebida, Float> listaBebidas;
 
-    public ElementoBebida(int codigo, ArrayList<Bebida> listaBebidas, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas) {
+    public ElementoBebida(int codigo, HashMap<Bebida, Float> listaBebidas, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas) {
         super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
         this.listaBebidas = listaBebidas;
     }
@@ -25,7 +25,7 @@ public class ElementoBebida extends Elemento{
         this.setDivisionesMaximas(divisionesMaximas);
     }
 
-    public ArrayList<Bebida> getListaBebidas() {
+    public HashMap<Bebida, Float> getListaBebidas() {
         return listaBebidas;
     }
 }
