@@ -27,9 +27,6 @@ public class Main {
     public static void main(String args[]) throws IOException {
 
         InterfazCliente interfaz = new InterfazCliente();
-        PanelPrincipalCliente PPC = new PanelPrincipalCliente();
-
-        interfaz.getContentPane().add(PPC);
         interfaz.setVisible(true);
 
         /*DialogoDeCarga dCarga = new DialogoDeCarga();
