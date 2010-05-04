@@ -1,11 +1,13 @@
 
-import ControladorImpresora.GestorImpresora;
-import GestionBaseDatos.AdminJDBC;
+//import ControladorImpresora.GestorImpresora;
+//import GestionBaseDatos.AdminJDBC;
 import GestionCarta.GestorCarta;
-import GestionStock.GestionIncidencias.GestorIncidencia;
-import GestionStock.GestionPedidoProveedor.GestorProveedor;
-import GestionStock.GestionProductos.GestorProducto;
+//import GestionStock.GestionIncidencias.GestorIncidencia;
+//import GestionStock.GestionPedidoProveedor.GestorProveedor;
+//import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
+import Vista.InterfazCliente.InterfazCliente;
+import Vista.InterfazCliente.PanelPrincipalCliente;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 import java.io.File;
@@ -24,7 +26,13 @@ public class Main {
 
     public static void main(String args[]) throws IOException {
 
-        DialogoDeCarga dCarga = new DialogoDeCarga();
+        InterfazCliente interfaz = new InterfazCliente();
+        PanelPrincipalCliente PPC = new PanelPrincipalCliente();
+
+        interfaz.getContentPane().add(PPC);
+        interfaz.setVisible(true);
+
+        /*DialogoDeCarga dCarga = new DialogoDeCarga();
         dCarga.setLocationRelativeTo(null);
         dCarga.setVisible(true);
         Properties properties = new Properties();
@@ -78,6 +86,6 @@ public class Main {
             dCarga.setVisible(false);
             dCarga.dispose();
             interfaz.setVisible(true);
-        }
+        }*/
     }
 }
