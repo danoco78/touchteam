@@ -4,6 +4,7 @@
  */
 
 package GestionPedidos;
+import java.util.Date;
 
 /**
  *
@@ -11,6 +12,8 @@ package GestionPedidos;
  */
 public class Factura {
     private Integer codFactura;
+    private Integer estado;
+    private Date fecha;
 
     public Integer getCodFactura() {
         return codFactura;
@@ -35,8 +38,7 @@ public class Factura {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    private Integer estado;
-    private Date fecha;
+
 
 
 }

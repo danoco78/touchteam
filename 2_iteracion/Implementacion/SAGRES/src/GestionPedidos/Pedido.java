@@ -13,8 +13,14 @@ import java.util.Date;
 public class Pedido {
     private Integer codMesa;
     private Integer codPedido;
-    private Integer estado;
     private Date fecha;
+    /**
+     * La variable estado puede tener 3 formas
+     * 0 = Modificable
+     * 1 = Bloqueado
+     * 2 = Facturado
+     */
+    private Integer estado;
 
     public void setCodPedido(Integer codPedido) {
         this.codPedido = codPedido;
