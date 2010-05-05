@@ -67,8 +67,8 @@ public class SAGRES implements IMetre, ICocinero {
         return this.iproducto.obtieneBebidas();
     }
 
-    public ArrayList<Elemento> compruebaElementosInvalidos(HashMap<Producto, Float> lista) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public HashSet<Elemento> compruebaElementosInvalidos(HashMap<Producto, Float> lista) {
+        return this.icarta.compruebaElementosInvalidados(lista);
     }
 
     public void imprimeListaProductosaPedir() {
@@ -76,7 +76,7 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void modificaElemento(Elemento e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.icarta.modificaElemento(e);
     }
 
     public void notificaRecepcionPedido(PedidoProveedor ped) {
