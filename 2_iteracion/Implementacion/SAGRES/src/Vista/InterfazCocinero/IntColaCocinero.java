@@ -24,6 +24,8 @@ public class IntColaCocinero extends javax.swing.JPanel {
         panelImagen = new PanelImagen("/Vista/InterfazMetre/imagenes/LogoSagres.png");
         this.panelCentroNorte.add(panelImagen);
         this.ActualizarVista();
+        this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
+        this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
     }
 
     @Override
@@ -45,13 +47,10 @@ public class IntColaCocinero extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         principalNorte = new javax.swing.JPanel();
         botonGestionProductos = new javax.swing.JButton();
         panelHora = new javax.swing.JPanel();
-        labelHora = new javax.swing.JLabel();
-        labelDia = new javax.swing.JLabel();
         panelCentroNorte = new javax.swing.JPanel();
         principalIzquierda = new javax.swing.JPanel();
         principalDerecha = new javax.swing.JPanel();
@@ -71,7 +70,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.setOpaque(false);
         principalNorte.setLayout(new java.awt.BorderLayout());
 
-        botonGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        botonGestionProductos.setFont(new java.awt.Font("Arial", 1, 18));
         botonGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
         botonGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
         botonGestionProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -82,20 +81,8 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.add(botonGestionProductos, java.awt.BorderLayout.WEST);
 
         panelHora.setBackground(new java.awt.Color(255, 255, 255));
-        panelHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
-        panelHora.setLayout(new java.awt.GridBagLayout());
-
-        labelHora.setFont(new java.awt.Font("Arial", 1, 36));
-        labelHora.setText("12:36");
-        panelHora.add(labelHora, new java.awt.GridBagConstraints());
-
-        labelDia.setFont(new java.awt.Font("Arial", 0, 11));
-        labelDia.setText("Martes 12, Agosto 2010");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        panelHora.add(labelDia, gridBagConstraints);
-
+        panelHora.setOpaque(false);
+        panelHora.setLayout(new java.awt.BorderLayout());
         principalNorte.add(panelHora, java.awt.BorderLayout.EAST);
 
         panelCentroNorte.setOpaque(false);
@@ -119,7 +106,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
         panelIzquierda.setLayout(new java.awt.BorderLayout());
 
-        infoPendientes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        infoPendientes.setFont(new java.awt.Font("Arial", 1, 16));
         infoPendientes.setForeground(new java.awt.Color(80, 98, 143));
         infoPendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         infoPendientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
@@ -136,7 +123,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
         panelDerecha.setLayout(new java.awt.BorderLayout());
 
-        infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16));
         infoPreparandose.setForeground(new java.awt.Color(80, 98, 143));
         infoPreparandose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         infoPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
@@ -178,8 +165,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private javax.swing.JPanel centroPreparandose;
     private javax.swing.JLabel infoPendientes;
     private javax.swing.JLabel infoPreparandose;
-    private javax.swing.JLabel labelDia;
-    private javax.swing.JLabel labelHora;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelHora;
