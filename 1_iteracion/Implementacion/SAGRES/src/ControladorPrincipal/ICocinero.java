@@ -21,7 +21,7 @@ import java.util.HashSet;
  */
 public interface ICocinero {
 
-    public abstract ArrayList<Elemento> compruebaElementosInvalidos(HashMap<Producto,Float> lista);
+    public abstract HashSet<Elemento> compruebaElementosInvalidos(HashMap<Producto,Float> lista);
     public abstract void eliminaElemento(Elemento e);
     public abstract void imprimeListaProductosaPedir();
     public abstract void modificaElemento(Elemento e);
