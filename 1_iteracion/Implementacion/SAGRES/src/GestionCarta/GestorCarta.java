@@ -232,6 +232,9 @@ public class GestorCarta implements ICarta {
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto) {
         return this.iCartaBD.obtieneElementosConProducto(producto);
     }
+    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
+        return this.iCartaBD.obtieneElementosDeSeccion(seccion);
+    }
 
     public HashSet<Seccion> obtieneSecciones() {
         return this.iCartaBD.obtieneSecciones();
