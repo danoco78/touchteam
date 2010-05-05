@@ -48,8 +48,10 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalCentro = new javax.swing.JPanel();
         panelIzquierda = new javax.swing.JPanel();
         infoPendientes = new javax.swing.JLabel();
+        centro = new javax.swing.JPanel();
         panelDerecha = new javax.swing.JPanel();
         infoPreparandose = new javax.swing.JLabel();
+        centroPreparandose = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -57,17 +59,24 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         principalNorte.setLayout(new java.awt.BorderLayout());
 
+        botonGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        botonGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
         botonGestionProductos.setText("Gestión de Productos");
-        botonGestionProductos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonGestionProductos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 51), null));
+        botonGestionProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGestionProductosActionPerformed(evt);
+            }
+        });
         principalNorte.add(botonGestionProductos, java.awt.BorderLayout.WEST);
 
         panelHora.setLayout(new java.awt.GridBagLayout());
 
-        labelHora.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        labelHora.setFont(new java.awt.Font("Arial", 1, 36));
         labelHora.setText("12:36");
         panelHora.add(labelHora, new java.awt.GridBagConstraints());
 
-        labelDia.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        labelDia.setFont(new java.awt.Font("Arial", 0, 11));
         labelDia.setText("Martes 12, Agosto 2010");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -90,25 +99,37 @@ public class IntColaCocinero extends javax.swing.JPanel {
         infoPendientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         panelIzquierda.add(infoPendientes, java.awt.BorderLayout.SOUTH);
 
+        centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
+        panelIzquierda.add(centro, java.awt.BorderLayout.CENTER);
+
         principalCentro.add(panelIzquierda);
 
         panelDerecha.setLayout(new java.awt.BorderLayout());
 
-        infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16));
         infoPreparandose.setForeground(new java.awt.Color(80, 98, 143));
         infoPreparandose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         infoPreparandose.setText("5 Platos Preparándose");
         infoPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         panelDerecha.add(infoPreparandose, java.awt.BorderLayout.SOUTH);
 
+        centroPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
+        panelDerecha.add(centroPreparandose, java.awt.BorderLayout.CENTER);
+
         principalCentro.add(panelDerecha);
 
         add(principalCentro, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonGestionProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGestionProductosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGestionProductos;
+    private javax.swing.JPanel centro;
+    private javax.swing.JPanel centroPreparandose;
     private javax.swing.JLabel infoPendientes;
     private javax.swing.JLabel infoPreparandose;
     private javax.swing.JLabel labelDia;
