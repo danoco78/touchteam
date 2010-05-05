@@ -39,8 +39,11 @@ public class panelMesa extends javax.swing.JPanel {
 
         labelMesa = new javax.swing.JLabel();
 
+        labelMesa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        labelMesa.setForeground(new java.awt.Color(80, 98, 143));
         labelMesa.setText("jLabel1");
 
+        setBackground(new java.awt.Color(245, 245, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         setLayout(new java.awt.GridBagLayout());
     }// </editor-fold>//GEN-END:initComponents
