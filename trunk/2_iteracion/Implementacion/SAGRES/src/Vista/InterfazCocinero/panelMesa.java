@@ -22,6 +22,11 @@ public class panelMesa extends javax.swing.JPanel {
     public panelMesa() {
         initComponents();
     }
+    public panelMesa(Pedido p) {
+        initComponents();
+        String sMesa = crearLabel(p.codMesa, p.codPedido);
+        this.labelMesa.setText(sMesa);
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -31,24 +36,23 @@ public class panelMesa extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
+        labelMesa = new javax.swing.JLabel();
+
+        labelMesa.setText("jLabel1");
+
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         setLayout(new java.awt.GridBagLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel labelMesa;
     // End of variables declaration//GEN-END:variables
 
-  void addComponente( Component comp,int gridx,int gridy,
-        int gridw,int gridh ) {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = gridx;
-        gbc.gridy = gridy;
-        gbc.gridwidth = gridw;
-        gbc.gridheight = gridh;
-        ((GridBagLayout)this.getLayout()).setConstraints(comp,gbc );
-        add( comp );
-   }
 
+    private String crearLabel(int nmesa, int npedido){
+        String text = "Mesa " + String.valueOf(nmesa) + ", pedido " + String.valueOf(npedido);
+        return text;
+    }
 }
