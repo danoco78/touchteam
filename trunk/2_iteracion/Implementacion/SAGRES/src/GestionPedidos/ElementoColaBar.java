@@ -9,6 +9,11 @@ package GestionPedidos;
  *
  * @author Gaspar
  */
-public class ElementoColaBar {
+public class ElementoColaBar extends ElementoPedido{
 
+     /**
+     * La variable estado de un ElementoColaBar puede ser
+     * 0 = En cola
+     * 1 = Preparado
+     */
 }
