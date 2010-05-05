@@ -21,7 +21,11 @@ public class panelPedido extends javax.swing.JPanel {
     public panelPedido() {
         initComponents();
     }
-
+    public panelPedido(ElementoPedido p) {
+        initComponents();
+        this.setLabelElemento(String.valueOf(p.getCodigo()));
+        this.setLabelObservacion(String.valueOf(p.getComentario()));
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

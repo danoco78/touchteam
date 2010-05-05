@@ -89,6 +89,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         principalCentro.setLayout(new java.awt.GridLayout(1, 2));
 
+        panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
         panelIzquierda.setLayout(new java.awt.BorderLayout());
 
         infoPendientes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -99,11 +100,13 @@ public class IntColaCocinero extends javax.swing.JPanel {
         infoPendientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         panelIzquierda.add(infoPendientes, java.awt.BorderLayout.SOUTH);
 
+        centro.setBackground(new java.awt.Color(245, 245, 255));
         centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         panelIzquierda.add(centro, java.awt.BorderLayout.CENTER);
 
         principalCentro.add(panelIzquierda);
 
+        panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
         panelDerecha.setLayout(new java.awt.BorderLayout());
 
         infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16));
@@ -113,6 +116,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         infoPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         panelDerecha.add(infoPreparandose, java.awt.BorderLayout.SOUTH);
 
+        centroPreparandose.setBackground(new java.awt.Color(245, 245, 255));
         centroPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         panelDerecha.add(centroPreparandose, java.awt.BorderLayout.CENTER);
 
