@@ -95,8 +95,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         try {
 
             int codigoElemento = elemento.getCodigoElemento();
-            // Iterator iterador = elemento.getListaBebidas().iterator();
-
+            
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET nombre=?, descripcion=?, disponible=?, foto=?, divi=?, divi_max=?, precio=? where elemento_id='" + codigoElemento + "'");
             actualizacion.setString(1, elemento.getNombre());
             actualizacion.setString(2, elemento.getDescripcion());
@@ -111,16 +110,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             actualizacion.setFloat(7, elemento.getPrecio());
 
             actualizacion.executeUpdate();//Actualizamos el ElementoBebida
-
-            /*  while (iterador.hasNext()) {
-            Producto bebida = (Producto)iterador.next();
-            actualizacion = this.Conexion.prepareStatement("INSERT INTO tienebebida VALUES('?','?')");
-            actualizacion.setInt(1, elemento.getCodigoElemento());
-            actualizacion.setInt(2, bebida.getCodPro());
-            actualizacion.executeUpdate();
-            }
-             */
-
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,7 +119,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         try {
 
             int codigoElemento = elemento.getCodigoElemento();
-            // Iterator iterador = elemento.getListaIngredientes().iterator();
 
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET nombre=?, descripcion=?, disponible=?, foto=?, divi=?, divi_max=?, precio=? where elemento_id='" + codigoElemento + "'");
             actualizacion.setString(1, elemento.getNombre());
@@ -149,16 +137,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             actualizacion = this.Conexion.prepareStatement("UPDATE elementoplato SET tiempo_elaboracion=? where elemento_elemento_id='" + codigoElemento + "'");
             actualizacion.executeUpdate();
-
-            /*  while (iterador.hasNext()) {
-            Producto ingrediente = (Producto)iterador.next();
-            actualizacion = this.Conexion.prepareStatement("INSERT INTO tieneingrediente VALUES('?','?')");
-            actualizacion.setInt(1, elemento.getCodigoElemento());
-            actualizacion.setInt(2, ingrediente.getCodPro());
-            actualizacion.executeUpdate();
-            }
-             */
-
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
