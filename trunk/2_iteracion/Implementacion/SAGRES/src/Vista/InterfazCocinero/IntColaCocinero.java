@@ -21,7 +21,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public IntColaCocinero() {
         initComponents();
         this.setDoubleBuffered(true);
-        panelImagen = new PanelImagen("/Vista/InterfazMetre/imagenes/LogoSagres.png");
+        panelImagen = new PanelImagen("/Vista/InterfazCocinero/imagenes/LogoSagres_interfaz.png");
         this.panelCentroNorte.add(panelImagen);
         this.ActualizarVista();
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
@@ -146,10 +146,11 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                javax.swing.JDialog dialog = new javax.swing.JDialog(new javax.swing.JFrame(), true);
+                javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
                 dialog.setSize(800, 600);
                 dialog.getContentPane().add(new IntColaCocinero(), java.awt.BorderLayout.CENTER);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
