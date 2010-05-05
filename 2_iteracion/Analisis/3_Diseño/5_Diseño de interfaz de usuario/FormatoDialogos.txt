@@ -1,0 +1,40 @@
+(Es un poco como CSS, se conserva el estilo en cascada (Por nivel de tabulación,
+es decir, "Cabecera secundaria" hereda el estilo de "Texto principal" pero NO 
+de "Cabecera")
+
+#Texto principal:
+        Color: rgb(80, 98, 143)
+        Fuente: Arial 14px
+
+   Cabecera:
+        En negrita
+   Cabecera secundaria:
+        En cursiva
+
+   Textos secundarios (aparecen más claros en las imagenes):
+        Color: rgb(150, 172, 229)
+
+   Texto que indica el "Paso" en la cabecera:
+        Tamaño: 12px;
+
+#Todos los diálogos tienen un botón de cerrar, que cancela la operación, A EXCEPCION
+DE LOS DIÁLOGOS DE CONFIRMACIÓN.
+
+#Gradiente de colores de la cabecera:
+        Color: rgb(170, 192, 249) ~ rgb(255, 255, 255)
+
+#Temas de los diálogos:
+        rgb(150, 172, 229) para los bordes.
+        rgb(211, 223, 253) para el borde superior de los botones y líneas claras.
+
+
+#En los diálogos de eliminar ingrediente y eliminar bebida, cuando se va a seleccionar
+la bebida, debería aparecer también una miniatura de su imagen.
+
+#Click sobre las miniaturas muestra la imagen a tamaño real (Opciones disponibles:
+      - Abrir un nuevo diálogo con únicamente la imagen
+      - Desplegar la imágen sobre el panel, abriendose espacio arrastrando el resto
+        de elementos.)
+
+*Nota final: Se espera que el acabado final sea "similar", pero no igual, cuando aparezcan
+complicaciones, busca que se parezca y ya está.
