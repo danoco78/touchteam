@@ -5,6 +5,8 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoBebida;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
+import GestionCarta.SeccionBebida;
+import GestionCarta.SeccionComida;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
@@ -283,6 +285,61 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return listaElementos;
+    }
+
+    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
+        HashSet<Elemento> listaElementos = new HashSet<Elemento>();
+        HashMap<Bebida, Float> listaBebida = null;
+        HashMap<Ingrediente, Float> listaIngredientes = null;
+        try {
+            if (seccion instanceof SeccionBebida) {
+                // Si estamos en una SeccionBebida sacamos todos los elementos de la seccion
+                java.sql.Statement consulta = this.Conexion.createStatement();
+                ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyebebida WHERE elemento.elemento_id = incluyebebida.elementoBebida_elemento_elemento_id AND incluyebebida.seccionBebida_seccion_seccion_id ="+seccion.getCodigoSeccion());
+                while (datosElementosBebida.next()) {
+                    // Obtenemos todas las bebidas
+                    listaBebida = new HashMap<Bebida, Float>();
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
+                            + "tienebebida.productoBebida_producto_producto_id"
+                            + " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
+                    ResultSet datosBebidas = consulta2.executeQuery();
+                    while (datosBebidas.next()) {
+                        Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
+                        Float cantidad = new Float(datosBebidas.getFloat(7));
+                        listaBebida.put(bebida, cantidad);
+                    }
+                    // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    listaElementos.add(elemento);
+                }
+            }
+            else if (seccion instanceof SeccionComida) {
+            // Si estamos en una SeccionComida sacamos todos los elementos de la seccion
+                java.sql.Statement consulta = this.Conexion.createStatement();
+                ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoplato.tiempo_elaboracion FROM elemento, elementoplato , incluyeplato WHERE elemento.elemento_id = incluyeplato.elementoPlato_elemento_elemento_id AND " +
+                        "elemento.elemento_id = elementoplato.elemento_elemento_id AND incluyeplato.seccionComida_seccion_seccion_id ="+seccion.getCodigoSeccion());
+                // Obtenemos todos los ingredientes
+                while (datosElementosPlato.next()) {
+                    listaIngredientes = new HashMap<Ingrediente, Float>();
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
+                            + "tieneingrediente.productoIngrediente_producto_producto_id"
+                            + " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
+                    ResultSet datosIngredientes = consulta2.executeQuery();
+                    while (datosIngredientes.next()) {
+                        Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
+                        Float cantidad = new Float(datosIngredientes.getFloat(7));
+                        listaIngredientes.put(ingrediente, cantidad);
+                    }
+                    // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    listaElementos.add(elemento);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return listaElementos;
     }
 

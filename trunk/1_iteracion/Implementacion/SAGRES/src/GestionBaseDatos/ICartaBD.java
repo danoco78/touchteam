@@ -34,4 +34,6 @@ public interface ICartaBD {
     public HashSet<Seccion> obtieneSecciones();
 
     public HashSet<Elemento> obtieneElementosConProducto(Producto producto);
+
+    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 }
