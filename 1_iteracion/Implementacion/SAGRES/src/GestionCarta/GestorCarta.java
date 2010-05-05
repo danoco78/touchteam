@@ -103,7 +103,28 @@ public class GestorCarta implements ICarta {
     }
 
     public void actualizaDisponibilidadElementos() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<Elemento> listaElementosHabilitables = new HashSet<Elemento>();
+        //1.- Obtenemos la lista de los elementos invalidados
+        HashSet<Elemento> listaElementos = this.iCartaBD.obtieneElementosInvalidados();
+        //2.-  Recorremos la lista
+        Iterator iterador = listaElementos.iterator();
+        while(iterador.hasNext()){
+            //2.1.- Para cada elemento comprobamos si tiene productos suficientes.
+            Elemento elemento = (Elemento)iterador.next();
+            if (elemento instanceof ElementoBebida){
+                if (((ElementoBebida)elemento).tieneProductosSuficientes()){
+                    //2.2.- Si los tiene incluimos el elemento en listaElementosHabilitados.
+                    listaElementosHabilitables.add(elemento);
+                }
+            }else if (elemento instanceof ElementoPlato){
+                if (((ElementoPlato)elemento).tieneProductosSuficientes()){
+                    //2.2.- Si los tiene incluimos el elemento en listaElementosHabilitados.
+                    listaElementosHabilitables.add(elemento);
+                }
+            }
+        }
+        //3.- Habilitamos los elementos de listaElementosHabilitados.
+        this.iCartaBD.habilitaElementos(listaElementosHabilitables);
     }
 
     public HashSet<Elemento> compruebaElementosInvalidados(HashMap<Producto, Float> listaProductosCantidades) {

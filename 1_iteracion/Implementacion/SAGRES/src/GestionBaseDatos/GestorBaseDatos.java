@@ -53,7 +53,18 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void deshabilitaElementos(HashSet<Elemento> listaElementos) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Iterator iterador = listaElementos.iterator();
+        while(iterador.hasNext()){
+            Elemento elemento = (Elemento)iterador.next();
+            elemento.setDisponible(false);
+            //Si hay que meter todo REVISAR
+            try{
+                java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET disponible=? WHERE elemento_id='" + elemento.getCodigoElemento()+ "'");
+                actualizacion.setInt(1, 0);
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void eliminaElemento(Elemento elemento) {
@@ -66,7 +77,18 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void habilitaElementos(HashSet<Elemento> listaElementos) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Iterator iterador = listaElementos.iterator();
+        while(iterador.hasNext()){
+            Elemento elemento = (Elemento)iterador.next();
+            elemento.setDisponible(true);
+            //Si hay que meter todo REVISAR
+            try{
+                java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET disponible=? WHERE elemento_id='" + elemento.getCodigoElemento()+ "'");
+                actualizacion.setInt(1, 1);
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void modificaElementoBebida(ElementoBebida elemento) {
