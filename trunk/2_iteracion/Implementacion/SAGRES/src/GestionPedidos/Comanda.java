@@ -4,11 +4,22 @@
  */
 
 package GestionPedidos;
-
+import java.util.ArrayList;
 /**
  *
  * @author Gaspar
  */
 public class Comanda {
 
+    public Comanda(){
+
+    }
+    //TODO hacer inserta(Pedido p)
+    public void inserta(Pedido p){
+
+    }
+    //TODO hacer obtienePedidos... y quitar sentencia return
+    public ArrayList<Pedido> obtienePedidosModificables(Integer n){
+        return new ArrayList<Pedido>();
+    }
 }

@@ -14,7 +14,13 @@ public class ElementoPedido {
     private String comentario;
     private Integer estado;
     private Integer codElementoPedido;
-    
+
+    public ElementoPedido(String comentario){
+        this.comentario = comentario;
+        this.estado = 0;
+        //TODO Como asignar el codigo del elementopedido
+        //this.codElementoPedido = ;
+    }
     public Integer getCodElementoPedido() {
         return codElementoPedido;
     }

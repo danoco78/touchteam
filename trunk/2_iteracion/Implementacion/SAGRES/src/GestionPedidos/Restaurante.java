@@ -4,56 +4,27 @@
  */
 
 package GestionPedidos;
+import java.util.ArrayList;
 
 /**
  *
  * @author Gaspar
  */
-public class Restaurante {
-    private String CIF;
+public class Restaurante{
     private Integer codRestaurante;
     private String direccion;
+    private String NIF;
     private String nombre;
     private String telefono;
+    private ArrayList<Factura> facturas;
 
-    public void setCIF(String CIF) {
-        this.CIF = CIF;
-    }
-
-    public void setCodRestaurante(Integer codRestaurante) {
+    public void Inicializa(Integer codRestaurante, String direccion,String NIF,
+            String nombre, String telefono){
         this.codRestaurante = codRestaurante;
-    }
-
-    public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public void setNombre(String nombre) {
+        this.NIF = NIF;
         this.nombre = nombre;
-    }
-
-    public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getCIF() {
-        return CIF;
-    }
-
-    public Integer getCodRestaurante() {
-        return codRestaurante;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
     }
 
 

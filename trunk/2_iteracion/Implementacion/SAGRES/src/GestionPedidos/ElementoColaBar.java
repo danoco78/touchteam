@@ -16,4 +16,8 @@ public class ElementoColaBar extends ElementoPedido{
      * 0 = En cola
      * 1 = Preparado
      */
+
+    public ElementoColaBar(String comentario){
+        super(comentario);
+    }
 }

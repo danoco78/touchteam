@@ -5,6 +5,7 @@
 
 package GestionPedidos;
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +15,8 @@ public class Pedido {
     private Integer codMesa;
     private Integer codPedido;
     private Date fecha;
+    private ArrayList<ElementoPedido> elementos;
+
     /**
      * La variable estado puede tener 3 formas
      * 0 = Modificable
@@ -21,18 +24,6 @@ public class Pedido {
      * 2 = Facturado
      */
     private Integer estado;
-
-    public void setCodPedido(Integer codPedido) {
-        this.codPedido = codPedido;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public void setCodMesa(Integer codMesa){
-        this.codMesa = codMesa;
-    }
 
     public void setEstado(Integer estado){
         this.estado = estado;
@@ -54,5 +45,16 @@ public class Pedido {
      */
     public Date getFecha(){
         return fecha;
+    }
+
+    public ArrayList<ElementoPedido> obtieneElementos(){
+        return this.elementos;
+    }
+
+    void asocia(ElementoColaCocina elem){
+
+    }
+    void asocia(ElementoColaBar elem){
+
     }
 }
