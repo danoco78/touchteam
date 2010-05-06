@@ -6,6 +6,8 @@
 package ControladorPrincipal;
 
 import GestionCarta.Elemento;
+import GestionCarta.ElementoBebida;
+import GestionCarta.ElementoPlato;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
@@ -18,6 +20,7 @@ import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
+import GestionPedidos.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,12 +36,15 @@ public class SAGRES implements IMetre, ICocinero {
     IProducto iproducto;
     IIncidencia iincidencia;
     IPedidoProveedor ipedidoproveedor;
+    IGestorPedidos ipedidos;
 
-    public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido){
+    public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, 
+            IPedidoProveedor iPedido, IGestorPedidos iPedidos){
         this.icarta = iCarta;
         this.iproducto = iProducto;
         this.iincidencia = iIncidencia;
         this.ipedidoproveedor = iPedido;
+        this.ipedidos = iPedidos;
     }
 
 
@@ -120,4 +126,55 @@ public class SAGRES implements IMetre, ICocinero {
         this.icarta.eliminaElemento(e);
     }
 
+    public void confirmaPagoFactura(Integer codMesa){
+
+    }
+
+    public ArrayList<String> getInfoRest(){
+        return this.ipedidos.getInfoRest();
+    }
+
+    public Pedido getSiguientePedidoBar(){
+        return this.ipedidos.getSiguientePedidoBar();
+    }
+
+    public Pedido getSiguientePedidoCocinaEncola(){
+        return this.ipedidos.getSiguientePedidoCocinaEncola();
+    }
+
+    public Pedido getSiguientePedidoCocinaPreparandose(){
+        return this.ipedidos.getSiguientePedidoCocinaPreparandose();
+    }
+
+    public void imprimeFactura(Integer codMesa){
+        this.ipedidos.imprimeFactura(codMesa);
+    }
+
+    public void imprimeFacturas(){
+        this.ipedidos.imprimeFacturas();
+    }
+
+    public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
+        return this.ipedidos.iniciaModificaPedido(codMesa);
+    }
+
+    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
+        return this.ipedidos.modificaPedido(codPedido, elems);
+    }
+
+    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems){
+        return this.ipedidos.nuevoPedido(codMesa, elems);
+    }
+
+    public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido){
+        return this.ipedidos.obtieneElementos(codPedido);
+    }
+    //TODO Preguntar por estas dos siguientes funciones
+    public boolean seleccionaBebida(Pedido p, ElementoBebida bebida){
+        return this.ipedidos.seleccionaBebida(p, bebida);
+    }
+
+    public boolean seleccionaPlato(Pedido p, ElementoPlato plato){
+        return this.ipedidos.seleccionaPlato(p, plato);
+    }
 }
