@@ -26,6 +26,8 @@ public class IntColaBar extends javax.swing.JPanel {
     /** Creates new form IntColaBar */
     public IntColaBar() {
         initComponents();
+
+        pDer.add(new PanelRelojFecha2(), new java.awt.GridBagConstraints());
     }
 
     @Override
@@ -61,25 +63,16 @@ public class IntColaBar extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(660, 560));
         setLayout(new java.awt.BorderLayout());
 
-        cabecera.setDoubleBuffered(true);
         cabecera.setMinimumSize(new java.awt.Dimension(50, 50));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(500, 100));
         cabecera.setLayout(new java.awt.BorderLayout());
 
-        pDer.setPreferredSize(new java.awt.Dimension(200, 100));
-
-        javax.swing.GroupLayout pDerLayout = new javax.swing.GroupLayout(pDer);
-        pDer.setLayout(pDerLayout);
-        pDerLayout.setHorizontalGroup(
-            pDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        pDerLayout.setVerticalGroup(
-            pDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
+        pDer.setMaximumSize(new java.awt.Dimension(230, 100));
+        pDer.setMinimumSize(new java.awt.Dimension(230, 100));
+        pDer.setOpaque(false);
+        pDer.setPreferredSize(new java.awt.Dimension(230, 100));
+        pDer.setLayout(new java.awt.GridBagLayout());
         cabecera.add(pDer, java.awt.BorderLayout.EAST);
 
         pIzq.setMinimumSize(new java.awt.Dimension(35, 21));
@@ -92,12 +85,15 @@ public class IntColaBar extends javax.swing.JPanel {
         bGestBebidas.setText("Gestionar Bebidas");
         bGestBebidas.setActionCommand("GestProductos");
         bGestBebidas.setBorder(null);
+        bGestBebidas.setMaximumSize(new java.awt.Dimension(170, 80));
+        bGestBebidas.setMinimumSize(new java.awt.Dimension(170, 80));
         bGestBebidas.setPreferredSize(new java.awt.Dimension(170, 80));
         pIzq.add(bGestBebidas, new java.awt.GridBagConstraints());
         bGestBebidas.getAccessibleContext().setAccessibleName("GestProductos");
 
         cabecera.add(pIzq, java.awt.BorderLayout.WEST);
 
+        pCentro.setOpaque(false);
         pCentro.setLayout(new java.awt.GridBagLayout());
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
@@ -106,6 +102,8 @@ public class IntColaBar extends javax.swing.JPanel {
         cabecera.add(pCentro, java.awt.BorderLayout.CENTER);
 
         add(cabecera, java.awt.BorderLayout.PAGE_START);
+
+        cuerpo.setOpaque(false);
 
         javax.swing.GroupLayout cuerpoLayout = new javax.swing.GroupLayout(cuerpo);
         cuerpo.setLayout(cuerpoLayout);
