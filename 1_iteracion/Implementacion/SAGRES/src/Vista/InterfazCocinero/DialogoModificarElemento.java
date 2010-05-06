@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -184,7 +185,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -841,8 +842,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.tPrecio.setValue(elemento.getPrecio());
             this.TImgen.setText("Imagen Actual");
             this.imagen = elemento.getFoto();
-            ArrayList<Producto> listaProductos = this.icocinero.obtieneIngredientes();
-            disponibles = new ArrayList<Producto>(listaProductos);
+            ArrayList<Producto> listaProductos = new ArrayList<Producto>(this.icocinero.obtieneIngredientes());
+            disponibles = listaProductos;
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
             modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
@@ -856,7 +857,12 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.tProductosDisponibles.setValueAt(listaProductos.get(i).getCantidad(), i, 1);
                 this.tProductosDisponibles.setValueAt(listaProductos.get(i).getImagen(), i, 2);
             }
-            seleccionados = this.icocinero.obtenProductosDeElemento(elemento);
+            
+            if (elemento instanceof ElementoBebida)
+                seleccionados = new ArrayList(((ElementoBebida)elemento).getListaBebidas().keySet());
+            else
+                seleccionados = new ArrayList(((ElementoPlato)elemento).getListaIngredientes().keySet());
+            
             for (int i = 0; i < seleccionados.size(); i++) {
                 Producto producto = (Producto) seleccionados.get(i);
                 Object[] obj = new Object[3];
