@@ -21,6 +21,11 @@ public class ElementoPedido {
         //TODO Como asignar el codigo del elementopedido
         //this.codElementoPedido = ;
     }
+    public ElementoPedido(Integer codElementoPedido, Integer estado, String comentario){
+        this.codElementoPedido = codElementoPedido;
+        this.estado = estado;
+        this.comentario = comentario;
+    }
     public Integer getCodElementoPedido() {
         return codElementoPedido;
     }
@@ -31,11 +36,6 @@ public class ElementoPedido {
 
     public Integer getEstado() {
         return estado;
-    }
-
-
-    public void setCodElementoPedido(Integer codElementoPedido) {
-        this.codElementoPedido = codElementoPedido;
     }
 
     public void setComentario(String comentario) {

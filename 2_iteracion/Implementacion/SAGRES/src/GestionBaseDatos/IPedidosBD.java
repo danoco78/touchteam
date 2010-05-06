@@ -3,14 +3,15 @@
  * and open the template in the editor.
  */
 
-package GestionCarta;
+package GestionBaseDatos;
 
+import GestionPedidos.Pedido;
 import java.util.ArrayList;
-import utilidades.Pair;
+
 /**
  *
  * @author Gaspar
  */
-public interface IGestionCartaA {
-    public ArrayList<Pair<Seccion, ArrayList<Elemento> > > iniciaNuevoPedido();
+public interface IPedidosBD {
+    public ArrayList<Pedido> obtienePedidosNoFacturados();
 }

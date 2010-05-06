@@ -7,6 +7,7 @@ package GestionPedidos;
 
 import java.util.ArrayList;
 import GestionCarta.*;
+import GestionBaseDatos.IPedidosBD;
 
 /**
  *
@@ -28,6 +29,9 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public Pedido getSiguientePedidoCocinaEncola(){
+        ArrayList<Pedido> noFacturados;
+        noFacturados = obtienePedidosNoFacturados();
+
         return new Pedido(); //Para quitar errores
     }
 
