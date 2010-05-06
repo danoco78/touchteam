@@ -25,6 +25,10 @@ public class Pedido {
      */
     private Integer estado;
 
+    public Pedido(){
+        super();
+    }
+    
     public Pedido(Integer codMesa, Integer codPedido, Integer estado, Date fecha){
         this.codMesa = codMesa;
         this.codPedido = codPedido;
@@ -57,10 +61,8 @@ public class Pedido {
         return this.elementos;
     }
 
-    void asocia(ElementoColaCocina elem){
-        ;
+    public void asocia(ElementoColaCocina elem){
     }
-    void asocia(ElementoColaBar elem){
-        ;
+    public void asocia(ElementoColaBar elem){
     }
 }
