@@ -12,6 +12,8 @@ import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import GestionPedidos.Pedido;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
 import com.mysql.jdbc.Statement;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -710,14 +712,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                             res2.getString(3));
                     ElementoColaBar temp = new ElementoColaBar();
                     if(elem.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
-                         p.
+                         p.asocia((ElementoColaBar)elem);
                     else
-
+                         p.asocia((ElementoColaCocina)elem);
                 }
-                /*tablaproductos.next();
-                Ingrediente ingrediente = new Ingrediente(tablaproductos.getInt(1), tablaproductos.getString(2), tablaproductos.getFloat(3), tablaproductos.getFloat(4),
-                        tablaproductos.getFloat(5), Imagen.blobToImageIcon(tablaproductos.getBytes(6)));
-                listaIngredientes.add(ingrediente);*/
+                noFacturados.add(p);
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
