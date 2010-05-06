@@ -3,6 +3,7 @@
 package Vista.InterfazMetre;
 
 import ControladorPrincipal.IMetre;
+import java.awt.CardLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,20 +16,26 @@ import javax.swing.JFrame;
 public class InterfazMetre extends javax.swing.JFrame {
 
     private IMetre imetre;
-    private IntPrincipalMetre panelPrincipal = null;
+    private IntGestionBebidas panelBebida = null;
+    private IntColaBar panelPrincipal = null;
 
+    protected static final String PRINCIPAL = "Principal";
+    protected static final String BEBIDA = "Bebida";
 
     public InterfazMetre(IMetre iMetre) {
         initComponents();
         this.imetre = iMetre;
-        this.panelPrincipal = new IntPrincipalMetre();
-        getContentPane().add(this.panelPrincipal,java.awt.BorderLayout.CENTER);
+        this.panelPrincipal = new IntColaBar();
+        this.panelBebida = new IntGestionBebidas();
+        getContentPane().add(this.panelPrincipal,InterfazMetre.PRINCIPAL);
+        getContentPane().add(this.panelBebida,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
-        this.panelPrincipal.bAnadirBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ANADIRBEBIDA));
-        this.panelPrincipal.bEliminarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ELIMNARBEBIDA));
-        this.panelPrincipal.bModificarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.MODIFICARBEBIDA));
-        this.panelPrincipal.bNotificcarIncidencia.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARINCIDENCIA));
+        this.panelBebida.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
+        this.panelBebida.bAnadirBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ANADIRBEBIDA));
+        this.panelBebida.bEliminarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ELIMNARBEBIDA));
+        this.panelBebida.bModificarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.MODIFICARBEBIDA));
+        this.panelBebida.bNotificcarIncidencia.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARINCIDENCIA));
+        //TODO Añadir Manejador de eventos a las colas del panel de bar
     }
 
 
@@ -51,6 +58,8 @@ public class InterfazMetre extends javax.swing.JFrame {
         protected static final int ELIMNARBEBIDA = 2;
         protected static final int MODIFICARBEBIDA = 3;
         protected static final int NOTIFICARINCIDENCIA = 4;
+        protected static final int GESTIONARBEBIDAS = 5;
+        // TODO Añadir variables para eventos de cola bar
 
         public ManejaEventos(JFrame Padre, int TipoEvento){
             this.padre = Padre;
@@ -59,9 +68,13 @@ public class InterfazMetre extends javax.swing.JFrame {
 
         public void actionPerformed(ActionEvent e) {
             Dialog dialogo= null;
+            CardLayout layout = (CardLayout) padre.getContentPane().getLayout();
             switch (this.tipoEvento) {
                 case ManejaEventos.SALIR:
-                    System.exit(0);
+                    layout.show(padre.getContentPane(), InterfazMetre.PRINCIPAL);
+                    break;
+                case ManejaEventos.GESTIONARBEBIDAS:
+                    layout.show(padre.getContentPane(), InterfazMetre.BEBIDA);
                     break;
                 case ManejaEventos.ANADIRBEBIDA:
                     dialogo = new DialogoAnadirBebida(padre, imetre);

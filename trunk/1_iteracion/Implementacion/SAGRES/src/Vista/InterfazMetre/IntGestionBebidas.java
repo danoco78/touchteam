@@ -11,10 +11,10 @@ import java.awt.Rectangle;
  *
  * @author Daniel Guerrero Martinez
  */
-public class IntPrincipalMetre extends javax.swing.JPanel {
+public class IntGestionBebidas extends javax.swing.JPanel {
 
     /** Creates new form IntGestionCarta */
-    public IntPrincipalMetre() {
+    public IntGestionBebidas() {
         initComponents();
     }
 
@@ -69,7 +69,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bSalir.setFont(new java.awt.Font("Arial", 1, 14));
+        bSalir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bSalir.setForeground(new java.awt.Color(80, 98, 143));
         bSalir.setText("Salir");
         bSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,7 +92,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirBebida.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bAnadirBebida.setFont(new java.awt.Font("Arial", 1, 14));
         bAnadirBebida.setForeground(new java.awt.Color(80, 98, 143));
         bAnadirBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/copa.png"))); // NOI18N
         bAnadirBebida.setText("Añadir Bebida");
@@ -104,7 +104,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirBebida, gridBagConstraints);
 
-        bNotificcarIncidencia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificcarIncidencia.setFont(new java.awt.Font("Arial", 1, 14));
         bNotificcarIncidencia.setForeground(new java.awt.Color(80, 98, 143));
         bNotificcarIncidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/incidencia.png"))); // NOI18N
         bNotificcarIncidencia.setText("Notificar incidencia");
@@ -119,7 +119,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarIncidencia, gridBagConstraints);
 
-        bEliminarBebida.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEliminarBebida.setFont(new java.awt.Font("Arial", 1, 14));
         bEliminarBebida.setForeground(new java.awt.Color(80, 98, 143));
         bEliminarBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/PedirBebida.png"))); // NOI18N
         bEliminarBebida.setText("Eliminar Bebida");
@@ -133,7 +133,7 @@ public class IntPrincipalMetre extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEliminarBebida, gridBagConstraints);
 
-        bModificarBebida.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bModificarBebida.setFont(new java.awt.Font("Arial", 1, 14));
         bModificarBebida.setForeground(new java.awt.Color(80, 98, 143));
         bModificarBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/ModificarBebida.png"))); // NOI18N
         bModificarBebida.setText("Modificar Bebida");
