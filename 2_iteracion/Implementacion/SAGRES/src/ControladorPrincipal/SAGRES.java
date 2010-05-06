@@ -104,10 +104,10 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public HashSet<Producto> obtieneProductosSeccion(Seccion seccion) {
-        if (seccion instanceof SeccionBebida)
+        /*if (seccion instanceof SeccionBebida)
             return this.iproducto.obtieneBebidas();
         else if (seccion instanceof SeccionComida)
-            return this.iproducto.obtieneIngredientes();
+            return this.iproducto.obtieneIngredientes();*/
 
         return null;
     }

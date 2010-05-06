@@ -11,8 +11,9 @@
 
 package Vista.InterfazCliente;
 
-import GestionBaseDatos.GestorBaseDatos;
+import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
+import GestionCarta.Seccion;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -22,10 +23,12 @@ import java.util.Iterator;
  */
 public class PanelHojasCarta extends javax.swing.JPanel {
 
+    private ICliente icliente;
+
     /** Creates new form PanelHojasCarta */
-    public PanelHojasCarta() {
+    public PanelHojasCarta() throws Exception {
         initComponents();
-        //CargarCarta();
+        CargarCarta();
     }
 
     /** This method is called from within the constructor to
@@ -75,19 +78,24 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelHojaIzquierda;
     // End of variables declaration//GEN-END:variables
 
-    private void CargarCarta() {
-        GestorBaseDatos GBD = new GestorBaseDatos();
-        HashSet<Elemento> listaElementos = GBD.obtieneElementos();
-
-        Iterator iterador = listaElementos.iterator();
+    private void CargarCarta() throws Exception {
+        HashSet<Seccion> listaSecciones = icliente.obtieneSecciones();
+        
+        Iterator iterador = listaSecciones.iterator();
         while (iterador.hasNext()){
+            Seccion seccion = (Seccion)iterador.next();
+
+            System.out.println(seccion.getCodigoSeccion());
+            System.out.println(seccion.getNombre());
+        }
+        /*while (iterador.hasNext()){
             Elemento elemento = (Elemento)iterador.next();
 
             System.out.println(elemento.getCodigoElemento());
             System.out.println(elemento.getNombre());
             System.out.println(elemento.getDescripcion());
             System.out.println(elemento.getDisponible());
-        }
+        }*/
     }
 
 }

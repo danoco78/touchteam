@@ -4,26 +4,28 @@
  */
 
 /*
- * ICliente.java
+ * InterfazCliente.java
  *
- * Created on 04-may-2010, 17:22:35
+ * Created on 04-may-2010, 16:38:03
  */
 
 package Vista.InterfazCliente;
+
+import ControladorPrincipal.ICocinero;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Carlos
  */
-public class InterfazCliente extends javax.swing.JFrame {
+public class InterfazCliente extends javax.swing.JPanel {
 
-    /** Creates new form ICliente */
-    public InterfazCliente() {
+    /** Creates new form InterfazCliente */
+    public InterfazCliente() throws Exception {
         initComponents();
-        
-        PanelPrincipalCliente PPC = new PanelPrincipalCliente();
-        PPC.setVisible(true);
-        this.getContentPane().add(PPC);
+        this.setDoubleBuffered(true);
+        this.PanelCarta.add(new PanelHojasCarta(), java.awt.BorderLayout.CENTER);
     }
 
     /** This method is called from within the constructor to
@@ -35,34 +37,179 @@ public class InterfazCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        GrupoBotonesSecciones = new javax.swing.ButtonGroup();
+        PanelGeneralEste = new javax.swing.JPanel();
+        PanelPedido = new javax.swing.JPanel();
+        PanelPedidoComida = new javax.swing.JPanel();
+        PanelListaComida = new javax.swing.JPanel();
+        Modificar = new javax.swing.JButton();
+        PanelPedidoBebida = new javax.swing.JPanel();
+        BotonVerFactura = new javax.swing.JButton();
+        PanelGeneralCentro = new javax.swing.JPanel();
+        PanelComentarios = new javax.swing.JPanel();
+        PanelCartaBotones = new javax.swing.JPanel();
+        PanelCarta = new javax.swing.JPanel();
+        PanelBotones = new javax.swing.JPanel();
+        BotonEntrantes = new javax.swing.JToggleButton();
+        BotonPescados = new javax.swing.JToggleButton();
+        BotonCarnes = new javax.swing.JToggleButton();
+        BotonBebidas = new javax.swing.JToggleButton();
+        BotonPostres = new javax.swing.JToggleButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setLayout(new java.awt.BorderLayout());
+
+        PanelGeneralEste.setLayout(new java.awt.BorderLayout());
+
+        PanelPedido.setLayout(new java.awt.BorderLayout());
+
+        PanelPedidoComida.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout PanelListaComidaLayout = new javax.swing.GroupLayout(PanelListaComida);
+        PanelListaComida.setLayout(PanelListaComidaLayout);
+        PanelListaComidaLayout.setHorizontalGroup(
+            PanelListaComidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 103, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        PanelListaComidaLayout.setVerticalGroup(
+            PanelListaComidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 229, Short.MAX_VALUE)
         );
 
-        pack();
+        PanelPedidoComida.add(PanelListaComida, java.awt.BorderLayout.CENTER);
+
+        Modificar.setBackground(new java.awt.Color(255, 255, 255));
+        Modificar.setFont(new java.awt.Font("Arial", 1, 16));
+        Modificar.setForeground(new java.awt.Color(80, 98, 143));
+        Modificar.setText("Modificar");
+        Modificar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelPedidoComida.add(Modificar, java.awt.BorderLayout.SOUTH);
+
+        PanelPedido.add(PanelPedidoComida, java.awt.BorderLayout.CENTER);
+
+        PanelPedidoBebida.setLayout(new java.awt.BorderLayout());
+        PanelPedido.add(PanelPedidoBebida, java.awt.BorderLayout.PAGE_START);
+
+        PanelGeneralEste.add(PanelPedido, java.awt.BorderLayout.CENTER);
+
+        BotonVerFactura.setBackground(new java.awt.Color(255, 255, 255));
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
+        BotonVerFactura.setText("Ver Factura");
+        BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonVerFactura.setPreferredSize(new java.awt.Dimension(89, 50));
+        PanelGeneralEste.add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
+
+        add(PanelGeneralEste, java.awt.BorderLayout.EAST);
+
+        PanelGeneralCentro.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout PanelComentariosLayout = new javax.swing.GroupLayout(PanelComentarios);
+        PanelComentarios.setLayout(PanelComentariosLayout);
+        PanelComentariosLayout.setHorizontalGroup(
+            PanelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 563, Short.MAX_VALUE)
+        );
+        PanelComentariosLayout.setVerticalGroup(
+            PanelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        PanelGeneralCentro.add(PanelComentarios, java.awt.BorderLayout.PAGE_END);
+
+        PanelCartaBotones.setLayout(new java.awt.BorderLayout());
+
+        PanelCarta.setLayout(new java.awt.BorderLayout());
+        PanelCartaBotones.add(PanelCarta, java.awt.BorderLayout.CENTER);
+
+        PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
+
+        BotonEntrantes.setBackground(new java.awt.Color(255, 255, 255));
+        GrupoBotonesSecciones.add(BotonEntrantes);
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
+        BotonEntrantes.setText("Entrantes");
+        BotonEntrantes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelBotones.add(BotonEntrantes);
+
+        BotonPescados.setBackground(new java.awt.Color(255, 255, 255));
+        GrupoBotonesSecciones.add(BotonPescados);
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
+        BotonPescados.setText("Pescados");
+        BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelBotones.add(BotonPescados);
+
+        BotonCarnes.setBackground(new java.awt.Color(255, 255, 255));
+        GrupoBotonesSecciones.add(BotonCarnes);
+        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
+        BotonCarnes.setText("Carnes");
+        BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelBotones.add(BotonCarnes);
+
+        BotonBebidas.setBackground(new java.awt.Color(255, 255, 255));
+        GrupoBotonesSecciones.add(BotonBebidas);
+        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
+        BotonBebidas.setText("Bebidas");
+        BotonBebidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelBotones.add(BotonBebidas);
+
+        BotonPostres.setBackground(new java.awt.Color(255, 255, 255));
+        GrupoBotonesSecciones.add(BotonPostres);
+        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
+        BotonPostres.setText("Postres");
+        BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        PanelBotones.add(BotonPostres);
+
+        PanelCartaBotones.add(PanelBotones, java.awt.BorderLayout.SOUTH);
+
+        PanelGeneralCentro.add(PanelCartaBotones, java.awt.BorderLayout.CENTER);
+
+        add(PanelGeneralCentro, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * @param args the command line arguments
-    */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazCliente().setVisible(true);
+                javax.swing.JFrame dialog = new javax.swing.JFrame("Interfaz Cliente");
+                dialog.setSize(800, 600);
+                try {
+                    dialog.getContentPane().add(new InterfazCliente(), java.awt.BorderLayout.CENTER);
+                } catch (Exception ex) {
+                    Logger.getLogger(InterfazCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton BotonBebidas;
+    private javax.swing.JToggleButton BotonCarnes;
+    private javax.swing.JToggleButton BotonEntrantes;
+    private javax.swing.JToggleButton BotonPescados;
+    private javax.swing.JToggleButton BotonPostres;
+    private javax.swing.JButton BotonVerFactura;
+    private javax.swing.ButtonGroup GrupoBotonesSecciones;
+    private javax.swing.JButton Modificar;
+    private javax.swing.JPanel PanelBotones;
+    private javax.swing.JPanel PanelCarta;
+    private javax.swing.JPanel PanelCartaBotones;
+    private javax.swing.JPanel PanelComentarios;
+    private javax.swing.JPanel PanelGeneralCentro;
+    private javax.swing.JPanel PanelGeneralEste;
+    private javax.swing.JPanel PanelListaComida;
+    private javax.swing.JPanel PanelPedido;
+    private javax.swing.JPanel PanelPedidoBebida;
+    private javax.swing.JPanel PanelPedidoComida;
     // End of variables declaration//GEN-END:variables
 
 }
