@@ -6,9 +6,12 @@
 package ControladorPrincipal;
 
 import GestionCarta.Elemento;
+import GestionCarta.ElementoBebida;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Producto;
+import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -24,5 +27,6 @@ public interface IMetre {
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract HashSet<Bebida> obtenerBebidas();
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
-
+    public abstract Pedido getSiguientePedidoBar();
+    public abstract boolean seleccionaBebida(Pedido p, ElementoBebida bebida);
 }
