@@ -5,6 +5,7 @@
 
 package GestionPedidos;
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +15,7 @@ public class Factura {
     private Integer codFactura;
     private Integer estado;
     private Date fecha;
+    private ArrayList<Pedido> pedidosAsociados;
 
     public Factura(Integer codFactura, Integer estado, Date fecha){
         this.codFactura = codFactura;

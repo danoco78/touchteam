@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class Comanda {
 
+    private ArrayList<Pedido> pedidos;
+    
     public Comanda(){
 
     }
