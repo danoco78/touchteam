@@ -11,13 +11,13 @@ import utilidades.Pair;
  */
 public interface IProducto {
 
-    //public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades);
+    public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades);
     public void eliminaProducto(Producto p);
     public void modificaProducto(Producto p);
     public void nuevoProducto(Producto p);
-    public HashSet<Bebida> obtieneBebidas();
-    public HashSet<Ingrediente> obtieneIngredientes();
-    public HashSet<Producto> obtieneProductosBajoMinimos();
+    public HashSet<Producto> obtieneBebidas();
+    public HashSet<Producto> obtieneIngredientes();
+    public  HashMap<Producto, Float> obtieneProductosBajoMinimos();
     public void restarCantidadProducto(Pair<Producto,Float> prodCantidad);
     
 }

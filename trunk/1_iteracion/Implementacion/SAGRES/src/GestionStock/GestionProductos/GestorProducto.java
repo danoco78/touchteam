@@ -5,6 +5,7 @@
 
 package GestionStock.GestionProductos;
 import GestionBaseDatos.IStockBD;
+import java.util.HashMap;
 import java.util.HashSet;
 import utilidades.Pair;
 /**
@@ -20,6 +21,10 @@ public class GestorProducto implements IProducto{
      */
     public GestorProducto( IStockBD almacen){
         this.iStockBD = almacen;
+    }
+
+    public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades){
+        this.iStockBD.actualizaCantidadesProductos(listaProductosCantidades);
     }
 
     /**
@@ -53,21 +58,21 @@ public class GestorProducto implements IProducto{
     /**
      * Permite obtener una lista de las bebidas que pertenecen a la lista de productos
      */
-    public HashSet<Bebida> obtieneBebidas(){
+    public HashSet<Producto> obtieneBebidas(){
         return this.iStockBD.obtieneBebidas();
     }
 
     /**
      * Permite obtener una lista de los ingredientes que pertenecen a la lista de productos
      */
-    public HashSet<Ingrediente> obtieneIngredientes(){
+    public HashSet<Producto> obtieneIngredientes(){
         return this.iStockBD.obtieneIngredientes();
     }
 
     /**
      * Permite obtener una lista de los productos bajo minimos dentro de nuestro stock
      */
-    public HashSet<Producto> obtieneProductosBajoMinimos(){
+    public HashMap<Producto, Float> obtieneProductosBajoMinimos(){
         return this.iStockBD.obtieneProductosBajoMinimos();
         /*
         ArrayList<Producto> listaProductosBajoMinimos = new ArrayList<Producto>();
