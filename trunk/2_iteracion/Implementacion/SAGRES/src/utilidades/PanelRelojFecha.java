@@ -11,6 +11,7 @@
 
 package utilidades;
 
+import utilidades.*;
 import java.util.Calendar;
 import javax.swing.JLabel;
 
@@ -42,16 +43,16 @@ public class PanelRelojFecha extends javax.swing.JPanel {
         tFecha = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 5, true));
-        setMaximumSize(new java.awt.Dimension(165, 40));
-        setMinimumSize(new java.awt.Dimension(165, 40));
-        setPreferredSize(new java.awt.Dimension(165, 40));
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229)));
+        setMaximumSize(new java.awt.Dimension(200, 80));
+        setMinimumSize(new java.awt.Dimension(200, 80));
+        setPreferredSize(new java.awt.Dimension(200, 80));
         setLayout(new java.awt.BorderLayout());
 
         pCentro.setOpaque(false);
         pCentro.setLayout(new java.awt.BorderLayout());
 
-        tHora.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        tHora.setFont(new java.awt.Font("Arial", 1, 36));
         tHora.setForeground(new java.awt.Color(80, 98, 143));
         tHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tHora.setText("16:32");
@@ -63,7 +64,7 @@ public class PanelRelojFecha extends javax.swing.JPanel {
         pSur.setOpaque(false);
         pSur.setLayout(new java.awt.BorderLayout());
 
-        tFecha.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        tFecha.setFont(new java.awt.Font("Arial", 1, 12));
         tFecha.setForeground(new java.awt.Color(80, 98, 143));
         tFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tFecha.setText("Martes 14, Agosto 2010");
@@ -99,8 +100,12 @@ public class PanelRelojFecha extends javax.swing.JPanel {
             while(!end){
                 try {
                     calendario = Calendar.getInstance();
-                    hora.setText(calendario.get(Calendar.HOUR_OF_DAY)+":"+
-                            calendario.get(Calendar.MINUTE));
+                    if (calendario.get(Calendar.MINUTE) < 10)
+                        hora.setText(calendario.get(Calendar.HOUR_OF_DAY)+":"+"0"+
+                                calendario.get(Calendar.MINUTE));
+                    else
+                        hora.setText(calendario.get(Calendar.HOUR_OF_DAY)+":"+
+                                calendario.get(Calendar.MINUTE));
                     fecha.setText(this.getDiaSemana(calendario.get(Calendar.DAY_OF_WEEK))+" "+
                             calendario.get(Calendar.DAY_OF_MONTH)+", "+
                             this.getMes(calendario.get(Calendar.MONTH))+" "+
