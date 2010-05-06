@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 /**
  *
  * @author Daniel Guerrero Martinez
+ * @author Samuel Guirado Navarro
  */
 public class InterfazMetre extends javax.swing.JFrame {
 
