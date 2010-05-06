@@ -15,10 +15,19 @@ public class Factura {
     private Integer estado;
     private Date fecha;
 
+    public Factura(Integer codFactura, Integer estado, Date fecha){
+        this.codFactura = codFactura;
+        this.estado = estado;
+        this.fecha = fecha;
+    }
     public Integer getCodFactura() {
         return codFactura;
     }
-
+    //TODO Preguntar que hace esta función
+    public Factura crear(){
+        Factura nueva = new Factura(0,0,fecha);
+        return nueva;
+    }
     public void setCodFactura(Integer codFactura) {
         this.codFactura = codFactura;
     }
@@ -27,7 +36,7 @@ public class Factura {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void modificaEstado(Integer estado) {
         this.estado = estado;
     }
 
