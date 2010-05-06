@@ -129,4 +129,8 @@ public class SAGRES implements IMetre, ICocinero {
         this.icarta.eliminaElemento(e);
     }
 
+    public HashSet<Elemento> obtieneElementos() {
+        return this.icarta.obtieneElementos();
+    }
+
 }

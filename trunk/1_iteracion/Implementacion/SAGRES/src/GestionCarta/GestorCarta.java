@@ -241,6 +241,10 @@ public class GestorCarta implements ICarta {
         return this.iCartaBD.obtieneSecciones();
     }
 
+    public HashSet<Elemento> obtieneElementos() {
+        return this.iCartaBD.obtieneElementos();
+    }
+
 
 
 

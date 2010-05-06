@@ -28,6 +28,8 @@ public interface ICarta {
 
     public HashSet<Seccion> obtieneSecciones();
 
+    public HashSet<Elemento> obtieneElementos();
+
     //public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
     

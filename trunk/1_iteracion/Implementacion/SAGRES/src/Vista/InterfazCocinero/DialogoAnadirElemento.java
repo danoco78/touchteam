@@ -841,8 +841,13 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.icocinero.obtenElementosDeSeccion(
-                    new ArrayList(this.icocinero.obtieneSecciones()).get(this.bSeccion.getSelectedIndex()));
+            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
+            ArrayList<Elemento> lista;
+            if (seccion instanceof SeccionBebida)
+                lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
+            else
+                lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
