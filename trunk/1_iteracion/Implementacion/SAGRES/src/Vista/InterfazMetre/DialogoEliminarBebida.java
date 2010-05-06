@@ -8,10 +8,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import Vista.DialogoComfirmacion;
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Bebida;
+import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +26,9 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
     //private IGestionarProducto gestorProducto;
     //private IProducto productos;
     private int bebidaSeleccionada;
-    private ArrayList<Bebida> listaBebidas;
+    private HashSet<Producto> listaBebidas;
+    private IMetre metre;
+    private Bebida aEliminar;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoEliminarBebida(java.awt.Frame parent, IMetre iMetre) {
@@ -32,16 +36,23 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         initComponents();
         /*this.gestorProducto = gestorProducto;
         this.productos = productos;*/
-        this.listaBebidas = this.productos.obtenerListaBebidas();
+        this.metre = iMetre;
+        listaBebidas = this.metre.obtenerBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tBebidas.getColumnName(0));
         tableModel.addColumn(this.tBebidas.getColumnName(1));
         tableModel.setRowCount(listaBebidas.size());
         this.tBebidas.setModel(tableModel);
-        for (int i = 0; i < this.listaBebidas.size(); i++) {
-            this.tBebidas.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
-            this.tBebidas.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
-        }
+        Iterator iterador = listaBebidas.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tBebidas.getModel().setValueAt(p.getNombre(), i, 0);
+            this.tBebidas.getModel().setValueAt(p.getCantidad(), i, 1);
+            ++i;
+	}
         this.bAceptar.setEnabled(false);
     }
 
@@ -309,9 +320,20 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
             try {
-                this.gestorProducto.eliminarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro());
+                Iterator iterador = listaBebidas.iterator();
+                int i = 0;
+                boolean noeliminado = true;
+                int select = this.tBebidas.getSelectedRow();
+                while (noeliminado) {
+                    Map.Entry entrada = (Map.Entry)iterador.next();
+                    aEliminar = (Bebida)entrada.getKey();
+                    if(i == select){
+                        this.metre.eliminaProducto(aEliminar);
+                        noeliminado = false;
+                    }
+                    else ++i;
+                }
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
             }
             setVisible(false);
             dispose();

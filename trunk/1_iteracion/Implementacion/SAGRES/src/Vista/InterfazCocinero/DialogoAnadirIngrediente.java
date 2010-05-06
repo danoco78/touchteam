@@ -3,7 +3,8 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionStock.GestionProductos.IGestionarProducto;
+import ControladorPrincipal.IMetre;
+import GestionStock.GestionProductos.Ingrediente;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -24,6 +25,7 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
 
     private ImageIcon imagen;
     //private IGestionarProducto gestorProducto;
+    private ICocinero cocina;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoAnadirIngrediente(java.awt.Frame parent, /*IGestionarProducto GestorProducto*/ ICocinero iCocinero) {
@@ -32,6 +34,7 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
         //gestorProducto = GestorProducto;
         imagen = null;
+        this.cocina = iCocinero;
     }
 
 
@@ -340,8 +343,8 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
-            this.gestorProducto.nuevoIngrediente(this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
-                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+            Ingrediente i = new Ingrediente(0, this.tNombre.getText(),((Float)this.tDisponible.getValue()), ((Float)this.tMaximo.getValue()), ((Float)this.tMinimo.getValue()), imagen);
+            this.cocina.nuevoProducto(i);
             setVisible(false);
             dispose();
         }

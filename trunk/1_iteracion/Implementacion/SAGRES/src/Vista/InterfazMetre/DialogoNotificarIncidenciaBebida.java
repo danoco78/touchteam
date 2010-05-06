@@ -4,6 +4,7 @@ package Vista.InterfazMetre;
 import ControladorPrincipal.IMetre;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Bebida;
+import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -12,6 +13,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,27 +30,34 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
     private final String PASO1 = "Paso 1/2";
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
-    private ImageIcon imagen;
-    private IMetre imetre;
     private int bebidaSeleccionada;
-    private ArrayList<Bebida> listaBebidas;
+    private IMetre metre;
+    private HashSet<Producto> listaBebidas;
+    private Bebida accidentado;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoNotificarIncidenciaBebida(java.awt.Frame parent,IMetre iMetre) {
         super(parent, true);
         initComponents();
         this.estado=1;
-        this.imetre = iMetre;
-        this.listaBebidas = this.imetre.obtenerBebidas();
+        this.metre = iMetre;
+        this.listaBebidas = this.metre.obtenerBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         tableModel.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
         tableModel.setRowCount(listaBebidas.size());
         this.tTablaIngredientesDisponibles.setModel(tableModel);
-        for (int i = 0; i<this.listaBebidas.size(); i++) {
-            this.tTablaIngredientesDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
-            this.tTablaIngredientesDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
-        }
+        Iterator iterador = listaBebidas.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
+            ++i;
+	}
         this.bSiguiente.setEnabled(false);
         this.bAnterior.setEnabled(false);
     }
@@ -392,7 +403,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 this.estado++;
                 cl.next(this.cuerpo);
                 this.bSiguiente.setText("Finalizar");
-                this.lNombre.setText("Producto afectado: "+this.listaBebidas.get(this.bebidaSeleccionada).getNombre());
+                this.lNombre.setText((String) this.tTablaIngredientesDisponibles.getValueAt(this.tTablaIngredientesDisponibles.getSelectedRow(), 0));
             break;
             case 2:
                 String subtitulo = this.lSubtitulo.getText();
@@ -403,11 +414,20 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
-                if(confirmar.isAceptado()){
-                    try{
-                        this.imetre.nuevaIncidencia( new Incidencia(this.listaBebidas.get(this.bebidaSeleccionada), (Float)this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
-                    } catch (Exception ex){
+                if (confirmar.isAceptado()) {
+                Iterator iterador = listaBebidas.iterator();
+                int i = 0;
+                int select = this.tTablaIngredientesDisponibles.getSelectedRow();
+                boolean noencontrado = true;
+                    while (noencontrado) {
+                        Map.Entry entrada = (Map.Entry)iterador.next();
+                        accidentado = (Bebida)entrada.getKey();
+                        if(i == select){
+                            noencontrado = false;
+                        }
+                        else ++i;
                     }
+                    this.metre.nuevaIncidencia(new Incidencia( accidentado,(Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
                     setVisible(false);
                     dispose();
                 }

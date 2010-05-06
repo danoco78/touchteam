@@ -1,16 +1,19 @@
 
 package Vista.InterfazCocinero;
 
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
+import ControladorPrincipal.ICocinero;
+import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Ingrediente;
+import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,25 +27,34 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
     private ImageIcon imagen;
     /*private IProducto almacenProductos;
     private IGestionarProducto gestorProductos;*/
-
+    private ICocinero cocina;
+    private HashSet<Producto> listaIngredientes;
+    private Ingrediente aEliminar;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoEliminarIngrediente(java.awt.Frame parent, /*IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero ) {
+    public DialogoEliminarIngrediente(java.awt.Frame parent, /*IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero) {
         super(parent, true);
         initComponents();
         //this.gestorProductos = GestorProductos;
         //this.almacenProductos = AlmacenProductos;
-        ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
+        this.cocina = iCocinero;
+        listaIngredientes = this.cocina.obtieneIngredientes();
         this.bAceptar.setEnabled(false);
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn(this.tTablaIngredientes.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientes.getColumnName(1));
         modelo.setRowCount(listaIngredientes.size());
         this.tTablaIngredientes.setModel(modelo);
-        for (int i = 0; i < listaIngredientes.size(); i++) {
-            this.tTablaIngredientes.setValueAt(listaIngredientes.get(i).getNombre(), i, 0);
-            this.tTablaIngredientes.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
-        }
+        Iterator iterador = listaIngredientes.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tTablaIngredientes.setValueAt(p.getNombre(), i, 0);
+            this.tTablaIngredientes.setValueAt(p.getCantidad(), i, 1);
+            ++i;
+	}
     }
 
 
@@ -305,7 +317,18 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
             try {
-                this.gestorProductos.eliminarProducto(this.almacenProductos.obtenerListaIngredientes().get(select).getCodPro());
+                Iterator iterador = listaIngredientes.iterator();
+                int i = 0;
+                boolean noeliminado = true;
+                while (noeliminado) {
+                    Map.Entry entrada = (Map.Entry)iterador.next();
+                    aEliminar = (Ingrediente)entrada.getKey();
+                    if(i == select){
+                        this.cocina.eliminaProducto(aEliminar);
+                        noeliminado = false;
+                    }
+                    else ++i;
+                }
             } catch (Exception ex) {
             }
             setVisible(false);
