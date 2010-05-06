@@ -3,8 +3,7 @@ package Vista.InterfazMetre;
 
 import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Bebida;
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -13,7 +12,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -35,7 +36,9 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     //private IGestionarProducto gestorProducto;
     //private IProducto productos;
     private int bebidaSeleccionada;
-    private ArrayList<Bebida> listaBebidas;
+    private IMetre metre;
+    private HashSet<Producto> listaBebidas;
+    private Bebida aModificar;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarBedidas(java.awt.Frame parent,IMetre iMetre) {
@@ -44,7 +47,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         this.estado=1;
         /*this.gestorProducto = gestorProducto;
         this.productos = productos;*/
-        this.listaBebidas = this.productos.obtenerListaBebidas();
+        this.metre = iMetre;
+        this.listaBebidas = this.metre.obtenerBebidas();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(0));
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(1));
@@ -53,11 +57,17 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         this.tTablaBebidasDisponibles.setModel(tableModel);
         this.tTablaBebidasDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaBebidasDisponibles.setRowHeight(50);
-        for (int i = 0; i < this.listaBebidas.size(); i++) {
-            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getNombre(), i, 0);
-            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getCantidad(), i, 1);
-            this.tTablaBebidasDisponibles.getModel().setValueAt(this.listaBebidas.get(i).getImagen(), i, 2);
-        }
+        Iterator iterador = listaBebidas.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tTablaBebidasDisponibles.setValueAt(p.getNombre(), i, 0);
+            this.tTablaBebidasDisponibles.setValueAt(p.getCantidad(), i, 1);
+            this.tTablaBebidasDisponibles.setValueAt(p.getImagen(), i, 2);
+            ++i;
+	}
         this.bAnterior.setEnabled(false);
         this.bSiguiente.setEnabled(false);
         this.imagen = null;
@@ -493,10 +503,24 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 this.estado++;
                 cl.next(this.cuerpo);
                 this.bSiguiente.setText("Finalizar");
-                this.tNombre.setText(this.listaBebidas.get(this.bebidaSeleccionada).getNombre());
-                this.tMaximo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMaximo());
-                this.tMinimo.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getMinimo());
-                this.tDisponible.setValue(this.listaBebidas.get(this.bebidaSeleccionada).getCantidad());
+                Iterator iterador = listaBebidas.iterator();
+                int i = 0;
+                int select = this.tTablaBebidasDisponibles.getSelectedRow();
+                boolean noencontrado = true;
+                while (noencontrado) {
+                    Map.Entry entrada = (Map.Entry)iterador.next();
+                    aModificar = (Bebida)entrada.getKey();
+                    if(i == select){
+                        noencontrado = false;
+                    }
+                    else ++i;
+                }
+                this.tNombre.setText(aModificar.getNombre());
+                this.tMaximo.setValue(aModificar.getMaximo());
+                this.tMinimo.setValue(aModificar.getMinimo());
+                this.tDisponible.setValue(aModificar.getCantidad());
+                this.lMuestraImagen.setIcon(aModificar.getImagen());
+                this.imagen = aModificar.getImagen();
             break;
             case 2:
                 String subtitulo = this.lSubtitulo.getText();
@@ -511,9 +535,13 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
             try {
-                if(this.imagen == null)
-                    this.imagen = this.listaBebidas.get(this.bebidaSeleccionada).getImagen();
-                this.gestorProducto.modificarProducto(this.listaBebidas.get(this.bebidaSeleccionada).getCodPro(), this.tNombre.getText(), (Float) this.tDisponible.getValue(), (Float) this.tMinimo.getValue(), (Float) this.tMaximo.getValue(), imagen);
+                float cantidad = aModificar.getCantidad() - (Float) this.tDisponible.getValue();
+                aModificar.actualizarCantidad(cantidad);
+                aModificar.setNombre(this.tNombre.getText());
+                aModificar.setMaximo((Float) this.tMaximo.getValue());
+                aModificar.setMinimo((Float) this.tMinimo.getValue());
+                aModificar.setFoto(imagen);
+                this.metre.modificarProducto(aModificar);
             } catch (Exception ex) {
             }
                     setVisible(false);

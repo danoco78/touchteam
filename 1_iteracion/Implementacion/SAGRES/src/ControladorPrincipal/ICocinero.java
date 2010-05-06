@@ -9,9 +9,7 @@ import GestionCarta.Elemento;
 import GestionCarta.Seccion;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
-import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -22,6 +20,9 @@ import java.util.HashSet;
 public interface ICocinero {
 
     public abstract HashSet<Elemento> compruebaElementosInvalidos(HashMap<Producto,Float> lista);
+    public abstract void eliminaProducto(Producto pro);
+    public abstract void modificarProducto(Producto pro);
+    public abstract void nuevoProducto(Producto pro);
     public abstract void eliminaElemento(Elemento e);
     public abstract void imprimeListaProductosaPedir();
     public abstract void modificaElemento(Elemento e);

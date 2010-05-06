@@ -2,9 +2,9 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionStock.GestionProductos.IGestionarProducto;
-import GestionStock.GestionProductos.IProducto;
+import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Ingrediente;
+import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -13,7 +13,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -36,15 +38,18 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
     private ImageIcon imagen;
    /* private IProducto almacenProductos;
     private IGestionarProducto gestorProductos;*/
+    private ICocinero cocina;
+    private HashSet<Producto> listaIngredientes;
     private Ingrediente aModificar;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoModificarIngrediente(java.awt.Frame parent, /* IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero ) {
+    public DialogoModificarIngrediente(java.awt.Frame parent, /* IProducto AlmacenProductos, IGestionarProducto GestorProductos*/ ICocinero iCocinero) {
         super(parent, false);
         initComponents();
         /*this.gestorProductos = GestorProductos;
         this.almacenProductos = AlmacenProductos;*/
-        ArrayList<Ingrediente> listaIngredientes = this.almacenProductos.obtenerListaIngredientes();
+        this.cocina = iCocinero;
+        listaIngredientes = this.cocina.obtieneIngredientes();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
@@ -53,11 +58,17 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         this.tTablaIngredientesDisponibles.setModel(modelo);
         this.tTablaIngredientesDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaIngredientesDisponibles.setRowHeight(50);
-        for (int i = 0; i < listaIngredientes.size(); i++) {
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getNombre(), i, 0);
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getCantidad(), i, 1);
-            this.tTablaIngredientesDisponibles.setValueAt(listaIngredientes.get(i).getImagen(), i, 2);
-        }
+        Iterator iterador = listaIngredientes.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
+            ++i;
+	}
         this.bSiguiente.setEnabled(false);
         this.estado=1;
         this.bAnterior.setEnabled(false);
@@ -436,8 +447,18 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 this.lPaso.setText(PASO2);
                 this.bAnterior.setEnabled(true);
                 this.estado++;
-                aModificar = this.almacenProductos.obtenerListaIngredientes().get(
-                        this.tTablaIngredientesDisponibles.getSelectedRow());
+                Iterator iterador = listaIngredientes.iterator();
+                int i = 0;
+                int select = this.tTablaIngredientesDisponibles.getSelectedRow();
+                boolean noencontrado = true;
+                while (noencontrado) {
+                    Map.Entry entrada = (Map.Entry)iterador.next();
+                    aModificar = (Ingrediente)entrada.getKey();
+                    if(i == select){
+                        noencontrado = false;
+                    }
+                    else ++i;
+                }
                 this.tNombre.setText(aModificar.getNombre());
                 this.tMaximo.setValue(aModificar.getMaximo());
                 this.tMinimo.setValue(aModificar.getMinimo());
@@ -464,7 +485,13 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
             try {
-                this.gestorProductos.modificarProducto(aModificar.getCodPro(), this.tNombre.getText(), (Float) this.tDisponible.getValue(), (Float) this.tMinimo.getValue(), (Float) this.tMaximo.getValue(), imagen);
+                float cantidad = aModificar.getCantidad() - (Float) this.tDisponible.getValue();
+                aModificar.actualizarCantidad(cantidad);
+                aModificar.setNombre(this.tNombre.getText());
+                aModificar.setMaximo((Float) this.tMaximo.getValue());
+                aModificar.setMinimo((Float) this.tMinimo.getValue());
+                aModificar.setFoto(imagen);
+                this.cocina.modificarProducto(aModificar);
             } catch (Exception ex) {
                 Logger.getLogger(DialogoModificarIngrediente.class.getName()).log(Level.SEVERE, null, ex);
             }

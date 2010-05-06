@@ -6,6 +6,7 @@ import GestionStock.GestionIncidencias.IIncidencia;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
+import GestionStock.GestionProductos.Producto;
 import Vista.DialogoComfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import utilidades.ImageRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,14 +35,16 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
     private final String PASO2 = "Paso 2/2";
     private int estado = 1;
     private ImageIcon imagen;
-    private ICocinero icocinero;
+    private ICocinero cocina;
+    private HashSet<Producto> listaIngredientes;
+    private Ingrediente accidentado;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoNotificarIncidencia(java.awt.Frame parent, ICocinero iCocinero) {
         super(parent, true);
         initComponents();
-        this.icocinero = iCocinero;
-        ArrayList<Ingrediente> listaIngredientes = this.icocinero.obtieneIngredientes();
+        this.cocina = iCocinero;
+        listaIngredientes = this.cocina.obtieneIngredientes();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
@@ -49,13 +53,17 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         this.tTablaIngredientesDisponibles.setModel(modelo);
         this.tTablaIngredientesDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         this.tTablaIngredientesDisponibles.setRowHeight(50);
-        Iterator<Ingrediente> it = listaIngredientes.iterator();
-        for (int i = 0; it.hasNext(); i++) {
-            Ingrediente aux = it.next();
-            this.tTablaIngredientesDisponibles.setValueAt(aux.getNombre(), i, 0);
-            this.tTablaIngredientesDisponibles.setValueAt(aux.getCantidad(), i, 1);
-            this.tTablaIngredientesDisponibles.setValueAt(aux.getImagen(), i, 2);
-        }
+        Iterator iterador = listaIngredientes.iterator();
+        Producto p;
+        int i = 0;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
+            this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
+            ++i;
+	}
         this.bSiguiente.setEnabled(false);
         this.estado = 1;
         this.bAnterior.setEnabled(false);
@@ -416,8 +424,19 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    this.icocinero.nuevaIncidencia(new Incidencia( this.icocinero.obtieneIngredientes().get(this.tTablaIngredientesDisponibles.getSelectedRow()),
-                            (Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
+                Iterator iterador = listaIngredientes.iterator();
+                int i = 0;
+                int select = this.tTablaIngredientesDisponibles.getSelectedRow();
+                boolean noencontrado = true;
+                    while (noencontrado) {
+                        Map.Entry entrada = (Map.Entry)iterador.next();
+                        accidentado = (Ingrediente)entrada.getKey();
+                        if(i == select){
+                            noencontrado = false;
+                        }
+                        else ++i;
+                    }
+                    this.cocina.nuevaIncidencia(new Incidencia( accidentado,(Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
                     setVisible(false);
                     dispose();
                 }
