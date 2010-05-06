@@ -33,6 +33,6 @@ public interface ICocinero {
     public abstract PedidoProveedor obtienePedidoProveedor();
     public abstract  HashMap<Producto, Float> obtieneProductosBajoMinimos();
     public abstract HashSet<Seccion> obtieneSecciones();
-    public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
+    //public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
     
 }

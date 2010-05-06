@@ -1,7 +1,7 @@
 package GestionCarta;
 
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -9,11 +9,11 @@ import java.util.ArrayList;
  * @author Carlos Salas Morales
  */
 public class SeccionBebida extends Seccion {
-    ArrayList<ElementoBebida> listaElementoBebida;
+    HashSet<ElementoBebida> listaElementoBebida;
 
-    public SeccionBebida(int codigoSeccion, String nombre, Carta carta) {
+    public SeccionBebida(int codigoSeccion, String nombre, Carta carta, HashSet<ElementoBebida> listaElementoBebida ) {
         super(codigoSeccion, nombre,carta);
-        listaElementoBebida = new ArrayList<ElementoBebida>();
+        this.listaElementoBebida = listaElementoBebida;
     }
 
     //@Override
@@ -21,7 +21,7 @@ public class SeccionBebida extends Seccion {
         listaElementoBebida.add(elementoBebida);
     }
 
-    public ArrayList<ElementoBebida> getListaElementoBebida() {
+    public HashSet<ElementoBebida> getListaElementoBebida() {
         return this.listaElementoBebida;
     }
 }

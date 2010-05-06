@@ -1,7 +1,7 @@
 package GestionCarta;
 
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 
 /**
@@ -10,11 +10,11 @@ import java.util.ArrayList;
  */
 public class SeccionComida extends Seccion {
 
-    ArrayList<ElementoPlato> listaElementoPlato;
+    HashSet<ElementoPlato> listaElementoPlato;
 
-    public SeccionComida(int codigoSeccion, String nombre, Carta carta) {
+    public SeccionComida(int codigoSeccion, String nombre, Carta carta, HashSet<ElementoPlato> listaElementoPlatos) {
         super(codigoSeccion, nombre, carta);
-        listaElementoPlato = new ArrayList<ElementoPlato>();
+        this.listaElementoPlato = listaElementoPlatos;
     }
 
     //@Override
@@ -22,7 +22,7 @@ public class SeccionComida extends Seccion {
         listaElementoPlato.add((ElementoPlato) elementoPlato);
     }
 
-    public ArrayList<ElementoPlato> getListaElementoPlato() {
+    public HashSet<ElementoPlato> getListaElementoPlato() {
         return this.listaElementoPlato;
     }
 }
