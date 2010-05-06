@@ -10,6 +10,7 @@ import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
 import java.util.Iterator;
 import java.util.Date;
+import java.lang.Exception;
 
 /**
  *
@@ -37,23 +38,37 @@ public class GestorPedidos implements IGestorPedidos {
         ArrayList<ElementoPedido> elementos;
         noFacturados = iPedidosBD.obtienePedidosNoFacturados();
 
-        Pedido pedido = new Pedido();
+        Pedido pedido = null;
 
         Iterator iterador = noFacturados.iterator();
         Integer estado=-1;
-        Date fecha, fechaPedido;
+        boolean encontrado = false;
+        Date fecha=null, fechaPedido=null;
         while(iterador.hasNext()){
             elementos = ((Pedido)iterador.next()).obtieneElementos();
             Iterator ite2 = elementos.iterator();
-            while (ite2.hasNext()){
-                if(ite2.next() instanceof ElementoColaCocina)
+            while (ite2.hasNext() && !encontrado){
+                if(ite2.next() instanceof ElementoColaCocina){
                     estado = ((ElementoColaCocina)ite2.next()).getEstado();
+                    if(estado == 0)
+                        encontrado = true;
+                }
             }
-            if(estado == 0)
+            if(encontrado){
                 fecha = ((Pedido)iterador.next()).getFecha();
-            
+            }
+            if( encontrado && pedido != null){
+                fechaPedido = pedido.getFecha();
+            }
+            if(ite2.next() instanceof ElementoColaCocina && encontrado &&
+                    (pedido == null || fecha.before(fechaPedido))){
+                pedido = ((Pedido)iterador.next());
+            }
+            else if(pedido == null)
+                 throw new Exception("comentario");
+
         }
-        return new Pedido(); //Para quitar errores
+        return pedido; //Para quitar errores
     }
 
     public Pedido getSiguientePedidoCocinaPreparandose(){
