@@ -16,7 +16,9 @@ public class ElementoColaCocina extends ElementoPedido{
      * 1 = Preparánodse
      * 2 = Preparado
      */
-
+    public ElementoColaCocina(){
+        super("");
+    }
     public ElementoColaCocina(String comentario){
         super(comentario);
     }

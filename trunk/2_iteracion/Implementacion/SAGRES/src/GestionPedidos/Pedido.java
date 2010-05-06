@@ -25,6 +25,12 @@ public class Pedido {
      */
     private Integer estado;
 
+    public Pedido(Integer codMesa, Integer codPedido, Integer estado, Date fecha){
+        this.codMesa = codMesa;
+        this.codPedido = codPedido;
+        this.estado = estado;
+        this.fecha = fecha;
+    }
     public void setEstado(Integer estado){
         this.estado = estado;
     }
@@ -52,9 +58,9 @@ public class Pedido {
     }
 
     void asocia(ElementoColaCocina elem){
-
+        ;
     }
     void asocia(ElementoColaBar elem){
-
+        ;
     }
 }

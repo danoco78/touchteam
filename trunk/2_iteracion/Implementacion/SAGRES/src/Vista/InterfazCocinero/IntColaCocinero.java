@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import utilidades.*;
 import GestionPedidos.Pedido;
 import GestionPedidos.IGestorPedidos;
+import GestionPedidos.*;
 
 /**
  *
@@ -31,13 +32,13 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
         //Pruebas
-        PanelMesaPedido mp = new PanelMesaPedido(new Pedido(),0);
+/*        PanelMesaPedido mp = new PanelMesaPedido(new Pedido(),0);
         PanelMesaPedido mp2 = new PanelMesaPedido(new Pedido(),0);
         //System.out.println(this.panelIzquierda.getWidth());
         //TODO Obtener el ancho del panel padre y el alto segun el numero de elementos del pedido
         mp.setPreferredSize(new Dimension(340,2000));
         mp.setBackground(Color.BLACK);
-        this.panelFlow.add(mp);
+        this.panelFlow.add(mp);*/
 
     }
 
@@ -179,6 +180,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
                     }
                 });
                 dialog.setVisible(true);
+
             }
         });
     }

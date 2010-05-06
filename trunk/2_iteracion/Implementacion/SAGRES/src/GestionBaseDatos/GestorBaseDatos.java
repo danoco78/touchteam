@@ -10,6 +10,8 @@ import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
+import GestionPedidos.Pedido;
+import GestionPedidos.ElementoPedido;
 import com.mysql.jdbc.Statement;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -26,6 +28,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
 import javax.sql.rowset.serial.SerialBlob;
 import utilidades.Imagen;
 
@@ -687,6 +690,40 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<Pedido> obtienePedidosNoFacturados(){
+        ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
+        Statement consulta;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("select pedidoid, mesaid, estado, fecha from pedido" +
+                    "where estado <> 2;");
+
+            while (resultado.next()) {
+                Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
+                        resultado.getInt(3),resultado.getDate(4));
+                ResultSet res2 = consulta.executeQuery(" select elementoPedido_id, estado, " +
+                        "comentario from elementoPedido where elementoPedido_id IN (select elementoPedido_id from tieneElemento where pedido_pedido_id = "+resultado.getInt(1)+"); ");
+                while(res2.next()){
+                    ElementoPedido elem = new ElementoPedido(res2.getInt(1),res2.getInt(2),
+                            res2.getString(3));
+                    ElementoColaBar temp = new ElementoColaBar();
+                    if(elem.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
+                         p.
+                    else
+
+                }
+                /*tablaproductos.next();
+                Ingrediente ingrediente = new Ingrediente(tablaproductos.getInt(1), tablaproductos.getString(2), tablaproductos.getFloat(3), tablaproductos.getFloat(4),
+                        tablaproductos.getFloat(5), Imagen.blobToImageIcon(tablaproductos.getBytes(6)));
+                listaIngredientes.add(ingrediente);*/
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return noFacturados;
     }
 }
 

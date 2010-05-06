@@ -6,11 +6,10 @@
 package GestionCarta;
 
 import java.util.ArrayList;
-import utilidades.Pair;
 /**
  *
  * @author Gaspar
  */
-public interface IGestionCartaA {
-    public ArrayList<Pair<Seccion, ArrayList<Elemento> > > iniciaNuevoPedido();
+public interface IGestionCartaB {
+    public ArrayList<Elemento> compruebaElementosConProducto(Integer codProducto);
 }
