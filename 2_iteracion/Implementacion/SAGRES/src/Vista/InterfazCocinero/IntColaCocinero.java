@@ -1,12 +1,11 @@
 
 package Vista.InterfazCocinero;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
+import java.util.ArrayList;
 import utilidades.*;
+import GestionPedidos.Pedido;
+import GestionPedidos.IGestorPedidos;
 
 /**
  *
@@ -16,6 +15,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     Integer pendientes = 0, preparandose = 0;
     PanelImagen panelImagen;
+
+    Pedido pendiente;
+    ArrayList<Pedido> colaPreparandose;
     
     /** Creates new form IntGestionCarta */
     public IntColaCocinero() {
@@ -23,9 +25,20 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.setDoubleBuffered(true);
         panelImagen = new PanelImagen("/Vista/InterfazCocinero/imagenes/LogoSagres_interfaz.png");
         this.panelCentroNorte.add(panelImagen);
-        this.ActualizarVista();
+        this.actualizarVista();
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
+
+
+        //Pruebas
+        PanelMesaPedido mp = new PanelMesaPedido(new Pedido(),0);
+        PanelMesaPedido mp2 = new PanelMesaPedido(new Pedido(),0);
+        //System.out.println(this.panelIzquierda.getWidth());
+        //TODO Obtener el ancho del panel padre y el alto segun el numero de elementos del pedido
+        mp.setPreferredSize(new Dimension(340,2000));
+        mp.setBackground(Color.BLACK);
+        this.panelFlow.add(mp);
+
     }
 
     @Override
@@ -58,10 +71,12 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalCentro = new javax.swing.JPanel();
         panelIzquierda = new javax.swing.JPanel();
         infoPendientes = new javax.swing.JLabel();
-        centro = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelFlow = new javax.swing.JPanel();
         panelDerecha = new javax.swing.JPanel();
         infoPreparandose = new javax.swing.JLabel();
-        centroPreparandose = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        panelBox2 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -113,10 +128,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
         infoPendientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         panelIzquierda.add(infoPendientes, java.awt.BorderLayout.SOUTH);
 
-        centro.setBackground(new java.awt.Color(245, 245, 255));
-        centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        centro.setLayout(new java.awt.GridBagLayout());
-        panelIzquierda.add(centro, java.awt.BorderLayout.CENTER);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        panelFlow.setBackground(new java.awt.Color(245, 245, 255));
+        panelFlow.setPreferredSize(new java.awt.Dimension(30, 30));
+        jScrollPane1.setViewportView(panelFlow);
+
+        panelIzquierda.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         principalCentro.add(panelIzquierda);
 
@@ -129,10 +148,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
         infoPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
         panelDerecha.add(infoPreparandose, java.awt.BorderLayout.SOUTH);
 
-        centroPreparandose.setBackground(new java.awt.Color(245, 245, 255));
-        centroPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        centroPreparandose.setLayout(new java.awt.GridBagLayout());
-        panelDerecha.add(centroPreparandose, java.awt.BorderLayout.CENTER);
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        panelBox2.setBackground(new java.awt.Color(245, 245, 255));
+        panelBox2.setLayout(new javax.swing.BoxLayout(panelBox2, javax.swing.BoxLayout.LINE_AXIS));
+        jScrollPane2.setViewportView(panelBox2);
+
+        panelDerecha.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         principalCentro.add(panelDerecha);
 
@@ -162,12 +185,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGestionProductos;
-    private javax.swing.JPanel centro;
-    private javax.swing.JPanel centroPreparandose;
     private javax.swing.JLabel infoPendientes;
     private javax.swing.JLabel infoPreparandose;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel panelBox2;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
+    private javax.swing.JPanel panelFlow;
     private javax.swing.JPanel panelHora;
     private javax.swing.JPanel panelIzquierda;
     private javax.swing.JPanel principalCentro;
@@ -194,8 +219,26 @@ public class IntColaCocinero extends javax.swing.JPanel {
             text = String.valueOf(n) + " platos preparándose";
         this.infoPreparandose.setText(text);
     }
-    private void ActualizarVista(){
+    private void actualizarVista(){
         this.setInfoPendientes(pendientes);
         this.setInfoPreparandose(preparandose);
     }
+
+    private void actualizarColaPreparandose(){
+        
+    }
+    private void actualizarColaPendientes(){
+        
+    }
+    /*
+   while(!haypedido){
+      try{
+           pedido = getSiguientePedidoEnCola();
+           haypedido = true;
+       }catch(excepcion ex){
+           // Si entra aqui es que no hay pedido aun
+       }
+    }
+
+     */
 }
