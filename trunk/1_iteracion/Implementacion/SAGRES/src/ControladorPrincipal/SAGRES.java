@@ -95,9 +95,10 @@ public class SAGRES implements IMetre, ICocinero {
     public HashSet<Elemento> obtieneElementosConProducto(Producto pro) {
         return this.icarta.obtieneElementosConProducto(pro);
     }
-    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
+
+    /*public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
         return this.icarta.obtieneElementosDeSeccion(seccion);
-    }
+    }*/
 
     public HashSet<Producto> obtieneIngredientes() {
         return this.iproducto.obtieneIngredientes();

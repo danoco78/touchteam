@@ -28,7 +28,7 @@ public interface ICarta {
 
     public HashSet<Seccion> obtieneSecciones();
 
-    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
+    //public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
     
     // ANTIGUOS MÉTODOS DE LA INTERFAZ

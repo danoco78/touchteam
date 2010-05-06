@@ -3,9 +3,9 @@ package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
-import GestionCarta.ICarta;
-import GestionCarta.IPreparaCarta;
 import GestionCarta.Seccion;
+import GestionCarta.SeccionBebida;
+import GestionCarta.SeccionComida;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -24,6 +24,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     //private ICarta gestorCarta;
     //private IPreparaCarta carta;
+    private ICocinero icocinero;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoEliminarElemento(java.awt.Frame parent, /*ICarta GestorCarta, IPreparaCarta Carta*/ ICocinero iCocinero) {
@@ -31,7 +32,8 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         initComponents();
         //this.gestorCarta = GestorCarta;
         //this.carta = Carta;
-        ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
+        this.icocinero = iCocinero;
+        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
@@ -263,11 +265,18 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
     }//GEN-LAST:event_seleccionarProductos
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
-        Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
-        Elemento aEliminar = this.gestorCarta.obtenElementosDeSeccion(seccion).get(
+        ArrayList<Elemento> listaElementos;
+        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
+        if (seccion instanceof SeccionBebida)
+            listaElementos = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
+        else
+            listaElementos = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
+
+        Elemento aEliminar = listaElementos.get(
                 this.tProductoSeccion.getSelectedRow() );
         String subtitulo = this.lSubtitulo.getText();
-        String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
+        String pregunta = "¿Confirma que desea eliminar el siguiente Elemento?";
         String texto = "Nombre: " + aEliminar.getNombre()
                 + "\nDescripción: " + aEliminar.getDescripcion()
                 + "\nPrecio: " + aEliminar.getPrecio()
@@ -277,7 +286,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         confirmar.setVisible(true);
         if (confirmar.isAceptado()) {
             try {
-                this.carta.eliminaElementoCarta(aEliminar.getCodigoElemento());
+                this.icocinero.eliminaElemento(aEliminar);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
@@ -288,8 +297,13 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
-                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            ArrayList<Elemento> lista;
+            Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
+            if (seccion instanceof SeccionBebida)
+                lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
+            else
+                lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));

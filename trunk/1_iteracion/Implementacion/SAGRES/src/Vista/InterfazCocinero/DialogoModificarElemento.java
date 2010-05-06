@@ -1,9 +1,13 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
+import GestionCarta.ElementoBebida;
+import GestionCarta.ElementoPlato;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
+import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
@@ -40,6 +44,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     /*private ICarta gestorCarta;
     private IPreparaCarta carta;
     private IProducto gestorProducto;*/
+    private ICocinero icocinero;
     private ArrayList disponibles;
     private ArrayList seleccionados;
     private ImageIcon imagen;
@@ -52,8 +57,9 @@ public class DialogoModificarElemento extends java.awt.Dialog {
        /* this.gestorCarta = GestorCarta;
         this.carta = Carta;
         this.gestorProducto = GestorProducto;*/
+        this.icocinero = iCocinero;
         this.estado = 1;
-        ArrayList<Seccion> listaSecciones = this.gestorCarta.obtenSecciones();
+        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
@@ -725,18 +731,21 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
+                    ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+                    Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion.getClass() == SeccionComida.class) {
                         try {
-                            this.carta.modificaElementoPlato(elemento.getCodigoElemento(), this.tNombre.getText(),
-                                    this.tDescripcion.getText(), this.imagen, (Integer) this.tTiempo.getValue(),
-                                    (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                             ElementoPlato plato = new ElementoPlato(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(),
+                                    this.imagen, (Integer) this.tTiempo.getValue(), (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                            this.icocinero.modificaElemento(plato);
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(lTiempo, ex.getMessage());
                         }
                     } else {
                         try {
-                            this.carta.modificaElementoBebida(elemento.getCodigoElemento(), this.tNombre.getText(), this.tDescripcion.getText(), this.imagen, (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                            ElementoBebida bebida = new ElementoBebida(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(),
+                                    this.imagen, (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
+                            this.icocinero.modificaElemento(bebida);
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(lTiempo, ex.getMessage());
                         }
@@ -818,15 +827,21 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         int select = this.tProductoSeccion.getSelectedRow();
         if (select != -1) {
             this.bSiguiente.setEnabled(true);
-            Seccion seccion = this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex());
-            this.elemento = this.gestorCarta.obtenElementosDeSeccion(seccion).get(select);
+            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
+            ArrayList<Elemento> listaElementos;
+            if (seccion instanceof SeccionBebida)
+                listaElementos = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
+            else
+                listaElementos = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
+            this.elemento = listaElementos.get(select);
             this.tNombre.setText(elemento.getNombre());
             this.tDescripcion.setText(elemento.getDescripcion());
             this.tPorciones.setValue(elemento.getDivisionesMaximas());
             this.tPrecio.setValue(elemento.getPrecio());
             this.TImgen.setText("Imagen Actual");
             this.imagen = elemento.getFoto();
-            ArrayList<Producto> listaProductos = this.gestorProducto.obtenerListaProductos();
+            ArrayList<Producto> listaProductos = this.icocinero.obtieneIngredientes();
             disponibles = new ArrayList<Producto>(listaProductos);
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
@@ -841,7 +856,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.tProductosDisponibles.setValueAt(listaProductos.get(i).getCantidad(), i, 1);
                 this.tProductosDisponibles.setValueAt(listaProductos.get(i).getImagen(), i, 2);
             }
-            seleccionados = this.gestorCarta.obtenProductosDeElemento(elemento);
+            seleccionados = this.icocinero.obtenProductosDeElemento(elemento);
             for (int i = 0; i < seleccionados.size(); i++) {
                 Producto producto = (Producto) seleccionados.get(i);
                 Object[] obj = new Object[3];
@@ -861,8 +876,13 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Elemento> lista = this.gestorCarta.obtenElementosDeSeccion(
-                    this.gestorCarta.obtenSecciones().get(this.bSeccion.getSelectedIndex()));
+            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            Seccion seccion =  listaSecciones.get(this.bSeccion.getSelectedIndex());
+            ArrayList<Elemento> lista;
+            if (seccion instanceof SeccionBebida)
+                lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
+            else
+                lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
