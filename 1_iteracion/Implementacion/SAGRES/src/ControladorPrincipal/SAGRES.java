@@ -63,7 +63,7 @@ public class SAGRES implements IMetre, ICocinero {
         this.icarta.actualizaDisponibilidadElementos();// compruebaElementosConProducto(prodCantidad.getFirst());
     }
 
-    public HashSet<Bebida> obtenerBebidas() {
+    public HashSet<Producto> obtenerBebidas() {
         return this.iproducto.obtieneBebidas();
     }
 
@@ -72,7 +72,9 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void imprimeListaProductosaPedir() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashMap<Producto, Float> listaProductosCantidades = this.iproducto.obtieneProductosBajoMinimos();
+        this.ipedidoproveedor.NuevoPedidoProveedor(listaProductosCantidades);
+        this.ipedidoproveedor.imprimeListaProductosPedido(listaProductosCantidades);
     }
 
     public void modificaElemento(Elemento e) {
@@ -80,7 +82,10 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void notificaRecepcionPedido(PedidoProveedor ped) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashMap<Producto, Float> listaProductosCantidades = ped.obtenerInfoPedido();
+        this.iproducto.actualizaCantidadesProductos(listaProductosCantidades);
+        this.ipedidoproveedor.pedidoRecibido(ped);
+        this.icarta.actualizaDisponibilidadElementos();
     }
 
     public void nuevoElemento(Elemento e, Seccion sec) {
@@ -94,15 +99,15 @@ public class SAGRES implements IMetre, ICocinero {
         return this.icarta.obtieneElementosDeSeccion(seccion);
     }
 
-    public HashSet<Ingrediente> obtieneIngredientes() {
+    public HashSet<Producto> obtieneIngredientes() {
         return this.iproducto.obtieneIngredientes();
     }
 
     public PedidoProveedor obtienePedidoProveedor() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.ipedidoproveedor.obtienePrimerPedidoPendiente();
     }
 
-    public HashSet<Producto> obtieneProductosBajoMinimos() {
+    public  HashMap<Producto, Float> obtieneProductosBajoMinimos() {
         return this.iproducto.obtieneProductosBajoMinimos();
     }
 

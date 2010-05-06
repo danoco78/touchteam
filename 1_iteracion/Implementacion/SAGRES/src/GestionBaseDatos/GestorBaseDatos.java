@@ -54,6 +54,28 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         }
     }
 
+    public void actualizaCantidadesProductos(HashMap<Producto,Float> listaProductosCantidades){
+        Iterator iterador = listaProductosCantidades.entrySet().iterator();
+        Producto p;
+        Float cantidad;
+        int codigoProducto;
+	while (iterador.hasNext()) {
+            Map.Entry entrada = (Map.Entry)iterador.next();
+            p = (Producto)entrada.getKey();
+            cantidad = (Float)entrada.getValue();
+            p.actualizarCantidad(cantidad);
+            codigoProducto = p.getCodPro();
+            java.sql.PreparedStatement actualizacion;
+            try {
+                actualizacion = this.Conexion.prepareStatement("update producto set cantidad=? where producto_id='" + codigoProducto + "'");
+                actualizacion.setFloat(1, p.getCantidad());
+                actualizacion.executeUpdate();//Actualizamos la cantidad en la base de datos
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	}
+    }
+
     public void deshabilitaElementos(HashSet<Elemento> listaElementos) {
         Iterator iterador = listaElementos.iterator();
         while(iterador.hasNext()){
@@ -638,9 +660,9 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         }
     }
 
-    public HashSet<Bebida> obtieneBebidas() {
+    public HashSet<Producto> obtieneBebidas() {
         int codigoBebida;
-        HashSet<Bebida> listaBebidas = new HashSet<Bebida>();
+        HashSet<Producto> listaBebidas = new HashSet<Producto>();
         Statement consulta;
         try {
             consulta = (Statement) this.Conexion.createStatement();
@@ -661,9 +683,9 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         return listaBebidas;
     }
 
-    public HashSet<Ingrediente> obtieneIngredientes() {
+    public HashSet<Producto> obtieneIngredientes() {
         int codigoIngrediente;
-        HashSet<Ingrediente> listaIngredientes = new HashSet<Ingrediente>();
+        HashSet<Producto> listaIngredientes = new HashSet<Producto>();
         Statement consulta;
         try {
             consulta = (Statement) this.Conexion.createStatement();
@@ -708,15 +730,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         return null;
     }
 
-    public HashSet<Producto> obtieneProductosBajoMinimos() {
-        HashSet<Producto> listaProductos = new HashSet<Producto>();
+    public HashMap<Producto, Float> obtieneProductosBajoMinimos() {
+        HashMap<Producto, Float> listaProductos = new HashMap<Producto, Float>();
         try {
             Statement consultaProductos = (Statement) this.Conexion.createStatement();
             ResultSet tablaproductos = consultaProductos.executeQuery("select * from producto where producto.cantidad < producto.minimo");
             while (tablaproductos.next()) {
                 Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)), tablaproductos.getString(2),
                         tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
-                listaProductos.add(producto);
+                listaProductos.put(producto, producto.getCantidad());
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -738,8 +760,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             /*Preparamos la consulta de actualizacion del producto*/
             int codigoProducto = prodCantidad.getFirst().getCodPro();
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("update producto set cantidad=? where producto_id='" + codigoProducto + "'");
-            actualizacion.setFloat(1, prodCantidad.getSecond());
+            float cantidad = prodCantidad.getFirst().getCantidad() - prodCantidad.getSecond();
+            actualizacion.setFloat(1, cantidad);
             actualizacion.executeUpdate();//Insertamos la incidencia
+            prodCantidad.getFirst().actualizarCantidad(-prodCantidad.getSecond());
 
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
