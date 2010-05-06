@@ -1,6 +1,7 @@
 
 package Vista.InterfazMetre;
 import ControladorPrincipal.IMetre;
+import GestionStock.GestionProductos.Bebida;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -11,7 +12,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import GestionStock.GestionProductos.IGestionarProducto;
 
 /**
  *
@@ -22,6 +22,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
 
     private ImageIcon imagen;
     //private IGestionarProducto gestorProducto;
+    private IMetre metre;
 
 
     /** Creates new form DialogoAnadirElemento */
@@ -29,6 +30,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         super(parent, true);
         initComponents();
         //this.gestorProducto = gestorProducto;
+        this.metre = iMetre;
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
         this.bAceptar.setEnabled(false);
     }
@@ -391,8 +393,8 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
-            this.gestorProducto.nuevaBebida(this.tNombre.getText(), ((Float)this.tDisponible.getValue()) ,
-                    ((Float)this.tMinimo.getValue()) ,((Float)this.tMaximo.getValue()) , imagen);
+            Bebida bebida = new Bebida(0, this.tNombre.getText(), imagen, (Float)this.tMinimo.getValue(), (Float)this.tMaximo.getValue(), (Float)this.tDisponible.getValue());
+            this.metre.nuevoProducto(bebida);
             setVisible(false);
             dispose();
         }
