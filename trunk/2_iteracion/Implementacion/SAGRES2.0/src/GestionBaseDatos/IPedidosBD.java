@@ -17,4 +17,5 @@ public interface IPedidosBD {
     public int getNumPlatosEnCola();
     public int getNumBebidasEnCola();
     public void actualizaPedido(Pedido p);
+    public ArrayList<Pedido> getPedidos(int codMesa);
 }
