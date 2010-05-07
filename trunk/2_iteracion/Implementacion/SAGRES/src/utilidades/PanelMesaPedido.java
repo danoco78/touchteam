@@ -37,11 +37,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         jButton1.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        // TODO Obtener la mesa del pedido
-        //this.tMesa_Pedido.setText("Mesa "+pedido.getCodMesa()+", pedido "+pedido.getCodPedido());
-
-        // TODO Obtener los ElementoPedido de pedido y añadir solo los que tengan estado == filtro
-        // Bucle FOR añadiendo
     }
 
     public void addPedidoBar(Pedido ped){
@@ -54,13 +49,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         ElementoPedido elemP;
         JButton boton;
         Elemento ele;
-        int cont=0;
+        //int cont=0;
         
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
             if (elemP.getEstado() == 0 &&
                     elemP instanceof ElementoColaBar){
-                cont++;
+                //cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();
 
@@ -74,7 +69,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             }
         }
 
-        pendientes.setText(String.valueOf(cont)+" bebidas pendientes");
+        //pendientes.setText(String.valueOf(cont)+" bebidas pendientes");
     }
 
 
@@ -88,13 +83,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         ElementoPedido elemP;
         JButton boton;
         Elemento ele;
-        int cont=0;
+        //int cont=0;
 
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
             if (elemP.getEstado() == 0 &&
                     elemP instanceof ElementoColaCocina){
-                cont++;
+                //cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();
 
@@ -107,7 +102,16 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             }
         }
 
-        pendientes.setText(String.valueOf(cont)+" platos pendientes");
+        //pendientes.setText(String.valueOf(cont)+" platos pendientes");
+    }
+
+    /**
+     * Modifica el mensaje de texto de la base. Es necesario decirle la cantidad por parametros,
+     * puesto que se obtiene de una consulta
+     * @param mensaje Texto a mostrar. <br>Siempre sigue el formato [num] platos pendientes, para el caso de platos.
+     */
+    public void setMensaje(String mensaje){
+        pendientes.setText(mensaje);
     }
 
     /** This method is called from within the constructor to

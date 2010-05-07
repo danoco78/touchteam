@@ -4,8 +4,6 @@ package Vista.InterfazCocinero;
 import java.awt.*;
 import java.util.ArrayList;
 import utilidades.*;
-import GestionPedidos.Pedido;
-import GestionPedidos.IGestorPedidos;
 import GestionPedidos.*;
 
 /**
@@ -16,6 +14,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     Integer pendientes = 0, preparandose = 0;
     PanelImagen panelImagen;
+    PanelMesaPedido pmp;
 
     Pedido pendiente;
     ArrayList<Pedido> colaPreparandose;
@@ -26,19 +25,15 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.setDoubleBuffered(true);
         panelImagen = new PanelImagen("/Vista/InterfazCocinero/imagenes/LogoSagres_interfaz.png");
         this.panelCentroNorte.add(panelImagen);
-        this.actualizarVista();
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
+        pmp = new PanelMesaPedido();
+        panelIzquierda.add(pmp, java.awt.BorderLayout.CENTER);
+        //pmp.addPedidoCocina(pendiente);
 
-        //Pruebas
-        PanelMesa mp = new PanelMesa(new Pedido(),0);
-        Dimension dim = this.panelIzquierda.getPreferredSize();
-        System.out.println(dim);
-        //Obtener el alto segun los elementos que tenga el pedido
-        mp.setPreferredSize(new Dimension((dim.width-10), 100));
-        mp.setBackground(Color.BLACK);
-        //this.panelFlow.add(mp);
+
+        this.actualizarVista();
     }
 
     @Override
@@ -187,7 +182,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             text = "Ningún plato pendiente.";
         else
             text = String.valueOf(n) + " platos pendientes";
-        this.infoPendientes.setText(text);
+        
     }
     
     private void setInfoPreparandose(int n){
