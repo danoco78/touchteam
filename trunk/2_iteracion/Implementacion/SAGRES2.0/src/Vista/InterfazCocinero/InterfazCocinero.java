@@ -4,6 +4,7 @@ package Vista.InterfazCocinero;
 import ControladorPrincipal.ICocinero;
 import java.awt.CardLayout;
 import java.awt.Dialog;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -18,10 +19,12 @@ public class InterfazCocinero extends javax.swing.JFrame {
     private IntPrincipalCocinero panelPrincipal = null;
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
+    private IntColaCocinero panelColaCocinero = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";
     protected static final String INGREDIENTE = "Ingrediente";
+    protected static final String COLA = "Cola";
 
 
     public InterfazCocinero( ICocinero iCocinero ) {
@@ -30,9 +33,11 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelPrincipal = new IntPrincipalCocinero();
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
+        this.panelColaCocinero = new IntColaCocinero();
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
         this.getContentPane().add( this.panelIngrediente, InterfazCocinero.INGREDIENTE );
+        this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
         this.panelPrincipal.bGestionCarta.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARCARTA));
@@ -48,6 +53,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelIngrediente.bNotificarIncidente.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARINCIDENCIA));
         this.panelCarta.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelIngrediente.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
+        this.panelColaCocinero.bGestionProductos.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARPRODUCTOS));
     }
 
 
@@ -78,6 +84,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         protected static final int IMPRIMIRLISTAPRODUCTOS = 10;
         protected static final int NOTIFICARRECEPCION = 11;
         protected static final int VOLVER = 12;
+        protected static final int GESTIONARPRODUCTOS = 13;
 
         public ManejaEventos(JFrame Padre, int TipoEvento){
             this.padre = Padre;
@@ -89,7 +96,8 @@ public class InterfazCocinero extends javax.swing.JFrame {
             CardLayout layout = (CardLayout) padre.getContentPane().getLayout();
             switch (this.tipoEvento) {
                 case ManejaEventos.SALIR:
-                    System.exit(0);
+                    //System.exit(0);
+                    layout.show(padre.getContentPane(), InterfazCocinero.COLA);
                     break;
                 case ManejaEventos.GESTIONARCARTA:
                     layout.show(padre.getContentPane(), InterfazCocinero.CARTA);
@@ -127,6 +135,9 @@ public class InterfazCocinero extends javax.swing.JFrame {
                 case ManejaEventos.NOTIFICARINCIDENCIA:
                     dialogo = new DialogoNotificarIncidencia(padre, icocinero);
                     break;
+                case ManejaEventos.GESTIONARPRODUCTOS:
+                    layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
+                    break;
             }
             if (dialogo != null) {
                 dialogo.setLocationRelativeTo(padre);
@@ -136,7 +147,23 @@ public class InterfazCocinero extends javax.swing.JFrame {
 
     }
 
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
+                dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+                dialog.getContentPane().add(new IntColaCocinero(), java.awt.BorderLayout.CENTER);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
 
+            }
+        });
+    }
 
 
 
