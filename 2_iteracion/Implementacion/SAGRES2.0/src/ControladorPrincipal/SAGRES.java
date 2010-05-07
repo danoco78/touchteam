@@ -11,6 +11,7 @@ import GestionCarta.ICarta;
 import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
+import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.IGestorPedidos;
@@ -176,10 +177,6 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido){
         return this.ipedidos.obtieneElementos(codPedido);
     }
-    //TODO Preguntar por estas dos siguientes funciones
-    public boolean seleccionaBebida(Pedido p, ElementoBebida bebida){
-        return this.ipedidos.seleccionaBebida(p, bebida);
-    }
 
     public Pedido getSiguientePedidoCocinaEnCola()throws Exception {
         return this.ipedidos.getSiguientePedidoCocinaEncola();
@@ -198,5 +195,17 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception{
         return this.ipedidos.seleccionPlato(p, ele);
+    }
+
+    public void confirmaPagoFactura(int codMesa) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void imprimeFactura(int codMesa) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean seleccionaBebida(Pedido pe, ElementoColaBar e) throws Exception{
+        return this.ipedidos.seleccionaBebida(pe, e);
     }
 }

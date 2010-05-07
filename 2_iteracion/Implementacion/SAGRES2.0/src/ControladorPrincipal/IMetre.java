@@ -30,6 +30,6 @@ public interface IMetre {
     public abstract void imprimeFactura(int codMesa);
     public abstract int getNumBebidasEnCola();
     public abstract Pedido getSiguientePedidoBar()throws Exception;
-    public abstract boolean seleccionaBebida(Pedido pe, ElementoColaBar e);
+    public abstract boolean seleccionaBebida(Pedido pe, ElementoColaBar e)throws Exception;
     
 }
