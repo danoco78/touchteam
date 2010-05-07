@@ -142,14 +142,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private void setInfoPendientes(int n){
 
         // TODO Cambiar el mensaje del panel izquierdo
-        this.pmpizq.setMensaje("");
+        this.pmpizq.setMensaje("1 plato pendiente");
         
     }
     
     private void setInfoPreparandose(int n){
 
         // TODO Cambiar el mensaje del panel derecho
-        this.pmpder.setMensaje("");
+        this.pmpder.setMensaje("1 plato preparándose");
     }
 
     private void actualizarVista(){
