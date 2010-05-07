@@ -69,7 +69,7 @@ public class IntGestionBebidas extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bSalir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bSalir.setFont(new java.awt.Font("Arial", 1, 14));
         bSalir.setForeground(new java.awt.Color(80, 98, 143));
         bSalir.setText("Salir");
         bSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
