@@ -6,7 +6,6 @@
 package GestionPedidos;
 
 import GestionCarta.Elemento;
-import java.util.ArrayList;
 
 /**
  *

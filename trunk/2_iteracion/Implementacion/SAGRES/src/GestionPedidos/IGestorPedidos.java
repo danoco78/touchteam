@@ -36,12 +36,12 @@ public interface IGestorPedidos {
     //TODO Preguntar por estas dos siguientes funciones
     public boolean seleccionaBebida(Pedido p, ElementoBebida bebida);
 
-    public boolean seleccionaPlato(Pedido p, ElementoPlato plato);
-
     public int getNumPlatosEnCola();
 
     public int getNumBebidasEnCola();
 
     public ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
+
+    public boolean seleccionPlato(Pedido p, ElementoColaCocina ele)throws Exception;;
 
 }

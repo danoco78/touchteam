@@ -1,7 +1,9 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Producto;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 /**
@@ -136,6 +138,17 @@ public class Elemento {
 
     public void asocia(Producto p){
         productos.add(p);
+    }
+
+    public HashMap<Producto,Float> getProductos(){
+        HashMap<Producto,Float> map = new HashMap();
+        Iterator ite = productos.iterator();
+        while(ite.hasNext()){
+            //TODO Obtener cantidad que reduce de cada producto del elemento
+            map.put(((Producto)ite),new Float(1.0));
+        }
+
+        return map;
     }
     /**
      * Método para comprobar si dos elementos son iguales
