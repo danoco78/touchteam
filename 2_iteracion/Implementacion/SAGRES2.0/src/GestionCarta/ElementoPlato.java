@@ -63,4 +63,8 @@ public class ElementoPlato extends Elemento {
         }
         return true;
     }
+
+    public void asocia(Ingrediente in, Float cantidad){
+        this.listaIngredientes.put(in, cantidad);
+    }
 }

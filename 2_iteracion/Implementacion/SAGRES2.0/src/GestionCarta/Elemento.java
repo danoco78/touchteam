@@ -130,7 +130,7 @@ public class Elemento {
     public boolean getDisponible() {
         return this.disponible;
     }
-    //TODO implementar la siguiente funcion de obtener los productos asociados a un elemento
+    //TODO implementar la siguiente funcion de obtener los productos asociados a un 
    /* public HashMap<Producto,Float> getProductos(){
         return productos;
     }*/
