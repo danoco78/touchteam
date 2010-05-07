@@ -28,8 +28,8 @@ public class GestorPedidos implements IGestorPedidos {
     //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
         ArrayList<Pedido> ped;
-        ArrayList<ElementoPedido> elemPed;
-        ArrayList<Elemento> elementos;
+        
+        ped = this.iPedidosBD.getPedidos(codMesa);
     }
 
     public ArrayList<String> getInfoRest(){
