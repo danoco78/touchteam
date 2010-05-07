@@ -7,6 +7,7 @@ package ControladorPrincipal;
 
 import java.util.ArrayList;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 
 /**
  *

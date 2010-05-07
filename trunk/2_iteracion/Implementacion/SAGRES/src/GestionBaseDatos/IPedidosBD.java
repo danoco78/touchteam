@@ -14,4 +14,6 @@ import java.util.ArrayList;
  */
 public interface IPedidosBD {
     public ArrayList<Pedido> obtienePedidosNoFacturados();
+    public int getNumPlatosEnCola();
+    public int getNumBebidasEnCola();
 }

@@ -37,4 +37,8 @@ public interface IGestorPedidos {
     public boolean seleccionaBebida(Pedido p, ElementoBebida bebida);
 
     public boolean seleccionaPlato(Pedido p, ElementoPlato plato);
+
+    public int getNumPlatosEnCola();
+
+    public int getNumBebidasEnCola();
 }
