@@ -925,5 +925,29 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public ArrayList<Pedido> getPedidos(int codMesa){
+        ArrayList<Pedido> pedidos = new ArrayList();
+        try{
+            ArrayList<ElementoPedido> elementos = new ArrayList();
+            Statement consulta = (Statement) this.Conexion.createStatement();
+            // Obtengo los pedidos
+            ResultSet tablaPedidos = consulta.executeQuery("select * from pedido where pedido.mesa_id = "+codMesa+" and pedido.estado = 1");
+            ResultSet tablaElementos;
+            while (tablaPedidos.next()){
+                pedidos.add(new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4)));
+                /*tablaElementos = consulta.executeQuery(
+"select ep.elementoPedido_id,ep.estado,ep.comentario from pedido p, tieneElemento t, elementoPedido ep where p.pedido_id = t.elementoPedido_elementoPedido_id AND
+      t.pedido_pedido_id = ep.elementoPedido_id AND
+      ep.elementoPedido_id = 'TUCODIGO';
+");*/
+
+                //pedidos.get(pedidos.size()).asocia(null);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pedidos;
+    }
 }
 
