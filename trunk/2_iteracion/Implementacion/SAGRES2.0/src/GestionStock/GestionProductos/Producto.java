@@ -38,6 +38,14 @@ public class Producto {
         this.codPro = codPro;
     }
 
+    public Producto(int codPro, String nombre, int cantidad, int maximo, int minimo, ImageIcon foto){
+        this.cantidad = cantidad;
+        this.maximo = maximo;
+        this.minimo = minimo;
+        this.nombre = nombre;
+        this.imagen = foto;
+        this.codPro = codPro;
+    }
     /*
      * Actualiza la cantidad de un producto determinado
      * @param cantidad Cantidad a aumentar o disminuir del stock del producto
