@@ -36,7 +36,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(211, 223, 253));
         jButton1.setFont(new java.awt.Font("Arial", 0, 10));
         jButton1.setForeground(new java.awt.Color(80, 98, 143));
-        jButton1.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
+        jButton1.setText("<html>\n<body> \nHamburguesa con queso \n<br></br>\n<br></br>\n<font color=\"#000000\">La carne poco hecha, por favor...</font>\n</body>\n</html>\n");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         this.centro.setSize(this.centro.getSize().width,
@@ -55,13 +55,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
         ElementoPedido elemP;
         JButton boton;
         Elemento ele;
-        int cont=0;
+        //int cont=0;
         
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
             if (elemP.getEstado() == 0 &&
                     elemP instanceof ElementoColaBar){
-                cont++;
+                //cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();
 
@@ -74,10 +74,10 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 panelInfoPedido.add(boton);
             }
         }
-        this.centro.setMaximumSize(new java.awt.Dimension(this.centro.getMaximumSize().width,
-                infoMesaPedido.getHeight()+cont*65));
-        System.out.println(infoMesaPedido.getHeight()+cont*65);
-        oldTama = this.getSize();
+        //this.centro.setMaximumSize(new java.awt.Dimension(this.centro.getMaximumSize().width,
+        //        infoMesaPedido.getHeight()+cont*65));
+        //System.out.println(infoMesaPedido.getHeight()+cont*65);
+        //oldTama = this.getSize();
 
         //pendientes.setText(String.valueOf(cont)+" bebidas pendientes");
     }
@@ -203,7 +203,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenDerLayout.setVerticalGroup(
             margenDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 234, Short.MAX_VALUE)
         );
 
         pCentral.add(margenDer, java.awt.BorderLayout.LINE_END);
@@ -219,7 +219,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenIzqLayout.setVerticalGroup(
             margenIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 234, Short.MAX_VALUE)
         );
 
         pCentral.add(margenIzq, java.awt.BorderLayout.LINE_START);
@@ -243,7 +243,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenIzq2Layout.setVerticalGroup(
             margenIzq2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
+            .addGap(0, 223, Short.MAX_VALUE)
         );
 
         centro.add(margenIzq2, java.awt.BorderLayout.WEST);
@@ -281,7 +281,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenDer2Layout.setVerticalGroup(
             margenDer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
+            .addGap(0, 223, Short.MAX_VALUE)
         );
 
         centro.add(margenDer2, java.awt.BorderLayout.EAST);
@@ -312,6 +312,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         pInf.setBackground(new java.awt.Color(255, 255, 255));
         pInf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229)));
+        pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
         pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N

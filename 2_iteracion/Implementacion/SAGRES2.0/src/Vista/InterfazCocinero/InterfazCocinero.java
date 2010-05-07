@@ -34,10 +34,10 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero();
+        this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
         this.getContentPane().add( this.panelIngrediente, InterfazCocinero.INGREDIENTE );
-        this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
         this.panelPrincipal.bGestionCarta.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARCARTA));
