@@ -1,8 +1,13 @@
 package GestionCarta;
 
+import GestionStock.GestionProductos.Bebida;
+import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
+import utilidades.Pair;
 
 /**
  *
@@ -131,9 +136,28 @@ public class Elemento {
         return this.disponible;
     }
     //TODO implementar la siguiente funcion de obtener los productos asociados a un 
-   /* public HashMap<Producto,Float> getProductos(){
-        return productos;
-    }*/
+    public HashMap<Producto,Float> getProductos(){
+        HashMap<Producto,Float> result = new HashMap();
+        if(this instanceof ElementoBebida){
+            HashMap<Bebida,Float> bebidas = ((ElementoBebida)this).getListaBebidas();
+            Collection c = (Collection)bebidas;
+            Iterator ite = c.iterator();
+            while(ite.hasNext()){
+                result.put(((Pair<Producto,Float>)ite.next()).getFirst()
+                        , ((Pair<Producto,Float>)ite.next()).getSecond());
+            }
+        }
+        else{
+            HashMap<Ingrediente,Float> ingredientes = ((ElementoPlato)this).getListaIngredientes();
+                        Collection c = (Collection)ingredientes;
+            Iterator ite = c.iterator();
+            while(ite.hasNext()){
+                result.put(((Pair<Producto,Float>)ite.next()).getFirst()
+                        , ((Pair<Producto,Float>)ite.next()).getSecond());
+            }
+        }
+        return result;
+    }
     /**
      * Método para comprobar si dos elementos son iguales
      * @param objeto El elemento con el que queremos comparar.
