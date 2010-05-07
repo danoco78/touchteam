@@ -4,30 +4,38 @@
  */
 
 /*
- * panelMesa.java
+ * PanelMesaPedido.java
  *
- * Created on 05-may-2010, 0:59:04
+ * Created on 05-may-2010, 19:04:58
  */
 
 package Vista.InterfazCocinero;
-import java.awt.*;
-import GestionPedidos.*;
+
+import GestionPedidos.Pedido;
+import javax.swing.JComponent;
 
 /**
  *
- * @author Gaspar
+ * @author redder
  */
-public class panelMesa extends javax.swing.JPanel {
+public class PanelMesa extends javax.swing.JPanel {
 
-    /** Creates new form panelMesa */
-    public panelMesa() {
+    Integer filtro;
+    Pedido pedido;
+
+    /** Creates new form PanelMesaPedido */
+    public PanelMesa(Pedido pedido, Integer estado) {
         initComponents();
+        this.filtro = estado;
+        this.pedido = pedido;
+
+        // TODO Obtener la mesa del pedido
+        //this.tMesa_Pedido.setText("Mesa "+pedido.getCodMesa()+", pedido "+pedido.getCodPedido());
+
+        // TODO Obtener los ElementoPedido de pedido y añadir solo los que tengan estado == filtro
+        // Bucle FOR añadiendo
     }
-    public panelMesa(Pedido p) {
-        initComponents();
-        String sMesa = crearLabel(p.getCodMesa(), p.getCodPedido());
-        this.labelMesa.setText(sMesa);
-    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -38,25 +46,139 @@ public class panelMesa extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelMesa = new javax.swing.JLabel();
+        pCuerpo = new javax.swing.JPanel();
+        pSuperior = new javax.swing.JPanel();
+        tMesa_Pedido = new javax.swing.JLabel();
+        pCentral = new javax.swing.JPanel();
+        pInferior = new javax.swing.JPanel();
+        parriba = new javax.swing.JPanel();
+        pabajo = new javax.swing.JPanel();
+        pizquierda = new javax.swing.JPanel();
+        pderecha = new javax.swing.JPanel();
 
-        labelMesa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        labelMesa.setForeground(new java.awt.Color(80, 98, 143));
-        labelMesa.setText("jLabel1");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        setLayout(new java.awt.BorderLayout(5, 5));
 
-        setBackground(new java.awt.Color(245, 245, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        setLayout(new java.awt.GridBagLayout());
+        pCuerpo.setOpaque(false);
+        pCuerpo.setLayout(new java.awt.BorderLayout());
+
+        pSuperior.setOpaque(false);
+        pSuperior.setLayout(new java.awt.BorderLayout(5, 5));
+
+        tMesa_Pedido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMesa_Pedido.setForeground(new java.awt.Color(80, 98, 143));
+        tMesa_Pedido.setText("Mesa X, Pedido YYYYY");
+        pSuperior.add(tMesa_Pedido, java.awt.BorderLayout.CENTER);
+        tMesa_Pedido.getAccessibleContext().setAccessibleName("Mesa X");
+
+        pCuerpo.add(pSuperior, java.awt.BorderLayout.NORTH);
+
+        pCentral.setOpaque(false);
+
+        javax.swing.GroupLayout pCentralLayout = new javax.swing.GroupLayout(pCentral);
+        pCentral.setLayout(pCentralLayout);
+        pCentralLayout.setHorizontalGroup(
+            pCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 384, Short.MAX_VALUE)
+        );
+        pCentralLayout.setVerticalGroup(
+            pCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 167, Short.MAX_VALUE)
+        );
+
+        pCuerpo.add(pCentral, java.awt.BorderLayout.CENTER);
+
+        pInferior.setOpaque(false);
+
+        javax.swing.GroupLayout pInferiorLayout = new javax.swing.GroupLayout(pInferior);
+        pInferior.setLayout(pInferiorLayout);
+        pInferiorLayout.setHorizontalGroup(
+            pInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 384, Short.MAX_VALUE)
+        );
+        pInferiorLayout.setVerticalGroup(
+            pInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        pCuerpo.add(pInferior, java.awt.BorderLayout.SOUTH);
+
+        add(pCuerpo, java.awt.BorderLayout.CENTER);
+
+        parriba.setOpaque(false);
+        parriba.setPreferredSize(new java.awt.Dimension(0, 0));
+
+        javax.swing.GroupLayout parribaLayout = new javax.swing.GroupLayout(parriba);
+        parriba.setLayout(parribaLayout);
+        parribaLayout.setHorizontalGroup(
+            parribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        parribaLayout.setVerticalGroup(
+            parribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        add(parriba, java.awt.BorderLayout.NORTH);
+
+        pabajo.setOpaque(false);
+
+        javax.swing.GroupLayout pabajoLayout = new javax.swing.GroupLayout(pabajo);
+        pabajo.setLayout(pabajoLayout);
+        pabajoLayout.setHorizontalGroup(
+            pabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        pabajoLayout.setVerticalGroup(
+            pabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        add(pabajo, java.awt.BorderLayout.SOUTH);
+
+        pizquierda.setOpaque(false);
+
+        javax.swing.GroupLayout pizquierdaLayout = new javax.swing.GroupLayout(pizquierda);
+        pizquierda.setLayout(pizquierdaLayout);
+        pizquierdaLayout.setHorizontalGroup(
+            pizquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pizquierdaLayout.setVerticalGroup(
+            pizquierdaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 284, Short.MAX_VALUE)
+        );
+
+        add(pizquierda, java.awt.BorderLayout.WEST);
+
+        pderecha.setOpaque(false);
+
+        javax.swing.GroupLayout pderechaLayout = new javax.swing.GroupLayout(pderecha);
+        pderecha.setLayout(pderechaLayout);
+        pderechaLayout.setHorizontalGroup(
+            pderechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pderechaLayout.setVerticalGroup(
+            pderechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 284, Short.MAX_VALUE)
+        );
+
+        add(pderecha, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel labelMesa;
+    private javax.swing.JPanel pCentral;
+    private javax.swing.JPanel pCuerpo;
+    private javax.swing.JPanel pInferior;
+    private javax.swing.JPanel pSuperior;
+    private javax.swing.JPanel pabajo;
+    private javax.swing.JPanel parriba;
+    private javax.swing.JPanel pderecha;
+    private javax.swing.JPanel pizquierda;
+    private javax.swing.JLabel tMesa_Pedido;
     // End of variables declaration//GEN-END:variables
 
-
-    private String crearLabel(int nmesa, int npedido){
-        String text = "Mesa " + String.valueOf(nmesa) + ", pedido " + String.valueOf(npedido);
-        return text;
-    }
 }
