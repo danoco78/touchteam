@@ -22,7 +22,9 @@ public class GestorPedidos implements IGestorPedidos {
 
     //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
-
+        ArrayList<Pedido> ped;
+        ArrayList<ElementoPedido> elemPed;
+        ArrayList<Elemento> elementos;
     }
 
     public ArrayList<String> getInfoRest(){
@@ -76,10 +78,6 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public void imprimeFactura(Integer codMesa){
-
-    }
-
-    public void imprimeFacturas(){
 
     }
 
