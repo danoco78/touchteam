@@ -16,4 +16,5 @@ public interface IPedidosBD {
     public ArrayList<Pedido> obtienePedidosNoFacturados();
     public int getNumPlatosEnCola();
     public int getNumBebidasEnCola();
+    public void actualizaPedido(Pedido p);
 }
