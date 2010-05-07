@@ -25,8 +25,6 @@ public interface IGestorPedidos {
 
     public void imprimeFactura(Integer codMesa);
 
-    public void imprimeFacturas();
-
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa);
 
     public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);
