@@ -35,8 +35,8 @@ public class GestorPedidos implements IGestorPedidos {
         return new Pedido(); //Para quitar errores
     }
 
-    public Pedido getSiguientePedidoCocinaEncola(){
-        ArrayList<Pedido> noFacturados;
+    public Pedido getSiguientePedidoCocinaEncola()throws Exception{
+         ArrayList<Pedido> noFacturados;
         ArrayList<ElementoPedido> elementos;
         noFacturados = iPedidosBD.obtienePedidosNoFacturados();
 
@@ -66,11 +66,10 @@ public class GestorPedidos implements IGestorPedidos {
                     (pedido == null || fecha.before(fechaPedido))){
                 pedido = ((Pedido)iterador.next());
             }
-            else if(pedido == null)
-                 throw new Exception("comentario");
-
         }
-        return pedido; //Para quitar errores
+        if(pedido == null)
+                 throw new Exception("No hay siguiente pedido en cola de cocina");
+        return pedido;
     }
 
     public Pedido getSiguientePedidoCocinaPreparandose(){

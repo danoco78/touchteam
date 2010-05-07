@@ -19,7 +19,7 @@ public interface IGestorPedidos {
 
     public Pedido getSiguientePedidoBar();
 
-    public Pedido getSiguientePedidoCocinaEncola();
+    public Pedido getSiguientePedidoCocinaEncola()throws Exception;
 
     public Pedido getSiguientePedidoCocinaPreparandose();
 
