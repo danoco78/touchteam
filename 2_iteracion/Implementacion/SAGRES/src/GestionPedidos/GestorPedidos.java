@@ -8,9 +8,13 @@ package GestionPedidos;
 import java.util.ArrayList;
 import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
+import GestionStock.GestionProductos.IProducto;
+import GestionStock.GestionProductos.Producto;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
-import java.lang.Exception;
+import java.util.HashMap;
+import utilidades.Pair;
 
 /**
  *
@@ -19,6 +23,7 @@ import java.lang.Exception;
 public class GestorPedidos implements IGestorPedidos {
 
     IPedidosBD iPedidosBD;
+    IProducto iProducto;
 
     //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
@@ -49,7 +54,7 @@ public class GestorPedidos implements IGestorPedidos {
             while (ite2.hasNext()){
                 if(ite2.next() instanceof ElementoColaBar){
                     estado = ((ElementoColaBar)ite2.next()).getEstado();
-                    if(estado == 0)
+                    if(estado == ElementoColaBar.ENCOLA)
                         encontrado = true;
                 }
             }
@@ -86,7 +91,7 @@ public class GestorPedidos implements IGestorPedidos {
             while (ite2.hasNext() && !encontrado){
                 if(ite2.next() instanceof ElementoColaCocina){
                     estado = ((ElementoColaCocina)ite2.next()).getEstado();
-                    if(estado == 0)
+                    if(estado == ElementoColaCocina.ENCOLA)
                         encontrado = true;
                 }
             }
@@ -134,10 +139,6 @@ public class GestorPedidos implements IGestorPedidos {
         return true;
     }
 
-    public boolean seleccionaPlato(Pedido p, ElementoPlato plato){
-        return true;
-    }
-
     public int getNumPlatosEnCola() {
         return this.iPedidosBD.getNumPlatosEnCola();
     }
@@ -161,7 +162,7 @@ public class GestorPedidos implements IGestorPedidos {
                 ElementoColaCocina temp = new ElementoColaCocina();
                 if(((ElementoPedido)ite.next()).getClass().getName().compareTo(temp.getClass().getName()) == 0 ){ //Si es ColaCocina
                      estado = ((ElementoColaCocina)ite.next()).getEstado();
-                     if(estado == 1 ) romper = true;
+                     if(estado == ElementoColaCocina.PREPARADO ) romper = true;
                 }
             }
             if(romper){
@@ -171,6 +172,39 @@ public class GestorPedidos implements IGestorPedidos {
         if(pedidos.isEmpty())
             throw new Exception("No hay pedidos preparándose en la cola de cocina");
         return pedidos;
+    }
+
+    public boolean seleccionPlato(Pedido p, ElementoColaCocina ele) throws Exception {
+        boolean exito=false, existe = false;
+        int estado;
+
+        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+        Elemento elem;
+        HashMap<Producto,Float> prods;
+
+        if(elementos.contains(ele)) existe = true;
+        if(existe){
+            estado = ele.getEstado();
+            if(estado == ElementoColaCocina.ENCOLA){
+               p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
+               ele.setEstado(ElementoColaCocina.PREPARANDOSE);
+               this.iPedidosBD.actualizaPedido(p);
+               elem = ele.getElemento();
+               prods = elem.getProductos();
+               Collection c = (Collection)prods;
+               Iterator ite = c.iterator();
+               while(ite.hasNext()){ //Restamos las cantidades de todos los productos
+                   this.iProducto.restarCantidadProducto(((Pair<Producto,Float>)ite.next()));
+               }
+            }
+            else if(estado == ElementoColaCocina.PREPARADO){
+                ele.setEstado(ElementoColaCocina.PREPARANDOSE);
+            }
+        }
+        else{
+            throw new Exception("El plato no existe en ese pedido.");
+        }
+        return exito;
     }
 }
 

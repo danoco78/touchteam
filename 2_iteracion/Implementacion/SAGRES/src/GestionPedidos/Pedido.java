@@ -16,14 +16,18 @@ public class Pedido {
     private Integer codPedido;
     private Date fecha;
     private ArrayList<ElementoPedido> elementos;
-
+    private Integer estado;
     /**
      * La variable estado puede tener 3 formas
      * 0 = Modificable
      * 1 = Bloqueado
      * 2 = Facturado
      */
-    private Integer estado;
+    public static Integer MODIFICABLE = 0;
+    public static Integer BLOQUEADO = 1;
+    public static Integer FACTURADO = 2;
+
+
 
     public Pedido(){
         super();
@@ -62,7 +66,9 @@ public class Pedido {
     }
 
     public void asocia(ElementoColaCocina elem){
+        elementos.add(elem);
     }
     public void asocia(ElementoColaBar elem){
+        elementos.add(elem);
     }
 }

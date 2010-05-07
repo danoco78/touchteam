@@ -16,6 +16,10 @@ public class ElementoColaCocina extends ElementoPedido{
      * 1 = Preparánodse
      * 2 = Preparado
      */
+    public static Integer ENCOLA = 0;
+    public static Integer PREPARANDOSE = 1;
+    public static Integer PREPARADO = 2;
+    
     public ElementoColaCocina(){
         super("");
     }

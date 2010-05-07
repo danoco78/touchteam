@@ -7,11 +7,8 @@ package ControladorPrincipal;
 
 import GestionCarta.Elemento;
 import GestionCarta.ElementoBebida;
-import GestionCarta.ElementoPlato;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
-import GestionCarta.SeccionBebida;
-import GestionCarta.SeccionComida;
 import GestionStock.GestionIncidencias.IIncidencia;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
@@ -174,10 +171,6 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.ipedidos.seleccionaBebida(p, bebida);
     }
 
-    public boolean seleccionaPlato(Pedido p, ElementoPlato plato){
-        return this.ipedidos.seleccionaPlato(p, plato);
-    }
-
     public Pedido getSiguientePedidoCocinaEnCola()throws Exception {
         return this.ipedidos.getSiguientePedidoCocinaEncola();
     }
@@ -191,5 +184,9 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public ArrayList<Pedido> getPedidosCocinaPreparandose() throws Exception{
         return this.ipedidos.getPedidosCocinaPreparandose();
+    }
+
+    public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception{
+        return this.ipedidos.seleccionPlato(p, ele);
     }
 }
