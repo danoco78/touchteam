@@ -7,9 +7,12 @@ package ControladorPrincipal;
 
 import GestionCarta.Elemento;
 import GestionCarta.Seccion;
+import GestionPedidos.ElementoColaCocina;
+import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -37,5 +40,11 @@ public interface ICocinero {
     public abstract HashSet<Producto> obtieneProductosSeccion(Seccion seccion);
     public abstract HashSet<Elemento> obtieneElementos();
     //public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
+
+    public abstract Pedido getSiguientePedidoCocinaEnCola()throws Exception;
+    public abstract Pedido getSiguientePedidoCocinaPreparandose();
+    public abstract int getNumPlatosEnCola();
+    public abstract ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
+    public abstract boolean seleccionaPlato(Pedido p, ElementoColaCocina ele)throws Exception;
     
 }
