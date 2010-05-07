@@ -78,8 +78,8 @@ public class Main {
             dCarga.Progreso(80);
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido);
             dCarga.Progreso(90);
-            //InterfazMetre interfaz = new InterfazMetre(controlador);
-            InterfazCocinero interfaz = new InterfazCocinero(controlador);
+            InterfazMetre interfaz = new InterfazMetre(controlador);
+            //InterfazCocinero interfaz = new InterfazCocinero(controlador);
             dCarga.Progreso(100);
             dCarga.setVisible(false);
             dCarga.dispose();
