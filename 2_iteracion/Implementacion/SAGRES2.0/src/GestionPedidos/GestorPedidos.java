@@ -175,7 +175,7 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public boolean seleccionPlato(Pedido p, ElementoColaCocina ele) throws Exception {
-        boolean exito=false, existe = false;
+        boolean exito=true, existe = false;
         int estado;
 
         ArrayList<ElementoPedido> elementos = p.obtieneElementos();
@@ -199,6 +199,42 @@ public class GestorPedidos implements IGestorPedidos {
             }
             else if(estado == ElementoColaCocina.PREPARADO){
                 ele.setEstado(ElementoColaCocina.PREPARANDOSE);
+            }
+            else{
+                exito = false;
+            }
+        }
+        else{
+            throw new Exception("El plato no existe en ese pedido.");
+        }
+        return exito;
+    }
+
+    public boolean seleccionaBebida(Pedido p, ElementoColaBar ele) throws Exception {
+        boolean exito=true, existe = false;
+        int estado;
+
+        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+        Elemento elem;
+        HashMap<Producto,Float> prods;
+
+        if(elementos.contains(ele)) existe = true;
+        if(existe){
+            estado = ele.getEstado();
+            if(estado == ElementoColaBar.ENCOLA){
+               p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
+               ele.setEstado(ElementoColaBar.PREPARADO);
+               this.iPedidosBD.actualizaPedido(p);
+               elem = ele.getElemento();
+               prods = elem.getProductos();
+               Collection c = (Collection)prods;
+               Iterator ite = c.iterator();
+               while(ite.hasNext()){ //Restamos las cantidades de todos los productos
+                   this.iProducto.restarCantidadProducto(((Pair<Producto,Float>)ite.next()));
+               }
+            }
+            else{
+                exito = false;
             }
         }
         else{
