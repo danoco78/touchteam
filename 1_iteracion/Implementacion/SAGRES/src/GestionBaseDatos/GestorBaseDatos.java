@@ -128,7 +128,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             } else {
                 actualizacion.setInt(3, 0);
             }
-            actualizacion.setBinaryStream(4, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setBytes(4, Imagen.imageIconToByteArray(elemento.getFoto()));
             actualizacion.setInt(5, elemento.getDivisiones());
             actualizacion.setInt(6, elemento.getDivisionesMaximas());
             actualizacion.setFloat(7, elemento.getPrecio());
@@ -152,7 +152,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             } else {
                 actualizacion.setInt(3, 0);
             }
-            actualizacion.setBinaryStream(4, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setBytes(4, Imagen.imageIconToByteArray(elemento.getFoto()));
             actualizacion.setInt(5, elemento.getDivisiones());
             actualizacion.setInt(6, elemento.getDivisionesMaximas());
             actualizacion.setFloat(7, elemento.getPrecio());
@@ -185,7 +185,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             int id_elemento = idElemento.getInt(1);
             // Insertamos la imagen en la tabla
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
-            actualizacion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
             // Insertamos en elementoBebida
             inserccion = this.Conexion.prepareStatement("INSERT INTO elementobebida VALUES('?')");
             inserccion.setInt(1, id_elemento);
@@ -233,7 +233,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             int id_elemento = idElemento.getInt(1);
             // Insertamos la imagen en la tabla
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
-            actualizacion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(elemento.getFoto())));
+            actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
             // Insertamos en elementoPlato
             inserccion = this.Conexion.prepareStatement("INSERT INTO elementoplato VALUES('?')");
             inserccion.setInt(1, id_elemento);
@@ -607,7 +607,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             actualizacion.setFloat(2, p.getMaximo());
             actualizacion.setFloat(3, p.getMinimo());
             actualizacion.setString(4, p.getNombre());
-            actualizacion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(p.getImagen())));
+            actualizacion.setBytes(5, Imagen.imageIconToByteArray(p.getImagen()));
             actualizacion.executeUpdate();//Insertamos la incidencia
 
         } catch (SQLException ex) {
@@ -623,7 +623,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             inserccion.setFloat(2, p.getCantidad());
             inserccion.setFloat(3, p.getMaximo());
             inserccion.setFloat(4, p.getMinimo());
-            inserccion.setBinaryStream(1, new ByteArrayInputStream(Imagen.imageIconToByteArray(p.getImagen())));
+            inserccion.setBytes(5, Imagen.imageIconToByteArray(p.getImagen()));
 
             //Ejecutamos la inserccion
             Statement ultimo = (Statement) this.Conexion.createStatement();
