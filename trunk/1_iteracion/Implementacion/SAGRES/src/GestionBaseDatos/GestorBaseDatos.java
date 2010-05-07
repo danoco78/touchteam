@@ -41,7 +41,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public GestorBaseDatos(String host, String user, String pass) throws Exception {
         try {
-            Conexion = (Connection) DriverManager.getConnection( host, user, pass);
+            Conexion = (Connection) DriverManager.getConnection( "jdbc:mysql://"+host, user, pass);
         } catch (SQLException ex) {
             switch (ex.getErrorCode()) {
                 case 1045:
