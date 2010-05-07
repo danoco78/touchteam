@@ -3,7 +3,6 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Ingrediente;
 import Vista.DialogoComfirmacion;
 import java.awt.Color;
