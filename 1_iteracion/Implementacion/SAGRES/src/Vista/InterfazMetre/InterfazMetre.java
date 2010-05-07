@@ -1,3 +1,16 @@
+
+
+package Vista.InterfazMetre;
+
+import ControladorPrincipal.IMetre;
+import java.awt.Dialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+
+/**
+ *
+ * @author Daniel Guerrero Martinez
  */
 public class InterfazMetre extends javax.swing.JFrame {
 
