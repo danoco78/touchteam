@@ -14,7 +14,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     Integer pendientes = 0, preparandose = 0;
     PanelImagen panelImagen;
-    PanelMesaPedido pmp;
+    PreparandosePanel pmp;
 
     Pedido pendiente;
     ArrayList<Pedido> colaPreparandose;
@@ -28,7 +28,8 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmp = new PanelMesaPedido();
+        pmp = new PreparandosePanel();
+        pmp.setPreferredSize(pmp.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmp, java.awt.BorderLayout.CENTER);
         //pmp.addPedidoCocina(pendiente);
 
