@@ -774,5 +774,27 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
         return numbebidas;
     }
+
+    public void actualizaPedido(Pedido p) {
+        try{
+            java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+ "'");
+            actPedido.setInt(1, p.getEstado());
+            actPedido.executeUpdate();
+            java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementoPedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
+            ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+            Iterator ite = elementos.iterator();
+            while (ite.hasNext()){
+                int est = ((ElementoPedido)ite.next()).getEstado();
+                String comment = ((ElementoPedido)ite.next()).getComentario();
+                int id = ((ElementoPedido)ite.next()).getCodElementoPedido();
+                actElem.setInt(1, est);
+                actElem.setString(2, comment);
+                actElem.setInt(3, id);
+                actElem.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
 
