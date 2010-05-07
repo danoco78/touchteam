@@ -26,7 +26,7 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar();
-        getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
+        //getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
