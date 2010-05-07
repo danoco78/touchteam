@@ -52,4 +52,9 @@ public class ElementoBebida extends Elemento{
         }
         return true;
     }
+
+    public void asocia(Bebida b, Float cantidad){
+        //TODO
+        listaBebidas.put(b, cantidad);
+    }
 }
