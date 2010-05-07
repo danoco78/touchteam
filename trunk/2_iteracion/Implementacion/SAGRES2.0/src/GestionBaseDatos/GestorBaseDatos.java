@@ -7,6 +7,10 @@ import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
+import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
@@ -23,6 +27,7 @@ import utilidades.Pair;
 import com.mysql.jdbc.Connection;
 import java.io.ByteArrayInputStream;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -814,6 +819,108 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             actualizacion.executeUpdate();//Insertamos la incidencia
             prodCantidad.getFirst().actualizarCantidad(-prodCantidad.getSecond());
 
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public ArrayList<Pedido> obtienePedidosNoFacturados(){
+        ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
+        Statement consulta;
+        ElementoPedido elemPed = null;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("select pedidoid, mesaid, estado, fecha from pedido" +
+                    "where estado <> 2;");
+
+            while (resultado.next()) {
+                Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
+                        resultado.getInt(3),resultado.getDate(4));
+                ResultSet resElemPed = consulta.executeQuery(" select elementoPedido_id, estado, " +
+                        "comentario from elementoPedido where elementoPedido_id IN (select elementoPedido_id " +
+                        "from tieneElemento where pedido_pedido_id = "+resultado.getInt(1)+"); ");
+                while(resElemPed.next()){
+                    elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
+                            resElemPed.getString(3));
+                    //TODO Resolver esta consulta
+                    ResultSet resElem = consulta.executeQuery("");
+                    Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
+                            resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
+                            ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
+                    //TODO Resolver esta consulta
+                    ResultSet resProds = consulta.executeQuery("");
+                    while(resProds.next()){
+                        Producto prod = new Producto(resProds.getInt(1),resProds.getString(2),
+                                resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
+                                Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
+                        elemento.asocia(prod);
+                    }
+                    elemPed.asocia(elemento);
+                }
+                ElementoColaBar temp = new ElementoColaBar();
+                    if(elemPed.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
+                         p.asocia((ElementoColaBar)elemPed);
+                    else
+                         p.asocia((ElementoColaCocina)elemPed);
+                noFacturados.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return noFacturados;
+    }
+
+    public int getNumPlatosEnCola() {
+        Statement consulta;
+        int numplatos=-1;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("SELECT count(elementoPedido_elementoPedido_id)" +
+                    "FROM elementoColaCocina WHERE elementoPedido_elementoPedido_id IN" +
+                    " (SELECT elementoPedido_id FROM elementoPedido WHERE estado = 0)");
+            numplatos = resultado.getInt(1);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return numplatos;
+    }
+
+    public int getNumBebidasEnCola() {
+        Statement consulta;
+        int numbebidas=-1;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("SELECT count(elementoPedido_elementoPedido_id)" +
+                    "FROM elementoColaBar WHERE elementoPedido_elementoPedido_id IN" +
+                    " (SELECT elementoPedido_id FROM elementoPedido WHERE estado = 0)");
+            numbebidas = resultado.getInt(1);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return numbebidas;
+    }
+
+    public void actualizaPedido(Pedido p) {
+        try{
+            java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+ "'");
+            actPedido.setInt(1, p.getEstado());
+            actPedido.executeUpdate();
+            java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementoPedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
+            ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+            Iterator ite = elementos.iterator();
+            while (ite.hasNext()){
+                int est = ((ElementoPedido)ite.next()).getEstado();
+                String comment = ((ElementoPedido)ite.next()).getComentario();
+                int id = ((ElementoPedido)ite.next()).getCodElementoPedido();
+                actElem.setInt(1, est);
+                actElem.setString(2, comment);
+                actElem.setInt(3, id);
+                actElem.executeUpdate();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }

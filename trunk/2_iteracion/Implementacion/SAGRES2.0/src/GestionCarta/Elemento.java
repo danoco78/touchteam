@@ -1,6 +1,7 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Producto;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 /**
@@ -8,6 +9,7 @@ import javax.swing.ImageIcon;
  * @author Ángel Luis García
  */
 public class Elemento {
+
     private int codigoElemento;
     private String descripcion;
     private boolean disponible;
@@ -17,8 +19,6 @@ public class Elemento {
     private String nombre;
     private float precio;
 
-    
-    
     public Elemento(int codigo, String descripcion, int divisionesMaximas, ImageIcon foto, String nombre, float precio) {
         this.codigoElemento = codigo;
         this.descripcion = descripcion;
@@ -29,14 +29,27 @@ public class Elemento {
         this.disponible = false; //Hasta que no se comprueben los productos no esta disponible
         this.divisiones = 1;
     }
-    
-    /**
-     * Establece la disponibilidad del elemento.
-     *
-     * @param disponibilidad La nueva disponobilidad del elemento. true: está disponible, false: no está disponible.
-     */
-    public void setDisponible(boolean disponibilidad){
-        disponible = disponibilidad;
+
+    public Elemento(int codigo, String nombre, String descripcion, boolean disponible, ImageIcon foto, int divi, int diviMax, float precio) {
+        this.codigoElemento = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.disponible = disponible;
+        this.foto = foto;
+        this.divisiones = divi;
+        this.divisionesMaximas = diviMax;
+        this.precio = precio;
+    }
+
+        /**
+         * Establece la disponibilidad del elemento.
+         *
+         * @param disponibilidad La nueva disponobilidad del elemento. true: está disponible, false: no está disponible.
+         */
+    public
+
+     void setDisponible(boolean disponibilidad) {
+        this.disponible = disponibilidad;
     }
 
     /**
@@ -44,18 +57,17 @@ public class Elemento {
      *
      * @return true: Sí hay la suficiente cantidad de cada producto, false: La cantidad de algún producto No es suficiente.
      */
-    public boolean tieneDeTodo(){
+    public boolean tieneDeTodo() {
         return false;
     }
 
-    
     /**
      * Comprueba si el elemento necesita el producto especificado.
      *
      * @param producto El producto a comprobar.
      * @return true: El elemento Sí necesita el producto, false: El elemento no necesita el producto.
      */
-    public boolean usaProducto(Producto producto){
+    public boolean usaProducto(Producto producto) {
         return false;
     }
 
@@ -115,10 +127,13 @@ public class Elemento {
         this.precio = precio;
     }
 
-    public boolean getDisponible(){
+    public boolean getDisponible() {
         return this.disponible;
     }
-    
+    //TODO implementar la siguiente funcion de obtener los productos asociados a un elemento
+   /* public HashMap<Producto,Float> getProductos(){
+        return productos;
+    }*/
     /**
      * Método para comprobar si dos elementos son iguales
      * @param objeto El elemento con el que queremos comparar.
@@ -126,12 +141,15 @@ public class Elemento {
      *         false En caso contrario.
      */
     @Override
-    public boolean equals( Object objeto ) {
-        if (objeto == null) return false;
+    public boolean equals(Object objeto) {
+        if (objeto == null) {
+            return false;
+        }
 
-        Elemento elemento = (Elemento)objeto;
-        if (this.getCodigoElemento() == elemento.getCodigoElemento())
+        Elemento elemento = (Elemento) objeto;
+        if (this.getCodigoElemento() == elemento.getCodigoElemento()) {
             return true;
+        }
 
         return false;
     }
