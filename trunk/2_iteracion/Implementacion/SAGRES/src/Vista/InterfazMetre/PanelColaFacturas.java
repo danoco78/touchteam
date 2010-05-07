@@ -55,22 +55,54 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
         scrollPane = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
+        centro = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        margenSup = new javax.swing.JPanel();
+        margenInf = new javax.swing.JPanel();
+        margenDer = new javax.swing.JPanel();
+        MargenIzq = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(150, 360));
-        setMinimumSize(new java.awt.Dimension(150, 360));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229)));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(150, 360));
         setLayout(new java.awt.BorderLayout());
 
         scrollPane.setBackground(new java.awt.Color(255, 255, 255));
         scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setOpaque(false);
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
-        panel.setMinimumSize(new java.awt.Dimension(150, 50));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new java.awt.Dimension(150, 360));
-        panel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 5));
+        panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229)));
+        panel.setLayout(new java.awt.BorderLayout());
+
+        centro.setOpaque(false);
+        centro.setLayout(new javax.swing.BoxLayout(centro, javax.swing.BoxLayout.Y_AXIS));
+
+        jButton8.setBackground(new java.awt.Color(211, 223, 253));
+        jButton8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(80, 98, 143));
+        jButton8.setText("Mesa 5");
+        jButton8.setMaximumSize(new java.awt.Dimension(3784524, 60));
+        centro.add(jButton8);
+
+        panel.add(centro, java.awt.BorderLayout.CENTER);
+
+        margenSup.setOpaque(false);
+        margenSup.setPreferredSize(new java.awt.Dimension(10, 5));
+        panel.add(margenSup, java.awt.BorderLayout.PAGE_START);
+
+        margenInf.setOpaque(false);
+        margenInf.setPreferredSize(new java.awt.Dimension(10, 5));
+        panel.add(margenInf, java.awt.BorderLayout.PAGE_END);
+
+        margenDer.setOpaque(false);
+        margenDer.setPreferredSize(new java.awt.Dimension(5, 10));
+        panel.add(margenDer, java.awt.BorderLayout.LINE_END);
+
+        MargenIzq.setOpaque(false);
+        MargenIzq.setPreferredSize(new java.awt.Dimension(5, 10));
+        panel.add(MargenIzq, java.awt.BorderLayout.LINE_START);
+
         scrollPane.setViewportView(panel);
 
         add(scrollPane, java.awt.BorderLayout.CENTER);
@@ -78,6 +110,12 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel MargenIzq;
+    private javax.swing.JPanel centro;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JPanel margenDer;
+    private javax.swing.JPanel margenInf;
+    private javax.swing.JPanel margenSup;
     private javax.swing.JPanel panel;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
