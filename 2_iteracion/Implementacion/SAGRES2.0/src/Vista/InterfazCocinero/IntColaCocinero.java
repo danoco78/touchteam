@@ -14,7 +14,8 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     Integer pendientes = 0, preparandose = 0;
     PanelImagen panelImagen;
-    PreparandosePanel pmp;
+    PanelMesaPedido pmpizq;
+    PreparandosePanel pmpder;
 
     Pedido pendiente;
     ArrayList<Pedido> colaPreparandose;
@@ -28,11 +29,13 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmp = new PreparandosePanel();
-        pmp.setPreferredSize(pmp.getComponent(0).getPreferredSize());
-        panelIzquierda.add(pmp, java.awt.BorderLayout.CENTER);
-        //pmp.addPedidoCocina(pendiente);
-
+        pmpizq = new PanelMesaPedido();
+        pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
+        panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
+        //pmpizq.addPedidoCocina(pendiente);
+        pmpder = new PreparandosePanel();
+        pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
+        panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
         this.actualizarVista();
     }
@@ -46,8 +49,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         super.paint(g);
     }
 
-
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -58,7 +59,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private void initComponents() {
 
         principalNorte = new javax.swing.JPanel();
-        botonGestionProductos = new javax.swing.JButton();
+        bGestionProductos = new javax.swing.JButton();
         panelHora = new javax.swing.JPanel();
         panelCentroNorte = new javax.swing.JPanel();
         principalIzquierda = new javax.swing.JPanel();
@@ -67,9 +68,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalCentro = new javax.swing.JPanel();
         panelIzquierda = new javax.swing.JPanel();
         panelDerecha = new javax.swing.JPanel();
-        infoPreparandose = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        panelBox2 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -78,15 +76,15 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.setOpaque(false);
         principalNorte.setLayout(new java.awt.BorderLayout());
 
-        botonGestionProductos.setFont(new java.awt.Font("Arial", 1, 18));
-        botonGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
-        botonGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
-        botonGestionProductos.addActionListener(new java.awt.event.ActionListener() {
+        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        bGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
+        bGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
+        bGestionProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGestionProductosActionPerformed(evt);
+                bGestionProductosActionPerformed(evt);
             }
         });
-        principalNorte.add(botonGestionProductos, java.awt.BorderLayout.WEST);
+        principalNorte.add(bGestionProductos, java.awt.BorderLayout.WEST);
 
         panelHora.setBackground(new java.awt.Color(255, 255, 255));
         panelHora.setOpaque(false);
@@ -117,54 +115,18 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
         panelDerecha.setLayout(new java.awt.BorderLayout());
-
-        infoPreparandose.setFont(new java.awt.Font("Arial", 1, 16));
-        infoPreparandose.setForeground(new java.awt.Color(80, 98, 143));
-        infoPreparandose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        infoPreparandose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        panelDerecha.add(infoPreparandose, java.awt.BorderLayout.SOUTH);
-
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        panelBox2.setBackground(new java.awt.Color(245, 245, 255));
-        panelBox2.setLayout(new javax.swing.BoxLayout(panelBox2, javax.swing.BoxLayout.LINE_AXIS));
-        jScrollPane2.setViewportView(panelBox2);
-
-        panelDerecha.add(jScrollPane2, java.awt.BorderLayout.CENTER);
-
         principalCentro.add(panelDerecha);
 
         add(principalCentro, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonGestionProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonGestionProductosActionPerformed
+    private void bGestionProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGestionProductosActionPerformed
+        // TODO Cambiar el panel por Gestion Productos
+    }//GEN-LAST:event_bGestionProductosActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
-                dialog.setSize(800, 600);
-                dialog.getContentPane().add(new IntColaCocinero(), java.awt.BorderLayout.CENTER);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonGestionProductos;
-    private javax.swing.JLabel infoPreparandose;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPanel panelBox2;
+    protected javax.swing.JButton bGestionProductos;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelHora;
@@ -178,21 +140,16 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
     private void setInfoPendientes(int n){
-        String text;
-        if(n == 0)
-            text = "Ningún plato pendiente.";
-        else
-            text = String.valueOf(n) + " platos pendientes";
+
+        // TODO Cambiar el mensaje del panel izquierdo
+        this.pmpizq.setMensaje("");
         
     }
     
     private void setInfoPreparandose(int n){
-        String text;
-        if(n == 0)
-            text = "Ningún plato preparándose.";
-        else
-            text = String.valueOf(n) + " platos preparándose";
-        this.infoPreparandose.setText(text);
+
+        // TODO Cambiar el mensaje del panel derecho
+        this.pmpder.setMensaje("");
     }
 
     private void actualizarVista(){

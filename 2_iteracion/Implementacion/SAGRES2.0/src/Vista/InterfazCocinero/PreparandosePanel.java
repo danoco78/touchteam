@@ -27,17 +27,22 @@ import javax.swing.JButton;
 public class PreparandosePanel extends javax.swing.JPanel {
 
     Pedido pedActual = null;
+    java.awt.Dimension oldTama;
     
     /** Creates new form PanelMesaPedido */
     public PreparandosePanel() {
         initComponents();
-
+        oldTama = this.getSize();
         jButton1.setBackground(new java.awt.Color(211, 223, 253));
         jButton1.setFont(new java.awt.Font("Arial", 0, 10));
         jButton1.setForeground(new java.awt.Color(80, 98, 143));
         jButton1.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
+        this.centro.setSize(this.centro.getSize().width,
+                infoMesaPedido.getHeight()+1*65);
+        this.centro.setPreferredSize(this.getSize());
+        System.out.println(infoMesaPedido.getHeight()+1*65);
     }
 
     public void addPedidoBar(Pedido ped){
@@ -50,13 +55,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
         ElementoPedido elemP;
         JButton boton;
         Elemento ele;
-        //int cont=0;
+        int cont=0;
         
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
             if (elemP.getEstado() == 0 &&
                     elemP instanceof ElementoColaBar){
-                //cont++;
+                cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();
 
@@ -69,6 +74,10 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 panelInfoPedido.add(boton);
             }
         }
+        this.centro.setMaximumSize(new java.awt.Dimension(this.centro.getMaximumSize().width,
+                infoMesaPedido.getHeight()+cont*65));
+        System.out.println(infoMesaPedido.getHeight()+cont*65);
+        oldTama = this.getSize();
 
         //pendientes.setText(String.valueOf(cont)+" bebidas pendientes");
     }
@@ -102,6 +111,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 panelInfoPedido.add(boton);
             }
         }
+        oldTama = this.getSize();
 
         //pendientes.setText(String.valueOf(cont)+" platos pendientes");
     }
@@ -130,6 +140,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         margenDer = new javax.swing.JPanel();
         margenIzq = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
+        PanelScroll = new javax.swing.JPanel();
         centro = new javax.swing.JPanel();
         margenIzq2 = new javax.swing.JPanel();
         centro2 = new javax.swing.JPanel();
@@ -150,7 +161,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         pCentral.setLayout(new java.awt.BorderLayout());
 
         margenSup.setOpaque(false);
-        margenSup.setPreferredSize(new java.awt.Dimension(394, 5));
+        margenSup.setPreferredSize(new java.awt.Dimension(4, 5));
 
         javax.swing.GroupLayout margenSupLayout = new javax.swing.GroupLayout(margenSup);
         margenSup.setLayout(margenSupLayout);
@@ -166,7 +177,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         pCentral.add(margenSup, java.awt.BorderLayout.PAGE_START);
 
         margenInf.setOpaque(false);
-        margenInf.setPreferredSize(new java.awt.Dimension(394, 5));
+        margenInf.setPreferredSize(new java.awt.Dimension(4, 5));
 
         javax.swing.GroupLayout margenInfLayout = new javax.swing.GroupLayout(margenInf);
         margenInf.setLayout(margenInfLayout);
@@ -192,7 +203,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenDerLayout.setVerticalGroup(
             margenDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 234, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         pCentral.add(margenDer, java.awt.BorderLayout.LINE_END);
@@ -208,12 +219,14 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenIzqLayout.setVerticalGroup(
             margenIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 234, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         pCentral.add(margenIzq, java.awt.BorderLayout.LINE_START);
 
         scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        PanelScroll.setLayout(new javax.swing.BoxLayout(PanelScroll, javax.swing.BoxLayout.Y_AXIS));
 
         centro.setBackground(new java.awt.Color(255, 255, 255));
         centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
@@ -230,7 +243,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenIzq2Layout.setVerticalGroup(
             margenIzq2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 263, Short.MAX_VALUE)
         );
 
         centro.add(margenIzq2, java.awt.BorderLayout.WEST);
@@ -238,7 +251,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         centro2.setOpaque(false);
         centro2.setLayout(new java.awt.BorderLayout());
 
-        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12));
+        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         infoMesaPedido.setForeground(new java.awt.Color(80, 98, 143));
         infoMesaPedido.setText("Mesa 2, pedido 3465");
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
@@ -268,7 +281,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         );
         margenDer2Layout.setVerticalGroup(
             margenDer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 263, Short.MAX_VALUE)
         );
 
         centro.add(margenDer2, java.awt.BorderLayout.EAST);
@@ -289,7 +302,9 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         centro.add(MargenInf2, java.awt.BorderLayout.SOUTH);
 
-        scroll.setViewportView(centro);
+        PanelScroll.add(centro);
+
+        scroll.setViewportView(PanelScroll);
 
         pCentral.add(scroll, java.awt.BorderLayout.CENTER);
 
@@ -297,10 +312,9 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         pInf.setBackground(new java.awt.Color(255, 255, 255));
         pInf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229)));
-        pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
-        pendientes.setFont(new java.awt.Font("Arial", 0, 18));
+        pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pendientes.setText("7 bebidas pendientes ");
@@ -312,6 +326,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MargenInf2;
+    private javax.swing.JPanel PanelScroll;
     private javax.swing.JPanel centro;
     private javax.swing.JPanel centro2;
     private javax.swing.JLabel infoMesaPedido;
