@@ -16,12 +16,14 @@ public class InterfazMetre extends javax.swing.JFrame {
 
     private IMetre imetre;
     private IntGestionBebidas panelPrincipal = null;
-
+    private IntColaBar panelColaBar = null;
 
     public InterfazMetre(IMetre iMetre) {
         initComponents();
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
+        this.panelColaBar = new IntColaBar();
+        getContentPane().add(this.panelColaBar,java.awt.BorderLayout.CENTER);
         getContentPane().add(this.panelPrincipal,java.awt.BorderLayout.CENTER);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
