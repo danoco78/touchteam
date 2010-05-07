@@ -26,6 +26,9 @@ import utilidades.PanelMesaPedido;
 public class IntColaBar extends javax.swing.JPanel {
 
     PanelMesaPedido pmp = new PanelMesaPedido();
+    PanelColaFacturas colaIzq = new PanelColaFacturas();
+    PanelColaFacturas colaDer = new PanelColaFacturas();
+
     
     /** Creates new form IntColaBar */
     public IntColaBar() {
@@ -34,6 +37,9 @@ public class IntColaBar extends javax.swing.JPanel {
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pmp.setBackground(new java.awt.Color(255, 255, 255));
         pIzq2.add(pmp, java.awt.BorderLayout.CENTER);
+
+        centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
+        centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
     }
 
     @Override
@@ -68,8 +74,16 @@ public class IntColaBar extends javax.swing.JPanel {
         margenDer = new javax.swing.JPanel();
         margenIzq = new javax.swing.JPanel();
         pDer2 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        margenInf1 = new javax.swing.JPanel();
+        margenDer1 = new javax.swing.JPanel();
+        margenIzq1 = new javax.swing.JPanel();
+        centro = new javax.swing.JPanel();
+        centroIzq = new javax.swing.JPanel();
+        panelTextoIzq = new javax.swing.JPanel();
+        textoIzq = new javax.swing.JLabel();
+        centroDer = new javax.swing.JPanel();
+        panelTextoDer = new javax.swing.JPanel();
+        textoDer = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(800, 650));
@@ -94,7 +108,7 @@ public class IntColaBar extends javax.swing.JPanel {
         pIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         pIzq.setLayout(new java.awt.GridBagLayout());
 
-        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14));
         bGestBebidas.setForeground(new java.awt.Color(80, 98, 143));
         bGestBebidas.setText("Gestionar Bebidas");
         bGestBebidas.setActionCommand("GestProductos");
@@ -190,37 +204,94 @@ public class IntColaBar extends javax.swing.JPanel {
         cuerpo.add(pIzq2);
 
         pDer2.setOpaque(false);
-        pDer2.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
+        pDer2.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        margenInf1.setOpaque(false);
+        margenInf1.setPreferredSize(new java.awt.Dimension(400, 30));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+        javax.swing.GroupLayout margenInf1Layout = new javax.swing.GroupLayout(margenInf1);
+        margenInf1.setLayout(margenInf1Layout);
+        margenInf1Layout.setHorizontalGroup(
+            margenInf1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
-        );
-
-        pDer2.add(jPanel2);
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+        margenInf1Layout.setVerticalGroup(
+            margenInf1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        pDer2.add(jPanel3);
+        pDer2.add(margenInf1, java.awt.BorderLayout.PAGE_END);
+
+        margenDer1.setOpaque(false);
+        margenDer1.setPreferredSize(new java.awt.Dimension(20, 500));
+
+        javax.swing.GroupLayout margenDer1Layout = new javax.swing.GroupLayout(margenDer1);
+        margenDer1.setLayout(margenDer1Layout);
+        margenDer1Layout.setHorizontalGroup(
+            margenDer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        margenDer1Layout.setVerticalGroup(
+            margenDer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
+        );
+
+        pDer2.add(margenDer1, java.awt.BorderLayout.LINE_END);
+
+        margenIzq1.setOpaque(false);
+        margenIzq1.setPreferredSize(new java.awt.Dimension(20, 350));
+
+        javax.swing.GroupLayout margenIzq1Layout = new javax.swing.GroupLayout(margenIzq1);
+        margenIzq1.setLayout(margenIzq1Layout);
+        margenIzq1Layout.setHorizontalGroup(
+            margenIzq1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        margenIzq1Layout.setVerticalGroup(
+            margenIzq1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
+        );
+
+        pDer2.add(margenIzq1, java.awt.BorderLayout.LINE_START);
+
+        centro.setOpaque(false);
+        centro.setLayout(new java.awt.GridLayout(1, 2, 25, 0));
+
+        centroIzq.setOpaque(false);
+        centroIzq.setLayout(new java.awt.BorderLayout());
+
+        panelTextoIzq.setOpaque(false);
+        panelTextoIzq.setPreferredSize(new java.awt.Dimension(180, 20));
+        panelTextoIzq.setLayout(new java.awt.BorderLayout());
+
+        textoIzq.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        textoIzq.setForeground(new java.awt.Color(80, 98, 143));
+        textoIzq.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textoIzq.setText("Facturas a imprimir");
+        panelTextoIzq.add(textoIzq, java.awt.BorderLayout.CENTER);
+
+        centroIzq.add(panelTextoIzq, java.awt.BorderLayout.NORTH);
+
+        centro.add(centroIzq);
+
+        centroDer.setOpaque(false);
+        centroDer.setLayout(new java.awt.BorderLayout());
+
+        panelTextoDer.setOpaque(false);
+        panelTextoDer.setPreferredSize(new java.awt.Dimension(180, 20));
+        panelTextoDer.setLayout(new java.awt.BorderLayout());
+
+        textoDer.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        textoDer.setForeground(new java.awt.Color(80, 98, 143));
+        textoDer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textoDer.setText("Mesas por facturar");
+        panelTextoDer.add(textoDer, java.awt.BorderLayout.CENTER);
+
+        centroDer.add(panelTextoDer, java.awt.BorderLayout.NORTH);
+
+        centro.add(centroDer);
+
+        pDer2.add(centro, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(pDer2);
 
@@ -231,19 +302,27 @@ public class IntColaBar extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bGestBebidas;
     private javax.swing.JPanel cabecera;
+    private javax.swing.JPanel centro;
+    private javax.swing.JPanel centroDer;
+    private javax.swing.JPanel centroIzq;
     private javax.swing.JPanel cuerpo;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel margenDer;
+    private javax.swing.JPanel margenDer1;
     private javax.swing.JPanel margenInf;
+    private javax.swing.JPanel margenInf1;
     private javax.swing.JPanel margenIzq;
+    private javax.swing.JPanel margenIzq1;
     private javax.swing.JPanel margenSup;
     private javax.swing.JPanel pCentro;
     private javax.swing.JPanel pDer;
     private javax.swing.JPanel pDer2;
     private javax.swing.JPanel pIzq;
     private javax.swing.JPanel pIzq2;
+    private javax.swing.JPanel panelTextoDer;
+    private javax.swing.JPanel panelTextoIzq;
+    private javax.swing.JLabel textoDer;
+    private javax.swing.JLabel textoIzq;
     // End of variables declaration//GEN-END:variables
 
 }
