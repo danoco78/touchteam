@@ -27,7 +27,7 @@ public interface IMetre {
     public abstract void nuevaIncidencia(Incidencia in);
     public abstract HashSet<Bebida> obtenerBebidas();
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
-    public abstract Pedido getSiguientePedidoBar();
+    public abstract Pedido getSiguientePedidoBar()throws Exception;
     public abstract boolean seleccionaBebida(Pedido p, ElementoBebida bebida);
     public abstract int getNumBebidasEnCola();
 }

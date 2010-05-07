@@ -17,7 +17,7 @@ public interface IGestorPedidos {
 
     public ArrayList<String> getInfoRest();
 
-    public Pedido getSiguientePedidoBar();
+    public Pedido getSiguientePedidoBar()throws Exception;
 
     public Pedido getSiguientePedidoCocinaEncola()throws Exception;
 
@@ -41,4 +41,7 @@ public interface IGestorPedidos {
     public int getNumPlatosEnCola();
 
     public int getNumBebidasEnCola();
+
+    public ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
+
 }

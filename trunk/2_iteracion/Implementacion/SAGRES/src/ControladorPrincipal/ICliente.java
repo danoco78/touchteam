@@ -10,7 +10,6 @@ import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 
 /**
- *
  * @author Gaspar
  */
 public interface ICliente {
