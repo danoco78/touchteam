@@ -36,8 +36,9 @@ public interface ICocinero {
     public abstract PedidoProveedor obtienePedidoProveedor();
     public abstract HashSet<Producto> obtieneProductosBajoMinimos();
     public abstract HashSet<Seccion> obtieneSecciones();
-    public abstract Pedido getSiguientePedidoCocinaEnCola();
+    public abstract Pedido getSiguientePedidoCocinaEnCola()throws Exception;
     public abstract Pedido getSiguientePedidoCocinaPreparandose();
     public abstract boolean seleccionaPlato(Pedido p, ElementoPlato plato);
     public abstract int getNumPlatosEnCola();
+    public abstract ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
 }

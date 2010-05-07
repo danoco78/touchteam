@@ -17,7 +17,7 @@ public class ElementoPedido {
     private String comentario;
     private Integer estado;
     private Integer codElementoPedido;
-    private ArrayList<Elemento> elementos;
+    private Elemento elemento;
 
     public ElementoPedido(String comentario){
         this.comentario = comentario;
@@ -41,7 +41,9 @@ public class ElementoPedido {
     public Integer getEstado() {
         return estado;
     }
-
+    public Elemento getElemento(){
+        return elemento;
+    }
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
@@ -49,7 +51,8 @@ public class ElementoPedido {
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
+    
     public void asocia(Elemento ele){
-        elementos.add(ele);
+        elemento = ele;
     }
 }

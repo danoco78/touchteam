@@ -30,7 +30,7 @@ import utilidades.Pair;
  *
  * @author Daniel
  */
-public class SAGRES implements IMetre, ICocinero {
+public class SAGRES implements IMetre, ICocinero, ICliente {
 
     ICarta icarta;
     IProducto iproducto;
@@ -134,7 +134,7 @@ public class SAGRES implements IMetre, ICocinero {
         return this.ipedidos.getInfoRest();
     }
 
-    public Pedido getSiguientePedidoBar(){
+    public Pedido getSiguientePedidoBar()throws Exception{
         return this.ipedidos.getSiguientePedidoBar();
     }
 
@@ -178,8 +178,8 @@ public class SAGRES implements IMetre, ICocinero {
         return this.ipedidos.seleccionaPlato(p, plato);
     }
 
-    public Pedido getSiguientePedidoCocinaEnCola() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Pedido getSiguientePedidoCocinaEnCola()throws Exception {
+        return this.ipedidos.getSiguientePedidoCocinaEncola();
     }
 
     public int getNumPlatosEnCola() {
@@ -187,5 +187,9 @@ public class SAGRES implements IMetre, ICocinero {
     }
     public int getNumBebidasEnCola(){
         return this.ipedidos.getNumBebidasEnCola();
+    }
+
+    public ArrayList<Pedido> getPedidosCocinaPreparandose() throws Exception{
+        return this.ipedidos.getPedidosCocinaPreparandose();
     }
 }
