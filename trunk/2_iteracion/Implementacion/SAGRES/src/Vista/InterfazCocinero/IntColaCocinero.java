@@ -32,14 +32,13 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
         //Pruebas
-/*        PanelMesaPedido mp = new PanelMesaPedido(new Pedido(),0);
-        PanelMesaPedido mp2 = new PanelMesaPedido(new Pedido(),0);
-        //System.out.println(this.panelIzquierda.getWidth());
-        //TODO Obtener el ancho del panel padre y el alto segun el numero de elementos del pedido
-        mp.setPreferredSize(new Dimension(340,2000));
+        PanelMesa mp = new PanelMesa(new Pedido(),0);
+        Dimension dim = this.panelIzquierda.getPreferredSize();
+        System.out.println(dim);
+        //Obtener el alto segun los elementos que tenga el pedido
+        mp.setPreferredSize(new Dimension((dim.width-10), 100));
         mp.setBackground(Color.BLACK);
-        this.panelFlow.add(mp);*/
-
+        this.panelFlow.add(mp);
     }
 
     @Override
@@ -122,7 +121,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
         panelIzquierda.setLayout(new java.awt.BorderLayout());
 
-        infoPendientes.setFont(new java.awt.Font("Arial", 1, 16));
+        infoPendientes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         infoPendientes.setForeground(new java.awt.Color(80, 98, 143));
         infoPendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         infoPendientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
@@ -213,6 +212,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             text = String.valueOf(n) + " platos pendientes";
         this.infoPendientes.setText(text);
     }
+    
     private void setInfoPreparandose(int n){
         String text;
         if(n == 0)
@@ -221,6 +221,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             text = String.valueOf(n) + " platos preparándose";
         this.infoPreparandose.setText(text);
     }
+
     private void actualizarVista(){
         this.setInfoPendientes(pendientes);
         this.setInfoPreparandose(preparandose);
