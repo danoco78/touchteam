@@ -13,6 +13,7 @@ package utilidades;
 
 import GestionCarta.Elemento;
 import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
@@ -57,7 +58,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
-            if (elemP.getEstado() == 0){
+            if (elemP.getEstado() == 0 &&
+                    elemP instanceof ElementoColaBar){
                 cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();
@@ -90,7 +92,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         for (int i=0;i<elementos.size();i++){
             elemP = elementos.get(i);
-            if (elemP.getEstado() == 0){
+            if (elemP.getEstado() == 0 &&
+                    elemP instanceof ElementoColaCocina){
                 cont++;
                 boton = new JButton();
                 ele = elementos.get(i).getElemento();

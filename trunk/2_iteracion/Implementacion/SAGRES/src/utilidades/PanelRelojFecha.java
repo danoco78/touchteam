@@ -110,7 +110,7 @@ public class PanelRelojFecha extends javax.swing.JPanel {
                             calendario.get(Calendar.DAY_OF_MONTH)+", "+
                             this.getMes(calendario.get(Calendar.MONTH))+" "+
                             calendario.get(Calendar.YEAR));
-                    Thread.sleep(10000);
+                    Thread.sleep(10000); // 10 Segundos
                     //synchronized(this){
                     //    wait();
                     //}

@@ -38,7 +38,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         //Obtener el alto segun los elementos que tenga el pedido
         mp.setPreferredSize(new Dimension((dim.width-10), 100));
         mp.setBackground(Color.BLACK);
-        this.panelFlow.add(mp);
+        //this.panelFlow.add(mp);
     }
 
     @Override
@@ -70,9 +70,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalSur = new javax.swing.JPanel();
         principalCentro = new javax.swing.JPanel();
         panelIzquierda = new javax.swing.JPanel();
-        infoPendientes = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        panelFlow = new javax.swing.JPanel();
         panelDerecha = new javax.swing.JPanel();
         infoPreparandose = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -120,23 +117,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
         panelIzquierda.setLayout(new java.awt.BorderLayout());
-
-        infoPendientes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        infoPendientes.setForeground(new java.awt.Color(80, 98, 143));
-        infoPendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        infoPendientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        infoPendientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panelIzquierda.add(infoPendientes, java.awt.BorderLayout.SOUTH);
-
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 5));
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        panelFlow.setBackground(new java.awt.Color(245, 245, 255));
-        panelFlow.setPreferredSize(new java.awt.Dimension(30, 30));
-        jScrollPane1.setViewportView(panelFlow);
-
-        panelIzquierda.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         principalCentro.add(panelIzquierda);
 
         panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
@@ -186,14 +166,11 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGestionProductos;
-    private javax.swing.JLabel infoPendientes;
     private javax.swing.JLabel infoPreparandose;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelBox2;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
-    private javax.swing.JPanel panelFlow;
     private javax.swing.JPanel panelHora;
     private javax.swing.JPanel panelIzquierda;
     private javax.swing.JPanel principalCentro;
