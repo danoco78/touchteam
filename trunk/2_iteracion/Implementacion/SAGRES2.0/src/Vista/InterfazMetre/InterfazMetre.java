@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  */
 public class InterfazMetre extends javax.swing.JFrame {
 
-    private IMetre imetre;
+    protected IMetre imetre;
     private IntGestionBebidas panelPrincipal = null;
     private IntColaBar panelColaBar = null;
 
