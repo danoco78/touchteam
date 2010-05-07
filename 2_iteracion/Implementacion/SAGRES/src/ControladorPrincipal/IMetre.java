@@ -29,4 +29,5 @@ public interface IMetre {
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
     public abstract Pedido getSiguientePedidoBar();
     public abstract boolean seleccionaBebida(Pedido p, ElementoBebida bebida);
+    public abstract int getNumBebidasEnCola();
 }

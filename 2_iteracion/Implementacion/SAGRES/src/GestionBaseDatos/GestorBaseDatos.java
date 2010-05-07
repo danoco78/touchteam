@@ -38,7 +38,7 @@ import utilidades.Imagen;
  *
  * @author Ángel Luis García, Carlos Salas, Daniel Guerrero y José David Dionisio
  */
-public class GestorBaseDatos implements ICartaBD, IStockBD {
+public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
     Connection Conexion;
 
@@ -739,6 +739,40 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         }
 
         return noFacturados;
+    }
+
+    public int getNumPlatosEnCola() {
+        Statement consulta;
+        int numplatos=-1;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("SELECT count(elementoPedido_elementoPedido_id)" +
+                    "FROM elementoColaCocina WHERE elementoPedido_elementoPedido_id IN" +
+                    " (SELECT elementoPedido_id FROM elementoPedido WHERE estado = 0)");
+            numplatos = resultado.getInt(1);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return numplatos;
+    }
+
+    public int getNumBebidasEnCola() {
+        Statement consulta;
+        int numbebidas=-1;
+        try {
+            consulta = (Statement) this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("SELECT count(elementoPedido_elementoPedido_id)" +
+                    "FROM elementoColaBar WHERE elementoPedido_elementoPedido_id IN" +
+                    " (SELECT elementoPedido_id FROM elementoPedido WHERE estado = 0)");
+            numbebidas = resultado.getInt(1);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return numbebidas;
     }
 }
 

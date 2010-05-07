@@ -103,4 +103,11 @@ public class GestorPedidos implements IGestorPedidos {
     public boolean seleccionaPlato(Pedido p, ElementoPlato plato){
         return true;
     }
+
+    public int getNumPlatosEnCola() {
+        return this.iPedidosBD.getNumPlatosEnCola();
+    }
+    public int getNumBebidasEnCola(){
+        return this.iPedidosBD.getNumBebidasEnCola();
+    }
 }

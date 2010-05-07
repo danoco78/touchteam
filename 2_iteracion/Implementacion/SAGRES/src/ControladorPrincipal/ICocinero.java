@@ -39,4 +39,5 @@ public interface ICocinero {
     public abstract Pedido getSiguientePedidoCocinaEnCola();
     public abstract Pedido getSiguientePedidoCocinaPreparandose();
     public abstract boolean seleccionaPlato(Pedido p, ElementoPlato plato);
+    public abstract int getNumPlatosEnCola();
 }

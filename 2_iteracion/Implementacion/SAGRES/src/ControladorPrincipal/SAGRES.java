@@ -138,7 +138,7 @@ public class SAGRES implements IMetre, ICocinero {
         return this.ipedidos.getSiguientePedidoBar();
     }
 
-    public Pedido getSiguientePedidoCocinaEncola(){
+    public Pedido getSiguientePedidoCocinaEncola() throws Exception{
         return this.ipedidos.getSiguientePedidoCocinaEncola();
     }
 
@@ -151,7 +151,7 @@ public class SAGRES implements IMetre, ICocinero {
     }
 
     public void imprimeFacturas(){
-        this.ipedidos.imprimeFacturas();
+        //this.ipedidos.imprimeFacturas();
     }
 
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
@@ -176,5 +176,16 @@ public class SAGRES implements IMetre, ICocinero {
 
     public boolean seleccionaPlato(Pedido p, ElementoPlato plato){
         return this.ipedidos.seleccionaPlato(p, plato);
+    }
+
+    public Pedido getSiguientePedidoCocinaEnCola() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public int getNumPlatosEnCola() {
+        return this.ipedidos.getNumPlatosEnCola();
+    }
+    public int getNumBebidasEnCola(){
+        return this.ipedidos.getNumBebidasEnCola();
     }
 }
