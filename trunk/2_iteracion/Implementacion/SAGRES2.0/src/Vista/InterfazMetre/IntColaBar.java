@@ -108,7 +108,7 @@ public class IntColaBar extends javax.swing.JPanel {
         pIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         pIzq.setLayout(new java.awt.GridBagLayout());
 
-        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14));
+        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bGestBebidas.setForeground(new java.awt.Color(80, 98, 143));
         bGestBebidas.setText("Gestionar Bebidas");
         bGestBebidas.setActionCommand("GestProductos");
@@ -117,7 +117,7 @@ public class IntColaBar extends javax.swing.JPanel {
         bGestBebidas.setMinimumSize(new java.awt.Dimension(170, 80));
         bGestBebidas.setPreferredSize(new java.awt.Dimension(170, 80));
         pIzq.add(bGestBebidas, new java.awt.GridBagConstraints());
-        bGestBebidas.getAccessibleContext().setAccessibleName("GestProductos");
+        bGestBebidas.getAccessibleContext().setAccessibleName("");
 
         cabecera.add(pIzq, java.awt.BorderLayout.WEST);
 
@@ -300,7 +300,7 @@ public class IntColaBar extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bGestBebidas;
+    protected javax.swing.JButton bGestBebidas;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel centro;
     private javax.swing.JPanel centroDer;
