@@ -19,7 +19,7 @@ public class InterfazMetre extends javax.swing.JFrame {
     private IntColaBar panelColaBar = null;
 
     protected static final String BEBIDA = "Bebida";
-    protected static final String COLA = "Cola";
+    protected static final String COLA = "Principal";
 
     public InterfazMetre(IMetre iMetre) {
         initComponents();
