@@ -697,6 +697,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     public ArrayList<Pedido> obtienePedidosNoFacturados(){
         ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
         Statement consulta;
+        ElementoPedido elemPed = null;
         try {
             consulta = (Statement) this.Conexion.createStatement();
             ResultSet resultado = consulta.executeQuery("select pedidoid, mesaid, estado, fecha from pedido" +
@@ -705,17 +706,32 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             while (resultado.next()) {
                 Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
-                ResultSet res2 = consulta.executeQuery(" select elementoPedido_id, estado, " +
-                        "comentario from elementoPedido where elementoPedido_id IN (select elementoPedido_id from tieneElemento where pedido_pedido_id = "+resultado.getInt(1)+"); ");
-                while(res2.next()){
-                    ElementoPedido elem = new ElementoPedido(res2.getInt(1),res2.getInt(2),
-                            res2.getString(3));
-                    ElementoColaBar temp = new ElementoColaBar();
-                    if(elem.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
-                         p.asocia((ElementoColaBar)elem);
-                    else
-                         p.asocia((ElementoColaCocina)elem);
+                ResultSet resElemPed = consulta.executeQuery(" select elementoPedido_id, estado, " +
+                        "comentario from elementoPedido where elementoPedido_id IN (select elementoPedido_id " +
+                        "from tieneElemento where pedido_pedido_id = "+resultado.getInt(1)+"); ");
+                while(resElemPed.next()){
+                    elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
+                            resElemPed.getString(3));
+                    //TODO Resolver esta consulta
+                    ResultSet resElem = consulta.executeQuery("");
+                    Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
+                            resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
+                            ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
+                    //TODO Resolver esta consulta
+                    ResultSet resProds = consulta.executeQuery("");
+                    while(resProds.next()){
+                        Producto prod = new Producto(resProds.getInt(1),resProds.getString(2),
+                                resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
+                                Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
+                        elemento.asocia(prod);
+                    }
+                    elemPed.asocia(elemento);
                 }
+                ElementoColaBar temp = new ElementoColaBar();
+                    if(elemPed.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
+                         p.asocia((ElementoColaBar)elemPed);
+                    else
+                         p.asocia((ElementoColaCocina)elemPed);
                 noFacturados.add(p);
             }
         } catch (SQLException ex) {

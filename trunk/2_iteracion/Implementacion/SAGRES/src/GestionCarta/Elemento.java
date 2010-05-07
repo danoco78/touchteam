@@ -1,6 +1,7 @@
 package GestionCarta;
 
 import GestionStock.GestionProductos.Producto;
+import java.util.HashSet;
 import javax.swing.ImageIcon;
 
 /**
@@ -16,6 +17,7 @@ public class Elemento {
     private ImageIcon foto;
     private String nombre;
     private float precio;
+    private HashSet<Producto> productos;
 
     
     
@@ -29,7 +31,20 @@ public class Elemento {
         this.disponible = false; //Hasta que no se comprueben los productos no esta disponible
         this.divisiones = 1;
     }
-    
+
+    public Elemento(int codigo, String nombre, String descripcion, boolean disponible, ImageIcon foto, int divi, int diviMax, float precio){
+    {
+        this.codigoElemento = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.disponible = disponible;
+        this.foto = foto;
+        this.divisiones = divi;
+        this.divisionesMaximas = diviMax;
+        this.precio = precio;
+    }
+
+    }
     /**
      * Establece la disponibilidad del elemento.
      *
@@ -118,7 +133,10 @@ public class Elemento {
     public boolean getDisponible(){
         return this.disponible;
     }
-    
+
+    public void asocia(Producto p){
+        productos.add(p);
+    }
     /**
      * Método para comprobar si dos elementos son iguales
      * @param objeto El elemento con el que queremos comparar.
