@@ -41,7 +41,7 @@ import utilidades.Imagen;
  *
  * @author Ángel Luis García, Carlos Salas, Daniel Guerrero y José David Dionisio
  */
-public class GestorBaseDatos implements ICartaBD, IStockBD {
+public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
     Connection Conexion;
 
