@@ -19,7 +19,7 @@ public class Factura {
 
     protected static final int ENCOLA = 0;
     protected static final int IMPRIMIDO = 1;
-    protected static final int PAGADO = 1;
+    protected static final int PAGADO = 2;
 
     public Factura(Integer codFactura, Integer estado, Date fecha){
         this.codFactura = codFactura;
