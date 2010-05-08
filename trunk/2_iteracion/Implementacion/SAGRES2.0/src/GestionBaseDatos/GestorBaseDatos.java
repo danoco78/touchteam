@@ -929,20 +929,51 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     public ArrayList<Pedido> getPedidos(int codMesa){
         ArrayList<Pedido> pedidos = new ArrayList();
         try{
-            ArrayList<ElementoPedido> elementos = new ArrayList();
+            // Obtengo todos lo elementos de la carta registrados en el sistema. Asi los objetos seran los mismos en los pedidos
+            HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
             Statement consulta = (Statement) this.Conexion.createStatement();
-            // Obtengo los pedidos
-            ResultSet tablaPedidos = consulta.executeQuery("select * from pedido where pedido.mesa_id = "+codMesa+" and pedido.estado = 1");
-            ResultSet tablaElementos;
-            while (tablaPedidos.next()){
-                pedidos.add(new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4)));
-                /*tablaElementos = consulta.executeQuery(
-"select ep.elementoPedido_id,ep.estado,ep.comentario from pedido p, tieneElemento t, elementoPedido ep where p.pedido_id = t.elementoPedido_elementoPedido_id AND
-      t.pedido_pedido_id = ep.elementoPedido_id AND
-      ep.elementoPedido_id = 'TUCODIGO';
-");*/
+            // Obtengo los pedidos en estado bloqueado de la mesa identificado por el codigo codMesa
+            ResultSet tablaPedidos = consulta.executeQuery("SELECT * FROM pedido WHERE mesa_id = "+codMesa+" AND estado = 1");
+            ResultSet tablaElementosPedido;
+            ResultSet codigoElemento;
+            boolean encontrado;
+            Iterator<Elemento> it;
+            Elemento ele = null;
+            ElementoPedido eleP;
+            Pedido p;
 
-                //pedidos.get(pedidos.size()).asocia(null);
+            while (tablaPedidos.next()){
+                // Obtengo los elementoPedido asociados al pedido
+                tablaElementosPedido = consulta.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
+                p = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
+                while (tablaElementosPedido.next()){
+                    //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
+                    codigoElemento = consulta.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                    if (!codigoElemento.next()){
+                        // No es un plato es una bebida
+                        codigoElemento = consulta.executeQuery("SELECT elementoBebida_elemento_elemento_id FROM asociaBebida WHERE elementoColaBar_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                        codigoElemento.next();
+                        eleP = (ElementoColaBar) new ElementoPedido(tablaElementosPedido.getInt(1),tablaElementosPedido.getInt(2),tablaElementosPedido.getString(3));
+                        //Asocio el elemento pedido al pedido
+                        p.asocia((ElementoColaBar) eleP);
+                    }
+                    else{
+                        eleP = (ElementoColaCocina) new ElementoPedido(tablaElementosPedido.getInt(1),tablaElementosPedido.getInt(2),tablaElementosPedido.getString(3));
+                        // Asocio el elemento pedido al pedido
+                        p.asocia((ElementoColaCocina) eleP);
+                    }
+                    // Busco el objeto elemento de carta
+                    encontrado = false;
+                    for (it = elementosCarta.iterator();it.hasNext() && !encontrado;){
+                        ele = it.next();
+                        if (ele.getCodigoElemento() == codigoElemento.getInt(1))
+                            encontrado = true;
+                    }
+                    // Asocio el elemento de la Carta al elemento pedido
+                    eleP.asocia(ele);
+                }
+                //Añado el pedido a la lista de pedidos de la mesa
+                pedidos.add(p);
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
