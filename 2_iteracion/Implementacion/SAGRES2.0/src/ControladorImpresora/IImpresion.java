@@ -1,5 +1,6 @@
 package ControladorImpresora;
 
+import GestionPedidos.Factura;
 import GestionStock.GestionProductos.Producto;
 import java.util.HashMap;
 
@@ -15,4 +16,12 @@ public interface IImpresion {
      * @param informacionPedido HashMap con la lista de (producto,cantidad) del pedido
      */
     public abstract void imprimePedido(HashMap<Producto, Float> informacionPedido);
+
+
+    /**
+     * Imprime la factura f
+     *
+     * @param f Factura a imprimir
+     */
+    public abstract void imprimeFactura(Factura f);
 }
