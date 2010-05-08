@@ -11,6 +11,9 @@
 
 package utilidades;
 
+import GestionCarta.Elemento;
+import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import javax.swing.JButton;
 
 /**
@@ -19,16 +22,28 @@ import javax.swing.JButton;
  */
 public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
+    public static final int PLATO = 0;
+    public static final int BEBIDA = 1;
+    int filtro;
+    Pedido ped;
+
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa() {
+    public PanelPedidoPorMesa(Pedido ped) {
         initComponents();
+        this.autoCompletar();
+        this.ped = ped;
+        this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
+    }
+
+    public void autoCompletar(){
+        // TODO Autocompletar con el pedido que guarda la clase
+        this.pPedidos.removeAll();
+        
+        ElementoPedido ele = new ElementoPedido(1, 1, "La carne poco hecha por favor.");
+        ele.asocia(new Elemento(2, "Hamburguesa con queso", "Deliciosa carne de vacuno a la parrilla con queso fresco",
+                true, null, 5, 5, 10));
         for(int i=0; i<4; ++i){
-            JButton b = new JButton("Boton "+i);
-            b.setBackground(new java.awt.Color(211, 223, 253));
-            b.setFont(new java.awt.Font("Arial", 0, 10));
-            b.setForeground(new java.awt.Color(80, 98, 143));
-            b.setText("<html>\n<body> \nHamburguesa con queso \n<br></br>\n<br></br>\n<font color=\"#000000\">La carne poco hecha, por favor...</font>\n</body>\n</html>\n");
-            b.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(ele);
             pPedidos.add(b);
             this.pPedidos.add(new PanelEspacioVertical());
         }
@@ -44,7 +59,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     private void initComponents() {
 
         pTexto = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        tPedido = new javax.swing.JLabel();
         pPedidos = new javax.swing.JPanel();
         pEspacioIzq = new javax.swing.JPanel();
         pEspacioDer = new javax.swing.JPanel();
@@ -56,11 +71,11 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         pTexto.setOpaque(false);
         pTexto.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(80, 98, 143));
-        jLabel1.setText("     Mesa 5, Pedido 2");
-        jLabel1.setPreferredSize(new java.awt.Dimension(92, 35));
-        pTexto.add(jLabel1, java.awt.BorderLayout.CENTER);
+        tPedido.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        tPedido.setForeground(new java.awt.Color(80, 98, 143));
+        tPedido.setText("     Mesa 5, Pedido 2");
+        tPedido.setPreferredSize(new java.awt.Dimension(92, 35));
+        pTexto.add(tPedido, java.awt.BorderLayout.CENTER);
 
         add(pTexto, java.awt.BorderLayout.NORTH);
 
@@ -107,11 +122,11 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel pEspacioDer;
     private javax.swing.JPanel pEspacioIzq;
     private javax.swing.JPanel pPedidos;
     private javax.swing.JPanel pTexto;
+    private javax.swing.JLabel tPedido;
     // End of variables declaration//GEN-END:variables
 
 }
