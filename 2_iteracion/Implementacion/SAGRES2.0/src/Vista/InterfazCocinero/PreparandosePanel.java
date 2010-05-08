@@ -42,9 +42,9 @@ public class PreparandosePanel extends javax.swing.JPanel {
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
-        int totalPlatos = 0; // Actualiza el total de platos
+        int totalPlatos = 0; // Actualiza el total de platos, por implementar
         for(int i=0; i<listaPedidos.size(); ++i){
-            this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i)));
+            this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), PanelPedidoPorMesa.PLATO));
             this.pPanelesPedido.add(new PanelEspacioVertical());
         }
     }

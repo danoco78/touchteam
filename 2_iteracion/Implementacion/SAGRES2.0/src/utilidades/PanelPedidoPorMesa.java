@@ -11,10 +11,11 @@
 
 package utilidades;
 
-import GestionCarta.Elemento;
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
-import javax.swing.JButton;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,24 +29,37 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     Pedido ped;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped) {
+    public PanelPedidoPorMesa(Pedido ped, int filtro) {
         initComponents();
         this.autoCompletar();
         this.ped = ped;
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
+        this.filtro = filtro;
     }
 
     public void autoCompletar(){
         // TODO Autocompletar con el pedido que guarda la clase
         this.pPedidos.removeAll();
         
-        ElementoPedido ele = new ElementoPedido(1, 1, "La carne poco hecha por favor.");
-        ele.asocia(new Elemento(2, "Hamburguesa con queso", "Deliciosa carne de vacuno a la parrilla con queso fresco",
-                true, null, 5, 5, 10));
-        for(int i=0; i<4; ++i){
-            BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(ele);
-            pPedidos.add(b);
-            this.pPedidos.add(new PanelEspacioVertical());
+        //ElementoPedido ele = new ElementoPedido(1, 1, "La carne poco hecha por favor.");
+        //ele.asocia(new Elemento(2, "Hamburguesa con queso", "Deliciosa carne de vacuno a la parrilla con queso fresco",
+        //        true, null, 5, 5, 10));
+
+        ArrayList<ElementoPedido> lista = ped.obtieneElementos();
+        for(int i=0; i<lista.size(); ++i){
+            if(filtro == PLATO){
+                if(lista.get(i) instanceof ElementoColaCocina){
+                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i));
+                    pPedidos.add(b);
+                    this.pPedidos.add(new PanelEspacioVertical());
+                }
+            }else{
+                if(lista.get(i) instanceof ElementoColaBar){
+                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i));
+                    pPedidos.add(b);
+                    this.pPedidos.add(new PanelEspacioVertical());
+                }
+            }
         }
     }
 
@@ -65,13 +79,12 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         pEspacioDer = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(235, 235, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         setLayout(new java.awt.BorderLayout());
 
         pTexto.setOpaque(false);
         pTexto.setLayout(new java.awt.BorderLayout());
 
-        tPedido.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        tPedido.setFont(new java.awt.Font("Arial", 1, 11));
         tPedido.setForeground(new java.awt.Color(80, 98, 143));
         tPedido.setText("     Mesa 5, Pedido 2");
         tPedido.setPreferredSize(new java.awt.Dimension(92, 35));
@@ -96,7 +109,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         );
         pEspacioIzqLayout.setVerticalGroup(
             pEspacioIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addGap(0, 265, Short.MAX_VALUE)
         );
 
         add(pEspacioIzq, java.awt.BorderLayout.WEST);
@@ -114,7 +127,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         );
         pEspacioDerLayout.setVerticalGroup(
             pEspacioDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addGap(0, 265, Short.MAX_VALUE)
         );
 
         add(pEspacioDer, java.awt.BorderLayout.EAST);
