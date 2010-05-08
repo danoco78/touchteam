@@ -77,7 +77,7 @@ public class Main {
             dCarga.Progreso(70);
             GestorProveedor pedido = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
-            GestorPedidos gpedido = new GestorPedidos();
+            GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
             InterfazMetre interfaz = new InterfazMetre(controlador);
