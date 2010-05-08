@@ -18,9 +18,17 @@ public class ElementoColaBar extends ElementoPedido{
     public static Integer ENCOLA = 0;
     public static Integer PREPARADO = 1;
 
+     /**
+     * Constructor por defecto de la clase ElementoColaBar. Crea un elemento con una cadena vacía
+     */
     public ElementoColaBar(){
         super("");
     }
+     /**
+     * Constructor con parámetros de la clase ElementoColaBar. Crea un objeto con un comentario determinado
+     *
+     * @param comentario
+     */
     public ElementoColaBar(String comentario){
         super(comentario);
     }

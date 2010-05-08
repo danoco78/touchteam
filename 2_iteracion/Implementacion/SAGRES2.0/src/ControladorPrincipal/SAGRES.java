@@ -39,11 +39,13 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     IPedidoProveedor ipedidoproveedor;
     IGestorPedidos ipedidos;
 
-    public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido){
+    public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido,
+            IGestorPedidos gpedidos){
         this.icarta = iCarta;
         this.iproducto = iProducto;
         this.iincidencia = iIncidencia;
         this.ipedidoproveedor = iPedido;
+        this.ipedidos = gpedidos;
     }
 
 
@@ -207,5 +209,9 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public boolean seleccionaBebida(Pedido pe, ElementoColaBar e) throws Exception{
         return this.ipedidos.seleccionaBebida(pe, e);
+    }
+
+    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

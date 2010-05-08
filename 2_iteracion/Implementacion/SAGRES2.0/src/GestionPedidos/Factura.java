@@ -29,7 +29,6 @@ public class Factura {
     public Integer getCodFactura() {
         return codFactura;
     }
-    //TODO Preguntar que hace esta función
     public Factura crear(){
         Factura nueva = new Factura(0,0,fecha);
         return nueva;
