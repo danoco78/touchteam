@@ -15,6 +15,8 @@ import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
 import Vista.InterfazCliente.PanelElementoCarta;
 import java.awt.BorderLayout;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  *
@@ -25,9 +27,42 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     private ICliente icliente;
 
     /** Creates new form PanelHojasCarta */
-    public PanelHojasCarta() throws Exception {
+    public PanelHojasCarta(HashSet<Elemento> listaElementos) throws Exception {
         initComponents();
-        CargarCarta();
+
+        Iterator it = listaElementos.iterator();
+
+        Elemento e;
+
+        if(it.hasNext()){
+            e = (Elemento) it.next();
+            PanelElementoArribaI.add(new PanelElementoCarta(e));
+
+            if(it.hasNext()){
+                e = (Elemento) it.next();
+                PanelElementoCentroI.add(new PanelElementoCarta(e));
+
+                if(it.hasNext()){
+                    e = (Elemento) it.next();
+                    PanelElementoAbajoI.add(new PanelElementoCarta(e));
+
+                    if(it.hasNext()){
+                        e = (Elemento) it.next();
+                        PanelElementoArribaD.add(new PanelElementoCarta(e));
+
+                        if(it.hasNext()){
+                            e = (Elemento) it.next();
+                            PanelElementoCentroD.add(new PanelElementoCarta(e));
+
+                            if(it.hasNext()){
+                                e = (Elemento) it.next();
+                                PanelElementoAbajoD.add(new PanelElementoCarta(e));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /** This method is called from within the constructor to
@@ -40,65 +75,53 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     private void initComponents() {
 
         PanelHojaIzquierda = new javax.swing.JPanel();
-        PanelElementoArriba = new javax.swing.JPanel();
-        PanelElementoCentro = new javax.swing.JPanel();
-        PanelElementoAbajo = new javax.swing.JPanel();
+        PanelElementoArribaI = new javax.swing.JPanel();
+        PanelElementoCentroI = new javax.swing.JPanel();
+        PanelElementoAbajoI = new javax.swing.JPanel();
         PanelHojaDerecha = new javax.swing.JPanel();
-        PanelElementoArriba1 = new javax.swing.JPanel();
-        PanelElementoCentro1 = new javax.swing.JPanel();
-        PanelElementoAbajo1 = new javax.swing.JPanel();
+        PanelElementoArribaD = new javax.swing.JPanel();
+        PanelElementoCentroD = new javax.swing.JPanel();
+        PanelElementoAbajoD = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridLayout(1, 0));
 
         PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0));
 
-        PanelElementoArriba.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoArriba);
+        PanelElementoArribaI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoArribaI);
 
-        PanelElementoCentro.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoCentro);
+        PanelElementoCentroI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoCentroI);
 
-        PanelElementoAbajo.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoAbajo);
+        PanelElementoAbajoI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoAbajoI);
 
         add(PanelHojaIzquierda);
 
         PanelHojaDerecha.setLayout(new java.awt.GridLayout(3, 0));
 
-        PanelElementoArriba1.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoArriba1);
+        PanelElementoArribaD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoArribaD);
 
-        PanelElementoCentro1.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoCentro1);
+        PanelElementoCentroD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoCentroD);
 
-        PanelElementoAbajo1.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoAbajo1);
+        PanelElementoAbajoD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoAbajoD);
 
         add(PanelHojaDerecha);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelElementoAbajo;
-    private javax.swing.JPanel PanelElementoAbajo1;
-    private javax.swing.JPanel PanelElementoArriba;
-    private javax.swing.JPanel PanelElementoArriba1;
-    private javax.swing.JPanel PanelElementoCentro;
-    private javax.swing.JPanel PanelElementoCentro1;
+    private javax.swing.JPanel PanelElementoAbajoD;
+    private javax.swing.JPanel PanelElementoAbajoI;
+    private javax.swing.JPanel PanelElementoArribaD;
+    private javax.swing.JPanel PanelElementoArribaI;
+    private javax.swing.JPanel PanelElementoCentroD;
+    private javax.swing.JPanel PanelElementoCentroI;
     private javax.swing.JPanel PanelHojaDerecha;
     private javax.swing.JPanel PanelHojaIzquierda;
     // End of variables declaration//GEN-END:variables
-
-    private void CargarCarta() throws Exception {
-        Elemento e1 = new Elemento(10, "Descripcion 1", 4, null, "Elemento 1", (float) 23.00);
-        Elemento e2 = new Elemento(20, "Descripcion 2", 4, null, "Elemento 2", (float) 43.00);
-        Elemento e3 = new Elemento(30, "Descripcion 3", 4, null, "Elemento 3", (float) 30.50);
-
-        PanelElementoCarta PEC = new PanelElementoCarta(e1);
-        PanelElementoArriba.add(PEC, BorderLayout.CENTER);
-        PanelElementoCentro.add(new PanelElementoCarta(e2));
-        PanelElementoAbajo.add(new PanelElementoCarta(e3));
-        
-    }
 
 }

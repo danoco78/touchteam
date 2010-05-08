@@ -26,6 +26,8 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         LabelNombre.setText(e.getNombre());
         TextoDescripcion.setText(e.getDescripcion());
         LabelPrecio.setText(Double.toString(e.getPrecio()));
+        TextoDescripcion.setSize(500, 400);
+
     }
 
     /** This method is called from within the constructor to
@@ -39,6 +41,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         PanelDatos = new javax.swing.JPanel();
         LabelNombre = new javax.swing.JLabel();
+        PanelDescripcion = new javax.swing.JPanel();
         ScrollDescripcion = new javax.swing.JScrollPane();
         TextoDescripcion = new javax.swing.JTextPane();
         PanelPrecio = new javax.swing.JPanel();
@@ -54,13 +57,17 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         LabelNombre.setText("jLabel1");
         PanelDatos.add(LabelNombre, java.awt.BorderLayout.NORTH);
 
+        PanelDescripcion.setLayout(new java.awt.BorderLayout());
+
         TextoDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 204), 1, true));
         TextoDescripcion.setEditable(false);
         TextoDescripcion.setMaximumSize(new java.awt.Dimension(10, 10));
         TextoDescripcion.setMinimumSize(new java.awt.Dimension(10, 10));
         ScrollDescripcion.setViewportView(TextoDescripcion);
 
-        PanelDatos.add(ScrollDescripcion, java.awt.BorderLayout.CENTER);
+        PanelDescripcion.add(ScrollDescripcion, java.awt.BorderLayout.CENTER);
+
+        PanelDatos.add(PanelDescripcion, java.awt.BorderLayout.LINE_END);
 
         PanelPrecio.setLayout(new java.awt.BorderLayout());
 
@@ -90,6 +97,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JLabel LabelNombre;
     private javax.swing.JLabel LabelPrecio;
     private javax.swing.JPanel PanelDatos;
+    private javax.swing.JPanel PanelDescripcion;
     private javax.swing.JPanel PanelFoto;
     private javax.swing.JPanel PanelPrecio;
     private javax.swing.JScrollPane ScrollDescripcion;
