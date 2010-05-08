@@ -10,6 +10,7 @@ import GestionCarta.SeccionComida;
 import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
@@ -904,9 +905,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         return numbebidas;
     }
 
+    // Actualiza el estado del pedido
     public void actualizaPedido(Pedido p) {
         try{
-            java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+ "'");
+            java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+"'");
             actPedido.setInt(1, p.getEstado());
             actPedido.executeUpdate();
             java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementoPedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
@@ -925,7 +927,23 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public Factura getFactura(int codMesa){
+        Factura fac = null;
+        try{
+            Statement consulta = (Statement) this.Conexion.createStatement();
+            ResultSet factura = consulta.executeQuery("SELECT factura_id,estado,fecha FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND estado = 1");
+            factura.next();
+            fac = new Factura(factura.getInt(1),factura.getInt(2),factura.getDate(3));
+            ArrayList<Pedido> pedidos = this.getPedidos(codMesa);
+            for (int i=0;i<pedidos.size();i++)
+                fac.asocia(pedidos.get(i));
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return fac;
+    }
+
     public ArrayList<Pedido> getPedidos(int codMesa){
         ArrayList<Pedido> pedidos = new ArrayList();
         try{
@@ -980,5 +998,17 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         }
         return pedidos;
     }
+
+    // Actualiza el estado de la factura
+    public void actualizaFactura(Factura f){
+        try {
+            java.sql.PreparedStatement accion = this.Conexion.prepareStatement("UPDATE factura SET estado=? WHERE factura_id='"+ f.getCodFactura()+"'");
+            accion.setInt(1, f.getEstado());
+            accion.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
 

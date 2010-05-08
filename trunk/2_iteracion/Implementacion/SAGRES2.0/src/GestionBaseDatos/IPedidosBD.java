@@ -5,6 +5,7 @@
 
 package GestionBaseDatos;
 
+import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
 
@@ -17,5 +18,7 @@ public interface IPedidosBD {
     public int getNumPlatosEnCola();
     public int getNumBebidasEnCola();
     public void actualizaPedido(Pedido p);
+    public Factura getFactura(int codMesa);
     public ArrayList<Pedido> getPedidos(int codMesa);
+    public void actualizaFactura(Factura f);
 }
