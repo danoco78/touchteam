@@ -5,6 +5,7 @@
 
 package GestionPedidos;
 
+import ControladorImpresora.IImpresion;
 import java.util.ArrayList;
 import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
@@ -24,6 +25,13 @@ public class GestorPedidos implements IGestorPedidos {
 
     IPedidosBD iPedidosBD;
     IProducto iProducto;
+    IImpresion iImpresion;
+
+    public GestorPedidos(IPedidosBD iPedidosBD, IProducto iProducto, IImpresion iImpresion){
+        this.iPedidosBD = iPedidosBD;
+        this.iProducto = iProducto;
+        this.iImpresion = iImpresion;
+    }
 
     //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
@@ -123,7 +131,10 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public void imprimeFactura(Integer codMesa){
-
+        Factura f = this.iPedidosBD.getFactura(codMesa);
+        f.modificaEstado(Factura.IMPRIMIDO);
+        this.iPedidosBD.actualizaFactura(f);
+        this.iImpresion.imprimeFactura(f);
     }
 
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
