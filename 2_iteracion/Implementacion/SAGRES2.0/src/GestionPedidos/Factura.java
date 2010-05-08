@@ -17,6 +17,10 @@ public class Factura {
     private Date fecha;
     private ArrayList<Pedido> pedidosAsociados;
 
+    protected static final int ENCOLA = 0;
+    protected static final int IMPRIMIDO = 1;
+    protected static final int PAGADO = 1;
+
     public Factura(Integer codFactura, Integer estado, Date fecha){
         this.codFactura = codFactura;
         this.estado = estado;
@@ -50,6 +54,12 @@ public class Factura {
         this.fecha = fecha;
     }
 
+    public ArrayList<Pedido> getPedidos(){
+        return pedidosAsociados;
+    }
 
-
+    public void asocia(Pedido p){
+        this.pedidosAsociados.add(p);
+    }
+    
 }

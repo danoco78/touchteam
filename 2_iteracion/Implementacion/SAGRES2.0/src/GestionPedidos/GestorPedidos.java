@@ -35,7 +35,7 @@ public class GestorPedidos implements IGestorPedidos {
             p.setEstado(Pedido.FACTURADO);
             this.iPedidosBD.actualizaPedido(p);
         }
-        f.setEstado(Factura.PAGADO);
+        f.modificaEstado(Factura.PAGADO);
         this.iPedidosBD.actualizaFactura(f);
     }
 
