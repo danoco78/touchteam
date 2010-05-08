@@ -14,10 +14,12 @@ package Vista.InterfazCliente;
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
 import GestionCarta.Seccion;
+import java.awt.CardLayout;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 
 /**
  *
@@ -27,17 +29,23 @@ public class InterfazCliente extends javax.swing.JPanel {
 
     ICliente icliente;
 
-    HashSet<PanelHojasCarta> hojasSeccionEntrantes = new HashSet();
-    HashSet<PanelHojasCarta> hojasSeccionCarnes = new HashSet();
-    HashSet<PanelHojasCarta> hojasSeccionPescados = new HashSet();
-    HashSet<PanelHojasCarta> hojasSeccionBebidas = new HashSet();
-    HashSet<PanelHojasCarta> hojasSeccionPostres = new HashSet();
+    JPanel hojasSeccionEntrantes = new JPanel();
+    JPanel hojasSeccionPescados = new JPanel();
+    JPanel hojasSeccionCarnes = new JPanel();
+    JPanel hojasSeccionBebidas = new JPanel();
+    JPanel hojasSeccionPostres = new JPanel();
+
+    int seccion; //Seccion que se muestra actualmente
 
     /** Creates new form InterfazCliente */
     public InterfazCliente() throws Exception {
         initComponents();
         this.setDoubleBuffered(true);
         cargarCarta();
+
+        seccion=0; //Entrantes
+        ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
+
     }
 
     /** This method is called from within the constructor to
@@ -61,7 +69,12 @@ public class InterfazCliente extends javax.swing.JPanel {
         PanelComentarios = new javax.swing.JPanel();
         PanelCartaBotones = new javax.swing.JPanel();
         PanelCarta = new javax.swing.JPanel();
-        MultiPanelCarta = new javax.swing.JLayeredPane();
+        PanelPasarPaginas = new javax.swing.JPanel();
+        PanelPaginaAnterior = new javax.swing.JPanel();
+        LabelPaginaAnterior = new javax.swing.JLabel();
+        PanelPaginaSiguiente = new javax.swing.JPanel();
+        LabelPaginaSiguiente = new javax.swing.JLabel();
+        PanelHojas = new javax.swing.JPanel();
         PanelBotones = new javax.swing.JPanel();
         BotonEntrantes = new javax.swing.JToggleButton();
         BotonPescados = new javax.swing.JToggleButton();
@@ -132,7 +145,37 @@ public class InterfazCliente extends javax.swing.JPanel {
         PanelCartaBotones.setLayout(new java.awt.BorderLayout());
 
         PanelCarta.setLayout(new java.awt.BorderLayout());
-        PanelCarta.add(MultiPanelCarta, java.awt.BorderLayout.CENTER);
+
+        PanelPasarPaginas.setLayout(new java.awt.BorderLayout());
+
+        PanelPaginaAnterior.setLayout(new java.awt.BorderLayout());
+
+        LabelPaginaAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/paginaAnterior.png"))); // NOI18N
+        LabelPaginaAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                paginaAnterior(evt);
+            }
+        });
+        PanelPaginaAnterior.add(LabelPaginaAnterior, java.awt.BorderLayout.CENTER);
+
+        PanelPasarPaginas.add(PanelPaginaAnterior, java.awt.BorderLayout.WEST);
+
+        PanelPaginaSiguiente.setLayout(new java.awt.BorderLayout());
+
+        LabelPaginaSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/paginaSiguiente.png"))); // NOI18N
+        LabelPaginaSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                paginaSiguiente(evt);
+            }
+        });
+        PanelPaginaSiguiente.add(LabelPaginaSiguiente, java.awt.BorderLayout.CENTER);
+
+        PanelPasarPaginas.add(PanelPaginaSiguiente, java.awt.BorderLayout.EAST);
+
+        PanelCarta.add(PanelPasarPaginas, java.awt.BorderLayout.SOUTH);
+
+        PanelHojas.setLayout(new java.awt.CardLayout(1, 1));
+        PanelCarta.add(PanelHojas, java.awt.BorderLayout.CENTER);
 
         PanelCartaBotones.add(PanelCarta, java.awt.BorderLayout.CENTER);
 
@@ -140,19 +183,29 @@ public class InterfazCliente extends javax.swing.JPanel {
 
         BotonEntrantes.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
         BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
         BotonEntrantes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonEntrantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarEntrantes(evt);
+            }
+        });
         PanelBotones.add(BotonEntrantes);
 
         BotonPescados.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonPescados);
-        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
         BotonPescados.setText("Pescados");
         BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonPescados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarPescados(evt);
+            }
+        });
         PanelBotones.add(BotonPescados);
 
         BotonCarnes.setBackground(new java.awt.Color(255, 255, 255));
@@ -161,6 +214,11 @@ public class InterfazCliente extends javax.swing.JPanel {
         BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
         BotonCarnes.setText("Carnes");
         BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonCarnes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarCarnes(evt);
+            }
+        });
         PanelBotones.add(BotonCarnes);
 
         BotonBebidas.setBackground(new java.awt.Color(255, 255, 255));
@@ -169,6 +227,11 @@ public class InterfazCliente extends javax.swing.JPanel {
         BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
         BotonBebidas.setText("Bebidas");
         BotonBebidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarBebidas(evt);
+            }
+        });
         PanelBotones.add(BotonBebidas);
 
         BotonPostres.setBackground(new java.awt.Color(255, 255, 255));
@@ -177,6 +240,11 @@ public class InterfazCliente extends javax.swing.JPanel {
         BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
         BotonPostres.setText("Postres");
         BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonPostres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarPostres(evt);
+            }
+        });
         PanelBotones.add(BotonPostres);
 
         PanelCartaBotones.add(PanelBotones, java.awt.BorderLayout.SOUTH);
@@ -185,6 +253,89 @@ public class InterfazCliente extends javax.swing.JPanel {
 
         add(PanelGeneralCentro, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void paginaSiguiente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paginaSiguiente
+        Iterator it;
+        int i=0;
+        
+        switch(seccion){
+            case 0: //Entrantes
+                ((CardLayout) hojasSeccionEntrantes.getLayout()).next(hojasSeccionEntrantes);
+                break;
+            case 1: //Pescados
+                ((CardLayout) hojasSeccionPescados.getLayout()).next(hojasSeccionPescados);
+                break;
+            case 2: //Carnes
+                ((CardLayout) hojasSeccionCarnes.getLayout()).next(hojasSeccionCarnes);
+                break;
+            case 3: //Bebidas
+                ((CardLayout) hojasSeccionBebidas.getLayout()).next(hojasSeccionBebidas);
+                break;
+            case 4: //Postres
+                ((CardLayout) hojasSeccionPostres.getLayout()).next(hojasSeccionPostres);
+                break;
+
+        }
+    }//GEN-LAST:event_paginaSiguiente
+
+    private void mostrarEntrantes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarEntrantes
+        if(seccion!=0){
+            seccion=0;
+            ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
+        }
+    }//GEN-LAST:event_mostrarEntrantes
+
+    private void mostrarPescados(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarPescados
+        if(seccion!=1){
+            seccion=1;
+            ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Pescados");
+        }
+    }//GEN-LAST:event_mostrarPescados
+
+    private void mostrarCarnes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCarnes
+        if(seccion!=2){
+            seccion=2;
+            ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Carnes");
+        }
+    }//GEN-LAST:event_mostrarCarnes
+
+    private void mostrarBebidas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarBebidas
+        if(seccion!=3){
+            seccion=3;
+            ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Bebidas");
+        }
+    }//GEN-LAST:event_mostrarBebidas
+
+    private void mostrarPostres(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarPostres
+        if(seccion!=4){
+            seccion=4;
+            ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Postres");
+        }
+    }//GEN-LAST:event_mostrarPostres
+
+    private void paginaAnterior(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paginaAnterior
+        Iterator it;
+        int i=0;
+
+        switch(seccion){
+            case 0: //Entrantes
+                ((CardLayout) hojasSeccionEntrantes.getLayout()).previous(hojasSeccionEntrantes);
+                break;
+            case 1: //Pescados
+                ((CardLayout) hojasSeccionPescados.getLayout()).previous(hojasSeccionPescados);
+                break;
+            case 2: //Carnes
+                ((CardLayout) hojasSeccionCarnes.getLayout()).previous(hojasSeccionCarnes);
+                break;
+            case 3: //Bebidas
+                ((CardLayout) hojasSeccionBebidas.getLayout()).previous(hojasSeccionBebidas);
+                break;
+            case 4: //Postres
+                ((CardLayout) hojasSeccionPostres.getLayout()).previous(hojasSeccionPostres);
+                break;
+
+        }
+    }//GEN-LAST:event_paginaAnterior
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -215,22 +366,27 @@ public class InterfazCliente extends javax.swing.JPanel {
     private javax.swing.JToggleButton BotonPostres;
     private javax.swing.JButton BotonVerFactura;
     private javax.swing.ButtonGroup GrupoBotonesSecciones;
+    private javax.swing.JLabel LabelPaginaAnterior;
+    private javax.swing.JLabel LabelPaginaSiguiente;
     private javax.swing.JButton Modificar;
-    private javax.swing.JLayeredPane MultiPanelCarta;
     private javax.swing.JPanel PanelBotones;
     private javax.swing.JPanel PanelCarta;
     private javax.swing.JPanel PanelCartaBotones;
     private javax.swing.JPanel PanelComentarios;
     private javax.swing.JPanel PanelGeneralCentro;
     private javax.swing.JPanel PanelGeneralEste;
+    private javax.swing.JPanel PanelHojas;
     private javax.swing.JPanel PanelListaComida;
+    private javax.swing.JPanel PanelPaginaAnterior;
+    private javax.swing.JPanel PanelPaginaSiguiente;
+    private javax.swing.JPanel PanelPasarPaginas;
     private javax.swing.JPanel PanelPedido;
     private javax.swing.JPanel PanelPedidoBebida;
     private javax.swing.JPanel PanelPedidoComida;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCarta() throws Exception {
-
+        
         /*/Cargamos las secciones
         HashSet<Seccion> listaSecciones = icliente.obtieneSecciones();
 
@@ -264,28 +420,57 @@ public class InterfazCliente extends javax.swing.JPanel {
         }*/
         
         HashSet<Elemento> listaElementos = new HashSet();
-        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Elemento 1", (float) 23.00));
-        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Elemento 2", (float) 43.00));
-        listaElementos.add(new Elemento(30, "Descripcion 3", 4, null, "Elemento 3", (float) 30.50));
-        listaElementos.add(new Elemento(40, "Descripcion 4", 4, null, "Elemento 4", (float) 50.50));
-        listaElementos.add(new Elemento(50, "Descripcion 5", 4, null, "Elemento 5", (float) 30.50));
-        listaElementos.add(new Elemento(60, "Descripcion 6", 4, null, "Elemento 6", (float) 23.50));
-        listaElementos.add(new Elemento(50, "Descripcion 7", 4, null, "Elemento 7", (float) 30.50));
-        listaElementos.add(new Elemento(60, "Descripcion 8", 4, null, "Elemento 8", (float) 23.50));
+        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Entrante 1", (float) 23.00));
+        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Entrante 2", (float) 43.00));
+        listaElementos.add(new Elemento(30, "Descripcion 3", 4, null, "Entrante 3", (float) 30.50));
+        listaElementos.add(new Elemento(40, "Descripcion 4", 4, null, "Entrante 4", (float) 50.50));
+        listaElementos.add(new Elemento(50, "Descripcion 5", 4, null, "Entrante 5", (float) 30.50));
+        listaElementos.add(new Elemento(60, "Descripcion 6", 4, null, "Entrante 6", (float) 23.50));
+        listaElementos.add(new Elemento(70, "Descripcion 7", 4, null, "Entrante 7", (float) 30.50));
+        listaElementos.add(new Elemento(80, "Descripcion 8", 4, null, "Entrante 8", (float) 23.50));
 
+
+        //Inicializamos los JPanel correspondientes a cada sección
+        hojasSeccionEntrantes.setLayout(new CardLayout(listaElementos.size(),1));
+        
         Iterator it = listaElementos.iterator();
 
         while(it.hasNext()){
+            int j=0;
             HashSet<Elemento> seisElementos = new HashSet();
             for(int i=0; i<6 && it.hasNext(); ++i){
                 seisElementos.add((Elemento) it.next());
             }
-            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos));
+            ++j;
+            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos),"Hoja"+Integer.toString(j));
         }
 
-        it = hojasSeccionEntrantes.iterator();
-        this.PanelCarta.add((PanelHojasCarta) it.next(), java.awt.BorderLayout.CENTER);
-        
+
+        listaElementos = new HashSet();
+        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Pescado 1", (float) 23.00));
+        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Pescado 2", (float) 43.00));
+
+
+        //Inicializamos los JPanel correspondientes a cada sección
+        hojasSeccionPescados.setLayout(new CardLayout(listaElementos.size(),1));
+
+        it = listaElementos.iterator();
+
+        while(it.hasNext()){
+            int j=0;
+            HashSet<Elemento> seisElementos = new HashSet();
+            for(int i=0; i<6 && it.hasNext(); ++i){
+                seisElementos.add((Elemento) it.next());
+            }
+            ++j;
+            hojasSeccionPescados.add(new PanelHojasCarta(seisElementos),"Hoja"+Integer.toString(j));
+        }
+
+        PanelHojas.add(hojasSeccionEntrantes,"Entrantes");
+        PanelHojas.add(hojasSeccionPescados,"Pescados");
+        PanelHojas.add(hojasSeccionCarnes,"Carnes");
+        PanelHojas.add(hojasSeccionBebidas,"Bebidas");
+        PanelHojas.add(hojasSeccionPostres,"Postres");
     }
 
 }
