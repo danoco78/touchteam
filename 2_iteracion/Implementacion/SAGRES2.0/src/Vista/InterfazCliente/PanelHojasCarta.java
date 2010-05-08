@@ -15,6 +15,7 @@ import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
 import Vista.InterfazCliente.PanelElementoCarta;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -63,6 +64,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
                 }
             }
         }
+        
     }
 
     /** This method is called from within the constructor to
@@ -74,29 +76,16 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelHojaIzquierda = new javax.swing.JPanel();
-        PanelElementoArribaI = new javax.swing.JPanel();
-        PanelElementoCentroI = new javax.swing.JPanel();
-        PanelElementoAbajoI = new javax.swing.JPanel();
         PanelHojaDerecha = new javax.swing.JPanel();
         PanelElementoArribaD = new javax.swing.JPanel();
         PanelElementoCentroD = new javax.swing.JPanel();
         PanelElementoAbajoD = new javax.swing.JPanel();
+        PanelHojaIzquierda = new javax.swing.JPanel();
+        PanelElementoArribaI = new javax.swing.JPanel();
+        PanelElementoCentroI = new javax.swing.JPanel();
+        PanelElementoAbajoI = new javax.swing.JPanel();
 
-        setLayout(new java.awt.GridLayout(1, 0));
-
-        PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0));
-
-        PanelElementoArribaI.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoArribaI);
-
-        PanelElementoCentroI.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoCentroI);
-
-        PanelElementoAbajoI.setLayout(new java.awt.BorderLayout());
-        PanelHojaIzquierda.add(PanelElementoAbajoI);
-
-        add(PanelHojaIzquierda);
+        setLayout(new java.awt.GridLayout());
 
         PanelHojaDerecha.setLayout(new java.awt.GridLayout(3, 0));
 
@@ -110,6 +99,19 @@ public class PanelHojasCarta extends javax.swing.JPanel {
         PanelHojaDerecha.add(PanelElementoAbajoD);
 
         add(PanelHojaDerecha);
+
+        PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0));
+
+        PanelElementoArribaI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoArribaI);
+
+        PanelElementoCentroI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoCentroI);
+
+        PanelElementoAbajoI.setLayout(new java.awt.BorderLayout());
+        PanelHojaIzquierda.add(PanelElementoAbajoI);
+
+        add(PanelHojaIzquierda);
     }// </editor-fold>//GEN-END:initComponents
 
 
