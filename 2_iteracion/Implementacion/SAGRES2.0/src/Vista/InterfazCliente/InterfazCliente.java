@@ -11,7 +11,11 @@
 
 package Vista.InterfazCliente;
 
-import ControladorPrincipal.ICocinero;
+import ControladorPrincipal.ICliente;
+import GestionCarta.Elemento;
+import GestionCarta.Seccion;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,11 +25,19 @@ import java.util.logging.Logger;
  */
 public class InterfazCliente extends javax.swing.JPanel {
 
+    ICliente icliente;
+
+    HashSet<PanelHojasCarta> hojasSeccionEntrantes = new HashSet();
+    HashSet<PanelHojasCarta> hojasSeccionCarnes = new HashSet();
+    HashSet<PanelHojasCarta> hojasSeccionPescados = new HashSet();
+    HashSet<PanelHojasCarta> hojasSeccionBebidas = new HashSet();
+    HashSet<PanelHojasCarta> hojasSeccionPostres = new HashSet();
+
     /** Creates new form InterfazCliente */
     public InterfazCliente() throws Exception {
         initComponents();
         this.setDoubleBuffered(true);
-        this.PanelCarta.add(new PanelHojasCarta(), java.awt.BorderLayout.CENTER);
+        cargarCarta();
     }
 
     /** This method is called from within the constructor to
@@ -49,6 +61,7 @@ public class InterfazCliente extends javax.swing.JPanel {
         PanelComentarios = new javax.swing.JPanel();
         PanelCartaBotones = new javax.swing.JPanel();
         PanelCarta = new javax.swing.JPanel();
+        MultiPanelCarta = new javax.swing.JLayeredPane();
         PanelBotones = new javax.swing.JPanel();
         BotonEntrantes = new javax.swing.JToggleButton();
         BotonPescados = new javax.swing.JToggleButton();
@@ -119,21 +132,24 @@ public class InterfazCliente extends javax.swing.JPanel {
         PanelCartaBotones.setLayout(new java.awt.BorderLayout());
 
         PanelCarta.setLayout(new java.awt.BorderLayout());
+        PanelCarta.add(MultiPanelCarta, java.awt.BorderLayout.CENTER);
+
         PanelCartaBotones.add(PanelCarta, java.awt.BorderLayout.CENTER);
 
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
         BotonEntrantes.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
+        BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
         BotonEntrantes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
         PanelBotones.add(BotonEntrantes);
 
         BotonPescados.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonPescados);
-        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
         BotonPescados.setText("Pescados");
         BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -200,6 +216,7 @@ public class InterfazCliente extends javax.swing.JPanel {
     private javax.swing.JButton BotonVerFactura;
     private javax.swing.ButtonGroup GrupoBotonesSecciones;
     private javax.swing.JButton Modificar;
+    private javax.swing.JLayeredPane MultiPanelCarta;
     private javax.swing.JPanel PanelBotones;
     private javax.swing.JPanel PanelCarta;
     private javax.swing.JPanel PanelCartaBotones;
@@ -211,5 +228,64 @@ public class InterfazCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPedidoBebida;
     private javax.swing.JPanel PanelPedidoComida;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCarta() throws Exception {
+
+        /*/Cargamos las secciones
+        HashSet<Seccion> listaSecciones = icliente.obtieneSecciones();
+
+        Iterator itSecciones = listaSecciones.iterator();
+
+        while(itSecciones.hasNext()){
+            Seccion s = (Seccion) itSecciones.next();
+            HashSet<Elemento> listaElementos = icliente.obtieneElementosDeSeccion(s);
+            Iterator it = listaElementos.iterator();
+            HashSet<PanelHojasCarta> hojasSeccion = new HashSet();
+
+            while(it.hasNext()){
+                HashSet<Elemento> seisElementos = new HashSet();
+                for(int i=0; i<6 && it.hasNext(); ++i){
+                    seisElementos.add((Elemento) it.next());
+                }
+                hojasSeccion.add(new PanelHojasCarta(seisElementos));
+            }
+
+            if(s.getNombre().equals("Entrantes")){
+                hojasSeccionEntrantes=hojasSeccion;
+            }else if(s.getNombre().equals("Carnes")){
+                hojasSeccionCarnes=hojasSeccion;
+            }else if(s.getNombre().equals("Pescados")){
+                hojasSeccionPescados=hojasSeccion;
+            }else if(s.getNombre().equals("Bebidas")){
+                hojasSeccionBebidas=hojasSeccion;
+            }else if(s.getNombre().equals("Postres")){
+                hojasSeccionPostres=hojasSeccion;
+            }
+        }*/
+        
+        HashSet<Elemento> listaElementos = new HashSet();
+        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Elemento 1", (float) 23.00));
+        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Elemento 2", (float) 43.00));
+        listaElementos.add(new Elemento(30, "Descripcion 3", 4, null, "Elemento 3", (float) 30.50));
+        listaElementos.add(new Elemento(40, "Descripcion 4", 4, null, "Elemento 4", (float) 50.50));
+        listaElementos.add(new Elemento(50, "Descripcion 5", 4, null, "Elemento 5", (float) 30.50));
+        listaElementos.add(new Elemento(60, "Descripcion 6", 4, null, "Elemento 6", (float) 23.50));
+        listaElementos.add(new Elemento(50, "Descripcion 7", 4, null, "Elemento 7", (float) 30.50));
+        listaElementos.add(new Elemento(60, "Descripcion 8", 4, null, "Elemento 8", (float) 23.50));
+
+        Iterator it = listaElementos.iterator();
+
+        while(it.hasNext()){
+            HashSet<Elemento> seisElementos = new HashSet();
+            for(int i=0; i<6 && it.hasNext(); ++i){
+                seisElementos.add((Elemento) it.next());
+            }
+            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos));
+        }
+
+        it = hojasSeccionEntrantes.iterator();
+        this.PanelCarta.add((PanelHojasCarta) it.next(), java.awt.BorderLayout.CENTER);
+        
+    }
 
 }

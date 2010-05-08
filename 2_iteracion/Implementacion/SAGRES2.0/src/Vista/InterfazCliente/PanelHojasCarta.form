@@ -26,15 +26,15 @@
         <Property name="rows" type="int" value="3"/>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="PanelElementoArriba">
+        <Container class="javax.swing.JPanel" name="PanelElementoArribaI">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
-        <Container class="javax.swing.JPanel" name="PanelElementoCentro">
+        <Container class="javax.swing.JPanel" name="PanelElementoCentroI">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
-        <Container class="javax.swing.JPanel" name="PanelElementoAbajo">
+        <Container class="javax.swing.JPanel" name="PanelElementoAbajoI">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
@@ -47,15 +47,15 @@
         <Property name="rows" type="int" value="3"/>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="PanelElementoArriba1">
+        <Container class="javax.swing.JPanel" name="PanelElementoArribaD">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
-        <Container class="javax.swing.JPanel" name="PanelElementoCentro1">
+        <Container class="javax.swing.JPanel" name="PanelElementoCentroD">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
-        <Container class="javax.swing.JPanel" name="PanelElementoAbajo1">
+        <Container class="javax.swing.JPanel" name="PanelElementoAbajoD">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
         </Container>
