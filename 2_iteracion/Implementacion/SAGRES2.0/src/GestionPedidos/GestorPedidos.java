@@ -27,9 +27,16 @@ public class GestorPedidos implements IGestorPedidos {
 
     //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
-        ArrayList<Pedido> ped;
-        
-        ped = this.iPedidosBD.getPedidos(codMesa);
+        Factura f = this.iPedidosBD.getFactura(codMesa);
+        ArrayList<Pedido> pedidos = f.getPedidos();
+        Pedido p;
+        for (int i=0;i<pedidos.size();i++){
+            p = pedidos.get(i);
+            p.setEstado(Pedido.FACTURADO);
+            this.iPedidosBD.actualizaPedido(p);
+        }
+        f.setEstado(Factura.PAGADO);
+        this.iPedidosBD.actualizaFactura(f);
     }
 
     public ArrayList<String> getInfoRest(){
