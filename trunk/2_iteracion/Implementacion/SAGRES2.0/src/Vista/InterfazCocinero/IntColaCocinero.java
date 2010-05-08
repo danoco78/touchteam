@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import GestionCarta.Elemento;
 import java.awt.*;
 import java.util.ArrayList;
 import utilidades.*;
@@ -153,15 +154,29 @@ public class IntColaCocinero extends javax.swing.JPanel {
     }
 
     private void actualizarVista(){
+        // TODO obtener el numero de platos pendientes
         this.setInfoPendientes(pendientes);
-        this.setInfoPreparandose(preparandose);
-    }
 
-    private void actualizarColaPreparandose(){
-        
-    }
-    private void actualizarColaPendientes(){
-        
+        // No es necesario obtener el numero de platos preparandose, lo actualiza
+        // PreparandosePanel automaticamente
+        //this.setInfoPreparandose(preparandose);
+
+        // TODO this.pmpder.autoCompletar(getPedidosCocinaPreparandose());
+        // Prueba para comprobar que funciona
+        ArrayList<Pedido> peds = new ArrayList<Pedido>();
+        ElementoColaCocina ele = (ElementoColaCocina) new ElementoPedido(1, 1, "La carne poco hecha por favor.");
+        ele.asocia(new Elemento(2, "Hamburguesa con queso",
+                "Deliciosa carne de vacuno a la parrilla con queso fresco",
+                true, null, 5, 5, 10));
+        for(int i=0; i<5; ++i){
+            peds.add(new Pedido(5, i, 0, null));
+            for(int j=0; j<4; ++j)
+                peds.get(i).asocia(ele);
+        }
+        // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
+        // independientemente de la prueba
+        this.pmpder.autoCompletar(peds);
+
     }
     /*
    while(!haypedido){

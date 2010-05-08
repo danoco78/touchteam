@@ -12,6 +12,7 @@
 package Vista.InterfazCocinero;
 
 import GestionPedidos.Pedido;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import utilidades.PanelEspacioVertical;
 import utilidades.PanelPedidoPorMesa;
@@ -29,13 +30,23 @@ public class PreparandosePanel extends javax.swing.JPanel {
     public PreparandosePanel() {
         initComponents();
         oldTama = this.getSize();
+        
+    }
 
+    /**
+     * Recibe una lista de pedidos, obtiene los platos o bebidas necesarios
+     * y los muestra en un panel. Sirve tambien para actualizar el panel.
+     * @param listaPedidos Lista de pedidos a recibir
+     */
+    public void autoCompletar(ArrayList<Pedido> listaPedidos){
+        this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
-        for(int i=0; i<5; ++i){
-            this.pPanelesPedido.add(new PanelPedidoPorMesa());
+
+        int totalPlatos = 0; // Actualiza el total de platos
+        for(int i=0; i<listaPedidos.size(); ++i){
+            this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i)));
             this.pPanelesPedido.add(new PanelEspacioVertical());
         }
-        
     }
 
     /**
@@ -73,10 +84,10 @@ public class PreparandosePanel extends javax.swing.JPanel {
         pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
-        pendientes.setFont(new java.awt.Font("Arial", 0, 18));
+        pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pendientes.setText("7 bebidas pendientes ");
+        pendientes.setText("7 platos preparándose");
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);
 
         add(pInf, java.awt.BorderLayout.SOUTH);
