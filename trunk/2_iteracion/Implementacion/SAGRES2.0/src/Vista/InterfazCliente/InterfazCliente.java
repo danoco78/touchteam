@@ -14,11 +14,18 @@ package Vista.InterfazCliente;
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
 import GestionCarta.Seccion;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -29,11 +36,16 @@ public class InterfazCliente extends javax.swing.JPanel {
 
     ICliente icliente;
 
-    JPanel hojasSeccionEntrantes = new JPanel();
-    JPanel hojasSeccionPescados = new JPanel();
-    JPanel hojasSeccionCarnes = new JPanel();
-    JPanel hojasSeccionBebidas = new JPanel();
-    JPanel hojasSeccionPostres = new JPanel();
+    private JPanel hojasSeccionEntrantes = new JPanel();
+    private int i_entrantes;
+    private JPanel hojasSeccionPescados = new JPanel();
+    private int i_pescados;
+    private JPanel hojasSeccionCarnes = new JPanel();
+    private int i_carnes;
+    private JPanel hojasSeccionBebidas = new JPanel();
+    private int i_bebidas;
+    private JPanel hojasSeccionPostres = new JPanel();
+    private int i_postres;
 
     int seccion; //Seccion que se muestra actualmente
 
@@ -45,7 +57,23 @@ public class InterfazCliente extends javax.swing.JPanel {
 
         seccion=0; //Entrantes
         ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
+        this.PanelPaginaAnterior.setVisible(false);
+        if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()<=1)
+            this.PanelPaginaSiguiente.setVisible(false);
+        
+        i_entrantes=i_pescados=i_carnes=i_bebidas=i_postres=0;
 
+        PanelPedido.add(new PanelPedidoComida(), BorderLayout.CENTER);
+
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        Rectangle clip = g2.getClipBounds();
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
+        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+        super.paint(g);
     }
 
     /** This method is called from within the constructor to
@@ -60,13 +88,12 @@ public class InterfazCliente extends javax.swing.JPanel {
         GrupoBotonesSecciones = new javax.swing.ButtonGroup();
         PanelGeneralEste = new javax.swing.JPanel();
         PanelPedido = new javax.swing.JPanel();
-        PanelPedidoComida = new javax.swing.JPanel();
-        PanelListaComida = new javax.swing.JPanel();
-        Modificar = new javax.swing.JButton();
         PanelPedidoBebida = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
         PanelGeneralCentro = new javax.swing.JPanel();
         PanelComentarios = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         PanelCartaBotones = new javax.swing.JPanel();
         PanelCarta = new javax.swing.JPanel();
         PanelPasarPaginas = new javax.swing.JPanel();
@@ -82,43 +109,22 @@ public class InterfazCliente extends javax.swing.JPanel {
         BotonBebidas = new javax.swing.JToggleButton();
         BotonPostres = new javax.swing.JToggleButton();
 
-        setLayout(new java.awt.BorderLayout());
+        setOpaque(false);
+        setLayout(new java.awt.BorderLayout(10, 0));
 
-        PanelGeneralEste.setLayout(new java.awt.BorderLayout());
+        PanelGeneralEste.setOpaque(false);
+        PanelGeneralEste.setPreferredSize(new java.awt.Dimension(200, 200));
+        PanelGeneralEste.setLayout(new java.awt.BorderLayout(0, 5));
 
-        PanelPedido.setLayout(new java.awt.BorderLayout());
-
-        PanelPedidoComida.setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout PanelListaComidaLayout = new javax.swing.GroupLayout(PanelListaComida);
-        PanelListaComida.setLayout(PanelListaComidaLayout);
-        PanelListaComidaLayout.setHorizontalGroup(
-            PanelListaComidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 103, Short.MAX_VALUE)
-        );
-        PanelListaComidaLayout.setVerticalGroup(
-            PanelListaComidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 229, Short.MAX_VALUE)
-        );
-
-        PanelPedidoComida.add(PanelListaComida, java.awt.BorderLayout.CENTER);
-
-        Modificar.setBackground(new java.awt.Color(255, 255, 255));
-        Modificar.setFont(new java.awt.Font("Arial", 1, 16));
-        Modificar.setForeground(new java.awt.Color(80, 98, 143));
-        Modificar.setText("Modificar");
-        Modificar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
-        PanelPedidoComida.add(Modificar, java.awt.BorderLayout.SOUTH);
-
-        PanelPedido.add(PanelPedidoComida, java.awt.BorderLayout.CENTER);
+        PanelPedido.setOpaque(false);
+        PanelPedido.setLayout(new java.awt.BorderLayout(0, 5));
 
         PanelPedidoBebida.setLayout(new java.awt.BorderLayout());
         PanelPedido.add(PanelPedidoBebida, java.awt.BorderLayout.PAGE_START);
 
         PanelGeneralEste.add(PanelPedido, java.awt.BorderLayout.CENTER);
 
-        BotonVerFactura.setBackground(new java.awt.Color(255, 255, 255));
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Ver Factura");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -127,25 +133,28 @@ public class InterfazCliente extends javax.swing.JPanel {
 
         add(PanelGeneralEste, java.awt.BorderLayout.EAST);
 
-        PanelGeneralCentro.setLayout(new java.awt.BorderLayout());
+        PanelGeneralCentro.setOpaque(false);
+        PanelGeneralCentro.setLayout(new java.awt.BorderLayout(0, 5));
 
-        javax.swing.GroupLayout PanelComentariosLayout = new javax.swing.GroupLayout(PanelComentarios);
-        PanelComentarios.setLayout(PanelComentariosLayout);
-        PanelComentariosLayout.setHorizontalGroup(
-            PanelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 563, Short.MAX_VALUE)
-        );
-        PanelComentariosLayout.setVerticalGroup(
-            PanelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        PanelComentarios.setOpaque(false);
+        PanelComentarios.setLayout(new java.awt.BorderLayout());
+
+        jEditorPane1.setEnabled(false);
+        jEditorPane1.setPreferredSize(new java.awt.Dimension(106, 50));
+        jScrollPane1.setViewportView(jEditorPane1);
+
+        PanelComentarios.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         PanelGeneralCentro.add(PanelComentarios, java.awt.BorderLayout.PAGE_END);
 
-        PanelCartaBotones.setLayout(new java.awt.BorderLayout());
+        PanelCartaBotones.setOpaque(false);
+        PanelCartaBotones.setLayout(new java.awt.BorderLayout(0, 5));
 
+        PanelCarta.setOpaque(false);
         PanelCarta.setLayout(new java.awt.BorderLayout());
 
+        PanelPasarPaginas.setOpaque(false);
+        PanelPasarPaginas.setPreferredSize(new java.awt.Dimension(100, 50));
         PanelPasarPaginas.setLayout(new java.awt.BorderLayout());
 
         PanelPaginaAnterior.setLayout(new java.awt.BorderLayout());
@@ -174,16 +183,17 @@ public class InterfazCliente extends javax.swing.JPanel {
 
         PanelCarta.add(PanelPasarPaginas, java.awt.BorderLayout.SOUTH);
 
+        PanelHojas.setOpaque(false);
         PanelHojas.setLayout(new java.awt.CardLayout(1, 1));
         PanelCarta.add(PanelHojas, java.awt.BorderLayout.CENTER);
 
         PanelCartaBotones.add(PanelCarta, java.awt.BorderLayout.CENTER);
 
+        PanelBotones.setOpaque(false);
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
-        BotonEntrantes.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
         BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
@@ -195,7 +205,6 @@ public class InterfazCliente extends javax.swing.JPanel {
         });
         PanelBotones.add(BotonEntrantes);
 
-        BotonPescados.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonPescados);
         BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
@@ -208,9 +217,8 @@ public class InterfazCliente extends javax.swing.JPanel {
         });
         PanelBotones.add(BotonPescados);
 
-        BotonCarnes.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonCarnes);
-        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
         BotonCarnes.setText("Carnes");
         BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -221,7 +229,6 @@ public class InterfazCliente extends javax.swing.JPanel {
         });
         PanelBotones.add(BotonCarnes);
 
-        BotonBebidas.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonBebidas);
         BotonBebidas.setFont(new java.awt.Font("Arial", 1, 16));
         BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
@@ -234,9 +241,8 @@ public class InterfazCliente extends javax.swing.JPanel {
         });
         PanelBotones.add(BotonBebidas);
 
-        BotonPostres.setBackground(new java.awt.Color(255, 255, 255));
         GrupoBotonesSecciones.add(BotonPostres);
-        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
         BotonPostres.setText("Postres");
         BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -255,24 +261,41 @@ public class InterfazCliente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void paginaSiguiente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paginaSiguiente
-        Iterator it;
-        int i=0;
-        
         switch(seccion){
             case 0: //Entrantes
                 ((CardLayout) hojasSeccionEntrantes.getLayout()).next(hojasSeccionEntrantes);
+                ++i_entrantes;
+                this.PanelPaginaAnterior.setVisible(true);
+                if(i_entrantes<((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap())
+                    this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 1: //Pescados
                 ((CardLayout) hojasSeccionPescados.getLayout()).next(hojasSeccionPescados);
+                ++i_pescados;
+                this.PanelPaginaAnterior.setVisible(true);
+                if(i_pescados<((CardLayout) hojasSeccionPescados.getLayout()).getHgap())
+                    this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 2: //Carnes
                 ((CardLayout) hojasSeccionCarnes.getLayout()).next(hojasSeccionCarnes);
+                ++i_carnes;
+                this.PanelPaginaAnterior.setVisible(true);
+                if(i_carnes<((CardLayout) hojasSeccionCarnes.getLayout()).getHgap())
+                    this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 3: //Bebidas
                 ((CardLayout) hojasSeccionBebidas.getLayout()).next(hojasSeccionBebidas);
+                ++i_bebidas;
+                this.PanelPaginaAnterior.setVisible(true);
+                if(i_bebidas<((CardLayout) hojasSeccionBebidas.getLayout()).getHgap())
+                    this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 4: //Postres
                 ((CardLayout) hojasSeccionPostres.getLayout()).next(hojasSeccionPostres);
+                ++i_postres;
+                this.PanelPaginaAnterior.setVisible(true);
+                if(i_postres<((CardLayout) hojasSeccionPostres.getLayout()).getHgap())
+                    this.PanelPaginaSiguiente.setVisible(false);
                 break;
 
         }
@@ -282,6 +305,14 @@ public class InterfazCliente extends javax.swing.JPanel {
         if(seccion!=0){
             seccion=0;
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
+            ((CardLayout) hojasSeccionEntrantes.getLayout()).first(hojasSeccionEntrantes);
+            this.PanelPaginaAnterior.setVisible(false);
+            if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()>1)
+                this.PanelPaginaSiguiente.setVisible(true);
+            else
+                this.PanelPaginaSiguiente.setVisible(false);
+
+            i_entrantes=0;
         }
     }//GEN-LAST:event_mostrarEntrantes
 
@@ -289,6 +320,14 @@ public class InterfazCliente extends javax.swing.JPanel {
         if(seccion!=1){
             seccion=1;
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Pescados");
+            ((CardLayout) hojasSeccionPescados.getLayout()).first(hojasSeccionPescados);
+            this.PanelPaginaAnterior.setVisible(false);
+            if(((CardLayout) hojasSeccionPescados.getLayout()).getHgap()>1)
+                this.PanelPaginaSiguiente.setVisible(true);
+            else
+                this.PanelPaginaSiguiente.setVisible(false);
+
+            i_pescados=0;
         }
     }//GEN-LAST:event_mostrarPescados
 
@@ -296,6 +335,14 @@ public class InterfazCliente extends javax.swing.JPanel {
         if(seccion!=2){
             seccion=2;
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Carnes");
+            ((CardLayout) hojasSeccionCarnes.getLayout()).first(hojasSeccionCarnes);
+            this.PanelPaginaAnterior.setVisible(false);
+            if(((CardLayout) hojasSeccionCarnes.getLayout()).getHgap()>1)
+                this.PanelPaginaSiguiente.setVisible(true);
+            else
+                this.PanelPaginaSiguiente.setVisible(false);
+
+            i_carnes=0;
         }
     }//GEN-LAST:event_mostrarCarnes
 
@@ -303,6 +350,14 @@ public class InterfazCliente extends javax.swing.JPanel {
         if(seccion!=3){
             seccion=3;
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Bebidas");
+            ((CardLayout) hojasSeccionBebidas.getLayout()).first(hojasSeccionBebidas);
+            this.PanelPaginaAnterior.setVisible(false);
+            if(((CardLayout) hojasSeccionBebidas.getLayout()).getHgap()>1)
+                this.PanelPaginaSiguiente.setVisible(true);
+            else
+                this.PanelPaginaSiguiente.setVisible(false);
+
+            i_bebidas=0;
         }
     }//GEN-LAST:event_mostrarBebidas
 
@@ -310,6 +365,14 @@ public class InterfazCliente extends javax.swing.JPanel {
         if(seccion!=4){
             seccion=4;
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Postres");
+            ((CardLayout) hojasSeccionPostres.getLayout()).first(hojasSeccionPostres);
+            this.PanelPaginaAnterior.setVisible(false);
+            if(((CardLayout) hojasSeccionPostres.getLayout()).getHgap()>1)
+                this.PanelPaginaSiguiente.setVisible(true);
+            else
+                this.PanelPaginaSiguiente.setVisible(false);
+
+            i_postres=0;
         }
     }//GEN-LAST:event_mostrarPostres
 
@@ -320,18 +383,38 @@ public class InterfazCliente extends javax.swing.JPanel {
         switch(seccion){
             case 0: //Entrantes
                 ((CardLayout) hojasSeccionEntrantes.getLayout()).previous(hojasSeccionEntrantes);
+                --i_entrantes;
+                this.PanelPaginaSiguiente.setVisible(true);
+                if(i_entrantes<=0)
+                    this.PanelPaginaAnterior.setVisible(false);
                 break;
             case 1: //Pescados
                 ((CardLayout) hojasSeccionPescados.getLayout()).previous(hojasSeccionPescados);
+                --i_pescados;
+                this.PanelPaginaSiguiente.setVisible(true);
+                if(i_pescados<=0)
+                    this.PanelPaginaAnterior.setVisible(false);
                 break;
             case 2: //Carnes
                 ((CardLayout) hojasSeccionCarnes.getLayout()).previous(hojasSeccionCarnes);
+                --i_carnes;
+                this.PanelPaginaSiguiente.setVisible(true);
+                if(i_carnes<=0)
+                    this.PanelPaginaAnterior.setVisible(false);
                 break;
             case 3: //Bebidas
                 ((CardLayout) hojasSeccionBebidas.getLayout()).previous(hojasSeccionBebidas);
+                --i_bebidas;
+                this.PanelPaginaSiguiente.setVisible(true);
+                if(i_bebidas<=0)
+                    this.PanelPaginaAnterior.setVisible(false);
                 break;
             case 4: //Postres
                 ((CardLayout) hojasSeccionPostres.getLayout()).previous(hojasSeccionPostres);
+                --i_postres;
+                this.PanelPaginaSiguiente.setVisible(true);
+                if(i_postres<=0)
+                    this.PanelPaginaAnterior.setVisible(false);
                 break;
 
         }
@@ -368,7 +451,6 @@ public class InterfazCliente extends javax.swing.JPanel {
     private javax.swing.ButtonGroup GrupoBotonesSecciones;
     private javax.swing.JLabel LabelPaginaAnterior;
     private javax.swing.JLabel LabelPaginaSiguiente;
-    private javax.swing.JButton Modificar;
     private javax.swing.JPanel PanelBotones;
     private javax.swing.JPanel PanelCarta;
     private javax.swing.JPanel PanelCartaBotones;
@@ -376,13 +458,13 @@ public class InterfazCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelGeneralCentro;
     private javax.swing.JPanel PanelGeneralEste;
     private javax.swing.JPanel PanelHojas;
-    private javax.swing.JPanel PanelListaComida;
     private javax.swing.JPanel PanelPaginaAnterior;
     private javax.swing.JPanel PanelPaginaSiguiente;
     private javax.swing.JPanel PanelPasarPaginas;
     private javax.swing.JPanel PanelPedido;
     private javax.swing.JPanel PanelPedidoBebida;
-    private javax.swing.JPanel PanelPedidoComida;
+    private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCarta() throws Exception {
@@ -430,8 +512,8 @@ public class InterfazCliente extends javax.swing.JPanel {
         listaElementos.add(new Elemento(80, "Descripcion 8", 4, null, "Entrante 8", (float) 23.50));
 
 
-        //Inicializamos los JPanel correspondientes a cada sección
-        hojasSeccionEntrantes.setLayout(new CardLayout(listaElementos.size(),1));
+        //Inicializamos el JPanel correspondientes a la sección
+        hojasSeccionEntrantes.setLayout(new CardLayout(listaElementos.size()+1/6,1));
         
         Iterator it = listaElementos.iterator();
 
@@ -451,8 +533,8 @@ public class InterfazCliente extends javax.swing.JPanel {
         listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Pescado 2", (float) 43.00));
 
 
-        //Inicializamos los JPanel correspondientes a cada sección
-        hojasSeccionPescados.setLayout(new CardLayout(listaElementos.size(),1));
+        //Inicializamos el JPanel correspondientes a la sección
+        hojasSeccionPescados.setLayout(new CardLayout(listaElementos.size()/6+1,1));
 
         it = listaElementos.iterator();
 
@@ -466,11 +548,40 @@ public class InterfazCliente extends javax.swing.JPanel {
             hojasSeccionPescados.add(new PanelHojasCarta(seisElementos),"Hoja"+Integer.toString(j));
         }
 
-        PanelHojas.add(hojasSeccionEntrantes,"Entrantes");
-        PanelHojas.add(hojasSeccionPescados,"Pescados");
-        PanelHojas.add(hojasSeccionCarnes,"Carnes");
-        PanelHojas.add(hojasSeccionBebidas,"Bebidas");
-        PanelHojas.add(hojasSeccionPostres,"Postres");
+        listaElementos= new HashSet();
+
+        //Inicializamos el JPanel correspondientes a la sección
+        hojasSeccionCarnes.setLayout(new CardLayout(listaElementos.size()+1/6,1));
+        //Inicializamos el JPanel correspondientes a la sección
+        hojasSeccionBebidas.setLayout(new CardLayout(listaElementos.size()+1/6,1));
+        //Inicializamos el JPanel correspondientes a la sección
+        hojasSeccionPostres.setLayout(new CardLayout(listaElementos.size()+1/6,1));
+
+        if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()>0)
+            PanelHojas.add(hojasSeccionEntrantes,"Entrantes");
+        else
+            PanelHojas.add(new JLabel("No existen entrantes disponibles en este momento", JLabel.CENTER),"Entrantes");
+
+        if(((CardLayout) hojasSeccionPescados.getLayout()).getHgap()>0)
+            PanelHojas.add(hojasSeccionPescados,"Pescados");
+        else
+            PanelHojas.add(new JLabel("No existen pescados disponibles en este momento", JLabel.CENTER),"Pescados");
+
+        if(((CardLayout) hojasSeccionCarnes.getLayout()).getHgap()>0)
+            PanelHojas.add(hojasSeccionCarnes,"Carnes");
+        else
+            PanelHojas.add(new JLabel("No existen carnes disponibles en este momento", JLabel.CENTER),"Carnes");
+
+        if(((CardLayout) hojasSeccionBebidas.getLayout()).getHgap()>0)
+            PanelHojas.add(hojasSeccionBebidas,"Bebidas");
+        else{
+            PanelHojas.add(new JLabel("No existen bebidas disponibles en este momento", JLabel.CENTER),"Bebidas");
+        }
+
+        if(((CardLayout) hojasSeccionPostres.getLayout()).getHgap()>0)
+            PanelHojas.add(hojasSeccionPostres,"Postres");
+        else
+            PanelHojas.add(new JLabel("No existen postres disponibles en este momento", JLabel.CENTER),"Postres");
     }
 
 }
