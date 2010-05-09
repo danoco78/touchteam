@@ -1,9 +1,12 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utilidades.*;
 import GestionPedidos.*;
 
@@ -13,10 +16,11 @@ import GestionPedidos.*;
  */
 public class IntColaCocinero extends javax.swing.JPanel {
 
-    Integer pendientes = 0, preparandose = 0;
+    public Integer pendientes = 0;
     PanelImagen panelImagen;
     PanelMesaPedido pmpizq;
     PreparandosePanel pmpder;
+    protected ICocinero icocinero;
 
     Pedido pendiente;
     ArrayList<Pedido> colaPreparandose;
@@ -156,7 +160,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         
     }
     
-    private void setInfoPreparandose(int n){
+    void setInfoPreparandose(int n){
 
         this.pmpder.setMensaje("1 plato preparándose");
                 switch(n){
@@ -174,16 +178,18 @@ public class IntColaCocinero extends javax.swing.JPanel {
     }
 
     private void actualizarVista(){
-        // TODO obtener el numero de platos pendientes
+        //this.pendientes = this.icocinero.getNumPlatosEnCola();
         this.setInfoPendientes(pendientes);
 
-        // No es necesario obtener el numero de platos preparandose, lo actualiza
-        // PreparandosePanel automaticamente
-        //this.setInfoPreparandose(preparandose);
-
-        // TODO this.pmpder.autoCompletar(getPedidosCocinaPreparandose());
         // Prueba para comprobar que funciona
         ArrayList<Pedido> peds = new ArrayList<Pedido>();
+        
+       /* try {
+            peds = this.icocinero.getPedidosCocinaPreparandose();
+        } catch (Exception ex) {
+            Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+
         ElementoColaCocina ele = new ElementoColaCocina(1, 1, "La carne poco hecha por favor.");
         ele.asocia(new Elemento(2, "Hamburguesa con queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",

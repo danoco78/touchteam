@@ -139,8 +139,8 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="0"/>
-        <Property name="horizontalGap" type="int" value="15"/>
         <Property name="rows" type="int" value="1"/>
+        <Property name="horizontalGap" type="int" value="15"/>
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="panelIzquierda">

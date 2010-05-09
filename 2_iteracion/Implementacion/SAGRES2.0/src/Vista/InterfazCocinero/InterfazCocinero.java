@@ -26,7 +26,6 @@ public class InterfazCocinero extends javax.swing.JFrame {
     protected static final String INGREDIENTE = "Ingrediente";
     protected static final String COLA = "Cola";
 
-
     public InterfazCocinero( ICocinero iCocinero ) {
         initComponents();
         this.icocinero = iCocinero;
@@ -54,6 +53,8 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelIngrediente.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelColaCocinero.bGestionProductos.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARPRODUCTOS));
+        //this.panelColaCocinero.pmpizq.addActionListener(new ManejaEventos(this, ManejaEventos.PREPARARPLATOPENDIENTE));
+        //this.panelColaCocinero.pmpder.addActionListener(new ManejaEventos(this, ManejaEventos.PLATOCOCINADO));
     }
 
 
@@ -84,7 +85,11 @@ public class InterfazCocinero extends javax.swing.JFrame {
         protected static final int IMPRIMIRLISTAPRODUCTOS = 10;
         protected static final int NOTIFICARRECEPCION = 11;
         protected static final int VOLVER = 12;
+
+        //Eventos para la segunda iteracion
         protected static final int GESTIONARPRODUCTOS = 13;
+        protected static final int PREPARARPLATOPENDIENTE = 14;
+        protected static final int PLATOCOCINADO = 15;
 
         public ManejaEventos(JFrame Padre, int TipoEvento){
             this.padre = Padre;
@@ -137,6 +142,10 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     break;
                 case ManejaEventos.GESTIONARPRODUCTOS:
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
+                    break;
+                case ManejaEventos.PREPARARPLATOPENDIENTE:
+                    break;
+                case ManejaEventos.PLATOCOCINADO:
                     break;
             }
             if (dialogo != null) {
