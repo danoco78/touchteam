@@ -8,7 +8,6 @@ import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
-import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Daniel
  */
-public class Main {
+public class MainBar {
 
     public static void main(String args[]) throws IOException {
 
@@ -81,7 +80,6 @@ public class Main {
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
             InterfazMetre interfaz = new InterfazMetre(controlador);
-            //InterfazCocinero interfaz = new InterfazCocinero(controlador);
             dCarga.Progreso(100);
             dCarga.setVisible(false);
             dCarga.dispose();

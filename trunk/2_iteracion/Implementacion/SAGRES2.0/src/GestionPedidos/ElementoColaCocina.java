@@ -26,4 +26,7 @@ public class ElementoColaCocina extends ElementoPedido{
     public ElementoColaCocina(String comentario){
         super(comentario);
     }
+    public ElementoColaCocina(Integer codElementoPedido, Integer estado, String comentario){
+        super(codElementoPedido,estado,comentario);
+    }
 }

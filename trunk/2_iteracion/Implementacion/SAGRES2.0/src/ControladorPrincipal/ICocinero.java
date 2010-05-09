@@ -42,7 +42,6 @@ public interface ICocinero {
     //public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
     public abstract Pedido getSiguientePedidoCocinaEnCola()throws Exception;
-    public abstract Pedido getSiguientePedidoCocinaPreparandose();
     public abstract int getNumPlatosEnCola();
     public abstract ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
     public abstract boolean seleccionaPlato(Pedido p, ElementoColaCocina ele)throws Exception;
