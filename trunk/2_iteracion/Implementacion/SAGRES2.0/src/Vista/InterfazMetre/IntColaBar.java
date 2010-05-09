@@ -41,6 +41,7 @@ public class IntColaBar extends javax.swing.JPanel {
 
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
+        //TODO Borrar esto
         this.actualizarVista();
         
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
