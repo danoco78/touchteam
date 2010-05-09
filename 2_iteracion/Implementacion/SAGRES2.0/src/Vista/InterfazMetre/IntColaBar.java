@@ -11,12 +11,17 @@
 
 package Vista.InterfazMetre;
 
+import GestionCarta.Elemento;
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.Pedido;
 import utilidades.PanelRelojFecha;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import javax.swing.JButton;
 import utilidades.PanelMesaPedido;
 
 /**
@@ -25,7 +30,7 @@ import utilidades.PanelMesaPedido;
  */
 public class IntColaBar extends javax.swing.JPanel {
 
-    PanelMesaPedido pmp = new PanelMesaPedido();
+    PanelMesaPedido pmp = new PanelMesaPedido(PanelMesaPedido.BAR);
     PanelColaFacturas colaIzq = new PanelColaFacturas();
     PanelColaFacturas colaDer = new PanelColaFacturas();
 
@@ -35,9 +40,9 @@ public class IntColaBar extends javax.swing.JPanel {
         initComponents();
 
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
-        pmp.setBackground(new java.awt.Color(255, 255, 255));
-        pIzq2.add(pmp, java.awt.BorderLayout.CENTER);
-
+        pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
+        this.actualizarVista();
+        
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
         centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
     }
@@ -108,7 +113,7 @@ public class IntColaBar extends javax.swing.JPanel {
         pIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         pIzq.setLayout(new java.awt.GridBagLayout());
 
-        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestBebidas.setFont(new java.awt.Font("Arial", 1, 14));
         bGestBebidas.setForeground(new java.awt.Color(80, 98, 143));
         bGestBebidas.setText("Gestionar Bebidas");
         bGestBebidas.setActionCommand("GestProductos");
@@ -324,5 +329,29 @@ public class IntColaBar extends javax.swing.JPanel {
     private javax.swing.JLabel textoDer;
     private javax.swing.JLabel textoIzq;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarVista(){
+        // TODO obtener el numero de platos pendientes
+        //this.setInfoPendientes(pendientes);
+
+        // No es necesario obtener el numero de platos preparandose, lo actualiza
+        // PreparandosePanel automaticamente
+        //this.setInfoPreparandose(preparandose);
+
+        // TODO this.pmpder.autoCompletar(getPedidosCocinaPreparandose());
+        // Prueba para comprobar que funciona
+        Pedido ped = new Pedido(5, 2, 0, null);
+        ElementoColaBar ele = new ElementoColaBar(1, 1, "Del tiempo, por favor");
+        ele.asocia(new Elemento(2, "Agua",
+                "Agua embotellada marca Bezoya",
+                true, null, 5, 5, 10));
+            for(int j=0; j<4; ++j)
+                ped.asocia(ele);
+        
+        // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
+        // independientemente de la prueba
+        this.pmp.addPedido(ped);
+
+    }
 
 }

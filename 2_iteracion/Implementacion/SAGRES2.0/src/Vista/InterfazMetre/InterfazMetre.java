@@ -5,9 +5,11 @@ package Vista.InterfazMetre;
 import ControladorPrincipal.IMetre;
 import java.awt.CardLayout;
 import java.awt.Dialog;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import utilidades.PanelMesaPedido;
 
 /**
  *
@@ -96,6 +98,36 @@ public class InterfazMetre extends javax.swing.JFrame {
             }
         }
 
+    }
+
+    private class HebraColaBar implements Runnable {
+        Thread t;
+
+        public HebraColaBar(PanelMesaPedido pmp){
+            t = new Thread(this,"Hebra Actualizadora de la Cola de Bar");
+        }
+
+        public void run() {
+
+        }
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
+                dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+                dialog.getContentPane().add(new IntColaBar(), java.awt.BorderLayout.CENTER);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
