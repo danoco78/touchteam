@@ -32,4 +32,8 @@ public class ElementoColaBar extends ElementoPedido{
     public ElementoColaBar(String comentario){
         super(comentario);
     }
+
+    public ElementoColaBar(Integer codElementoPedido, Integer estado, String comentario){
+        super(codElementoPedido,estado,comentario);
+    }
 }
