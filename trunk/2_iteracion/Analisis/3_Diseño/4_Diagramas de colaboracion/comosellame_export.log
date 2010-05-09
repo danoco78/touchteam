@@ -1,0 +1,38 @@
+Exporting package to 'D:\Universidad\IS3\SVNTouchTeam\2_iteracion\Analisis\3_Diseño\4_Diagramas de colaboracion\comosellame.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: comosellame
+Element:0: pedidos :ArrayList<Pedido>
+Element:1: consulta: Statement
+Element:2: resultado : ResultSet
+Element:3: resElemPed :ResultSet
+Element:4: 
+Element:5: 
+Element:6: :IPedidosBD
+Element:7: resProds :ResultSet
+Element:8: conexion :Connection
+Element:9: 
+Element:10: 
+Element:11: elemPed:ElementoPedido
+Element:12: prod :Producto
+Element:13: 
+Element:14: :GestorBaseDatos
+Element:15: elem :Elemento
+Element:16: 
+Element:17: pedido:Pedido
+Element:18: 
+Element:19: 
+Element:20: 
+Element:21: 
+Element:22: 
+Diagram: comosellame
+Formatting output XML...please wait
+XMI Document Export Complete!
