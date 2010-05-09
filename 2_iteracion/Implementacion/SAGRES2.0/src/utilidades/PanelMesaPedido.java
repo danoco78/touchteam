@@ -26,83 +26,59 @@ import javax.swing.JButton;
 public class PanelMesaPedido extends javax.swing.JPanel {
 
     Pedido pedActual = null;
+    int filtro;
+    
+    public static final int COCINA = 0;
+    public static final int BAR = 1;
+
     
     /** Creates new form PanelMesaPedido */
-    public PanelMesaPedido() {
+    public PanelMesaPedido(int f) {
         initComponents();
 
-        jButton1.setBackground(new java.awt.Color(211, 223, 253));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 10));
-        jButton1.setForeground(new java.awt.Color(80, 98, 143));
-        jButton1.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        filtro = f;
+
+        /*for (int i=0;i<10;i++){
+            JButton boton = new JButton();
+
+            boton.setBackground(new java.awt.Color(211, 223, 253));
+            boton.setPreferredSize(new java.awt.Dimension(panelInfoPedido.getWidth(), 60));
+            boton.setFont(new java.awt.Font("Arial", 0, 10));
+            boton.setForeground(new java.awt.Color(80, 98, 143));
+            boton.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
+            boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+            panelInfoPedido.add(boton);
+            panelInfoPedido.add(new PanelEspacioVertical());
+        }*/
 
     }
 
-    public void addPedidoBar(Pedido ped){
+    public void addPedido(Pedido ped){
         pedActual = ped;
 
         panelInfoPedido.removeAll();
         infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
 
-        ArrayList<ElementoPedido> elementos = pedActual.obtieneElementos();
-        ElementoPedido elemP;
+        ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
         JButton boton;
         Elemento ele;
-        //int cont=0;
         
-        for (int i=0;i<elementos.size();i++){
-            elemP = elementos.get(i);
-            if (elemP.getEstado() == 0 &&
-                    elemP instanceof ElementoColaBar){
-                //cont++;
+        for (int i = 0; i < lista.size(); ++i) {
+            if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar)
+                    || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina)) {
                 boton = new JButton();
-                ele = elementos.get(i).getElemento();
+                ele = lista.get(i).getElemento();
 
                 boton.setBackground(new java.awt.Color(211, 223, 253));
-                boton.setMaximumSize(new java.awt.Dimension(734204, 60));
+                boton.setPreferredSize(new java.awt.Dimension(panelInfoPedido.getWidth(), 60));
                 boton.setFont(new java.awt.Font("Arial", 0, 10));
                 boton.setForeground(new java.awt.Color(80, 98, 143));
-                boton.setText("<html>\n<body> \n"+ele.getNombre()+" \n<br></br>\n<br></br>\n<font color=\"#000000\">"+elementos.get(i).getComentario()+"</font>\n</body>\n</html>\n");
+                boton.setText("<html>\n<body> \n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n</body>\n</html>\n");
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 panelInfoPedido.add(boton);
+                panelInfoPedido.add(new PanelEspacioVertical());
             }
         }
-
-        //pendientes.setText(String.valueOf(cont)+" bebidas pendientes");
-    }
-
-
-    public void addPedidoCocina(Pedido ped){
-        pedActual = ped;
-
-        panelInfoPedido.removeAll();
-        infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
-
-        ArrayList<ElementoPedido> elementos = pedActual.obtieneElementos();
-        ElementoPedido elemP;
-        JButton boton;
-        Elemento ele;
-        //int cont=0;
-
-        for (int i=0;i<elementos.size();i++){
-            elemP = elementos.get(i);
-            if (elemP.getEstado() == 0 &&
-                    elemP instanceof ElementoColaCocina){
-                //cont++;
-                boton = new JButton();
-                ele = elementos.get(i).getElemento();
-
-                boton.setBackground(new java.awt.Color(211, 223, 253));
-                boton.setFont(new java.awt.Font("Arial", 0, 10));
-                boton.setForeground(new java.awt.Color(80, 98, 143));
-                boton.setText("<html>\n<body> \n"+ele.getNombre()+" \n<br></br>\n<br></br>\n<font color=\"#000000\">"+elementos.get(i).getComentario()+"</font>\n</body>\n</html>\n");
-                boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                panelInfoPedido.add(boton);
-            }
-        }
-
-        //pendientes.setText(String.valueOf(cont)+" platos pendientes");
     }
 
     /**
@@ -128,13 +104,12 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         margenInf = new javax.swing.JPanel();
         margenDer = new javax.swing.JPanel();
         margenIzq = new javax.swing.JPanel();
-        scroll = new javax.swing.JScrollPane();
         centro = new javax.swing.JPanel();
         margenIzq2 = new javax.swing.JPanel();
         centro2 = new javax.swing.JPanel();
         infoMesaPedido = new javax.swing.JLabel();
+        scroll = new javax.swing.JScrollPane();
         panelInfoPedido = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         margenDer2 = new javax.swing.JPanel();
         MargenInf2 = new javax.swing.JPanel();
         pInf = new javax.swing.JPanel();
@@ -212,8 +187,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         pCentral.add(margenIzq, java.awt.BorderLayout.LINE_START);
 
-        scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         centro.setBackground(new java.awt.Color(255, 255, 255));
         centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
         centro.setLayout(new java.awt.BorderLayout());
@@ -229,33 +202,29 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         );
         margenIzq2Layout.setVerticalGroup(
             margenIzq2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 225, Short.MAX_VALUE)
         );
 
         centro.add(margenIzq2, java.awt.BorderLayout.WEST);
 
-        centro2.setOpaque(false);
+        centro2.setBackground(new java.awt.Color(255, 255, 255));
         centro2.setLayout(new java.awt.BorderLayout());
 
         infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         infoMesaPedido.setForeground(new java.awt.Color(80, 98, 143));
-        infoMesaPedido.setText("Mesa 2, pedido 3465");
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
         centro2.add(infoMesaPedido, java.awt.BorderLayout.NORTH);
 
-        panelInfoPedido.setOpaque(false);
+        scroll.setOpaque(false);
+
+        panelInfoPedido.setBackground(new java.awt.Color(255, 255, 255));
         panelInfoPedido.setLayout(new javax.swing.BoxLayout(panelInfoPedido, javax.swing.BoxLayout.Y_AXIS));
+        scroll.setViewportView(panelInfoPedido);
 
-        jButton1.setText("jButton1");
-        jButton1.setMaximumSize(new java.awt.Dimension(9987, 60));
-        jButton1.setMinimumSize(new java.awt.Dimension(73, 60));
-        panelInfoPedido.add(jButton1);
-
-        centro2.add(panelInfoPedido, java.awt.BorderLayout.CENTER);
+        centro2.add(scroll, java.awt.BorderLayout.CENTER);
 
         centro.add(centro2, java.awt.BorderLayout.CENTER);
 
-        margenDer2.setMinimumSize(new java.awt.Dimension(5, 0));
         margenDer2.setOpaque(false);
         margenDer2.setPreferredSize(new java.awt.Dimension(5, 198));
 
@@ -267,7 +236,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         );
         margenDer2Layout.setVerticalGroup(
             margenDer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 225, Short.MAX_VALUE)
         );
 
         centro.add(margenDer2, java.awt.BorderLayout.EAST);
@@ -279,7 +248,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         MargenInf2.setLayout(MargenInf2Layout);
         MargenInf2Layout.setHorizontalGroup(
             MargenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         MargenInf2Layout.setVerticalGroup(
             MargenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,9 +257,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         centro.add(MargenInf2, java.awt.BorderLayout.SOUTH);
 
-        scroll.setViewportView(centro);
-
-        pCentral.add(scroll, java.awt.BorderLayout.CENTER);
+        pCentral.add(centro, java.awt.BorderLayout.CENTER);
 
         add(pCentral, java.awt.BorderLayout.CENTER);
 
@@ -302,7 +269,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pendientes.setText("7 bebidas pendientes ");
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);
 
         add(pInf, java.awt.BorderLayout.SOUTH);
@@ -314,7 +280,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     private javax.swing.JPanel centro;
     private javax.swing.JPanel centro2;
     private javax.swing.JLabel infoMesaPedido;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel margenDer;
     private javax.swing.JPanel margenDer2;
     private javax.swing.JPanel margenInf;
