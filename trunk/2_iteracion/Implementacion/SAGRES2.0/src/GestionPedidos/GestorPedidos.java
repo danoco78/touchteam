@@ -57,31 +57,37 @@ public class GestorPedidos implements IGestorPedidos {
         noFacturados = iPedidosBD.obtienePedidosNoFacturados();
 
         Pedido pedido = null;
-
-        Iterator iterador = noFacturados.iterator();
+        ElementoPedido elemP = null;
+        Pedido ped;
+        
+        Iterator<Pedido> iterador = noFacturados.iterator();
         Integer estado=-1;
         boolean encontrado = false;
         Date fecha=null, fechaPedido=null;
         while(iterador.hasNext()){
             encontrado = false;
-            elementos = ((Pedido)iterador.next()).obtieneElementos();
-            Iterator ite2 = elementos.iterator();
-            while (ite2.hasNext()){
-                if(ite2.next() instanceof ElementoColaBar){
-                    estado = ((ElementoColaBar)ite2.next()).getEstado();
+            ped = ((Pedido)iterador.next());
+            elementos = ped.obtieneElementos();
+            Iterator<ElementoPedido> ite2 = elementos.iterator();
+            while (ite2.hasNext() && !encontrado){
+                elemP = ite2.next();
+                if(elemP instanceof ElementoColaBar){
+                    estado = ((ElementoColaBar)elemP).getEstado();
                     if(estado == ElementoColaBar.ENCOLA)
                         encontrado = true;
                 }
             }
             if(encontrado){
-                fecha = ((Pedido)iterador.next()).getFecha();
-            }
-            if( encontrado && pedido != null){
-                fechaPedido = pedido.getFecha();
-            }
-            if(ite2.next() instanceof ElementoColaCocina && encontrado &&
-                    (pedido == null || fecha.before(fechaPedido))){
-                pedido = ((Pedido)iterador.next());
+                fecha = ped.getFecha();
+                if (pedido != null){
+                    fechaPedido = pedido.getFecha();
+                    pedido = ped;
+                }
+                else{
+                    if (fecha.before(fechaPedido)){
+                        pedido = ped;
+                    }
+                }
             }
         }
         if(pedido == null)
