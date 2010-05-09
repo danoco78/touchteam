@@ -21,8 +21,6 @@ public interface IGestorPedidos {
 
     public Pedido getSiguientePedidoCocinaEncola()throws Exception;
 
-    public Pedido getSiguientePedidoCocinaPreparandose();
-
     public void imprimeFactura(Integer codMesa);
 
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa);

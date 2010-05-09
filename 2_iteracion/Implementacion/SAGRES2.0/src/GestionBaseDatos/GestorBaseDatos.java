@@ -858,7 +858,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                     elemPed.asocia(elemento);
                 }
                 ElementoColaBar temp = new ElementoColaBar();
-                    if(elemPed.getClass().getName().compareTo(temp.getClass().getName()) == 0 ) //Si es ColaBar
+                    if(elemPed instanceof ElementoColaBar) //Si es ColaBar
                          p.asocia((ElementoColaBar)elemPed);
                     else
                          p.asocia((ElementoColaCocina)elemPed);
@@ -915,9 +915,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             ArrayList<ElementoPedido> elementos = p.obtieneElementos();
             Iterator ite = elementos.iterator();
             while (ite.hasNext()){
-                int est = ((ElementoPedido)ite.next()).getEstado();
-                String comment = ((ElementoPedido)ite.next()).getComentario();
-                int id = ((ElementoPedido)ite.next()).getCodElementoPedido();
+                ElementoPedido eped = ((ElementoPedido)ite.next());
+                int est = eped.getEstado();
+                String comment = eped.getComentario();
+                int id = eped.getCodElementoPedido();
                 actElem.setInt(1, est);
                 actElem.setString(2, comment);
                 actElem.setInt(3, id);
