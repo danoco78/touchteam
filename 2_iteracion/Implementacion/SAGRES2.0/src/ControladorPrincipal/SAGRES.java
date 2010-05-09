@@ -141,7 +141,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     }
 
     public void confirmaPagoFactura(Integer codMesa){
-
+        this.ipedidos.confirmaPagoFactura(codMesa);
     }
 
     public ArrayList<String> getInfoRest(){
