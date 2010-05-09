@@ -34,7 +34,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmpizq = new PanelMesaPedido();
+        pmpizq = new PanelMesaPedido(PanelMesaPedido.COCINA);
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         //pmpizq.addPedidoCocina(pendiente);
@@ -202,6 +202,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
         // independientemente de la prueba
         this.pmpder.autoCompletar(peds);
+        this.pmpizq.addPedido(peds.get(0));
 
     }
     /*
