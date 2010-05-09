@@ -76,31 +76,31 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelHojaDerecha = new javax.swing.JPanel();
-        PanelElementoArribaD = new javax.swing.JPanel();
-        PanelElementoCentroD = new javax.swing.JPanel();
-        PanelElementoAbajoD = new javax.swing.JPanel();
+        PanelCentral = new javax.swing.JPanel();
         PanelHojaIzquierda = new javax.swing.JPanel();
         PanelElementoArribaI = new javax.swing.JPanel();
         PanelElementoCentroI = new javax.swing.JPanel();
         PanelElementoAbajoI = new javax.swing.JPanel();
+        PanelHojaDerecha = new javax.swing.JPanel();
+        PanelElementoArribaD = new javax.swing.JPanel();
+        PanelElementoCentroD = new javax.swing.JPanel();
+        PanelElementoAbajoD = new javax.swing.JPanel();
+        PanelMargenArriba = new javax.swing.JPanel();
+        PanelMargenAbajo = new javax.swing.JPanel();
+        PanelMargenIzquierda = new javax.swing.JPanel();
+        PanelMargenDerecha = new javax.swing.JPanel();
 
-        setLayout(new java.awt.GridLayout());
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(200, 200));
+        setLayout(new java.awt.BorderLayout());
 
-        PanelHojaDerecha.setLayout(new java.awt.GridLayout(3, 0));
+        PanelCentral.setOpaque(false);
+        PanelCentral.setLayout(new java.awt.GridLayout(1, 0, 5, 5));
 
-        PanelElementoArribaD.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoArribaD);
-
-        PanelElementoCentroD.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoCentroD);
-
-        PanelElementoAbajoD.setLayout(new java.awt.BorderLayout());
-        PanelHojaDerecha.add(PanelElementoAbajoD);
-
-        add(PanelHojaDerecha);
-
-        PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0));
+        PanelHojaIzquierda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        PanelHojaIzquierda.setOpaque(false);
+        PanelHojaIzquierda.setPreferredSize(new java.awt.Dimension(50, 150));
+        PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
 
         PanelElementoArribaI.setLayout(new java.awt.BorderLayout());
         PanelHojaIzquierda.add(PanelElementoArribaI);
@@ -111,11 +111,42 @@ public class PanelHojasCarta extends javax.swing.JPanel {
         PanelElementoAbajoI.setLayout(new java.awt.BorderLayout());
         PanelHojaIzquierda.add(PanelElementoAbajoI);
 
-        add(PanelHojaIzquierda);
+        PanelCentral.add(PanelHojaIzquierda);
+
+        PanelHojaDerecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        PanelHojaDerecha.setOpaque(false);
+        PanelHojaDerecha.setPreferredSize(new java.awt.Dimension(50, 150));
+        PanelHojaDerecha.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
+
+        PanelElementoArribaD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoArribaD);
+
+        PanelElementoCentroD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoCentroD);
+
+        PanelElementoAbajoD.setLayout(new java.awt.BorderLayout());
+        PanelHojaDerecha.add(PanelElementoAbajoD);
+
+        PanelCentral.add(PanelHojaDerecha);
+
+        add(PanelCentral, java.awt.BorderLayout.CENTER);
+
+        PanelMargenArriba.setOpaque(false);
+        add(PanelMargenArriba, java.awt.BorderLayout.NORTH);
+
+        PanelMargenAbajo.setOpaque(false);
+        add(PanelMargenAbajo, java.awt.BorderLayout.SOUTH);
+
+        PanelMargenIzquierda.setOpaque(false);
+        add(PanelMargenIzquierda, java.awt.BorderLayout.WEST);
+
+        PanelMargenDerecha.setOpaque(false);
+        add(PanelMargenDerecha, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelElementoAbajoD;
     private javax.swing.JPanel PanelElementoAbajoI;
     private javax.swing.JPanel PanelElementoArribaD;
@@ -124,6 +155,10 @@ public class PanelHojasCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelElementoCentroI;
     private javax.swing.JPanel PanelHojaDerecha;
     private javax.swing.JPanel PanelHojaIzquierda;
+    private javax.swing.JPanel PanelMargenAbajo;
+    private javax.swing.JPanel PanelMargenArriba;
+    private javax.swing.JPanel PanelMargenDerecha;
+    private javax.swing.JPanel PanelMargenIzquierda;
     // End of variables declaration//GEN-END:variables
 
 }
