@@ -35,22 +35,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     /** Creates new form PanelMesaPedido */
     public PanelMesaPedido(int f) {
         initComponents();
-
         filtro = f;
-
-        /*for (int i=0;i<10;i++){
-            JButton boton = new JButton();
-
-            boton.setBackground(new java.awt.Color(211, 223, 253));
-            boton.setPreferredSize(new java.awt.Dimension(panelInfoPedido.getWidth(), 60));
-            boton.setFont(new java.awt.Font("Arial", 0, 10));
-            boton.setForeground(new java.awt.Color(80, 98, 143));
-            boton.setText("<html>\n<body> \nAgua \n<br></br>\n<br></br>\n<font color=\"#000000\">Del tiempo, por favor</font>\n</body>\n</html>\n");
-            boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-            panelInfoPedido.add(boton);
-            panelInfoPedido.add(new PanelEspacioVertical());
-        }*/
-
     }
 
     public void addPedido(Pedido ped){
@@ -70,10 +55,9 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 ele = lista.get(i).getElemento();
 
                 boton.setBackground(new java.awt.Color(211, 223, 253));
-                boton.setPreferredSize(new java.awt.Dimension(panelInfoPedido.getWidth(), 60));
-                boton.setFont(new java.awt.Font("Arial", 0, 10));
+                boton.setFont(new java.awt.Font("Arial", 0, 12));
                 boton.setForeground(new java.awt.Color(80, 98, 143));
-                boton.setText("<html>\n<body> \n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n</body>\n</html>\n");
+                boton.setText("<html>\n<body> \n<br></br>\n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n<br></br>\n<br></br>\n</body>\n</html>\n");
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 panelInfoPedido.add(boton);
                 panelInfoPedido.add(new PanelEspacioVertical());
@@ -111,7 +95,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         scroll = new javax.swing.JScrollPane();
         panelInfoPedido = new javax.swing.JPanel();
         margenDer2 = new javax.swing.JPanel();
-        MargenInf2 = new javax.swing.JPanel();
+        margenInf2 = new javax.swing.JPanel();
         pInf = new javax.swing.JPanel();
         pendientes = new javax.swing.JLabel();
 
@@ -210,7 +194,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         centro2.setBackground(new java.awt.Color(255, 255, 255));
         centro2.setLayout(new java.awt.BorderLayout());
 
-        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12));
         infoMesaPedido.setForeground(new java.awt.Color(80, 98, 143));
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
         centro2.add(infoMesaPedido, java.awt.BorderLayout.NORTH);
@@ -241,21 +225,21 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         centro.add(margenDer2, java.awt.BorderLayout.EAST);
 
-        MargenInf2.setOpaque(false);
-        MargenInf2.setPreferredSize(new java.awt.Dimension(378, 5));
+        margenInf2.setOpaque(false);
+        margenInf2.setPreferredSize(new java.awt.Dimension(378, 5));
 
-        javax.swing.GroupLayout MargenInf2Layout = new javax.swing.GroupLayout(MargenInf2);
-        MargenInf2.setLayout(MargenInf2Layout);
-        MargenInf2Layout.setHorizontalGroup(
-            MargenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout margenInf2Layout = new javax.swing.GroupLayout(margenInf2);
+        margenInf2.setLayout(margenInf2Layout);
+        margenInf2Layout.setHorizontalGroup(
+            margenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 380, Short.MAX_VALUE)
         );
-        MargenInf2Layout.setVerticalGroup(
-            MargenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        margenInf2Layout.setVerticalGroup(
+            margenInf2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 5, Short.MAX_VALUE)
         );
 
-        centro.add(MargenInf2, java.awt.BorderLayout.SOUTH);
+        centro.add(margenInf2, java.awt.BorderLayout.SOUTH);
 
         pCentral.add(centro, java.awt.BorderLayout.CENTER);
 
@@ -266,7 +250,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
-        pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        pendientes.setFont(new java.awt.Font("Arial", 0, 18));
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);
@@ -276,13 +260,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel MargenInf2;
     private javax.swing.JPanel centro;
     private javax.swing.JPanel centro2;
     private javax.swing.JLabel infoMesaPedido;
     private javax.swing.JPanel margenDer;
     private javax.swing.JPanel margenDer2;
     private javax.swing.JPanel margenInf;
+    private javax.swing.JPanel margenInf2;
     private javax.swing.JPanel margenIzq;
     private javax.swing.JPanel margenIzq2;
     private javax.swing.JPanel margenSup;
