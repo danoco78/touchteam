@@ -96,9 +96,10 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public Pedido getSiguientePedidoCocinaEncola()throws Exception{
-         ArrayList<Pedido> noFacturados;
+        ArrayList<Pedido> noFacturados;
         ArrayList<ElementoPedido> elementos;
         noFacturados = iPedidosBD.obtienePedidosNoFacturados();
+        ElementoPedido elemP = null;
 
         Pedido pedido = null;
 
@@ -107,33 +108,31 @@ public class GestorPedidos implements IGestorPedidos {
         boolean encontrado = false;
         Date fecha=null, fechaPedido=null;
         while(iterador.hasNext()){
-            elementos = ((Pedido)iterador.next()).obtieneElementos();
+            Pedido ped = ((Pedido)iterador.next());
+            elementos = ped.obtieneElementos();
             Iterator ite2 = elementos.iterator();
             while (ite2.hasNext() && !encontrado){
-                if(ite2.next() instanceof ElementoColaCocina){
-                    estado = ((ElementoColaCocina)ite2.next()).getEstado();
+                elemP = (ElementoPedido)ite2.next();
+                if(elemP instanceof ElementoColaCocina){
+                    estado = elemP.getEstado();
                     if(estado == ElementoColaCocina.ENCOLA)
                         encontrado = true;
                 }
             }
             if(encontrado){
-                fecha = ((Pedido)iterador.next()).getFecha();
+                fecha = ped.getFecha();
             }
             if( encontrado && pedido != null){
                 fechaPedido = pedido.getFecha();
             }
             if(ite2.next() instanceof ElementoColaCocina && encontrado &&
                     (pedido == null || fecha.before(fechaPedido))){
-                pedido = ((Pedido)iterador.next());
+                pedido = ped;
             }
         }
         if(pedido == null)
                  throw new Exception("No hay siguiente pedido en cola de cocina");
         return pedido;
-    }
-
-    public Pedido getSiguientePedidoCocinaPreparandose(){
-        return new Pedido(); //Para quitar errores
     }
 
     public void imprimeFactura(Integer codMesa){
@@ -159,10 +158,6 @@ public class GestorPedidos implements IGestorPedidos {
         return new ArrayList<ElementoPedido>(); //Para quitar errores
     }
 
-    public boolean seleccionaBebida(Pedido p, ElementoBebida bebida){
-        return true;
-    }
-
     public int getNumPlatosEnCola() {
         return this.iPedidosBD.getNumPlatosEnCola();
     }
@@ -174,23 +169,24 @@ public class GestorPedidos implements IGestorPedidos {
         ArrayList<Pedido> noFacturados = this.iPedidosBD.obtienePedidosNoFacturados();
         ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
         ArrayList<ElementoPedido> elementos = new ArrayList<ElementoPedido>();
-        Iterator ite = noFacturados.iterator();
+        Iterator<Pedido> ite = noFacturados.iterator();
         Boolean romper = false;
         int estado;
 
         while(ite.hasNext()){
             romper = false;
-            elementos = ((Pedido)ite.next()).obtieneElementos();
+            Pedido p = ((Pedido)ite.next());
+            elementos = p.obtieneElementos();
             Iterator ite2 = elementos.iterator();
             while(ite2.hasNext() && !romper){
-                ElementoColaCocina temp = new ElementoColaCocina();
-                if(((ElementoPedido)ite.next()).getClass().getName().compareTo(temp.getClass().getName()) == 0 ){ //Si es ColaCocina
-                     estado = ((ElementoColaCocina)ite.next()).getEstado();
+                ElementoPedido ep = (ElementoPedido)ite2.next();
+                if(ep instanceof ElementoColaCocina ){ //Si es ColaCocina
+                     estado = ep.getEstado();
                      if(estado == ElementoColaCocina.PREPARADO ) romper = true;
                 }
             }
             if(romper){
-                pedidos.add(((Pedido)ite.next()));
+                pedidos.add(p);
             }
         }
         if(pedidos.isEmpty())
