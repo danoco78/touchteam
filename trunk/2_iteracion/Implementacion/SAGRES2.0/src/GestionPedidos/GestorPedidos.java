@@ -233,32 +233,37 @@ public class GestorPedidos implements IGestorPedidos {
     public boolean seleccionaBebida(Pedido p, ElementoColaBar ele) throws Exception {
         boolean exito=true, existe = false;
         int estado;
-
-        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
-        Elemento elem;
+        ElementoBebida elem;
         HashMap<Producto,Float> prods;
 
-        if(elementos.contains(ele)) existe = true;
+        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+        existe = elementos.contains(ele); // Comprobar si funciona el equals
+        
         if(existe){
             estado = ele.getEstado();
             if(estado == ElementoColaBar.ENCOLA){
-               p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
-               ele.setEstado(ElementoColaBar.PREPARADO);
-               this.iPedidosBD.actualizaPedido(p);
-               elem = ele.getElemento();
-               prods = elem.getProductos();
-               Collection c = (Collection)prods;
-               Iterator ite = c.iterator();
-               while(ite.hasNext()){ //Restamos las cantidades de todos los productos
-                   this.iProducto.restarCantidadProducto(((Pair<Producto,Float>)ite.next()));
-               }
+                p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
+                ele.setEstado(ElementoColaBar.PREPARADO);
+                this.iPedidosBD.actualizaPedido(p);
+                elem = (ElementoBebida) ele.getElemento();
+                prods = elem.getProductos();
+                Iterator ite = prods.entrySet().iterator();
+                Producto prod;
+                Float cantidad;
+                Map.Entry entrada;
+                while (ite.hasNext()) { //Restamos las cantidades de todos los productos
+                    entrada = (Map.Entry)ite.next();
+                    prod = (Producto) entrada.getKey();
+                    cantidad = (Float)entrada.getValue();
+                    this.iProducto.restarCantidadProducto(new Pair<Producto,Float>(prod,cantidad));
+                }
             }
             else{
                 exito = false;
             }
         }
         else{
-            throw new Exception("El plato no existe en ese pedido.");
+            throw new Exception("La bebida no existe en ese pedido.");
         }
         return exito;
     }
