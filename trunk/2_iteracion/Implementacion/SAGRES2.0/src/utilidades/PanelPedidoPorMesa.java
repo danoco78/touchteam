@@ -31,10 +31,10 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     /** Creates new form PanelPedidoPorMesa */
     public PanelPedidoPorMesa(Pedido ped, int filtro) {
         initComponents();
-        this.autoCompletar();
         this.ped = ped;
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
         this.filtro = filtro;
+        this.autoCompletar();
     }
 
     public void autoCompletar(){
@@ -79,6 +79,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         pEspacioDer = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(235, 235, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         setLayout(new java.awt.BorderLayout());
 
         pTexto.setOpaque(false);
@@ -109,7 +110,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         );
         pEspacioIzqLayout.setVerticalGroup(
             pEspacioIzqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
 
         add(pEspacioIzq, java.awt.BorderLayout.WEST);
@@ -127,7 +128,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         );
         pEspacioDerLayout.setVerticalGroup(
             pEspacioDerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
 
         add(pEspacioDer, java.awt.BorderLayout.EAST);

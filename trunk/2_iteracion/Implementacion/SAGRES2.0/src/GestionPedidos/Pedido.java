@@ -31,9 +31,11 @@ public class Pedido {
 
     public Pedido(){
         super();
+        elementos = new ArrayList<ElementoPedido>();
     }
     
     public Pedido(Integer codMesa, Integer codPedido, Integer estado, Date fecha){
+        this();
         this.codMesa = codMesa;
         this.codPedido = codPedido;
         this.estado = estado;
