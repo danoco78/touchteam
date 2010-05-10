@@ -20,8 +20,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import javax.swing.JButton;
 import utilidades.PanelMesaPedido;
 
 /**
@@ -45,7 +43,7 @@ public class IntColaBar extends javax.swing.JPanel {
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
         //TODO Borrar esto
-        this.actualizarVista();
+        //this.actualizarVista();
         
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
         centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
@@ -345,7 +343,7 @@ public class IntColaBar extends javax.swing.JPanel {
         // TODO this.pmpder.autoCompletar(getPedidosCocinaPreparandose());
         // Prueba para comprobar que funciona
         Pedido ped = new Pedido(5, 2, 0, null);
-        ElementoColaBar ele = new ElementoColaBar(1, 1, "Del tiempo, por favor");
+        ElementoColaBar ele = new ElementoColaBar(1, 0, "Del tiempo, por favor");
         ele.asocia(new Elemento(2, "Agua",
                 "Agua embotellada marca Bezoya",
                 true, null, 5, 5, 10));
