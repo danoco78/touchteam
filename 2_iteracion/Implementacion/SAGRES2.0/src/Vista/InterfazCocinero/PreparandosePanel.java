@@ -25,11 +25,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
     Pedido pedActual = null;
     java.awt.Dimension oldTama;
+    public IntColaCocinero colaCocineroPadre = null;
     
     /** Creates new form PanelMesaPedido */
-    public PreparandosePanel() {
+    public PreparandosePanel(IntColaCocinero padre) {
         initComponents();
         oldTama = this.getSize();
+        this.colaCocineroPadre = padre;
         
     }
 
@@ -44,18 +46,31 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         int totalPlatos = 0; // Actualiza el total de platos, por implementar
         for(int i=0; i<listaPedidos.size(); ++i){
-            this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), PanelPedidoPorMesa.PLATO));
-            this.pPanelesPedido.add(new PanelEspacioVertical());
+            totalPlatos += listaPedidos.get(i).obtieneElementos().size();
+            if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
+                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), PanelPedidoPorMesa.PLATO));
+                this.pPanelesPedido.add(new PanelEspacioVertical());
+            }
         }
+        System.out.println("holaaa " + totalPlatos);
+        //Actualizamos la etiqueta de platos preparándose
+        this.setMensaje(totalPlatos);
+
     }
 
-    /**
-     * Modifica el mensaje de texto de la base. Es necesario decirle la cantidad por parametros,
-     * puesto que se obtiene de una consulta
-     * @param mensaje Texto a mostrar. <br>Siempre sigue el formato [num] platos pendientes, para el caso de platos.
-     */
-    public void setMensaje(String mensaje){
-        pendientes.setText(mensaje);
+    public void setMensaje(int n){
+        switch(n){
+            case 0:
+                pendientes.setText("No hay ningún plato preparándose");
+                break;
+            case 1:
+                pendientes.setText("Hay "+ n + " plato preparándose.");
+                break;
+            default:
+                pendientes.setText("Hay "+ n + " platos preparándose.");
+                break;
+        }
+
     }
 
     /** This method is called from within the constructor to

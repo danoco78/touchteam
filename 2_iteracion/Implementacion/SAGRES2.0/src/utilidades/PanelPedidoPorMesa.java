@@ -15,6 +15,7 @@ import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
+import Vista.InterfazCocinero.PreparandosePanel;
 import java.util.ArrayList;
 
 /**
@@ -27,9 +28,11 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     public static final int BEBIDA = 1;
     int filtro;
     Pedido ped;
+    public PreparandosePanel prepPanel = null;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, int filtro) {
+    public PanelPedidoPorMesa(Pedido ped, int filtro, PreparandosePanel padre) {
+        this.prepPanel = padre;
         initComponents();
         this.ped = ped;
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());

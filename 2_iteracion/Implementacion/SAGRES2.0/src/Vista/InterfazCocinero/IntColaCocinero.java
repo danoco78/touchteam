@@ -38,7 +38,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         //pmpizq.addPedidoCocina(pendiente);
-        pmpder = new PreparandosePanel();
+        pmpder = new PreparandosePanel(this);
         pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
@@ -159,23 +159,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         }
         
     }
-    
-    void setInfoPreparandose(int n){
-
-        this.pmpder.setMensaje("1 plato preparándose");
-                switch(n){
-            case 0:
-                this.pmpder.setMensaje("No hay ningún plato preparándose");
-                break;
-            case 1:
-                this.pmpder.setMensaje("Hay " + n + " plato preparándose");
-                break;
-            default:
-                this.pmpder.setMensaje("Hay " + n + " platos preparándose");
-                break;
-        }
-
-    }
+   
 
     private void actualizarVista(){
         //this.pendientes = this.icocinero.getNumPlatosEnCola();
@@ -205,15 +189,4 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.pmpizq.addPedido(peds.get(0));
 
     }
-    /*
-   while(!haypedido){
-      try{
-           pedido = getSiguientePedidoEnCola();
-           haypedido = true;
-       }catch(excepcion ex){
-           // Si entra aqui es que no hay pedido aun
-       }
-    }
-
-     */
 }
