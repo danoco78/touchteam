@@ -7,8 +7,6 @@ package utilidades;
 
 import GestionCarta.Elemento;
 import GestionPedidos.ElementoPedido;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
@@ -16,8 +14,10 @@ import java.awt.event.ActionListener;
  */
 public class BotonElementoPedidoComentario extends javax.swing.JButton {
     public PanelPedidoPorMesa pedidoPorMesa = null;
+    ElementoPedido elem;
 
     public BotonElementoPedidoComentario(ElementoPedido ele, final PanelPedidoPorMesa padre){
+        this.elem = ele;
         this.pedidoPorMesa = padre;
         Elemento el = ele.getElemento();
         setBackground(new java.awt.Color(211, 223, 253));
@@ -29,5 +29,8 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
         this.setFocusPainted(false);
 
     }
-
+    public ElementoPedido getAsociado(){
+        System.out.println("estado: " + elem.getEstado()+ "  comentario: " +elem.getComentario());
+        return elem;
+    }
 }
