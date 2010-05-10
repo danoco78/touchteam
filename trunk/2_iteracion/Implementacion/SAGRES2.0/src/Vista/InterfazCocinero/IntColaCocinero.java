@@ -18,7 +18,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     public Integer pendientes = 0;
     PanelImagen panelImagen;
-    PanelMesaPedido pmpizq;
+    public PanelMesaPedido pmpizq;
     PreparandosePanel pmpder;
     protected ICocinero icocinero;
 
