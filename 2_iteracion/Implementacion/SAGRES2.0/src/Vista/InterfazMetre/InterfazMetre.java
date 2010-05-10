@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import utilidades.PanelMesaPedido;
 
 /**
  *
@@ -50,8 +49,7 @@ public class InterfazMetre extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
+    
     private class ManejaEventos implements ActionListener {
 
         private int tipoEvento;
@@ -73,7 +71,6 @@ public class InterfazMetre extends javax.swing.JFrame {
             CardLayout layout = (CardLayout) padre.getContentPane().getLayout();
             switch (this.tipoEvento) {
                 case ManejaEventos.SALIR:
-                    //System.exit(0);
                     layout.show(padre.getContentPane(), InterfazMetre.COLA);
                     break;
                 case ManejaEventos.ANADIRBEBIDA:
@@ -98,18 +95,6 @@ public class InterfazMetre extends javax.swing.JFrame {
             }
         }
 
-    }
-
-    private class HebraColaBar implements Runnable {
-        Thread t;
-
-        public HebraColaBar(PanelMesaPedido pmp){
-            t = new Thread(this,"Hebra Actualizadora de la Cola de Bar");
-        }
-
-        public void run() {
-
-        }
     }
 
     public static void main(String args[]) {

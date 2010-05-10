@@ -30,15 +30,18 @@ import utilidades.PanelMesaPedido;
  */
 public class IntColaBar extends javax.swing.JPanel {
 
-    PanelMesaPedido pmp = new PanelMesaPedido(PanelMesaPedido.BAR);
-    PanelColaFacturas colaIzq = new PanelColaFacturas();
-    PanelColaFacturas colaDer = new PanelColaFacturas();
-
+    PanelMesaPedido pmp = null;
+    PanelColaFacturas colaIzq = null;
+    PanelColaFacturas colaDer = null;
     
     /** Creates new form IntColaBar */
     public IntColaBar() {
         initComponents();
 
+        pmp = new PanelMesaPedido(PanelMesaPedido.BAR);
+        colaIzq = new PanelColaFacturas();
+        colaDer = new PanelColaFacturas();
+        
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
         //TODO Borrar esto
