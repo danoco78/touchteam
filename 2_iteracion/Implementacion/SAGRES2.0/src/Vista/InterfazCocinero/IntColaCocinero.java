@@ -190,7 +190,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        ElementoColaCocina ele = new ElementoColaCocina(1, 1, "La carne poco hecha por favor.");
+        ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
         ele.asocia(new Elemento(2, "Hamburguesa con queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",
                 true, null, 5, 5, 10));
