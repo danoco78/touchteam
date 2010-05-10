@@ -31,7 +31,7 @@ public class InterfazCliente extends javax.swing.JFrame {
         try {
             initComponents();
             this.iCliente = icliente;
-            this.panelGeneralCliente = new PanelGeneralCliente();
+            this.panelGeneralCliente = new PanelGeneralCliente(icliente);
             this.getContentPane().add(this.panelGeneralCliente, java.awt.BorderLayout.CENTER);
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } catch (Exception ex) {
@@ -57,13 +57,13 @@ public class InterfazCliente extends javax.swing.JFrame {
      /**
     * @param args the command line arguments
     */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
                     dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-                    dialog.getContentPane().add(new PanelGeneralCliente(), java.awt.BorderLayout.CENTER);
+                    //dialog.getContentPane().add(new PanelGeneralCliente(), java.awt.BorderLayout.CENTER);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                         @Override
@@ -78,7 +78,7 @@ public class InterfazCliente extends javax.swing.JFrame {
 
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
