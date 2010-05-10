@@ -20,7 +20,7 @@ import Vista.InterfazCocinero.PreparandosePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -33,9 +33,15 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     int filtro;
     Pedido ped;
     public PreparandosePanel prepPanel = null;
+    JPanel papa = null;
+    PanelEspacioVertical pe = null;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, int filtro, PreparandosePanel padre) {
+    public PanelPedidoPorMesa(Pedido ped, int filtro, PreparandosePanel padre, JPanel papa,
+            PanelEspacioVertical pe) {
+        tieneElementosPreparandose(ped);
+        this.pe = pe;
+        this.papa = papa;
         this.prepPanel = padre;
         initComponents();
         this.ped = ped;
@@ -58,7 +64,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                 if(lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
                     BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
                     b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.interfaz
-                            ,ped,b,this));
+                            ,ped,b,this,papa,pe));
                     pPedidos.add(b);
                     this.pPedidos.add(new PanelEspacioVertical());
                 }
@@ -154,26 +160,54 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     private class ManejaEventos implements ActionListener{
 
-        JButton boton;
+        BotonElementoPedidoComentario boton;
         InterfazCocinero c;
         Pedido p;
-        PanelPedidoPorMesa padre;
+        PanelPedidoPorMesa este;
+        JPanel padre;
+        PanelEspacioVertical pe;
 
-        public ManejaEventos(InterfazCocinero ic, Pedido ped, JButton b, PanelPedidoPorMesa padre){
+        public ManejaEventos(InterfazCocinero ic, Pedido ped,BotonElementoPedidoComentario b, PanelPedidoPorMesa este,
+                JPanel padre, PanelEspacioVertical pe){
             c = ic;
             p = ped;
             boton = b;
+            this.este = este;
             this.padre = padre;
+            this.pe = pe;
         }
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Entro");
-            padre.remove(boton);
 
-           // pPedidos.remove(padre);
-            padre.repaint();
-            padre.revalidate();
+            pPedidos.remove(boton);  //Borramos el boton de la interfaz
+            int codElem = boton.getAsociado().getCodElementoPedido();
+           cambiaAPreparado(p,codElem);
+
+            if(tieneElementosPreparandose(p)){
+                pPedidos.repaint();
+                pPedidos.revalidate();
+            }
+            else{
+                 padre.remove(este);
+                 padre.remove(pe);
+                 padre.repaint();
+                 padre.revalidate();
+            }
         }
     }
 
+    public boolean tieneElementosPreparandose(Pedido p){
+        System.out.println("Aqui entro");
+        for(int i=0;i<p.obtieneElementos().size();i++){
+            System.out.println("i es: " + i);
+            if(p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.PREPARANDOSE)
+                return true;
+        }
+        System.out.println("No tiene??");
+        return false;
+    }
+
+    void cambiaAPreparado(Pedido p,int codElem){
+
+    }
 }
