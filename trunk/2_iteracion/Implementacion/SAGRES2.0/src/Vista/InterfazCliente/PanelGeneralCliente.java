@@ -13,16 +13,14 @@ package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
-import GestionCarta.Seccion;
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JLabel;
@@ -47,9 +45,12 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private JPanel hojasSeccionPostres = new JPanel();
     private int i_postres;
 
-    private PanelPedidoComida panelPedidoComida;
+    private PanelRealizarPedido panelRealizarPedido;
+    private PanelPedidoRealizado panelPedidoRealizado;
 
     int seccion; //Seccion que se muestra actualmente
+    boolean pedidoRealizado;
+    private Elemento elementoMarcado;
 
     /** Creates new form PanelGeneralCliente */
     public PanelGeneralCliente() throws Exception {
@@ -65,8 +66,15 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         
         i_entrantes=i_pescados=i_carnes=i_bebidas=i_postres=0;
 
-        panelPedidoComida = new PanelPedidoComida();
-        PanelPedido.add(panelPedidoComida, BorderLayout.CENTER);
+        panelRealizarPedido = new PanelRealizarPedido(this);
+        PanelGeneralEste.add(panelRealizarPedido,"RealizarPedido");
+        panelPedidoRealizado = new PanelPedidoRealizado();
+        PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
+
+        ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
+
+        pedidoRealizado=false;
+        elementoMarcado = null;
 
     }
 
@@ -97,13 +105,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         GrupoBotonesSecciones = new javax.swing.ButtonGroup();
         PanelGeneralEste = new javax.swing.JPanel();
-        PanelPedido = new javax.swing.JPanel();
-        PanelPedidoBebida = new javax.swing.JPanel();
-        BotonVerFactura = new javax.swing.JButton();
         PanelGeneralCentro = new javax.swing.JPanel();
         PanelComentarios = new javax.swing.JPanel();
         ScrollComentarios = new javax.swing.JScrollPane();
         TextoComentarios = new javax.swing.JEditorPane();
+        BotonAnadir = new javax.swing.JButton();
         PanelCartaBotones = new javax.swing.JPanel();
         PanelCarta = new javax.swing.JPanel();
         PanelHojas = new javax.swing.JPanel();
@@ -124,36 +130,35 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelGeneralEste.setOpaque(false);
         PanelGeneralEste.setPreferredSize(new java.awt.Dimension(200, 200));
-        PanelGeneralEste.setLayout(new java.awt.BorderLayout(0, 5));
-
-        PanelPedido.setOpaque(false);
-        PanelPedido.setLayout(new java.awt.BorderLayout(0, 5));
-
-        PanelPedidoBebida.setLayout(new java.awt.BorderLayout());
-        PanelPedido.add(PanelPedidoBebida, java.awt.BorderLayout.PAGE_START);
-
-        PanelGeneralEste.add(PanelPedido, java.awt.BorderLayout.CENTER);
-
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
-        BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
-        BotonVerFactura.setText("Ver Factura");
-        BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
-        BotonVerFactura.setPreferredSize(new java.awt.Dimension(89, 50));
-        PanelGeneralEste.add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
-
+        PanelGeneralEste.setLayout(new java.awt.CardLayout(2, 1));
         add(PanelGeneralEste, java.awt.BorderLayout.EAST);
 
         PanelGeneralCentro.setOpaque(false);
         PanelGeneralCentro.setLayout(new java.awt.BorderLayout(0, 5));
 
+        PanelComentarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         PanelComentarios.setOpaque(false);
         PanelComentarios.setLayout(new java.awt.BorderLayout());
+
+        ScrollComentarios.setBorder(null);
 
         TextoComentarios.setEnabled(false);
         TextoComentarios.setPreferredSize(new java.awt.Dimension(106, 50));
         ScrollComentarios.setViewportView(TextoComentarios);
 
         PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
+
+        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonAnadir.setForeground(new java.awt.Color(80, 98, 143));
+        BotonAnadir.setText("Añadir");
+        BotonAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
+        BotonAnadir.setPreferredSize(new java.awt.Dimension(89, 50));
+        BotonAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anadirElementoAPedido(evt);
+            }
+        });
+        PanelComentarios.add(BotonAnadir, java.awt.BorderLayout.EAST);
 
         PanelGeneralCentro.add(PanelComentarios, java.awt.BorderLayout.PAGE_END);
 
@@ -445,14 +450,23 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.repaint();
     }//GEN-LAST:event_paginaAnterior
 
+    private void anadirElementoAPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirElementoAPedido
+        if(elementoMarcado!=null){
+            this.panelRealizarPedido.anadirElemento(elementoMarcado);
+            this.TextoComentarios.setEnabled(false);
+            this.TextoComentarios.setText("");
+            this.elementoMarcado=null;
+        }
+    }//GEN-LAST:event_anadirElementoAPedido
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonAnadir;
     private javax.swing.JToggleButton BotonBebidas;
     private javax.swing.JToggleButton BotonCarnes;
     private javax.swing.JToggleButton BotonEntrantes;
     private javax.swing.JToggleButton BotonPescados;
     private javax.swing.JToggleButton BotonPostres;
-    private javax.swing.JButton BotonVerFactura;
     private javax.swing.ButtonGroup GrupoBotonesSecciones;
     private javax.swing.JLabel LabelPaginaAnterior;
     private javax.swing.JLabel LabelPaginaSiguiente;
@@ -466,8 +480,6 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPaginaAnterior;
     private javax.swing.JPanel PanelPaginaSiguiente;
     private javax.swing.JPanel PanelPasarPaginas;
-    private javax.swing.JPanel PanelPedido;
-    private javax.swing.JPanel PanelPedidoBebida;
     private javax.swing.JScrollPane ScrollComentarios;
     private javax.swing.JEditorPane TextoComentarios;
     // End of variables declaration//GEN-END:variables
@@ -594,8 +606,21 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             PanelHojas.add(new JLabel("No existen postres disponibles en este momento", JLabel.CENTER),"Postres");
     }
 
-    public void anadirElementoAPedido(String nomElemento) {
-        panelPedidoComida.anadirElemento(nomElemento);
+    public void marcarElemento(Elemento elemento) {
+        this.elementoMarcado = elemento;
+        this.TextoComentarios.setEnabled(true);
+    }
+
+    public void desmarcarElemento(Elemento elemento) {
+        this.elementoMarcado = null;
+        this.TextoComentarios.setEnabled(false);
+    }
+
+    public void realizarPedido() {
+        ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "PedidoRealizado");
+        this.BotonAnadir.setVisible(false);
+        this.TextoComentarios.setText("");
+        this.TextoComentarios.setEnabled(false);
     }
 
 }

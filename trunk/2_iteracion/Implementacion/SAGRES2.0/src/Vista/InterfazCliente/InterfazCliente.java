@@ -12,11 +12,7 @@
 package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
-import java.awt.CardLayout;
-import java.awt.Dialog;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
