@@ -5,9 +5,9 @@
 
 package utilidades;
 
-import ControladorPrincipal.ICocinero;
-import ControladorPrincipal.IMetre;
 import GestionPedidos.Pedido;
+import Vista.InterfazCocinero.InterfazCocinero;
+import Vista.InterfazMetre.InterfazMetre;
 
 /**
  *
@@ -15,30 +15,27 @@ import GestionPedidos.Pedido;
  */
 public class HebraColaPedidos implements Runnable {
     Thread t;
-    IMetre iMetre;
-    ICocinero iCocinero;
-    PanelMesaPedido pmp;
+    InterfazMetre mpadre;
+    InterfazCocinero cpadre;
     boolean end;
-    Pedido p;
+    Pedido actual = null ,p = null;
 
     int filtro;
 
     public static final int COCINA = 0;
     public static final int BAR = 1;
 
-    public HebraColaPedidos(IMetre iMetre, PanelMesaPedido panel) {
+    public HebraColaPedidos(InterfazMetre iMetre) {
         t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Bar");
-        this.iMetre = iMetre;
-        this.pmp = panel;
+        mpadre = iMetre;
         end = false;
         filtro = BAR;
         t.start();
     }
 
-    public HebraColaPedidos(ICocinero iCocinero, PanelMesaPedido panel) {
+    public HebraColaPedidos(InterfazCocinero iCocinero) {
         t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Cocina");
-        this.iCocinero = iCocinero;
-        this.pmp = panel;
+        cpadre = iCocinero;
         end = false;
         filtro = COCINA;
         t.start();
@@ -49,18 +46,25 @@ public class HebraColaPedidos implements Runnable {
             try {
                 switch (filtro){
                     case BAR:
-                        p = iMetre.getSiguientePedidoBar();
+                        p = mpadre.imetre.getSiguientePedidoBar();
+                        if (p == actual) {
+                            Thread.sleep(5000); // 5 Segundos
+                        } else {
+                            actual = p;
+                            mpadre.panelColaBar.pmp.addPedido(actual);
+                        }
+                        mpadre.panelColaBar.pmp.setPendientes(mpadre.imetre.getNumBebidasEnCola());
                         break;
                     case COCINA:
-                        p = iCocinero.getSiguientePedidoCocinaEnCola();
+                        p = cpadre.icocinero.getSiguientePedidoCocinaEnCola();
+                        if (p == actual) {
+                            Thread.sleep(5000); // 5 Segundos
+                        } else {
+                            actual = p;
+                            cpadre.panelColaCocinero.pmpizq.addPedido(actual);
+                        }
+                        cpadre.panelColaCocinero.pmpizq.setPendientes(cpadre.icocinero.getNumPlatosEnCola());
                         break;
-                }
-                
-                if (p == null) {
-                    Thread.sleep(5000); // 5 Segundos
-                } else {
-                    t.interrupt();
-                    pmp.addPedido(p);
                 }
             } catch (Exception ex) {
                 end = true;

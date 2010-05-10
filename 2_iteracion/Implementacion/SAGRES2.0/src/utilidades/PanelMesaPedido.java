@@ -16,6 +16,10 @@ import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
+import Vista.InterfazCocinero.InterfazCocinero;
+import Vista.InterfazMetre.InterfazMetre;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 
@@ -27,15 +31,24 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
     Pedido pedActual = null;
     int filtro;
+    InterfazMetre mpadre;
+    InterfazCocinero cpadre;
     
     public static final int COCINA = 0;
     public static final int BAR = 1;
 
     
     /** Creates new form PanelMesaPedido */
-    public PanelMesaPedido(int f) {
+    public PanelMesaPedido(InterfazMetre i) {
         initComponents();
-        filtro = f;
+        filtro = BAR;
+        mpadre = i;
+    }
+
+    public PanelMesaPedido(InterfazCocinero i) {
+        initComponents();
+        filtro = COCINA;
+        cpadre = i;
     }
 
     public void addPedido(Pedido ped){
@@ -46,12 +59,14 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
         JButton boton;
+        PanelEspacioVertical pev;
         Elemento ele;
         
         for (int i = 0; i < lista.size(); ++i) {
             if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
                     || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
                 boton = new JButton();
+                pev = new PanelEspacioVertical();
                 ele = lista.get(i).getElemento();
 
                 boton.setBackground(new java.awt.Color(211, 223, 253));
@@ -59,9 +74,14 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setForeground(new java.awt.Color(80, 98, 143));
                 boton.setText("<html>\n<body> \n<br></br>\n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n<br></br>\n<br></br>\n</body>\n</html>\n");
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                boton.setFocusPainted(false);
+                if (filtro == BAR)
+                    boton.addActionListener(new ManejaEventos(mpadre,pedActual,boton, pev));
+                else
+                    boton.addActionListener(new ManejaEventos(cpadre,pedActual,boton, pev));
                 panelInfoPedido.add(boton);
-                panelInfoPedido.add(new PanelEspacioVertical());
-                //TODO Manejar el evento del boton
+                panelInfoPedido.add(pev);
+                
             }
         }
     }
@@ -71,8 +91,15 @@ public class PanelMesaPedido extends javax.swing.JPanel {
      * puesto que se obtiene de una consulta
      * @param mensaje Texto a mostrar. <br>Siempre sigue el formato [num] platos pendientes, para el caso de platos.
      */
-    public void setMensaje(String mensaje){
-        pendientes.setText(mensaje);
+    public void setPendientes(int num){
+        switch (filtro){
+            case PanelMesaPedido.COCINA:
+                pendientes.setText(String.valueOf(num)+" platos pendientes");
+                break;
+            case PanelMesaPedido.BAR:
+                pendientes.setText(String.valueOf(num) + " bebidas pendientes");
+                break;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -278,4 +305,44 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
 
+    private class ManejaEventos implements ActionListener{
+
+        JButton boton;
+        PanelEspacioVertical panel;
+        InterfazMetre m;
+        InterfazCocinero c;
+        int filtro;
+        Pedido p;
+
+        public ManejaEventos(InterfazMetre im, Pedido ped, JButton b,PanelEspacioVertical pev){
+            m = im;
+            p = ped;
+            boton = b;
+            panel = pev;
+            filtro = PanelMesaPedido.BAR;
+        }
+
+        public ManejaEventos(InterfazCocinero ic, Pedido ped, JButton b,PanelEspacioVertical pev){
+            c = ic;
+            p = ped;
+            boton = b;
+            panel = pev;
+            filtro = PanelMesaPedido.COCINA;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            switch(filtro){
+                case PanelMesaPedido.BAR:
+
+                    break;
+                case PanelMesaPedido.COCINA:
+                    break;
+            }
+
+            panelInfoPedido.remove(boton);
+            panelInfoPedido.remove(panel);
+            panelInfoPedido.repaint();
+            panelInfoPedido.revalidate();
+        }
+    }
 }
