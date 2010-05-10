@@ -49,8 +49,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         Elemento ele;
         
         for (int i = 0; i < lista.size(); ++i) {
-            if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar)
-                    || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina)) {
+            if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
+                    || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
                 boton = new JButton();
                 ele = lista.get(i).getElemento();
 
@@ -61,6 +61,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 panelInfoPedido.add(boton);
                 panelInfoPedido.add(new PanelEspacioVertical());
+                //TODO Manejar el evento del boton
             }
         }
     }

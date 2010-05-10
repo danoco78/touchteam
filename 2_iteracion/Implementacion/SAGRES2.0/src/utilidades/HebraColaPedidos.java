@@ -36,7 +36,7 @@ public class HebraColaPedidos implements Runnable {
     }
 
     public HebraColaPedidos(ICocinero iCocinero, PanelMesaPedido panel) {
-        t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Bar");
+        t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Cocina");
         this.iCocinero = iCocinero;
         this.pmp = panel;
         end = false;
