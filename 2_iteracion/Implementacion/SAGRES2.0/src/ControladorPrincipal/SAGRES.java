@@ -208,6 +208,6 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     }
 
     public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.icarta.obtieneElementosDeSeccion(seccion);
     }
 }

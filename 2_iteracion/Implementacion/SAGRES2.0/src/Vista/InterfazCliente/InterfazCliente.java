@@ -54,32 +54,6 @@ public class InterfazCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     /**
-    * @param args the command line arguments
-    */
-    /*public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
-                    dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-                    //dialog.getContentPane().add(new PanelGeneralCliente(), java.awt.BorderLayout.CENTER);
-                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
-                        }
-                    });
-                    dialog.setVisible(true);
-                } catch (Exception ex) {
-                    Logger.getLogger(InterfazCliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-        });
-    }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 

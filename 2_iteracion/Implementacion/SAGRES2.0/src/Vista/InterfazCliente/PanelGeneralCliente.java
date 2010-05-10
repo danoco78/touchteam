@@ -509,29 +509,28 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 ++j;
                 hojasSeccion.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
         }
-
+            
             if(s.getNombre().equals("Entrantes")){
+                hojasSeccionEntrantes=hojasSeccion;
                 hojasSeccionEntrantes.setLayout(new CardLayout(listaElementos.size()+1/6,1));
                 hojasSeccionEntrantes.setOpaque(false);
-                hojasSeccionEntrantes=hojasSeccion;
             }else if(s.getNombre().equals("Pescados")){
+                hojasSeccionPescados=hojasSeccion;
                 hojasSeccionPescados.setLayout(new CardLayout(listaElementos.size()/6+1,1));
                 hojasSeccionPescados.setOpaque(false);
-                hojasSeccionPescados=hojasSeccion;
             }else if(s.getNombre().equals("Carnes")){
+                hojasSeccionCarnes=hojasSeccion;
                 hojasSeccionCarnes.setLayout(new CardLayout(listaElementos.size()/6+1,1));
                 hojasSeccionCarnes.setOpaque(false);
-                hojasSeccionCarnes=hojasSeccion;
-            }else if(s.getNombre().equals("Bebidas")){
+            }else if(s.getNombre().equals("Refrescos") || s.getNombre().equals("Vinos")){
+                hojasSeccionBebidas=hojasSeccion;
                 hojasSeccionBebidas.setLayout(new CardLayout(listaElementos.size()/6+1,1));
                 hojasSeccionBebidas.setOpaque(false);
-                hojasSeccionBebidas=hojasSeccion;
             }else if(s.getNombre().equals("Postres")){
                 hojasSeccionPostres.setLayout(new CardLayout(listaElementos.size()/6+1,1));
                 hojasSeccionPostres.setOpaque(false);
-                hojasSeccionPostres=hojasSeccion;
             }
-        }
+       }
         
         /*HashSet<Elemento> listaElementos = new HashSet();
         listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Entrante 1", (float) 23.00));
