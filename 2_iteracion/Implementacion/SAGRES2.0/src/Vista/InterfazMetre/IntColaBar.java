@@ -33,10 +33,10 @@ public class IntColaBar extends javax.swing.JPanel {
     PanelColaFacturas colaDer = null;
     
     /** Creates new form IntColaBar */
-    public IntColaBar() {
+    public IntColaBar(InterfazMetre i) {
         initComponents();
 
-        pmp = new PanelMesaPedido(PanelMesaPedido.BAR);
+        pmp = new PanelMesaPedido(i);
         colaIzq = new PanelColaFacturas();
         colaDer = new PanelColaFacturas();
         

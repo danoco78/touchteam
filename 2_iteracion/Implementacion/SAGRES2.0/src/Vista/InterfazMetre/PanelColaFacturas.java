@@ -30,31 +30,32 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         //TODO Borrar
         for (int i=0;i<20;i++){
             JButton boton = new JButton();
-
+            PanelEspacioVertical pev = new PanelEspacioVertical();
             boton.setBackground(new java.awt.Color(211, 223, 253));
             boton.setForeground(new java.awt.Color(80, 98, 143));
             boton.setFont(new java.awt.Font("Arial", 0, 18));
             boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa 5\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
             boton.setFocusPainted(false);
-            boton.addActionListener(new ManejaEventos(boton));
+            boton.addActionListener(new ManejaEventos(boton,pev));
 
             centro.add(boton);
-            centro.add(new PanelEspacioVertical());
+            centro.add(pev);
         }
     }
 
     public void addMesa(int codigo){
         JButton boton = new JButton();
+        PanelEspacioVertical pev = new PanelEspacioVertical();
 
         boton.setBackground(new java.awt.Color(211, 223, 253));
         boton.setForeground(new java.awt.Color(80, 98, 143));
         boton.setFont(new java.awt.Font("Arial", 0, 18));
         boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(codigo)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
         boton.setFocusPainted(false);
-        boton.addActionListener(new ManejaEventos(boton));
+        boton.addActionListener(new ManejaEventos(boton,pev));
 
         centro.add(boton);
-        centro.add(new PanelEspacioVertical());
+        centro.add(pev);
     }
 
     /** This method is called from within the constructor to
@@ -116,14 +117,19 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
     private class ManejaEventos implements ActionListener{
 
-        JButton padre;
+        JButton boton;
+        PanelEspacioVertical panel;
 
-        public ManejaEventos(JButton b){
-            padre = b;
+        public ManejaEventos(JButton b,PanelEspacioVertical p){
+            boton = b;
+            panel = p;
         }
 
         public void actionPerformed(ActionEvent e) {
-            //centro.remove(padre);
+            centro.remove(boton);
+            centro.remove(panel);
+            centro.repaint();
+            centro.revalidate();
         }
     }
 }
