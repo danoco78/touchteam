@@ -35,7 +35,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelPrincipal = new IntPrincipalCocinero();
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
-        this.panelColaCocinero = new IntColaCocinero();
+        this.panelColaCocinero = new IntColaCocinero(this);
         //this.hebra = new HebraColaPedidos(this);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
@@ -165,7 +165,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
             public void run() {
                 javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
                 dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-                dialog.getContentPane().add(new IntColaCocinero(), java.awt.BorderLayout.CENTER);
+                dialog.getContentPane().add(new IntColaCocinero(this), java.awt.BorderLayout.CENTER);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

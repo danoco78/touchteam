@@ -21,12 +21,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public PanelMesaPedido pmpizq;
     PreparandosePanel pmpder;
     protected ICocinero icocinero;
+    public InterfazCocinero interfaz = null;
 
     Pedido pendiente;
     ArrayList<Pedido> colaPreparandose;
     
     /** Creates new form IntGestionCarta */
-    public IntColaCocinero() {
+    public IntColaCocinero(InterfazCocinero i) {
+        this.interfaz = i;
         initComponents();
         this.setDoubleBuffered(true);
         panelImagen = new PanelImagen("/Vista/InterfazCocinero/imagenes/LogoSagres_interfaz.png");
@@ -34,7 +36,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmpizq = new PanelMesaPedido(PanelMesaPedido.COCINA);
+        pmpizq = new PanelMesaPedido(i);
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         //pmpizq.addPedidoCocina(pendiente);
@@ -144,8 +146,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-    private void setInfoPendientes(int n){
-
+    /*private void setInfoPendientes(int n){
         switch(n){
             case 0:
                 this.pmpizq.setMensaje("No hay ningún plato pendiente");
@@ -158,12 +159,12 @@ public class IntColaCocinero extends javax.swing.JPanel {
                 break;
         }
         
-    }
+    }*/
    
 
     private void actualizarVista(){
         //this.pendientes = this.icocinero.getNumPlatosEnCola();
-        this.setInfoPendientes(pendientes);
+        this.pmpizq.setPendientes(this.pendientes);
 
         // Prueba para comprobar que funciona
         ArrayList<Pedido> peds = new ArrayList<Pedido>();
@@ -175,18 +176,25 @@ public class IntColaCocinero extends javax.swing.JPanel {
         }*/
 
         ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
+        ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
         ele.asocia(new Elemento(2, "Hamburguesa con queso",
+                "Deliciosa carne de vacuno a la parrilla con queso fresco",
+                true, null, 5, 5, 10));
+        ele2.asocia(new Elemento(2, "Hamburguesa sin queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",
                 true, null, 5, 5, 10));
         for(int i=0; i<5; ++i){
             peds.add(new Pedido(5, i, 0, null));
             for(int j=0; j<4; ++j)
-                peds.get(i).asocia(ele);
+                peds.get(i).asocia(ele2);
         }
+
         // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
         // independientemente de la prueba
         this.pmpder.autoCompletar(peds);
-        this.pmpizq.addPedido(peds.get(0));
+        Pedido aux = new Pedido(5, 30, 0, null);
+        aux.asocia(ele);
+        this.pmpizq.addPedido(aux);
 
     }
 }

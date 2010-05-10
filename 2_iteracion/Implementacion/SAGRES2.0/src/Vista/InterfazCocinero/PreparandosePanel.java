@@ -11,7 +11,11 @@
 
 package Vista.InterfazCocinero;
 
+import GestionPedidos.ElementoColaCocina;
+import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import utilidades.PanelEspacioVertical;
@@ -32,7 +36,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
         initComponents();
         oldTama = this.getSize();
         this.colaCocineroPadre = padre;
-        
     }
 
     /**
@@ -41,21 +44,23 @@ public class PreparandosePanel extends javax.swing.JPanel {
      * @param listaPedidos Lista de pedidos a recibir
      */
     public void autoCompletar(ArrayList<Pedido> listaPedidos){
+
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
-        int totalPlatos = 0; // Actualiza el total de platos, por implementar
-        for(int i=0; i<listaPedidos.size(); ++i){
-            totalPlatos += listaPedidos.get(i).obtieneElementos().size();
-            if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
-                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), PanelPedidoPorMesa.PLATO));
-                this.pPanelesPedido.add(new PanelEspacioVertical());
-            }
-        }
-        System.out.println("holaaa " + totalPlatos);
+
+        int totalPlatos = cuentaPlatos(listaPedidos);
         //Actualizamos la etiqueta de platos preparándose
         this.setMensaje(totalPlatos);
 
+
+        for(int i=0; i<listaPedidos.size(); ++i){
+            totalPlatos += listaPedidos.get(i).obtieneElementos().size();
+            if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
+                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), PanelPedidoPorMesa.PLATO,this));
+                this.pPanelesPedido.add(new PanelEspacioVertical());
+            }
+        }
     }
 
     public void setMensaje(int n){
@@ -164,5 +169,17 @@ public class PreparandosePanel extends javax.swing.JPanel {
     private javax.swing.JLabel pendientes;
     private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
+
+
+    private int cuentaPlatos(ArrayList<Pedido> listaPedidos) {
+        int Total = 0;
+        for (int i=0;i<listaPedidos.size();i++){
+            for(int j=0;j<listaPedidos.get(i).obtieneElementos().size();j++){
+                if(listaPedidos.get(i).obtieneElementos().get(j).getEstado() == ElementoColaCocina.PREPARANDOSE)
+                    Total++;
+            }
+        }
+        return Total;
+    }
 
 }
