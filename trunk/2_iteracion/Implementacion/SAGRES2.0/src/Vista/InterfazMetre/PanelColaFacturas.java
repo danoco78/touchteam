@@ -35,6 +35,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
             boton.setForeground(new java.awt.Color(80, 98, 143));
             boton.setFont(new java.awt.Font("Arial", 0, 18));
             boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa 5\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+            boton.setFocusPainted(false);
             boton.addActionListener(new ManejaEventos(boton));
 
             centro.add(boton);
@@ -49,6 +50,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         boton.setForeground(new java.awt.Color(80, 98, 143));
         boton.setFont(new java.awt.Font("Arial", 0, 18));
         boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(codigo)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+        boton.setFocusPainted(false);
         boton.addActionListener(new ManejaEventos(boton));
 
         centro.add(boton);

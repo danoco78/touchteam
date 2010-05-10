@@ -14,12 +14,13 @@ import utilidades.HebraColaPedidos;
 /**
  *
  * @author Daniel Guerrero Martinez
+ * @author Samuel Guirado Navarro
  */
 public class InterfazMetre extends javax.swing.JFrame {
 
-    protected IMetre imetre;
+    public IMetre imetre;
     private IntGestionBebidas panelPrincipal = null;
-    private IntColaBar panelColaBar = null;
+    public IntColaBar panelColaBar = null;
 
     HebraColaPedidos hebra = null;
 
@@ -31,7 +32,7 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar();
-        //this.hebra = new HebraColaPedidos(this.imetre,panelColaBar.pmp);
+        //this.hebra = new HebraColaPedidos(this);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -42,7 +43,6 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.panelPrincipal.bNotificcarIncidencia.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARINCIDENCIA));
         this.panelColaBar.bGestBebidas.addActionListener(new ManejaEventos(this, ManejaEventos.GESTBEBIDAS));
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
