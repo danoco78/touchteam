@@ -15,8 +15,12 @@ import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
+import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazCocinero.PreparandosePanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 
 /**
  *
@@ -51,14 +55,16 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         ArrayList<ElementoPedido> lista = ped.obtieneElementos();
         for(int i=0; i<lista.size(); ++i){
             if(filtro == PLATO){
-                if(lista.get(i) instanceof ElementoColaCocina){
-                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i));
+                if(lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
+                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
+                    b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.interfaz
+                            ,ped,b,this));
                     pPedidos.add(b);
                     this.pPedidos.add(new PanelEspacioVertical());
                 }
             }else{
                 if(lista.get(i) instanceof ElementoColaBar){
-                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i));
+                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
                     pPedidos.add(b);
                     this.pPedidos.add(new PanelEspacioVertical());
                 }
@@ -145,5 +151,29 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     private javax.swing.JPanel pTexto;
     private javax.swing.JLabel tPedido;
     // End of variables declaration//GEN-END:variables
+
+    private class ManejaEventos implements ActionListener{
+
+        JButton boton;
+        InterfazCocinero c;
+        Pedido p;
+        PanelPedidoPorMesa padre;
+
+        public ManejaEventos(InterfazCocinero ic, Pedido ped, JButton b, PanelPedidoPorMesa padre){
+            c = ic;
+            p = ped;
+            boton = b;
+            this.padre = padre;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Entro");
+            padre.remove(boton);
+
+           // pPedidos.remove(padre);
+            padre.repaint();
+            padre.revalidate();
+        }
+    }
 
 }
