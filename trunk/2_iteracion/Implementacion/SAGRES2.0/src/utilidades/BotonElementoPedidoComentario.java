@@ -13,8 +13,10 @@ import GestionPedidos.ElementoPedido;
  * @author redder
  */
 public class BotonElementoPedidoComentario extends javax.swing.JButton {
+    public PanelPedidoPorMesa pedidoPorMesa = null;
 
-    public BotonElementoPedidoComentario(ElementoPedido ele){
+    public BotonElementoPedidoComentario(ElementoPedido ele, PanelPedidoPorMesa padre){
+        this.pedidoPorMesa = padre;
         Elemento el = ele.getElemento();
         setBackground(new java.awt.Color(211, 223, 253));
         setFont(new java.awt.Font("Arial", 0, 10));
