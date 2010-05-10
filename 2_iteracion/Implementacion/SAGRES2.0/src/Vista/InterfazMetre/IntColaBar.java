@@ -28,7 +28,7 @@ import utilidades.PanelMesaPedido;
  */
 public class IntColaBar extends javax.swing.JPanel {
 
-    PanelMesaPedido pmp = null;
+    public PanelMesaPedido pmp = null;
     PanelColaFacturas colaIzq = null;
     PanelColaFacturas colaDer = null;
     
@@ -43,7 +43,7 @@ public class IntColaBar extends javax.swing.JPanel {
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
         //TODO Borrar esto
-        //this.actualizarVista();
+        this.actualizarVista();
         
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
         centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
