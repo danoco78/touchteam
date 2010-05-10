@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import utilidades.HebraColaPedidos;
 
 /**
  *
@@ -20,6 +21,8 @@ public class InterfazMetre extends javax.swing.JFrame {
     private IntGestionBebidas panelPrincipal = null;
     private IntColaBar panelColaBar = null;
 
+    HebraColaPedidos hebra = null;
+
     protected static final String BEBIDA = "Bebida";
     protected static final String COLA = "Cola";
 
@@ -28,12 +31,13 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar();
+        //this.hebra = new HebraColaPedidos(this.imetre,panelColaBar.pmp);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
         this.panelPrincipal.bAnadirBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ANADIRBEBIDA));
-        this.panelPrincipal.bEliminarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ELIMNARBEBIDA));
+        this.panelPrincipal.bEliminarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.ELIMINARBEBIDA));
         this.panelPrincipal.bModificarBebida.addActionListener(new ManejaEventos(this, ManejaEventos.MODIFICARBEBIDA));
         this.panelPrincipal.bNotificcarIncidencia.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARINCIDENCIA));
         this.panelColaBar.bGestBebidas.addActionListener(new ManejaEventos(this, ManejaEventos.GESTBEBIDAS));
@@ -56,7 +60,7 @@ public class InterfazMetre extends javax.swing.JFrame {
         private JFrame padre;
         protected static final int SALIR = 0;
         protected static final int ANADIRBEBIDA = 1;
-        protected static final int ELIMNARBEBIDA = 2;
+        protected static final int ELIMINARBEBIDA = 2;
         protected static final int MODIFICARBEBIDA = 3;
         protected static final int NOTIFICARINCIDENCIA = 4;
         protected static final int GESTBEBIDAS = 5;
@@ -76,7 +80,7 @@ public class InterfazMetre extends javax.swing.JFrame {
                 case ManejaEventos.ANADIRBEBIDA:
                     dialogo = new DialogoAnadirBebida(padre, imetre);
                     break;
-                case ManejaEventos.ELIMNARBEBIDA:
+                case ManejaEventos.ELIMINARBEBIDA:
                     dialogo =new DialogoEliminarBebida(padre, imetre);
                     break;
                 case ManejaEventos.MODIFICARBEBIDA:
