@@ -22,6 +22,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JLabel;
@@ -46,6 +47,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private JPanel hojasSeccionPostres = new JPanel();
     private int i_postres;
 
+    private PanelPedidoComida panelPedidoComida;
+
     int seccion; //Seccion que se muestra actualmente
 
     /** Creates new form PanelGeneralCliente */
@@ -62,7 +65,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         
         i_entrantes=i_pescados=i_carnes=i_bebidas=i_postres=0;
 
-        PanelPedido.add(new PanelPedidoComida(), BorderLayout.CENTER);
+        panelPedidoComida = new PanelPedidoComida();
+        PanelPedido.add(panelPedidoComida, BorderLayout.CENTER);
 
     }
 
@@ -98,8 +102,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         BotonVerFactura = new javax.swing.JButton();
         PanelGeneralCentro = new javax.swing.JPanel();
         PanelComentarios = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        ScrollComentarios = new javax.swing.JScrollPane();
+        TextoComentarios = new javax.swing.JEditorPane();
         PanelCartaBotones = new javax.swing.JPanel();
         PanelCarta = new javax.swing.JPanel();
         PanelHojas = new javax.swing.JPanel();
@@ -130,7 +134,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelGeneralEste.add(PanelPedido, java.awt.BorderLayout.CENTER);
 
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Ver Factura");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -145,11 +149,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelComentarios.setOpaque(false);
         PanelComentarios.setLayout(new java.awt.BorderLayout());
 
-        jEditorPane1.setEnabled(false);
-        jEditorPane1.setPreferredSize(new java.awt.Dimension(106, 50));
-        jScrollPane1.setViewportView(jEditorPane1);
+        TextoComentarios.setEnabled(false);
+        TextoComentarios.setPreferredSize(new java.awt.Dimension(106, 50));
+        ScrollComentarios.setViewportView(TextoComentarios);
 
-        PanelComentarios.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
 
         PanelGeneralCentro.add(PanelComentarios, java.awt.BorderLayout.PAGE_END);
 
@@ -200,7 +204,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
         BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
@@ -213,7 +217,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonEntrantes);
 
         GrupoBotonesSecciones.add(BotonPescados);
-        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
         BotonPescados.setText("Pescados");
         BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -225,7 +229,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonPescados);
 
         GrupoBotonesSecciones.add(BotonCarnes);
-        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16));
         BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
         BotonCarnes.setText("Carnes");
         BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -237,7 +241,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonCarnes);
 
         GrupoBotonesSecciones.add(BotonBebidas);
-        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 16));
         BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
         BotonBebidas.setText("Bebidas");
         BotonBebidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -249,7 +253,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonBebidas);
 
         GrupoBotonesSecciones.add(BotonPostres);
-        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16));
         BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
         BotonPostres.setText("Postres");
         BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -464,14 +468,14 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPasarPaginas;
     private javax.swing.JPanel PanelPedido;
     private javax.swing.JPanel PanelPedidoBebida;
-    private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane ScrollComentarios;
+    private javax.swing.JEditorPane TextoComentarios;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCarta() throws Exception {
         
         //Cargamos las secciones
-        HashSet<Seccion> listaSecciones = this.icliente.obtieneSecciones();
+        //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icliente.obtieneSecciones());
 
         /*Iterator itSecciones = listaSecciones.iterator();
 
@@ -526,7 +530,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 seisElementos.add((Elemento) it.next());
             }
             ++j;
-            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos),"Hoja"+Integer.toString(j));
+            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
         }
 
 
@@ -548,7 +552,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 seisElementos.add((Elemento) it.next());
             }
             ++j;
-            hojasSeccionPescados.add(new PanelHojasCarta(seisElementos),"Hoja"+Integer.toString(j));
+            hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
         }
 
         listaElementos= new HashSet();
@@ -588,6 +592,10 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             PanelHojas.add(hojasSeccionPostres,"Postres");
         else
             PanelHojas.add(new JLabel("No existen postres disponibles en este momento", JLabel.CENTER),"Postres");
+    }
+
+    public void anadirElementoAPedido(String nomElemento) {
+        panelPedidoComida.anadirElemento(nomElemento);
     }
 
 }

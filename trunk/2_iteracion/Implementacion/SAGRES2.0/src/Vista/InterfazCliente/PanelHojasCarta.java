@@ -23,10 +23,13 @@ import java.util.Iterator;
 public class PanelHojasCarta extends javax.swing.JPanel {
 
     private ICliente icliente;
+    private PanelGeneralCliente PGC;
 
     /** Creates new form PanelHojasCarta */
-    public PanelHojasCarta(HashSet<Elemento> listaElementos) throws Exception {
+    public PanelHojasCarta(HashSet<Elemento> listaElementos, PanelGeneralCliente PGC) throws Exception {
         initComponents();
+
+        this.PGC=PGC;
 
         Iterator it = listaElementos.iterator();
 
@@ -34,27 +37,27 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
         if(it.hasNext()){
             e = (Elemento) it.next();
-            PanelElementoArribaI.add(new PanelElementoCarta(e));
+            PanelElementoArribaI.add(new PanelElementoCarta(e,PGC));
 
             if(it.hasNext()){
                 e = (Elemento) it.next();
-                PanelElementoCentroI.add(new PanelElementoCarta(e));
+                PanelElementoCentroI.add(new PanelElementoCarta(e,PGC));
 
                 if(it.hasNext()){
                     e = (Elemento) it.next();
-                    PanelElementoAbajoI.add(new PanelElementoCarta(e));
+                    PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC));
 
                     if(it.hasNext()){
                         e = (Elemento) it.next();
-                        PanelElementoArribaD.add(new PanelElementoCarta(e));
+                        PanelElementoArribaD.add(new PanelElementoCarta(e,PGC));
 
                         if(it.hasNext()){
                             e = (Elemento) it.next();
-                            PanelElementoCentroD.add(new PanelElementoCarta(e));
+                            PanelElementoCentroD.add(new PanelElementoCarta(e,PGC));
 
                             if(it.hasNext()){
                                 e = (Elemento) it.next();
-                                PanelElementoAbajoD.add(new PanelElementoCarta(e));
+                                PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC));
                             }
                         }
                     }
