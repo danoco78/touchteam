@@ -31,7 +31,7 @@ public class InterfazMetre extends javax.swing.JFrame {
         initComponents();
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
-        this.panelColaBar = new IntColaBar();
+        this.panelColaBar = new IntColaBar(this);
         //this.hebra = new HebraColaPedidos(this);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
