@@ -105,7 +105,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         );
         PanelFotoLayout.setVerticalGroup(
             PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 134, Short.MAX_VALUE)
+            .addGap(0, 144, Short.MAX_VALUE)
         );
 
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
@@ -122,6 +122,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelMargenAbajo.setLayout(new java.awt.BorderLayout());
         add(PanelMargenAbajo, java.awt.BorderLayout.SOUTH);
 
+        PanelMargenIzquierda.setBackground(new java.awt.Color(255, 255, 255));
         PanelMargenIzquierda.setOpaque(false);
         PanelMargenIzquierda.setPreferredSize(new java.awt.Dimension(5, 5));
         PanelMargenIzquierda.setLayout(new java.awt.BorderLayout());
