@@ -69,4 +69,8 @@ public class PanelPedidoComida extends javax.swing.JPanel {
     private javax.swing.JTextPane TextoListaComida;
     // End of variables declaration//GEN-END:variables
 
+    public void anadirElemento(String nomElemento) {
+        TextoListaComida.setText(TextoListaComida.getText()+"\n- "+nomElemento);
+    }
+
 }

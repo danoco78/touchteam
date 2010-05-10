@@ -18,10 +18,13 @@ import GestionCarta.Elemento;
  * @author Carlos
  */
 public class PanelElementoCarta extends javax.swing.JPanel {
-
+    PanelGeneralCliente PGC;
+    
     /** Creates new form PanelElementoCarta */
-    public PanelElementoCarta(Elemento e) {
+    public PanelElementoCarta(Elemento e, PanelGeneralCliente PGC) {
         initComponents();
+
+        this.PGC=PGC;
 
         LabelNombre.setText(e.getNombre());
         TextoDescripcion.setText(e.getDescripcion());
@@ -55,6 +58,11 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                seleccionarElemento(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
@@ -65,7 +73,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelDatos.setLayout(new java.awt.BorderLayout());
 
         LabelNombre.setBackground(new java.awt.Color(255, 255, 255));
-        LabelNombre.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        LabelNombre.setFont(new java.awt.Font("Arial", 1, 16));
         LabelNombre.setText("jLabel1");
         PanelDatos.add(LabelNombre, java.awt.BorderLayout.NORTH);
 
@@ -105,7 +113,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         );
         PanelFotoLayout.setVerticalGroup(
             PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGap(0, 134, Short.MAX_VALUE)
         );
 
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
@@ -133,6 +141,10 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelMargenDerecha.setLayout(new java.awt.BorderLayout());
         add(PanelMargenDerecha, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void seleccionarElemento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarElemento
+        PGC.anadirElementoAPedido(this.LabelNombre.getText());
+    }//GEN-LAST:event_seleccionarElemento
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

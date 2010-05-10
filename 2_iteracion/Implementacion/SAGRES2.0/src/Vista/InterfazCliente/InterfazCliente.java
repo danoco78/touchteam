@@ -27,14 +27,14 @@ import javax.swing.JFrame;
  */
 public class InterfazCliente extends javax.swing.JFrame {
 
-    ICliente icliente;
-    PanelGeneralCliente panelGeneralCliente;
+    private ICliente iCliente;
+    private PanelGeneralCliente panelGeneralCliente;
 
     /** Creates new form InterfazCliente */
     public InterfazCliente(ICliente icliente) {
         try {
             initComponents();
-            this.icliente = icliente;
+            this.iCliente = icliente;
             this.panelGeneralCliente = new PanelGeneralCliente();
             this.getContentPane().add(this.panelGeneralCliente, java.awt.BorderLayout.CENTER);
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -58,87 +58,7 @@ public class InterfazCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private class ManejaEventos implements ActionListener {
-
-        private int tipoEvento;
-        private JFrame padre;
-        protected static final int SALIR = 0;
-        /*protected static final int ANADIRELEMENTO = 1;
-        protected static final int ELIMINARELEMENTO = 2;
-        protected static final int MODIFICARELEMENTO = 3;
-        protected static final int ANADIRINGREDIENTE = 4;
-        protected static final int ELIMINARINGREDIENTE = 5;
-        protected static final int MODIFICARINGREDIENTE = 6;
-        protected static final int NOTIFICARINCIDENCIA = 7;
-        protected static final int GESTIONARCARTA = 8;
-        protected static final int GESTIONARINGREDIENTES = 9;
-        protected static final int IMPRIMIRLISTAPRODUCTOS = 10;
-        protected static final int NOTIFICARRECEPCION = 11;
-        protected static final int VOLVER = 12;
-        protected static final int GESTIONARPRODUCTOS = 13;*/
-
-        public ManejaEventos(JFrame Padre, int TipoEvento){
-            this.padre = Padre;
-            this.tipoEvento = TipoEvento;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            Dialog dialogo = null;
-            CardLayout layout = (CardLayout) padre.getContentPane().getLayout();
-            switch (this.tipoEvento) {
-                /*case ManejaEventos.SALIR:
-                    //System.exit(0);
-                    layout.show(padre.getContentPane(), InterfazCliente.COLA);
-                    break;
-                case ManejaEventos.GESTIONARCARTA:
-                    layout.show(padre.getContentPane(), InterfazCocinero.CARTA);
-                    break;
-                case ManejaEventos.GESTIONARINGREDIENTES:
-                    layout.show(padre.getContentPane(), InterfazCocinero.INGREDIENTE);
-                    break;
-                case ManejaEventos.VOLVER:
-                    layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
-                    break;
-                case ManejaEventos.IMPRIMIRLISTAPRODUCTOS:
-                    dialogo = new DialogoImprimirListaProductosAPedir(padre, icocinero);
-                    break;
-                case ManejaEventos.NOTIFICARRECEPCION:
-                    dialogo = new DialogoNotificarLlegadaProductos(padre, icocinero);
-                    break;
-                case ManejaEventos.ANADIRINGREDIENTE:
-                    dialogo = new DialogoAnadirIngrediente(padre, icocinero);
-                    break;
-                case ManejaEventos.ELIMINARINGREDIENTE:
-                    dialogo = new DialogoEliminarIngrediente(padre, icocinero);
-                    break;
-                case ManejaEventos.MODIFICARINGREDIENTE:
-                    dialogo = new DialogoModificarIngrediente(padre, icocinero);
-                    break;
-                case ManejaEventos.ANADIRELEMENTO:
-                    dialogo = new DialogoAnadirElemento(padre, icocinero);
-                    break;
-                case ManejaEventos.ELIMINARELEMENTO:
-                    dialogo = new DialogoEliminarElemento(padre, icocinero);
-                    break;
-                case ManejaEventos.MODIFICARELEMENTO:
-                    dialogo = new DialogoModificarElemento(padre, icocinero);
-                    break;
-                case ManejaEventos.NOTIFICARINCIDENCIA:
-                    dialogo = new DialogoNotificarIncidencia(padre, icocinero);
-                    break;
-                case ManejaEventos.GESTIONARPRODUCTOS:
-                    layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
-                    break;*/
-            }
-            if (dialogo != null) {
-                dialogo.setLocationRelativeTo(padre);
-                dialogo.setVisible(true);
-            }
-        }
-
-    }
-
-    /**
+     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
