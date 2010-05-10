@@ -21,6 +21,8 @@ import Vista.InterfazMetre.InterfazMetre;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 
 /**
@@ -75,6 +77,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setText("<html>\n<body> \n<br></br>\n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n<br></br>\n<br></br>\n</body>\n</html>\n");
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 boton.setFocusPainted(false);
+                boton.setName(String.valueOf(i));
                 if (filtro == BAR)
                     boton.addActionListener(new ManejaEventos(mpadre,pedActual,boton, pev));
                 else
@@ -313,6 +316,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         InterfazCocinero c;
         int filtro;
         Pedido p;
+        int num;
 
         public ManejaEventos(InterfazMetre im, Pedido ped, JButton b,PanelEspacioVertical pev){
             m = im;
@@ -333,9 +337,21 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
             switch(filtro){
                 case PanelMesaPedido.BAR:
-
+                    //TODO Comprobar cuando es la ultima bebida a borrar
+                    ElementoColaBar eleB = (ElementoColaBar) p.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                    try {
+                        m.imetre.seleccionaBebida(p, eleB);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
                 case PanelMesaPedido.COCINA:
+                    ElementoColaCocina eleC = (ElementoColaCocina) p.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                    try {
+                        c.icocinero.seleccionaPlato(p, eleC);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
             }
 
@@ -343,6 +359,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             panelInfoPedido.remove(panel);
             panelInfoPedido.repaint();
             panelInfoPedido.revalidate();
+            setPendientes(num);
         }
     }
 }
