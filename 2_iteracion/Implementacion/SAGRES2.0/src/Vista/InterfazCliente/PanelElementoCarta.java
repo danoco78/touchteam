@@ -12,19 +12,24 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import java.awt.Color;
 
 /**
  *
  * @author Carlos
  */
 public class PanelElementoCarta extends javax.swing.JPanel {
-    PanelGeneralCliente PGC;
+    private PanelGeneralCliente PGC;
+    private Elemento elemento;
+    private boolean seleccionado;
     
     /** Creates new form PanelElementoCarta */
     public PanelElementoCarta(Elemento e, PanelGeneralCliente PGC) {
         initComponents();
 
         this.PGC=PGC;
+        this.elemento=e;
+        this.seleccionado=false;
 
         LabelNombre.setText(e.getNombre());
         TextoDescripcion.setText(e.getDescripcion());
@@ -143,7 +148,19 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarElemento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarElemento
-        PGC.anadirElementoAPedido(this.LabelNombre.getText());
+        if(!PGC.pedidoRealizado){
+            if(!this.seleccionado){
+                seleccionado=true;
+                PGC.marcarElemento(this.elemento);
+                this.PanelDatos.setBackground(new Color(153,204,255));
+                this.TextoDescripcion.setBackground(new Color(153,204,255));
+            }else{
+                seleccionado=false;
+                PGC.desmarcarElemento(this.elemento);
+                this.PanelDatos.setBackground(new Color(255,255,255));
+                this.TextoDescripcion.setBackground(new Color(255,255,255));
+            }
+        }
     }//GEN-LAST:event_seleccionarElemento
 
 
