@@ -42,4 +42,6 @@ public interface IGestorPedidos {
 
     public boolean seleccionPlato(Pedido p, ElementoColaCocina ele)throws Exception;;
 
+    public Factura getFactura(int codMesa);
+
 }
