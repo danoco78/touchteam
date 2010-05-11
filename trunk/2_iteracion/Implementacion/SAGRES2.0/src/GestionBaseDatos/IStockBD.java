@@ -32,6 +32,6 @@ public interface IStockBD {
     public abstract PedidoProveedor obtienePrimerPedidoPendiente();
     public abstract HashMap<Producto, Float> obtieneProductosBajoMinimos();
     public abstract void pedidoRecibido(PedidoProveedor pedProveedor);
-    public abstract void restarCantidadProducto( Pair<Producto,Float> prodCantidad);
+    public abstract void restarCantidadProducto(Producto p, Float c);
 
 }
