@@ -63,7 +63,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
     }
 
     public void setMensaje(int n){
-        npendientes = n;
+        this.npreparandose = n;
         switch(n){
             case 0:
                 pendientes.setText("No hay ningún plato preparándose");

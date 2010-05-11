@@ -185,9 +185,8 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
             
             int codElem = boton.getAsociado().getCodElementoPedido(); //Obtenemos el codigo del Elemento
             ElementoColaCocina ele = (ElementoColaCocina)cambiaAPreparado(p,codElem); //Cambiamos su estado a preparado
-            System.out.println("El nuevo estado es: " + ele.getEstado());
             /*try {
-                //c.icocinero.seleccionaPlato(p, ele);
+                c.icocinero.seleccionaPlato(p, ele);
             } catch (Exception ex) {
                 Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
             }*/
@@ -199,9 +198,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                 pPedidos.revalidate();
             }
             else{
-                System.out.println("Aqui no entro1");
                 if(!tieneElementosEnCola(p)){
-                    System.out.println("Aqui no entro2");
                     if(cerrarPedido(p,c)){
                          pPedidos.remove(boton);
                          c.panelColaCocinero.pmpder.decPreparandose();
@@ -226,19 +223,16 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     public boolean tieneElementosPreparandose(Pedido p){
         for(int i=0;i<p.obtieneElementos().size();i++){
-            System.out.println("(Preparandose) Estado es: " + p.obtieneElementos().get(i).getEstado());
             if(p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
-                System.out.println("Quedan elementos preparandose");
                 return true;
             }
         }
-        System.out.println("No quedan elementos preparandose");
+
         return false;
     }
 
      public boolean tieneElementosEnCola(Pedido p){
         for(int i=0;i<p.obtieneElementos().size();i++){
-            System.out.println("(EnCola) Estado es: " + p.obtieneElementos().get(i).getEstado());
             if(p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.ENCOLA)
                 return true;
 
@@ -254,7 +248,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                 texto += elems.get(i).getElemento().getNombre()+"\n";
         }
         DialogoComfirmacion confirmar = new DialogoComfirmacion(c,"Cerrar pedido de cocina", "¿Está seguro de que desea cerrar los platos de este pedido?",texto);
-        //confirmar.setLocationRelativeTo(m);
+        confirmar.setLocationRelativeTo(c);
         confirmar.setVisible(true);
         if(confirmar.isAceptado())
            return true;
@@ -265,7 +259,6 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     private ElementoPedido cambiaAPreparado(Pedido p,int codElem){
         for(int i=0;i<p.obtieneElementos().size();i++){
             if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem){
-                System.out.println("El anterior estado es: " + p.obtieneElementos().get(i).getEstado());
                 p.obtieneElementos().get(i).setEstado(ElementoColaCocina.PREPARADO);
                 return p.obtieneElementos().get(i);
             }
@@ -276,7 +269,6 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         private ElementoPedido cambiaAPreparandose(Pedido p,int codElem){
         for(int i=0;i<p.obtieneElementos().size();i++){
             if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem){
-                System.out.println("El anterior estado es: " + p.obtieneElementos().get(i).getEstado());
                 p.obtieneElementos().get(i).setEstado(ElementoColaCocina.PREPARANDOSE);
                 return p.obtieneElementos().get(i);
             }

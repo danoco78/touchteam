@@ -160,7 +160,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
 
     }
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
@@ -176,7 +176,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
 
             }
         });
-    }
+    }*/
 
 
 
