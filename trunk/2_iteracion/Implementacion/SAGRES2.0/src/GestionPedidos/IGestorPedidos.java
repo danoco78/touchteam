@@ -40,7 +40,7 @@ public interface IGestorPedidos {
 
     public ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
 
-    public boolean seleccionPlato(Pedido p, ElementoColaCocina ele)throws Exception;;
+    public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele)throws Exception;;
 
     public Factura getFactura(int codMesa);
 
