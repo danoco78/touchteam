@@ -82,11 +82,11 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setFocusPainted(false);
                 boton.setName(String.valueOf(i));
                 if (filtro == BAR){
-                    boton.addActionListener(new ManejaEventos(mpadre,pedActual,boton, pev));
+                    boton.addActionListener(new ManejaEventos(boton, pev));
                     numBebidas++;
                 }
                 else
-                    boton.addActionListener(new ManejaEventos(cpadre,pedActual,boton, pev));
+                    boton.addActionListener(new ManejaEventos(boton, pev));
                 panelInfoPedido.add(boton);
                 panelInfoPedido.add(pev);
             }
@@ -316,27 +316,17 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         JButton boton;
         PanelEspacioVertical panel;
-        InterfazMetre m;
-        InterfazCocinero c;
-        int filtro;
-        Pedido p;
         int num;
         boolean borrar;
 
-        public ManejaEventos(InterfazMetre im, Pedido ped, JButton b,PanelEspacioVertical pev){
-            m = im;
-            p = ped;
+        public ManejaEventos(JButton b,PanelEspacioVertical pev){
             boton = b;
             panel = pev;
-            filtro = PanelMesaPedido.BAR;
         }
 
-        public ManejaEventos(InterfazCocinero ic, Pedido ped, JButton b,PanelEspacioVertical pev){
-            c = ic;
-            p = ped;
+        public ManejaEventos(Pedido ped, JButton b,PanelEspacioVertical pev){
             boton = b;
             panel = pev;
-            filtro = PanelMesaPedido.COCINA;
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -346,12 +336,12 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     //TODO Comprobar cuando es la ultima bebida a borrar
                     if (numBebidas == 1){
                         String texto = new String();
-                        ArrayList<ElementoPedido> elems = p.obtieneElementos();
+                        ArrayList<ElementoPedido> elems = pedActual.obtieneElementos();
                         for (int i=0;i<elems.size();i++){
                             if (elems.get(i) instanceof ElementoColaBar)
                                 texto += elems.get(i).getElemento().getNombre()+"\n";
                         }
-                        DialogoComfirmacion confirmar = new DialogoComfirmacion(m,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
+                        DialogoComfirmacion confirmar = new DialogoComfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         //confirmar.setLocationRelativeTo(m);
                         confirmar.setVisible(true);
                         if(confirmar.isAceptado())
@@ -362,19 +352,19 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     
                     try {
                         if (borrar){
-                            ElementoColaBar eleB = (ElementoColaBar) p.obtieneElementos().get(Integer.getInteger(boton.getName()));
-                            m.imetre.seleccionaBebida(p, eleB);
-                            num = m.imetre.getNumBebidasEnCola();
+                            ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                            mpadre.imetre.seleccionaBebida(pedActual, eleB);
+                            num = mpadre.imetre.getNumBebidasEnCola();
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 case PanelMesaPedido.COCINA:
-                    ElementoColaCocina eleC = (ElementoColaCocina) p.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                    ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.getInteger(boton.getName()));
                     try {
-                        c.icocinero.seleccionaPlato(p, eleC);
-                        num = c.icocinero.getNumPlatosEnCola();
+                        cpadre.icocinero.seleccionaPlato(pedActual, eleC);
+                        num = cpadre.icocinero.getNumPlatosEnCola();
                         borrar = true;
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
