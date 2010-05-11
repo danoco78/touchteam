@@ -186,7 +186,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
             actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
             // Insertamos en elementoBebida
-            inserccion = this.Conexion.prepareStatement("INSERT INTO elementobebida VALUES('?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoBebida VALUES('?')");
             inserccion.setInt(1, id_elemento);
             inserccion.executeUpdate();
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
@@ -197,14 +197,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 Map.Entry entry = (Map.Entry) it.next();
                 Producto bebida = (Producto) entry.getKey();
                 Float cantidad = (Float) entry.getValue();
-                inserccion = this.Conexion.prepareStatement("INSERT INTO tienebebida VALUES('?','?','?')");
+                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneBebida VALUES('?','?','?')");
                 inserccion.setInt(1, id_elemento);
                 inserccion.setInt(2, bebida.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
             }
             // Insertamos el elemento en su sección
-            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyebebida VALUES ('?','?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeBebida VALUES ('?','?')");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
@@ -234,7 +234,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
             actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
             // Insertamos en elementoPlato
-            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoplato VALUES('?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoPlato VALUES('?')");
             inserccion.setInt(1, id_elemento);
             inserccion.executeUpdate();
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
@@ -245,14 +245,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 Map.Entry entry = (Map.Entry) it.next();
                 Producto ingrediente = (Producto) entry.getKey();
                 Float cantidad = (Float) entry.getValue();
-                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneingrediente VALUES('?','?','?')");
+                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneIngrediente VALUES('?','?','?')");
                 inserccion.setInt(1, id_elemento);
                 inserccion.setInt(2, ingrediente.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
             }
             // Insertamos el elemento en su sección
-            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeplato VALUES ('?','?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyePlato VALUES ('?','?')");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
@@ -268,12 +268,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         try {
             // Obtenemos todas las bebidas
             java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id");
+            ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, elementoBebida WHERE elemento.elemento_id = elementoBebida.elemento_elemento_id");
             while (datosElementosBebida.next()) {
                 listaBebida = new HashMap<Bebida, Float>();
-                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
-                        + "tienebebida.productoBebida_producto_producto_id"
-                        + " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
+                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneBebida.cantidad FROM tieneBebida, producto WHERE "
+                        + "tieneBebida.productoBebida_producto_producto_id"
+                        + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                 ResultSet datosBebidas = consulta2.executeQuery();
                 while (datosBebidas.next()) {
                     Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
@@ -287,12 +287,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             // Obtenemos todos los platos
             consulta = this.Conexion.createStatement();
-            ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoplato.tiempo_elaboracion FROM elemento, elementoplato HERE elemento.elemento_id = elementoplato.elemento_elemento_id");
+            ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoPlato.tiempo_elaboracion FROM elemento, elementoPlato HERE elemento.elemento_id = elementoPlato.elemento_elemento_id");
             while (datosElementosPlato.next()) {
                 listaIngredientes = new HashMap<Ingrediente, Float>();
-                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
-                        + "tieneingrediente.productoIngrediente_producto_producto_id"
-                        + " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
+                java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneIngrediente.cantidad FROM tieneIngrediente, producto WHERE "
+                        + "tieneIngrediente.productoIngrediente_producto_producto_id"
+                        + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                 ResultSet datosIngredientes = consulta2.executeQuery();
                 while (datosIngredientes.next()) {
                     Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
@@ -317,13 +317,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             if (seccion instanceof SeccionBebida) {
                 // Si estamos en una SeccionBebida sacamos todos los elementos de la seccion
                 java.sql.Statement consulta = this.Conexion.createStatement();
-                ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyebebida WHERE elemento.elemento_id = incluyebebida.elementoBebida_elemento_elemento_id AND incluyebebida.seccionBebida_seccion_seccion_id ="+seccion.getCodigoSeccion());
+                ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyeBebida WHERE elemento.elemento_id = incluyeBebida.elementoBebida_elemento_elemento_id AND incluyeBebida.seccionBebida_seccion_seccion_id ="+seccion.getCodigoSeccion());
                 while (datosElementosBebida.next()) {
                     // Obtenemos todas las bebidas
                     listaBebida = new HashMap<Bebida, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
-                            + "tienebebida.productoBebida_producto_producto_id"
-                            + " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneBebida.cantidad FROM tieneBebida, producto WHERE "
+                            + "tieneBebida.productoBebida_producto_producto_id"
+                            + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
@@ -343,9 +343,9 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 // Obtenemos todos los ingredientes
                 while (datosElementosPlato.next()) {
                     listaIngredientes = new HashMap<Ingrediente, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
-                            + "tieneingrediente.productoIngrediente_producto_producto_id"
-                            + " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneIngrediente.cantidad FROM tieneIngrediente, producto WHERE "
+                            + "tieneIngrediente.productoIngrediente_producto_producto_id"
+                            + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
@@ -371,13 +371,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         try {
             if (producto instanceof Bebida) {
                 // Obtenemos los datos del elementoBebida con ese producto
-                java.sql.PreparedStatement consulta = this.Conexion.prepareStatement("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, tienebebida WHERE elemento.elemento_id = tienebebida.elementoBebida_elemento_elemento_id AND productoBebida_producto_producto_id =" + producto.getCodPro());
+                java.sql.PreparedStatement consulta = this.Conexion.prepareStatement("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, tieneBebida WHERE elemento.elemento_id = tieneBebida.elementoBebida_elemento_elemento_id AND productoBebida_producto_producto_id =" + producto.getCodPro());
                 ResultSet datosElementosBebida = consulta.executeQuery();
                 while (datosElementosBebida.next()) {
                     listaBebida = new HashMap<Bebida, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
-                            + "tienebebida.productoBebida_producto_producto_id"
-                            + " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tieneBebida, producto WHERE "
+                            + "tieneBebida.productoBebida_producto_producto_id"
+                            + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
@@ -390,14 +390,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 }
             } else {
                 // Obtenemos los datos del elementoPlato con ese producto
-                java.sql.PreparedStatement consulta = this.Conexion.prepareStatement("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoplato.tiempo_elaboracion FROM elemento, elementoplato, tieneingrediente "
-                        + "WHERE elemento.elemento_id = elementoplato.elemento_elemento_id AND elemento.elemento_id = elementoComida_elemento_elemento_id AND productoIngrediente_producto_producto_id = " + producto.getCodPro());
+                java.sql.PreparedStatement consulta = this.Conexion.prepareStatement("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoPlato.tiempo_elaboracion FROM elemento, elementoPlato, tieneIngrediente "
+                        + "WHERE elemento.elemento_id = elementoPlato.elemento_elemento_id AND elemento.elemento_id = elementoComida_elemento_elemento_id AND productoIngrediente_producto_producto_id = " + producto.getCodPro());
                 ResultSet datosElementosPlato = consulta.executeQuery();
                 while (datosElementosPlato.next()) {
                     listaIngredientes = new HashMap<Ingrediente, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
-                            + "tieneingrediente.productoIngrediente_producto_producto_id"
-                            + " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneIngrediente.cantidad FROM tieneIngrediente, producto WHERE "
+                            + "tieneIngrediente.productoIngrediente_producto_producto_id"
+                            + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
@@ -444,13 +444,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             //2.- Obtengo todos los elementos no disponibles
             //2.a.- Primero obtengo las bebidas no disponibles
-            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementobebida WHERE elemento.elemento_id = elementobebida.elemento_elemento_id AND elemento.disponible = 0");
+            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento, elementoBebida WHERE elemento.elemento_id = elementoBebida.elemento_elemento_id AND elemento.disponible = 0");
             rsElementos = consultaElementos.executeQuery();
             while (rsElementos.next()) {
                 //3.a.- Para cada elemento obtengo los codigos de los productos que necesita
                 HashMap<Bebida, Float> listaProductosElemento = new HashMap<Bebida, Float>();
-                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
-                        + "tienebebida.productoBebida_producto_producto_id = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + rsElementos.getInt(1));
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tieneBebida.cantidad FROM tieneBebida, producto WHERE "
+                        + "tieneBebida.productoBebida_producto_producto_id = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + rsElementos.getInt(1));
                 rsProductos = consultaProductos.executeQuery();
                 while (rsProductos.next()) {
                     //4.a.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
@@ -473,13 +473,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             //2.- Obtengo todos los elementos no disponibles
             //2.b.- Continuo con los platos no disponibles
-            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio, tiempo_elaboracion FROM elemento, elementoplato WHERE elemento.elemento_id = elementoplato.elemento_elemento_id AND elemento.disponible = 0");
+            consultaElementos = this.Conexion.prepareStatement("SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio, tiempo_elaboracion FROM elemento, elementoPlato WHERE elemento.elemento_id = elementoPlato.elemento_elemento_id AND elemento.disponible = 0");
             rsElementos = consultaElementos.executeQuery();
             while (rsElementos.next()) {
                 //3.b.- Para cada elemento obtengo los codigos de los productos que necesita
                 HashMap<Ingrediente, Float> listaProductosElemento = new HashMap<Ingrediente, Float>();
-                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
-                        + "tieneingrediente.productoIngrediente_producto_producto_id = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + rsElementos.getInt(1));
+                consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, tieneIngrediente.cantidad FROM tieneIngrediente, producto WHERE "
+                        + "tieneIngrediente.productoIngrediente_producto_producto_id = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + rsElementos.getInt(1));
                 rsProductos = consultaProductos.executeQuery();
                 while (rsProductos.next()) {
                     //4.b.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
@@ -521,17 +521,17 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             // Obtenemos todas las secciones de la carta, primero de comida y luego de bebida
             consulta = (Statement) this.Conexion.createStatement();
             // Para cada seccion obtenida, creamos su objeto e insertamos en el HashSet
-            ResultSet datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionbebida WHERE seccion.seccion_id = seccionbebida.seccion_seccion_id");
+            ResultSet datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionBebida WHERE seccion.seccion_id = seccionBebida.seccion_seccion_id");
             while (datosSeccion.next()) {
                 // Si estamos en una SeccionBebida sacamos todos los elementos de la seccion
                 consulta = this.Conexion.createStatement();
-                ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyebebida WHERE elemento.elemento_id = incluyebebida.elementoBebida_elemento_elemento_id AND incluyebebida.seccionBebida_seccion_seccion_id ="+datosSeccion.getInt(1));
+                ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyeBebida WHERE elemento.elemento_id = incluyeBebida.elementoBebida_elemento_elemento_id AND incluyeBebida.seccionBebida_seccion_seccion_id ="+datosSeccion.getInt(1));
                 while (datosElementosBebida.next()) {
                     // Obtenemos todas las bebidas
                     listaBebida = new HashMap<Bebida, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tienebebida.cantidad FROM tienebebida, producto WHERE "
-                            + "tienebebida.productoBebida_producto_producto_id"
-                            + " = producto.producto_id AND tienebebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneBebida.cantidad FROM tieneBebida, producto WHERE "
+                            + "tieneBebida.productoBebida_producto_producto_id"
+                            + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
@@ -547,18 +547,18 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             }
             consulta = (Statement) this.Conexion.createStatement();
             // Para cada seccion obtenida, creamos su objeto e insertamos en el HashSet
-            datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccioncomida WHERE seccion.seccion_id = seccioncomida.seccion_seccion_id");
+            datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionComida WHERE seccion.seccion_id = seccionComida.seccion_seccion_id");
             while (datosSeccion.next()) {
                 // Si estamos en una SeccionComida sacamos todos los elementos de la seccion
                 consulta = this.Conexion.createStatement();
-                ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoplato.tiempo_elaboracion FROM elemento, elementoplato , incluyeplato WHERE elemento.elemento_id = incluyeplato.elementoPlato_elemento_elemento_id AND " +
-                        "elemento.elemento_id = elementoplato.elemento_elemento_id AND incluyeplato.seccionComida_seccion_seccion_id ="+datosSeccion.getInt(1));
+                ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoPlato.tiempo_elaboracion FROM elemento, elementoPlato , incluyePlato WHERE elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id AND " +
+                        "elemento.elemento_id = elementoPlato.elemento_elemento_id AND incluyePlato.seccionComida_seccion_seccion_id ="+datosSeccion.getInt(1));
                 // Obtenemos todos los ingredientes
                 while (datosElementosPlato.next()) {
                     listaIngredientes = new HashMap<Ingrediente, Float>();
-                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneingrediente.cantidad FROM tieneingrediente, producto WHERE "
-                            + "tieneingrediente.productoIngrediente_producto_producto_id"
-                            + " = producto.producto_id AND tieneingrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
+                    java.sql.PreparedStatement consulta2 = this.Conexion.prepareStatement("SELECT producto.foto, producto.nombre, producto.minimo, producto.maximo, producto.cantidad, producto.producto_id, tieneIngrediente.cantidad FROM tieneIngrediente, producto WHERE "
+                            + "tieneIngrediente.productoIngrediente_producto_producto_id"
+                            + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
@@ -584,10 +584,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             java.sql.PreparedStatement borrado;
             /*Preparamos la consulta de borrado del producto*/
             if (p instanceof Bebida) {
-                borrado = this.Conexion.prepareStatement("delete from productobebida where producto_producto_id='" + codPro + "'");
+                borrado = this.Conexion.prepareStatement("delete from productoBebida where producto_producto_id='" + codPro + "'");
                 borrado.executeUpdate();
             } else if (p instanceof Ingrediente) {
-                borrado = this.Conexion.prepareStatement("delete from productoingrediente where producto_producto_id='" + codPro + "'");
+                borrado = this.Conexion.prepareStatement("delete from productoIngrediente where producto_producto_id='" + codPro + "'");
                 borrado.executeUpdate();
             }
             java.sql.PreparedStatement borrado2 = this.Conexion.prepareStatement("delete from producto where producto_id='" + codPro + "'");
@@ -634,11 +634,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             /*Actualizamos en la tabla de bebidas o de ingredientes segun corresponda*/
             java.sql.PreparedStatement relacion;
             if (p instanceof Bebida) {
-                relacion = this.Conexion.prepareStatement("insert into productobebida" + "(producto_producto_id) " + "values ( ? )");
+                relacion = this.Conexion.prepareStatement("insert into productoBebida" + "(producto_producto_id) " + "values ( ? )");
                 relacion.setInt(1, p.getCodPro());
                 relacion.executeUpdate();
             } else if (p instanceof Ingrediente) {
-                relacion = this.Conexion.prepareStatement("insert into productoingrediente" + "(producto_producto_id) " + "values ( ? )");
+                relacion = this.Conexion.prepareStatement("insert into productoIngrediente" + "(producto_producto_id) " + "values ( ? )");
                 relacion.setInt(1, p.getCodPro());
                 relacion.executeUpdate();
             }
@@ -658,7 +658,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             /*Preparamos la consulta de la incidencia y el producto afectado*/
             Statement ultimo = (Statement) this.Conexion.createStatement();
-            java.sql.PreparedStatement relacion = this.Conexion.prepareStatement("insert into tieneincidencia"
+            java.sql.PreparedStatement relacion = this.Conexion.prepareStatement("insert into tieneIncidencia"
                     + "(incidencia_incidencia_id,producto_producto_id) "
                     + "values ( ? , ? )");
             relacion.setInt(2, in.getProducto().getCodPro());
@@ -679,7 +679,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     public void nuevoPedidoProveedor(PedidoProveedor pedProdveedor) {
         try {
             /*Preparamos la consulta de inserccion del pedido*/
-            java.sql.PreparedStatement insercion = this.Conexion.prepareStatement("insert into pedidoproveedor"
+            java.sql.PreparedStatement insercion = this.Conexion.prepareStatement("insert into pedidoProveedor"
                     + "(fecha_pedido,recibido)"
                     + " values ( ? , ?)");
             insercion.setBoolean(2, pedProdveedor.fueRecibido());
@@ -687,13 +687,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             /*Preparamos la relacion con los productos pedidos*/
             Statement ultimo = (Statement) this.Conexion.createStatement();
-            java.sql.PreparedStatement relacion = this.Conexion.prepareStatement("insert into tienepedido "
+            java.sql.PreparedStatement relacion = this.Conexion.prepareStatement("insert into tienePedido "
                     + "values (?,?,?)");
             Iterator it = pedProdveedor.obtenerInfoPedido().entrySet().iterator();
 
             //Ejecutamos las consultas
             insercion.executeUpdate();//Insertamos la incidencia
-            ResultSet id = ultimo.executeQuery("select MAX(pedido_proveedor_id) from pedidoproveedor"); // Sacamos su ID
+            ResultSet id = ultimo.executeQuery("select MAX(pedido_proveedor_id) from pedidoProveedor"); // Sacamos su ID
             id.next();
             pedProdveedor.setCodigo(id.getInt(1));
             relacion.setInt(1, pedProdveedor.getCodigo()); // Metemeos el ID en la consulta de relacion
@@ -714,7 +714,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         Statement consulta;
         try {
             consulta = (Statement) this.Conexion.createStatement();
-            ResultSet tablabebidas = consulta.executeQuery("select producto_producto_id FROM productobebida");
+            ResultSet tablabebidas = consulta.executeQuery("select producto_producto_id FROM productoBebida");
 
             while (tablabebidas.next()) {
                 codigoBebida = tablabebidas.getInt(1);
@@ -737,7 +737,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         Statement consulta;
         try {
             consulta = (Statement) this.Conexion.createStatement();
-            ResultSet tablaingredientes = consulta.executeQuery("select producto_producto_id FROM productoingrediente");
+            ResultSet tablaingredientes = consulta.executeQuery("select producto_producto_id FROM productoIngrediente");
 
             while (tablaingredientes.next()) {
                 codigoIngrediente = tablaingredientes.getInt(1);
@@ -758,11 +758,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
         try {
             Statement pedido = (Statement) this.Conexion.createStatement();
             ResultSet infoPedido = pedido.executeQuery("select pedido_proveedor_id, fecha_pedido, recibido "
-                    + "from pedidoproveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoproveedor where recibido = false) mini "
+                    + "from pedidoProveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoProveedor where recibido = false) mini "
                     + "where n.pedido_proveedor_id = mini.min_id;");
             infoPedido.next();
-            ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienepedido.cantidad"
-                    + "from producto, tienepedido"
+            ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienePedido.cantidad"
+                    + "from producto, tienePedido"
                     + " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1)
                     + "' and producto_producto_id = producto_id;");
             HashMap<Producto, Float> productosCantidad = new HashMap<Producto, Float>();
@@ -797,7 +797,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     public void pedidoRecibido(PedidoProveedor pedProveedor) {
         try {
             Statement actualiza = (Statement) this.Conexion.createStatement();
-            actualiza.executeUpdate("update pedidoproveedor set recibido= '1' where pedido_proveedor_id = " + pedProveedor.getCodigo());
+            actualiza.executeUpdate("update pedidoProveedor set recibido= '1' where pedido_proveedor_id = " + pedProveedor.getCodigo());
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
