@@ -154,14 +154,11 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         
         if(!this.seleccionado){
             seleccionado=true;
-            PGC.marcarElemento(this.elemento);
-            this.PanelDatos.setBackground(new Color(153,204,255));
-            this.TextoDescripcion.setBackground(new Color(153,204,255));
+            PGC.marcarElemento(this);
         }else{
             seleccionado=false;
-            PGC.desmarcarElemento(this.elemento);
-            this.PanelDatos.setBackground(new Color(255,255,255));
-            this.TextoDescripcion.setBackground(new Color(255,255,255));
+            PGC.desmarcarElemento();
+            this.desmarcar();
         }
     }//GEN-LAST:event_seleccionarElemento
 
@@ -182,4 +179,17 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JTextPane TextoDescripcion;
     // End of variables declaration//GEN-END:variables
 
+    public Elemento getElemento(){
+        return this.elemento;
+    }
+
+    public void marcar(){
+        this.PanelDatos.setBackground(new Color(153,204,255));
+        this.TextoDescripcion.setBackground(new Color(153,204,255));
+    }
+
+    public void desmarcar(){
+        this.PanelDatos.setBackground(new Color(255,255,255));
+        this.TextoDescripcion.setBackground(new Color(255,255,255));
+    }
 }

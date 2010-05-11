@@ -175,6 +175,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 480));
 
         tConfirma.setColumns(20);
+        tConfirma.setEditable(false);
         tConfirma.setRows(5);
         tConfirma.setPreferredSize(new java.awt.Dimension(164, 400));
         jScrollPane1.setViewportView(tConfirma);

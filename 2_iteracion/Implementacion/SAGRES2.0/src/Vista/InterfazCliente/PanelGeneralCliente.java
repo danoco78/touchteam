@@ -29,6 +29,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,6 +63,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     boolean pedidoRealizado;
     private Elemento elementoMarcado;
 
+    private PanelElementoCarta panelElementoCarta;
+
     /** Creates new form PanelGeneralCliente */
     public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente) throws Exception {
         initComponents();
@@ -70,24 +73,23 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.setDoubleBuffered(true);
         cargarCarta();
 
-        seccion=0; //Entrantes
+        this.seccion=0; //Entrantes
         ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
         this.PanelPaginaAnterior.setVisible(false);
         if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()<=1)
             this.PanelPaginaSiguiente.setVisible(false);
         
-        i_entrantes=i_pescados=i_carnes=i_bebidas=i_postres=0;
+        this.i_entrantes=i_pescados=i_carnes=i_bebidas=i_postres=0;
 
-        panelRealizarPedido = new PanelRealizarPedido(this);
-        PanelGeneralEste.add(panelRealizarPedido,"RealizarPedido");
-        panelPedidoRealizado = new PanelPedidoRealizado();
-        PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
+        this.panelRealizarPedido = new PanelRealizarPedido(this);
+        this.PanelGeneralEste.add(panelRealizarPedido,"RealizarPedido");
+        this.panelPedidoRealizado = new PanelPedidoRealizado();
+        this.PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
 
         ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
 
-        pedidoRealizado=false;
-        elementoMarcado = null;
-
+        this.pedidoRealizado=false;
+        this.elementoMarcado = null;
     }
 
     @Override
@@ -598,14 +600,21 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             PanelHojas.add(new JLabel("No existen postres disponibles en este momento", JLabel.CENTER),"Postres");
     }
 
-    public void marcarElemento(Elemento elemento) {
-        this.elementoMarcado = elemento;
+    public void marcarElemento(PanelElementoCarta panelElementoCarta) {
+        this.elementoMarcado = panelElementoCarta.getElemento();
         this.TextoComentarios.setEnabled(true);
+
+        if(this.panelElementoCarta!=null){
+            this.panelElementoCarta.desmarcar();
+        }
+
+        panelElementoCarta.marcar();
     }
 
-    public void desmarcarElemento(Elemento elemento) {
-        this.elementoMarcado = null;
+    public void desmarcarElemento() {
         this.TextoComentarios.setEnabled(false);
+        elementoMarcado=null;
+        panelElementoCarta=null;
     }
 
     public void realizarPedido() {
@@ -631,14 +640,13 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                                 +"\n\n"
                                 +listaBebida
                                 +"\n\nSiempre puede añadir nuevos pedidos más tarde";
-
-            System.out.println(listaTotal);
             
             DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
                     "Realizar Pedido",
                     "",
                     listaTotal);
 
+            dialogo.setLocationRelativeTo(interfazCliente);
             dialogo.show();
 
 
