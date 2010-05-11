@@ -381,9 +381,9 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                     try {
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
-                        //num = cpadre.icocinero.getNumPlatosEnCola();
+                        num = cpadre.icocinero.getNumPlatosEnCola();
                         borrar = true;
-                        //cpadre.panelColaCocinero.actualizarVista();
+                        cpadre.panelColaCocinero.actualizarVista();
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }

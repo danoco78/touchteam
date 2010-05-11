@@ -68,6 +68,7 @@ public class HebraColaPedidos implements Runnable {
                         } else {
                             actual = p;
                             cpadre.panelColaCocinero.pmpizq.addPedido(actual);
+                            cpadre.panelColaCocinero.actualizarVista();
                         }
 
                         aux = cpadre.icocinero.getNumPlatosEnCola();
