@@ -42,7 +42,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     /** Creates new form PanelPedidoPorMesa */
     public PanelPedidoPorMesa(Pedido ped, int filtro, PreparandosePanel padre, JPanel papa,
             PanelEspacioVertical pe) {
-        tieneElementosPreparandose(ped);
+
         this.pe = pe;
         this.papa = papa;
         this.prepPanel = padre;
@@ -184,61 +184,37 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
             
             int codElem = boton.getAsociado().getCodElementoPedido(); //Obtenemos el codigo del Elemento
-            ElementoColaCocina ele = (ElementoColaCocina)cambiaAPreparado(p,codElem); //Cambiamos su estado a preparado
-            /*try {
-                c.icocinero.seleccionaPlato(p, ele);
-            } catch (Exception ex) {
-                Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            int num = getNumElemento(p,codElem);
 
-            if(tieneElementosPreparandose(p)){
+            if(hayMasPreparandose(p,codElem)){ //Hay mas preparandose
+                try {
+                     c.icocinero.seleccionaPlato(p, (ElementoColaCocina)p.obtieneElementos().get(num));
+                } catch (Exception ex) {
+                      Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 pPedidos.remove(boton);  //Borramos el boton de la interfaz
                 c.panelColaCocinero.pmpder.decPreparandose();
                 pPedidos.repaint();
                 pPedidos.revalidate();
             }
-            else{
-                if(!tieneElementosEnCola(p)){
-                    if(cerrarPedido(p,c)){
+            else{ //Es el ultimo
+                     if(cerrarPedido(p,c)){
                          pPedidos.remove(boton);
                          c.panelColaCocinero.pmpder.decPreparandose();
                          padre.remove(este);
                          padre.remove(pe);
                          padre.repaint();
                          padre.revalidate();
-                    }
-                    else{
-                        ElementoColaCocina ele2 = (ElementoColaCocina)cambiaAPreparandose(p,codElem); //Deshacemos el cambio
                         try {
-                            c.icocinero.seleccionaPlato(p, ele2);
+                            c.icocinero.seleccionaPlato(p, (ElementoColaCocina)p.obtieneElementos().get(num));
                         } catch (Exception ex) {
                             Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
                     }
-                }
             }
-        }
+
     }
 
-    public boolean tieneElementosPreparandose(Pedido p){
-        for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-     public boolean tieneElementosEnCola(Pedido p){
-        for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.ENCOLA)
-                return true;
-
-        }
-        return false;
-    }
      public boolean cerrarPedido(Pedido p, InterfazCocinero c){
        
         String texto = new String();
@@ -256,23 +232,21 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
            return false;
      }
 
-    private ElementoPedido cambiaAPreparado(Pedido p,int codElem){
+    private boolean hayMasPreparandose(Pedido p,int codElem){
         for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem){
-                p.obtieneElementos().get(i).setEstado(ElementoColaCocina.PREPARADO);
-                return p.obtieneElementos().get(i);
+            if(p.obtieneElementos().get(i).getCodElementoPedido() != codElem
+                    && p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.PREPARANDOSE)
+                return true;
             }
-        }
-        return null;
+         return false;
     }
 
-        private ElementoPedido cambiaAPreparandose(Pedido p,int codElem){
+    int getNumElemento(Pedido p, int codElem){
         for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem){
-                p.obtieneElementos().get(i).setEstado(ElementoColaCocina.PREPARANDOSE);
-                return p.obtieneElementos().get(i);
-            }
+            if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem)
+                return i;
         }
-        return null;
+        return -1;
     }
+}
 }
