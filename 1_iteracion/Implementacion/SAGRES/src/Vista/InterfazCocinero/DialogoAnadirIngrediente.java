@@ -342,6 +342,8 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
+            if (imagen == null)
+                imagen = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
             Ingrediente i = new Ingrediente(0, this.tNombre.getText(),((Float)this.tDisponible.getValue()), ((Float)this.tMaximo.getValue()), ((Float)this.tMinimo.getValue()), imagen);
             this.cocina.nuevoProducto(i);
             setVisible(false);

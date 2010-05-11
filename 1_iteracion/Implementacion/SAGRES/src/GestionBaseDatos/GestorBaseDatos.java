@@ -653,7 +653,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             /*Preparamos la consulta de inserccion de la incidencia*/
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("insert into incidencia" + "(descripcion,fecha,cantidad_afectada)" + " values ( ? , ?, ?)");
             inserccion.setString(1, in.getTipoIncidencia());
-            inserccion.setDate(2, (Date) in.getFecha());
+            java.sql.Date fechaSQL = new java.sql.Date(in.getFecha().getTime());
+            inserccion.setDate(2, fechaSQL);
             inserccion.setFloat(3, in.getCantidadAfectada());
 
             /*Preparamos la consulta de la incidencia y el producto afectado*/

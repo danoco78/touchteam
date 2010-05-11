@@ -61,8 +61,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaBebidasDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaBebidasDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaBebidasDisponibles.setValueAt(p.getImagen(), i, 2);
@@ -508,8 +507,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 int select = this.tTablaBebidasDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                 while (noencontrado) {
-                    Map.Entry entrada = (Map.Entry)iterador.next();
-                    aModificar = (Bebida)entrada.getKey();
+                    aModificar = (Bebida)iterador.next();
                     if(i == select){
                         noencontrado = false;
                     }
@@ -535,7 +533,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 confirmar.setVisible(true);
                 if(confirmar.isAceptado()){
             try {
-                float cantidad = aModificar.getCantidad() - (Float) this.tDisponible.getValue();
+                float cantidad = (Float) this.tDisponible.getValue();
                 aModificar.actualizarCantidad(cantidad);
                 aModificar.setNombre(this.tNombre.getText());
                 aModificar.setMaximo((Float) this.tMaximo.getValue());
