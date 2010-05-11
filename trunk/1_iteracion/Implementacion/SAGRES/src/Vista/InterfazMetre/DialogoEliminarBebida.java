@@ -2,6 +2,7 @@
 package Vista.InterfazMetre;
 
 import ControladorPrincipal.IMetre;
+import GestionCarta.Elemento;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -10,10 +11,8 @@ import java.awt.Rectangle;
 import Vista.DialogoComfirmacion;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Producto;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -300,8 +299,29 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
 
     private void validarFormulario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validarFormulario
         this.bebidaSeleccionada = this.tBebidas.getSelectedRow();
-
+        Iterator iterador = listaBebidas.iterator();
+        int i = 0;
+        boolean noencontrado = true;
         this.tElementosDeshabilitados.removeAll();
+        while (noencontrado) {
+            aEliminar = (Bebida)iterador.next();
+            if(i == this.bebidaSeleccionada) noencontrado = false;
+            else ++i;
+        }
+        HashSet<Elemento> listaElementos = this.metre.obtieneElementosConProducto(aEliminar);
+        Iterator iterador2 = listaElementos.iterator();
+        Elemento e;
+        int j=0;
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn(this.tElementosDeshabilitados.getColumnName(0));
+        tableModel.addColumn(this.tElementosDeshabilitados.getColumnName(1));
+        tableModel.setRowCount(listaElementos.size());
+        this.tElementosDeshabilitados.setModel(tableModel);
+        while (iterador2.hasNext()){
+            e = (Elemento)iterador2.next();
+            this.tElementosDeshabilitados.getModel().setValueAt(e.getNombre(), j, 0);
+            ++j;
+        }
         if (this.bebidaSeleccionada != -1) {
             this.bAceptar.setEnabled(true);
         } else {
@@ -319,18 +339,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
             try {
-                Iterator iterador = listaBebidas.iterator();
-                int i = 0;
-                boolean noeliminado = true;
-                int select = this.tBebidas.getSelectedRow();
-                while (noeliminado) {
-                    aEliminar = (Bebida)iterador.next();
-                    if(i == select){
-                        this.metre.eliminaProducto(aEliminar);
-                        noeliminado = false;
-                    }
-                    else ++i;
-                }
+                this.metre.eliminaProducto(aEliminar);
             } catch (Exception ex) {
             }
             setVisible(false);
