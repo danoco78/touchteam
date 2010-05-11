@@ -107,6 +107,7 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     public void limpiar() {
         this.elementosPedido=new ArrayList();
+        this.listaElementos=new ArrayList();
         this.PanelElementosPedido.removeAll();
     }
 
