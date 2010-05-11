@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,7 +61,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         this.carta = Carta;*/
         this.icocinero = iCocinero;
         this.estado = 1;
-        HashSet<Seccion> listaSecciones = this.icocinero.obtieneSecciones();
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Collections.sort(listaSecciones);
         Iterator<Seccion> iterador = listaSecciones.iterator();
 
         while(iterador.hasNext()){
@@ -707,7 +709,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.lPaso.setText(PASO3);
                 this.bSiguiente.setText("Finalizar");
                 this.estado++;
-                Iterator<Seccion> it = this.icocinero.obtieneSecciones().iterator();
+                Iterator<Seccion> it = listaSecciones.iterator();
                 for(int i = 0; i< this.bSeccion.getSelectedIndex(); i++ ) it.next();
                 Seccion sec = it.next();
                 HashSet<Producto> listaProductos = this.icocinero.obtieneProductosSeccion(sec);
@@ -739,7 +741,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad" + producto.getCantidad();
+                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad " + producto.getCantidad();
                 }
 
                 DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
@@ -753,12 +755,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                     imagen = null;
                 }
                 if (confirmar.isAceptado()) {
-                    listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+                    //listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
                     Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion instanceof SeccionComida) {
                         HashMap<Ingrediente, Float> listaIngredientes = new HashMap<Ingrediente, Float>();
                         for(int i = 0;i < this.seleccionados.size();i++){
-                            listaIngredientes.put( (Ingrediente) this.seleccionados.get(i), (Float) this.tProductosAsociados.getModel().getValueAt(i, 2));
+                            listaIngredientes.put( (Ingrediente) this.seleccionados.get(i),new Float( this.tProductosAsociados.getModel().getValueAt(i, 2).toString()));
                         }
                         ElementoPlato plato = new ElementoPlato(0, listaIngredientes, this.tNombre.getText(), this.tDescripcion.getText()
                                 , imagen,(Integer) this.tTiempo.getValue(),(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
@@ -766,7 +768,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                     } else {
                         HashMap<Bebida, Float> listaBebidas = new HashMap<Bebida, Float>();
                         for(int i = 0;i < this.seleccionados.size();i++){
-                            listaBebidas.put( (Bebida) this.seleccionados.get(i), (Float) this.tProductosAsociados.getModel().getValueAt(i, 2));
+                            listaBebidas.put( (Bebida) this.seleccionados.get(i), new Float (this.tProductosAsociados.getModel().getValueAt(i, 2).toString()));
                         }
                         ElementoBebida bebida = new ElementoBebida(0, listaBebidas, this.tNombre.getText(), this.tDescripcion.getText()
                                 , imagen,(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
@@ -841,13 +843,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> lista;
             if (seccion instanceof SeccionBebida)
                 lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
             else
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
+            
             DefaultTableModel modelo = new DefaultTableModel();
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
