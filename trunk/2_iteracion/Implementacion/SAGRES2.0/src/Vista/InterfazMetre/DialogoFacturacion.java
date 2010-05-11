@@ -29,6 +29,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
 
     InterfazMetre controlador = null;
     Factura fac;
+    int codMesa;
     
     public static final boolean ACEPTAR = true;
     public static final boolean CANCELAR = false;
@@ -36,12 +37,13 @@ public class DialogoFacturacion extends java.awt.Dialog {
     private boolean estado = CANCELAR;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoFacturacion(java.awt.Frame parent,Factura f) {
+    public DialogoFacturacion(java.awt.Frame parent,int codMesa) {
         super(parent, true);
         initComponents();
 
         controlador = (InterfazMetre) parent;
-        fac = f;
+        this.codMesa = codMesa;
+        fac = controlador.imetre.getFactura(codMesa);
         ArrayList<Pedido> pedidos = fac.getPedidos();
         ArrayList<ElementoPedido> elems;
         float total = 0;
@@ -259,7 +261,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
     }//GEN-LAST:event_Aceptar
 
     private void bImprimir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bImprimir
-        controlador.imetre.imprimeFactura(fac.getPedidos().get(0).getCodMesa());
+        controlador.imetre.imprimeFactura(codMesa);
     }//GEN-LAST:event_bImprimir
 
 
