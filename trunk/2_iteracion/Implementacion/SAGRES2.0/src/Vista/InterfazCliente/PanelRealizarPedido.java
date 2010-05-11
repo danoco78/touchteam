@@ -76,4 +76,8 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         PanelElementosPedido.remove(panelElementoPedido);
     }
 
+    public int getNumElementos() {
+        return this.PanelElementosPedido.getComponentCount();
+    }
+
 }

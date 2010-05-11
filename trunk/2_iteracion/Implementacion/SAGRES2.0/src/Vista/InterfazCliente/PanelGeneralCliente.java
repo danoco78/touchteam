@@ -17,6 +17,7 @@ import GestionCarta.Seccion;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dialog.ModalityType;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,7 +26,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -494,11 +497,36 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         Iterator itSecciones = listaSecciones.iterator();
 
+        HashSet<Elemento> listaBebidas = new HashSet();
+
         while(itSecciones.hasNext()){
             Seccion s = (Seccion) itSecciones.next();
             HashSet<Elemento> listaElementos = this.icliente.obtieneElementosDeSeccion(s);
+
+            if(s.getNombre().equals("Entrantes")){
+                hojasSeccionEntrantes.setLayout(new CardLayout(1,(listaElementos.size()+1)/6));
+                hojasSeccionEntrantes.setOpaque(false);
+            }else if(s.getNombre().equals("Pescados")){
+                hojasSeccionPescados.setLayout(new CardLayout(1,(listaElementos.size()+1)/6));
+                hojasSeccionPescados.setOpaque(false);
+            }else if(s.getNombre().equals("Carnes")){
+                hojasSeccionCarnes.setLayout(new CardLayout(1,(listaElementos.size()+1)/6));
+                hojasSeccionCarnes.setOpaque(false);
+            }else if(s.getNombre().equals("Refrescos") || s.getNombre().equals("Vinos")){
+                //Juntamos las bebidas
+                if(listaBebidas.size()==0){
+                    listaBebidas.addAll(listaElementos);
+                }else{
+                    listaBebidas.addAll(listaElementos);
+                    hojasSeccionBebidas.setLayout(new CardLayout(1,(listaBebidas.size()+1)/6));
+                    hojasSeccionBebidas.setOpaque(false);
+                }
+            }else if(s.getNombre().equals("Postres")){
+                hojasSeccionPostres.setLayout(new CardLayout(1,(listaElementos.size()+1)/6));
+                hojasSeccionPostres.setOpaque(false);
+            }
+
             Iterator itElementos = listaElementos.iterator();
-            JPanel hojasSeccion = new JPanel();
 
             while(itElementos.hasNext()){
                 int j=0;
@@ -507,84 +535,34 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                     seisElementos.add((Elemento) itElementos.next());
                 }
                 ++j;
-                hojasSeccion.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
-        }
-            
-            if(s.getNombre().equals("Entrantes")){
-                hojasSeccionEntrantes=hojasSeccion;
-                hojasSeccionEntrantes.setLayout(new CardLayout(listaElementos.size()+1/6,1));
-                hojasSeccionEntrantes.setOpaque(false);
-            }else if(s.getNombre().equals("Pescados")){
-                hojasSeccionPescados=hojasSeccion;
-                hojasSeccionPescados.setLayout(new CardLayout(listaElementos.size()/6+1,1));
-                hojasSeccionPescados.setOpaque(false);
-            }else if(s.getNombre().equals("Carnes")){
-                hojasSeccionCarnes=hojasSeccion;
-                hojasSeccionCarnes.setLayout(new CardLayout(listaElementos.size()/6+1,1));
-                hojasSeccionCarnes.setOpaque(false);
-            }else if(s.getNombre().equals("Refrescos") || s.getNombre().equals("Vinos")){
-                hojasSeccionBebidas=hojasSeccion;
-                hojasSeccionBebidas.setLayout(new CardLayout(listaElementos.size()/6+1,1));
-                hojasSeccionBebidas.setOpaque(false);
-            }else if(s.getNombre().equals("Postres")){
-                hojasSeccionPostres.setLayout(new CardLayout(listaElementos.size()/6+1,1));
-                hojasSeccionPostres.setOpaque(false);
+
+                if(s.getNombre().equals("Entrantes")){
+                    hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                }else if(s.getNombre().equals("Pescados")){
+                    hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                }else if(s.getNombre().equals("Carnes")){
+                    hojasSeccionCarnes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                }else if(s.getNombre().equals("Postres")){
+                    hojasSeccionPostres.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                }
             }
-       }
-        
-        /*HashSet<Elemento> listaElementos = new HashSet();
-        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Entrante 1", (float) 23.00));
-        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Entrante 2", (float) 43.00));
-        listaElementos.add(new Elemento(30, "Descripcion 3", 4, null, "Entrante 3", (float) 30.50));
-        listaElementos.add(new Elemento(40, "Descripcion 4", 4, null, "Entrante 4", (float) 50.50));
-        listaElementos.add(new Elemento(50, "Descripcion 5", 4, null, "Entrante 5", (float) 30.50));
-        listaElementos.add(new Elemento(60, "Descripcion 6", 4, null, "Entrante 6", (float) 23.50));
-        listaElementos.add(new Elemento(70, "Descripcion 7", 4, null, "Entrante 7", (float) 30.50));
-        listaElementos.add(new Elemento(80, "Descripcion 8", 4, null, "Entrante 8", (float) 23.50));
+        }
 
+        //Añadimos las bebidas
+        Iterator itBebidas = listaBebidas.iterator();
 
-        
-        Iterator it = listaElementos.iterator();
-
-        while(it.hasNext()){
+        while(itBebidas.hasNext()){
             int j=0;
             HashSet<Elemento> seisElementos = new HashSet();
-            for(int i=0; i<6 && it.hasNext(); ++i){
-                seisElementos.add((Elemento) it.next());
+            for(int i=0; i<6 && itBebidas.hasNext(); ++i){
+                seisElementos.add((Elemento) itBebidas.next());
             }
             ++j;
-            hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+
+            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
         }
 
-
-        listaElementos = new HashSet();
-        listaElementos.add(new Elemento(10, "Descripcion 1", 4, null, "Pescado 1", (float) 23.00));
-        listaElementos.add(new Elemento(20, "Descripcion 2", 4, null, "Pescado 2", (float) 43.00));
-
-        it = listaElementos.iterator();
-
-        while(it.hasNext()){
-            int j=0;
-            HashSet<Elemento> seisElementos = new HashSet();
-            for(int i=0; i<6 && it.hasNext(); ++i){
-                seisElementos.add((Elemento) it.next());
-            }
-            ++j;
-            hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
-        }
-
-        listaElementos= new HashSet();
-
-        //Inicializamos el JPanel correspondientes a la sección
-        hojasSeccionCarnes.setLayout(new CardLayout(listaElementos.size()+1/6,1));
-        hojasSeccionCarnes.setOpaque(false);
-        //Inicializamos el JPanel correspondientes a la sección
-        hojasSeccionBebidas.setLayout(new CardLayout(listaElementos.size()+1/6,1));
-        hojasSeccionBebidas.setOpaque(false);
-        //Inicializamos el JPanel correspondientes a la sección
-        hojasSeccionPostres.setLayout(new CardLayout(listaElementos.size()+1/6,1));
-        hojasSeccionPostres.setOpaque(false);*/
-
+        
         if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()>0)
             PanelHojas.add(hojasSeccionEntrantes,"Entrantes");
         else
@@ -623,10 +601,18 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     }
 
     public void realizarPedido() {
-        ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "PedidoRealizado");
-        this.BotonAnadir.setVisible(false);
-        this.TextoComentarios.setText("");
-        this.TextoComentarios.setEnabled(false);
+        if(this.panelRealizarPedido.getNumElementos()>0){
+            ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "PedidoRealizado");
+            this.BotonAnadir.setVisible(false);
+            this.TextoComentarios.setText("");
+            this.TextoComentarios.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(this,
+                              "Debe seleccionar, al menos, un elemento.",
+                              "El pedido no puede ser realizado",
+                              JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }
 
 }

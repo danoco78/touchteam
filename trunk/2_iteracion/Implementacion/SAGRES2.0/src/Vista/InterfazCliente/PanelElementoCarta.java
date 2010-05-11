@@ -13,6 +13,7 @@ package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
 import java.awt.Color;
+import javax.swing.JLabel;
 
 /**
  *
@@ -24,18 +25,17 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private boolean seleccionado;
     
     /** Creates new form PanelElementoCarta */
-    public PanelElementoCarta(Elemento e, PanelGeneralCliente PGC) {
+    public PanelElementoCarta(Elemento elemento, PanelGeneralCliente PGC) {
         initComponents();
 
         this.PGC=PGC;
-        this.elemento=e;
+        this.elemento=elemento;
         this.seleccionado=false;
 
-        LabelNombre.setText(e.getNombre());
-        TextoDescripcion.setText(e.getDescripcion());
-        LabelPrecio.setText(Double.toString(e.getPrecio()));
-        TextoDescripcion.setSize(500, 400);
-
+        this.LabelNombre.setText(elemento.getNombre());
+        this.TextoDescripcion.setText(elemento.getDescripcion());
+        this.LabelPrecio.setText(Double.toString(elemento.getPrecio()));
+        this.PanelFoto.add(new JLabel(elemento.getFoto(),JLabel.CENTER),java.awt.BorderLayout.CENTER);
     }
 
     /** This method is called from within the constructor to
@@ -109,18 +109,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         PanelFoto.setBackground(new java.awt.Color(255, 255, 255));
         PanelFoto.setPreferredSize(new java.awt.Dimension(150, 150));
-
-        javax.swing.GroupLayout PanelFotoLayout = new javax.swing.GroupLayout(PanelFoto);
-        PanelFoto.setLayout(PanelFotoLayout);
-        PanelFotoLayout.setHorizontalGroup(
-            PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-        );
-        PanelFotoLayout.setVerticalGroup(
-            PanelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 134, Short.MAX_VALUE)
-        );
-
+        PanelFoto.setLayout(new java.awt.BorderLayout());
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
