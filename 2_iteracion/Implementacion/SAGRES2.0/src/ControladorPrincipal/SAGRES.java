@@ -67,7 +67,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public void nuevaIncidencia(Incidencia in) {
         this.iincidencia.nuevaIncidencia(in);
         Pair<Producto,Float> prodCantidad = in.getProductoCantidad();
-        this.iproducto.restarCantidadProducto(prodCantidad);
+        this.iproducto.restarCantidadProducto(prodCantidad.getFirst(),prodCantidad.getSecond());
         this.icarta.actualizaDisponibilidadElementos();// compruebaElementosConProducto(prodCantidad.getFirst());
     }
 
@@ -141,7 +141,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.icarta.obtieneElementos();
     }
 
-    public void confirmaPagoFactura(Integer codMesa){
+    public void confirmaPagoFactura(int codMesa){
         this.ipedidos.confirmaPagoFactura(codMesa);
     }
 
@@ -193,11 +193,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     }
 
     public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception{
-        return this.ipedidos.seleccionPlato(p, ele);
-    }
-
-    public void confirmaPagoFactura(int codMesa) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.ipedidos.seleccionaPlato(p, ele);
     }
 
     public void imprimeFactura(int codMesa) {
