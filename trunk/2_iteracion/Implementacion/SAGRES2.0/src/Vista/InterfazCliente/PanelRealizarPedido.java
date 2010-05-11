@@ -12,9 +12,12 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionCarta.ElementoPlato;
 import GestionPedidos.ElementoPedido;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import javax.swing.JPanel;
 
 /**
  *
@@ -24,14 +27,14 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
     ArrayList<ElementoPedido> elementosPedido;
-    ArrayList<Elemento> elementos;
+    ArrayList<Elemento> listaElementos;
 
     /** Creates new form PanelRealizarPedido */
     public PanelRealizarPedido(PanelGeneralCliente panelGeneralCliente) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
         this.elementosPedido = new ArrayList();
-        this.elementos = new ArrayList();
+        this.listaElementos = new ArrayList();
     }
 
     /** This method is called from within the constructor to
@@ -77,14 +80,15 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     public void anadirElementoPedido(Elemento elemento, String comentario) {
         ElementoPedido elementoPedido = new ElementoPedido(elemento.getCodigoElemento(), 0, comentario);
-        PanelElementosPedido.add(new PanelElementoPedido(elementoPedido, elemento.getNombre(),this));
+        PanelElementosPedido.add(new PanelElementoPedido(elementoPedido, elemento,this));
         elementosPedido.add(elementoPedido);
-        elementos.add(elemento);
+        listaElementos.add(elemento);
     }
 
     public void quitarElemento(PanelElementoPedido panelElementoPedido) {
-        PanelElementosPedido.remove(panelElementoPedido);
-        elementosPedido.remove(panelElementoPedido.elementoPedido);
+        this.PanelElementosPedido.remove(panelElementoPedido);
+        this.listaElementos.remove(panelElementoPedido.elemento);
+        this.elementosPedido.remove(panelElementoPedido.elementoPedido);
         this.repaint();
         this.revalidate();
     }
@@ -98,7 +102,12 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     }
 
     public ArrayList<Elemento> getElementos() {
-        return this.elementos;
+        return this.listaElementos;
+    }
+
+    public void limpiar() {
+        this.elementosPedido=new ArrayList();
+        this.PanelElementosPedido.removeAll();
     }
 
 }

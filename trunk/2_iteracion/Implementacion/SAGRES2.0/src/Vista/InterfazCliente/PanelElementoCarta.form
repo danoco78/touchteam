@@ -113,6 +113,9 @@
                           <Dimension value="[10, 10]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="seleccionarElemento"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

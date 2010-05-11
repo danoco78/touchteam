@@ -12,7 +12,9 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import java.awt.CardLayout;
 import java.awt.Color;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 
 /**
@@ -35,7 +37,10 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
         this.LabelPrecio.setText(Double.toString(elemento.getPrecio()));
-        this.PanelFoto.add(new JLabel(elemento.getFoto(),JLabel.CENTER),java.awt.BorderLayout.CENTER);
+        Icon foto = elemento.getFoto();
+        JLabel LabelFoto = new JLabel(foto,JLabel.CENTER);
+        LabelFoto.setVisible(true);
+        this.PanelFoto.add(LabelFoto,java.awt.BorderLayout.CENTER);
     }
 
     /** This method is called from within the constructor to
@@ -90,6 +95,11 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         TextoDescripcion.setEditable(false);
         TextoDescripcion.setMaximumSize(new java.awt.Dimension(10, 10));
         TextoDescripcion.setMinimumSize(new java.awt.Dimension(10, 10));
+        TextoDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                seleccionarElemento(evt);
+            }
+        });
         ScrollDescripcion.setViewportView(TextoDescripcion);
 
         PanelDescripcion.add(ScrollDescripcion, java.awt.BorderLayout.CENTER);
@@ -137,18 +147,21 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarElemento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarElemento
-        if(!PGC.pedidoRealizado){
-            if(!this.seleccionado){
-                seleccionado=true;
-                PGC.marcarElemento(this.elemento);
-                this.PanelDatos.setBackground(new Color(153,204,255));
-                this.TextoDescripcion.setBackground(new Color(153,204,255));
-            }else{
-                seleccionado=false;
-                PGC.desmarcarElemento(this.elemento);
-                this.PanelDatos.setBackground(new Color(255,255,255));
-                this.TextoDescripcion.setBackground(new Color(255,255,255));
-            }
+        if(PGC.pedidoRealizado){
+            PGC.cambiarPanelEste();
+            PGC.pedidoRealizado=false;
+        }
+        
+        if(!this.seleccionado){
+            seleccionado=true;
+            PGC.marcarElemento(this.elemento);
+            this.PanelDatos.setBackground(new Color(153,204,255));
+            this.TextoDescripcion.setBackground(new Color(153,204,255));
+        }else{
+            seleccionado=false;
+            PGC.desmarcarElemento(this.elemento);
+            this.PanelDatos.setBackground(new Color(255,255,255));
+            this.TextoDescripcion.setBackground(new Color(255,255,255));
         }
     }//GEN-LAST:event_seleccionarElemento
 

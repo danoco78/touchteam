@@ -26,7 +26,6 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     /** Creates new form PanelPedidoRealizado */
     public PanelPedidoRealizado() {
         initComponents();
-        this.TextoListaComida.setText("");
     }
 
     /** This method is called from within the constructor to
@@ -38,36 +37,16 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelPedidoComida = new javax.swing.JPanel();
-        PanelListaComida = new javax.swing.JPanel();
-        ScrollListaComida = new javax.swing.JScrollPane();
-        TextoListaComida = new javax.swing.JTextPane();
-        Modificar = new javax.swing.JButton();
+        PanelPedido = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
-        PanelPedidoComida.setOpaque(false);
-        PanelPedidoComida.setLayout(new java.awt.BorderLayout(0, 5));
+        PanelPedido.setOpaque(false);
+        PanelPedido.setLayout(new java.awt.GridLayout(0, 1));
+        add(PanelPedido, java.awt.BorderLayout.CENTER);
 
-        PanelListaComida.setLayout(new java.awt.BorderLayout());
-
-        TextoListaComida.setEditable(false);
-        ScrollListaComida.setViewportView(TextoListaComida);
-
-        PanelListaComida.add(ScrollListaComida, java.awt.BorderLayout.CENTER);
-
-        PanelPedidoComida.add(PanelListaComida, java.awt.BorderLayout.CENTER);
-
-        Modificar.setFont(new java.awt.Font("Arial", 1, 16));
-        Modificar.setForeground(new java.awt.Color(80, 98, 143));
-        Modificar.setText("Modificar");
-        Modificar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
-        PanelPedidoComida.add(Modificar, java.awt.BorderLayout.SOUTH);
-
-        add(PanelPedidoComida, java.awt.BorderLayout.CENTER);
-
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Ver Factura");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -78,21 +57,11 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonVerFactura;
-    private javax.swing.JButton Modificar;
-    private javax.swing.JPanel PanelListaComida;
-    private javax.swing.JPanel PanelPedidoComida;
-    private javax.swing.JScrollPane ScrollListaComida;
-    private javax.swing.JTextPane TextoListaComida;
+    private javax.swing.JPanel PanelPedido;
     // End of variables declaration//GEN-END:variables
 
-    public void anadirElementosPedido(ArrayList<Elemento> listaElementos) {
-        Iterator it = listaElementos.iterator();
-
-        while(it.hasNext()){
-            Elemento elemento = (Elemento) it.next();
-
-            this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
-        }
+    public void anadirPedido(ArrayList<Elemento> listaElementos) {
+        this.PanelPedido.add(new PanelListaPedido(listaElementos));
     }
 
 }

@@ -22,13 +22,15 @@ public class PanelElementoPedido extends javax.swing.JPanel {
 
     PanelRealizarPedido panelRealizarPedido;
     ElementoPedido elementoPedido;
+    Elemento elemento;
 
     /** Creates new form PanelElementoPedido */
-    public PanelElementoPedido(ElementoPedido elementoPedido, String nomElemento, PanelRealizarPedido panelRealizarPedido) {
+    public PanelElementoPedido(ElementoPedido elementoPedido, Elemento elemento, PanelRealizarPedido panelRealizarPedido) {
         initComponents();
-        this.LabelNombreElemento.setText(nomElemento);
+        this.LabelNombreElemento.setText(elemento.getNombre());
         this.panelRealizarPedido=panelRealizarPedido;
         this.elementoPedido=elementoPedido;
+        this.elemento=elemento;
     }
 
     /** This method is called from within the constructor to
