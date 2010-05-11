@@ -31,7 +31,7 @@ public class InterfazCliente extends javax.swing.JFrame {
         try {
             initComponents();
             this.iCliente = icliente;
-            this.panelGeneralCliente = new PanelGeneralCliente(icliente);
+            this.panelGeneralCliente = new PanelGeneralCliente(this,icliente);
             this.getContentPane().add(this.panelGeneralCliente, java.awt.BorderLayout.CENTER);
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } catch (Exception ex) {

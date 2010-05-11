@@ -13,8 +13,10 @@ package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
+import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import GestionPedidos.ElementoPedido;
+import Vista.DialogoComfirmacion;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -40,6 +42,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     protected ICliente icliente;
 
+    private InterfazCliente interfazCliente;
+
     private JPanel hojasSeccionEntrantes = new JPanel();
     private int i_entrantes;
     private JPanel hojasSeccionPescados = new JPanel();
@@ -59,8 +63,9 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private Elemento elementoMarcado;
 
     /** Creates new form PanelGeneralCliente */
-    public PanelGeneralCliente(ICliente icliente) throws Exception {
+    public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente) throws Exception {
         initComponents();
+        this.interfazCliente=interfazCliente;
         this.icliente=icliente;
         this.setDoubleBuffered(true);
         cargarCarta();
@@ -605,22 +610,65 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     public void realizarPedido() {
         if(this.panelRealizarPedido.getNumElementos()>0){
-            ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "PedidoRealizado");
-            this.BotonAnadir.setVisible(false);
-            this.TextoComentarios.setText("");
-            this.TextoComentarios.setEnabled(false);
-
-            ArrayList<ElementoPedido> elementosPedido = this.panelRealizarPedido.getElementosPedido();
             ArrayList<Elemento> listaElementos = this.panelRealizarPedido.getElementos();
-            this.panelPedidoRealizado.anadirElementosPedido(listaElementos);
-            this.icliente.nuevoPedido(1, elementosPedido);
+            String listaComida = "PLATOS:";
+            String listaBebida = "BEBIDAS:";
+
+            Iterator it = listaElementos.iterator();
+
+            while(it.hasNext()){
+                Elemento elemento = (Elemento) it.next();
+
+                if(elemento instanceof ElementoPlato){
+                    listaComida=listaComida.concat("\n- "+elemento.getNombre());
+                }else{
+                    listaBebida=listaBebida.concat("\n- "+elemento.getNombre());
+                }
+            }
+
+            String listaTotal = "¿Está seguro de que ha terminado de seleccionar los elementos de su pedido?\n\n"
+                                +listaComida
+                                +"\n\n"
+                                +listaBebida
+                                +"\n\nSiempre puede añadir nuevos pedidos más tarde";
+
+            System.out.println(listaTotal);
+            
+            DialogoComfirmacion dialogo = new DialogoComfirmacion(interfazCliente,
+                    "Realizar Pedido",
+                    "",
+                    listaTotal);
+
+            dialogo.show();
+
+
+            if(dialogo.isAceptado()){
+                this.cambiarPanelEste();
+                this.TextoComentarios.setText("");
+                this.TextoComentarios.setEnabled(false);
+
+                this.panelPedidoRealizado.anadirPedido(listaElementos);
+
+                ArrayList<ElementoPedido> elementosPedido = this.panelRealizarPedido.getElementosPedido();
+                this.icliente.nuevoPedido(1, elementosPedido);
+
+                this.elementoMarcado=null;
+                this.panelRealizarPedido.limpiar();
+
+                this.pedidoRealizado=true;
+            }
         }else{
             JOptionPane.showMessageDialog(this,
-                              "Debe seleccionar, al menos, un elemento.",
+                              "Debe añadir, al menos, un elemento.",
                               "El pedido no puede ser realizado",
                               JOptionPane.INFORMATION_MESSAGE);
 
         }
+    }
+
+    public void cambiarPanelEste() {
+        ((CardLayout) PanelGeneralEste.getLayout()).next(PanelGeneralEste);
+        this.BotonAnadir.setVisible(!this.BotonAnadir.isVisible());
     }
 
 }
