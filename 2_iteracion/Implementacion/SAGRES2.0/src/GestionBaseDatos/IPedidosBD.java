@@ -21,4 +21,7 @@ public interface IPedidosBD {
     public Factura getFactura(int codMesa);
     public ArrayList<Pedido> getPedidos(int codMesa);
     public void actualizaFactura(Factura f);
+
+    // TODO No esta reflejada en el diseño
+    public Pedido getSiguientePedidoBar();
 }
