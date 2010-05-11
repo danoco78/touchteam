@@ -14,6 +14,7 @@ import GestionCarta.SeccionComida;
 import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
 import GestionPedidos.IGestorPedidos;
 import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.IIncidencia;
@@ -209,5 +210,9 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
         return this.icarta.obtieneElementosDeSeccion(seccion);
+    }
+
+    public Factura getFactura(int codMesa){
+        return this.ipedidos.getFactura(codMesa);
     }
 }

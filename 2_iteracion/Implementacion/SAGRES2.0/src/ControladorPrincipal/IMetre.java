@@ -7,6 +7,7 @@ package ControladorPrincipal;
 
 import GestionCarta.Elemento;
 import GestionPedidos.ElementoColaBar;
+import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Producto;
@@ -31,5 +32,7 @@ public interface IMetre {
     public abstract int getNumBebidasEnCola();
     public abstract Pedido getSiguientePedidoBar()throws Exception;
     public abstract boolean seleccionaBebida(Pedido pe, ElementoColaBar e)throws Exception;
+
+    public Factura getFactura(int codMesa);
     
 }
