@@ -1,0 +1,49 @@
+DIAPOSITIVA 1:
+	Como no se ha especificado ningún tipo de pruebas se ha
+	decidido hacer las pruebas de caja negra para el software
+	producido en esta iteracion.
+
+DIAPOSITIVA 2:
+	Dentro de las pruebas de caja negra se ha optado por las
+	pruebas de Partición en Clases de Equivalencia.
+	
+	Para ello nos hemos basado en las interfaces de usuario
+	especificadas en la versión 1.0 del documento de diseño.
+
+	Debido a que en esta versión del documento no hay interfaces
+	con elementos de entrada solo se han diseñado las pruebas para
+	la salida.
+	Para cada interfaz se ha hecho lo siguiente:
+		- Se han identificado las condiciones válidas e inválidas
+		- Se han definido los casos de prueba válidos y los inválidos
+		- Se han detallado los resultados esperados para las entradas dadas
+	
+DIAPOSITIVA 3:
+	En el diálogo de Confirmación hay que comprobar la presencia de los
+	campos. Como no se ha dado ninguna restricción sobre el tipo de 
+	información ni del formato de ésta no se han comprobado más categorías.
+	La lista de productos asociados puede aparecer o no, los demás elementos
+	son necesarios.
+
+DIAPOSITIVA 4:
+	En la interfaz del Cliente también hay que comprobar la presencia de los
+	campos. Al igual que antes, no se ha establecido ninguna restricción sobre
+	el tipo de información ni del formato de ésta por lo que no se han
+	comprobado más categorías.
+	Los productos y las secciones son necesarias, no es válida una carta sin
+	secciones o una sección sin productos. Los demás elementos pueden aparecer
+	o no.
+
+DIAPOSITIVA 5:
+	En la interfaz del Metre también hay que comprobar la presencia de los
+	campos. Como pasó antes no se ha establecido ninguna restricción sobre
+	el tipo de información ni del formato de ésta por lo que no se han
+	comprobado más categorías.
+	La hora y la fecha son necesarias. Los demás elementos pueden aparecer
+	o no. Por ejemplo en el caso de que no tengamos ningún pedido de bebidas.
+
+DIAPOSITIVA 6:
+	En la interfaz del Cocinero como en todos los casos anteriores solo hay
+	que comprobar la presencia de los campos.
+	La hora y la fecha son necesarias. Los demás elementos pueden aparecer
+	o no. Por ejemplo en el caso de que no tengamos ningún pedido de comida.
