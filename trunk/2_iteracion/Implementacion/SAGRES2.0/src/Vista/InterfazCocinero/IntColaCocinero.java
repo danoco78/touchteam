@@ -21,8 +21,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public PreparandosePanel pmpder;
     protected ICocinero icocinero;
     public InterfazCocinero interfaz = null;
-
-    Pedido pendiente;
     
     /** Creates new form IntGestionCarta */
     public IntColaCocinero(InterfazCocinero i) {
@@ -164,9 +162,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
         // Prueba para comprobar que funciona
-        ArrayList<Pedido> peds = new ArrayList<Pedido>();
+        //ArrayList<Pedido> peds = new ArrayList<Pedido>();
         
-        try {
+        /*try {
             peds = this.icocinero.getPedidosCocinaPreparandose();
             if(peds != null){
                 this.pmpder.autoCompletar(peds);
@@ -175,7 +173,19 @@ public class IntColaCocinero extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+
+        Pedido ped = new Pedido(5, 2, 0, null);
+        ElementoColaCocina ele = new ElementoColaCocina(1, 0, "Del tiempo, por favor");
+        ele.asocia(new Elemento(2, "Agua",
+                "Agua embotellada marca Bezoya",
+                true, null, 5, 5, 10));
+        for(int j=0; j<4; ++j)
+                ped.asocia(ele);
+
+        // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
+        // independientemente de la prueba
+        this.pmpizq.addPedido(ped);
 
        /* ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
         ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");

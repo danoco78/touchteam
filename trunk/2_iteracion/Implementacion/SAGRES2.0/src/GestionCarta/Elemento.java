@@ -6,6 +6,7 @@ import GestionStock.GestionProductos.Producto;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import utilidades.Pair;
 
@@ -149,11 +150,15 @@ public class Elemento {
         }
         else{
             HashMap<Ingrediente,Float> ingredientes = ((ElementoPlato)this).getListaIngredientes();
-                        Collection c = (Collection)ingredientes;
-            Iterator ite = c.iterator();
-            while(ite.hasNext()){
-                result.put(((Pair<Producto,Float>)ite.next()).getFirst()
-                        , ((Pair<Producto,Float>)ite.next()).getSecond());
+            Iterator ite = ingredientes.entrySet().iterator();
+            Producto prod;
+            Float cantidad;
+            Map.Entry entrada;
+            while (ite.hasNext()) { //Restamos las cantidades de todos los productos
+                entrada = (Map.Entry)ite.next();
+                prod = (Producto) entrada.getKey();
+                cantidad = (Float)entrada.getValue();
+                result.put(prod, cantidad);
             }
         }
         return result;

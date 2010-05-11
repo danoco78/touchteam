@@ -87,8 +87,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     boton.addActionListener(new ManejaEventos(boton, pev));
                     numBebidas++;
                 }
-                else
+                else{
+                    System.out.println("hasta aqui llego2");
                     boton.addActionListener(new ManejaEventos(boton, pev));
+                }
                 panelInfoPedido.add(boton);
                 panelInfoPedido.add(pev);
             }
@@ -108,13 +110,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             case PanelMesaPedido.COCINA:
                  switch(num){
                     case 0:
-                        pendientes.setText("No hay ningún plato preparándose");
+                        pendientes.setText("No hay ningún plato pendiente");
                         break;
                     case 1:
-                        pendientes.setText("Hay "+ num + " plato preparándose.");
+                        pendientes.setText("Hay "+ num + " plato pendiente.");
                         break;
                     default:
-                        pendientes.setText("Hay "+ num+ " platos preparándose.");
+                        pendientes.setText("Hay "+ num+ " platos pendiente.");
                         break;
                 }
                 break;
@@ -376,12 +378,12 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     }
                     break;
                 case PanelMesaPedido.COCINA:
-                    ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                    ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                     try {
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
-                        num = cpadre.icocinero.getNumPlatosEnCola();
+                        //num = cpadre.icocinero.getNumPlatosEnCola();
                         borrar = true;
-                        cpadre.panelColaCocinero.actualizarVista();
+                        //cpadre.panelColaCocinero.actualizarVista();
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
