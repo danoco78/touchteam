@@ -11,6 +11,7 @@ import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,7 +53,14 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public Pedido getSiguientePedidoBar()throws Exception{
-        ArrayList<Pedido> noFacturados;
+
+        // TODO Esta implementación no está reflejada en el diseño
+        return this.iPedidosBD.getSiguientePedidoBar();
+
+
+
+
+        /*ArrayList<Pedido> noFacturados;
         ArrayList<ElementoPedido> elementos;
         noFacturados = iPedidosBD.obtienePedidosNoFacturados();
 
@@ -92,7 +100,7 @@ public class GestorPedidos implements IGestorPedidos {
         }
         if(pedido == null)
                  throw new Exception("No hay siguiente pedido en cola de bar");
-        return pedido;
+        return pedido;*/
     }
 
     public Pedido getSiguientePedidoCocinaEncola()throws Exception{
@@ -194,47 +202,40 @@ public class GestorPedidos implements IGestorPedidos {
         return pedidos;
     }
 
-    public boolean seleccionPlato(Pedido p, ElementoColaCocina ele) throws Exception {
+    public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception {
         boolean exito=true, existe = false;
         int estado;
-
-        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
         ElementoPlato elem;
         HashMap<Producto,Float> prods;
 
-        existe = elementos.contains(ele);
+        ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+        existe = elementos.contains(ele); // Comprobar si funciona el equals
 
         if(existe){
             estado = ele.getEstado();
-            if(estado == ElementoColaCocina.ENCOLA){
-               p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
-               ele.setEstado(ElementoColaCocina.PREPARANDOSE);
-               this.iPedidosBD.actualizaPedido(p);
-               System.out.println("Hasta aqui llego bien");
-               //TODO Arreglar, casting, es necesario tiempo Elaboracion
-               elem = new ElementoPlato(ele.getElemento(),10);
-               System.out.println("Aqui ya fallo");
-               prods = elem.getProductos();
-               Iterator ite = prods.entrySet().iterator();
-               Producto prod;
-               Float cantidad;
-               Map.Entry entrada;
-               while(ite.hasNext()){ //Restamos las cantidades de todos los productos
-                   entrada = (Map.Entry)ite.next();
-                   prod = (Producto) entrada.getKey();
-                   cantidad = (Float)entrada.getValue();
-                   this.iProducto.restarCantidadProducto(new Pair<Producto,Float>(prod,cantidad));
-               }
-            }
-            else if(estado == ElementoColaCocina.PREPARANDOSE){
-                ele.setEstado(ElementoColaCocina.PREPARADO);
+            if(estado == ElementoColaBar.ENCOLA){
+                p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
+                ele.setEstado(ElementoColaBar.PREPARADO);
+                this.iPedidosBD.actualizaPedido(p);
+                elem = (ElementoPlato) ele.getElemento();
+                prods = elem.getProductos();
+                Iterator ite = prods.entrySet().iterator();
+                Producto prod;
+                Float cantidad;
+                Map.Entry entrada;
+                while (ite.hasNext()) { //Restamos las cantidades de todos los productos
+                    entrada = (Map.Entry)ite.next();
+                    prod = (Producto) entrada.getKey();
+                    cantidad = (Float)entrada.getValue();
+                    this.iProducto.restarCantidadProducto(prod,cantidad);
+                }
             }
             else{
                 exito = false;
             }
         }
         else{
-            throw new Exception("El plato no existe en ese pedido.");
+            throw new Exception("El plato no existe en ese pedido");
         }
         return exito;
     }
@@ -264,7 +265,7 @@ public class GestorPedidos implements IGestorPedidos {
                     entrada = (Map.Entry)ite.next();
                     prod = (Producto) entrada.getKey();
                     cantidad = (Float)entrada.getValue();
-                    this.iProducto.restarCantidadProducto(new Pair<Producto,Float>(prod,cantidad));
+                    this.iProducto.restarCantidadProducto(prod,cantidad);
                 }
             }
             else{
