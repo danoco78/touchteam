@@ -212,14 +212,19 @@ public class GestorPedidos implements IGestorPedidos {
                this.iPedidosBD.actualizaPedido(p);
                elem = ele.getElemento();
                prods = elem.getProductos();
-               Collection c = (Collection)prods;
-               Iterator ite = c.iterator();
+               Iterator ite = prods.entrySet().iterator();
+               Producto prod;
+               Float cantidad;
+               Map.Entry entrada;
                while(ite.hasNext()){ //Restamos las cantidades de todos los productos
-                   this.iProducto.restarCantidadProducto(((Pair<Producto,Float>)ite.next()));
+                   entrada = (Map.Entry)ite.next();
+                   prod = (Producto) entrada.getKey();
+                   cantidad = (Float)entrada.getValue();
+                   this.iProducto.restarCantidadProducto(new Pair<Producto,Float>(prod,cantidad));
                }
             }
-            else if(estado == ElementoColaCocina.PREPARADO){
-                ele.setEstado(ElementoColaCocina.PREPARANDOSE);
+            else if(estado == ElementoColaCocina.PREPARANDOSE){
+                ele.setEstado(ElementoColaCocina.PREPARADO);
             }
             else{
                 exito = false;
