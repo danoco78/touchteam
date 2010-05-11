@@ -32,7 +32,7 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.imetre = iMetre;
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar(this);
-        //this.hebra = new HebraColaPedidos(this);
+        this.hebra = new HebraColaPedidos(this);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -99,24 +99,6 @@ public class InterfazMetre extends javax.swing.JFrame {
             }
         }
 
-    }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                javax.swing.JFrame dialog = new javax.swing.JFrame("Prueba ejecucion");
-                dialog.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-                dialog.getContentPane().add(new IntColaBar(), java.awt.BorderLayout.CENTER);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
