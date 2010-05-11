@@ -57,8 +57,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
@@ -429,8 +428,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 int select = this.tTablaIngredientesDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                     while (noencontrado) {
-                        Map.Entry entrada = (Map.Entry)iterador.next();
-                        accidentado = (Ingrediente)entrada.getKey();
+                        accidentado = (Ingrediente)iterador.next();
                         if(i == select){
                             noencontrado = false;
                         }

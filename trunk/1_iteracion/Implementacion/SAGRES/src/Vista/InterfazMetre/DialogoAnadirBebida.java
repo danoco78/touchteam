@@ -33,6 +33,7 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         this.metre = iMetre;
         this.dSelector.setFileFilter( new FileNameExtensionFilter("IMAGEN", "jpg","jpeg","png","gif"));
         this.bAceptar.setEnabled(false);
+        this.imagen = null;
     }
 
 
@@ -393,6 +394,8 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
+            if (imagen == null)
+                imagen = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
             Bebida bebida = new Bebida(0, this.tNombre.getText(), imagen, (Float)this.tMinimo.getValue(), (Float)this.tMaximo.getValue(), (Float)this.tDisponible.getValue());
             this.metre.nuevoProducto(bebida);
             setVisible(false);

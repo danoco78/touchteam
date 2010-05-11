@@ -51,11 +51,10 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
-            this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
+            //this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
             ++i;
 	}
         this.bSiguiente.setEnabled(false);
@@ -420,8 +419,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 int select = this.tTablaIngredientesDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                     while (noencontrado) {
-                        Map.Entry entrada = (Map.Entry)iterador.next();
-                        accidentado = (Bebida)entrada.getKey();
+                        accidentado = (Bebida)iterador.next();
                         if(i == select){
                             noencontrado = false;
                         }

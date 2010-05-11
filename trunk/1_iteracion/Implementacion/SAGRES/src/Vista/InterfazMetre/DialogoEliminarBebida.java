@@ -47,8 +47,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tBebidas.getModel().setValueAt(p.getNombre(), i, 0);
             this.tBebidas.getModel().setValueAt(p.getCantidad(), i, 1);
             ++i;
@@ -325,8 +324,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
                 boolean noeliminado = true;
                 int select = this.tBebidas.getSelectedRow();
                 while (noeliminado) {
-                    Map.Entry entrada = (Map.Entry)iterador.next();
-                    aEliminar = (Bebida)entrada.getKey();
+                    aEliminar = (Bebida)iterador.next();
                     if(i == select){
                         this.metre.eliminaProducto(aEliminar);
                         noeliminado = false;

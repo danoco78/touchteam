@@ -62,8 +62,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
@@ -452,8 +451,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 int select = this.tTablaIngredientesDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                 while (noencontrado) {
-                    Map.Entry entrada = (Map.Entry)iterador.next();
-                    aModificar = (Ingrediente)entrada.getKey();
+                    aModificar = (Ingrediente)iterador.next();
                     if(i == select){
                         noencontrado = false;
                     }
@@ -485,7 +483,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
             try {
-                float cantidad = aModificar.getCantidad() - (Float) this.tDisponible.getValue();
+                float cantidad = (Float) this.tDisponible.getValue();
                 aModificar.actualizarCantidad(cantidad);
                 aModificar.setNombre(this.tNombre.getText());
                 aModificar.setMaximo((Float) this.tMaximo.getValue());
