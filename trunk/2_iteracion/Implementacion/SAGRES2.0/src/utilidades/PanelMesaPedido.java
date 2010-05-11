@@ -59,6 +59,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pedActual = ped;
 
         panelInfoPedido.removeAll();
+        
         infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
 
         ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
@@ -91,6 +92,9 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 panelInfoPedido.add(pev);
             }
         }
+
+        panelInfoPedido.repaint();
+        panelInfoPedido.revalidate();
     }
 
     /**
