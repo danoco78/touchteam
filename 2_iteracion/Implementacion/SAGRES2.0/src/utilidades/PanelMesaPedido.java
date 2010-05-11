@@ -358,7 +358,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                                 texto += elems.get(i).getElemento().getNombre()+"\n";
                         }
                         DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
-                        confirmar.setLocationRelativeTo(m);
+                        confirmar.setLocationRelativeTo(mpadre);
                         confirmar.setVisible(true);
                         if(confirmar.isAceptado())
                             borrar = true;
