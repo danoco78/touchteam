@@ -18,6 +18,6 @@ public interface IProducto {
     public HashSet<Producto> obtieneBebidas();
     public HashSet<Producto> obtieneIngredientes();
     public  HashMap<Producto, Float> obtieneProductosBajoMinimos();
-    public void restarCantidadProducto(Pair<Producto,Float> prodCantidad);
+    public void restarCantidadProducto(Producto p, Float c);
     
 }

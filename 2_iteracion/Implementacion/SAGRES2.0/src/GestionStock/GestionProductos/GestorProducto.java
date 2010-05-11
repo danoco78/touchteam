@@ -94,8 +94,8 @@ public class GestorProducto implements IProducto{
          */
     }
 
-    public void restarCantidadProducto(Pair<Producto, Float> prodCantidad) {
-        this.iStockBD.restarCantidadProducto(prodCantidad);
+    public void restarCantidadProducto(Producto p, Float c) {
+        this.iStockBD.restarCantidadProducto(p,c);
     }
 
 }
