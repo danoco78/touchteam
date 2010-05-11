@@ -11,7 +11,6 @@
 
 package Vista.InterfazMetre;
 
-import GestionPedidos.Factura;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -43,9 +42,10 @@ public class PanelColaFacturas extends javax.swing.JPanel {
             boton.setBackground(new java.awt.Color(211, 223, 253));
             boton.setForeground(new java.awt.Color(80, 98, 143));
             boton.setFont(new java.awt.Font("Arial", 0, 18));
-            boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa 5\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+            boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+(i+1)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
             boton.setFocusPainted(false);
             boton.addActionListener(new ManejaEventos(boton,pev));
+            boton.setName(String.valueOf(i+1));
 
             centro.add(boton);
             centro.add(pev);
@@ -140,12 +140,12 @@ public class PanelColaFacturas extends javax.swing.JPanel {
             borrar = false;
             switch(filtro){
                 case PanelColaFacturas.PARAIMPRIMIR:
-                    controlador.imetre.imprimeFactura(Integer.getInteger(boton.getName()));
+                    controlador.imetre.imprimeFactura(Integer.parseInt(boton.getName()));
                     borrar = true;
                     break;
                 case PanelColaFacturas.PARAFACTURAR:
-                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,boton.getName());
-                    //confirmar.setLocationRelativeTo(m);
+                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,Integer.parseInt(boton.getName()));
+                    confirmar.setLocationRelativeTo(m);
                     confirmar.setVisible(true);
                     if(confirmar.isAceptado())
                         borrar = true;
