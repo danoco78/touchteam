@@ -145,7 +145,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                     break;
                 case PanelColaFacturas.PARAFACTURAR:
                     Factura f = controlador.imetre.getFactura(Integer.valueOf(boton.getName()));
-                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,"Facturar pedido", "¿Desea marcar la factura como pagada?",texto);
+                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,f);
                     //confirmar.setLocationRelativeTo(m);
                     confirmar.setVisible(true);
                     if(confirmar.isAceptado())

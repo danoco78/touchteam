@@ -11,12 +11,15 @@
 
 package Vista.InterfazMetre;
 
-import Vista.*;
+import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
+import GestionPedidos.Pedido;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,19 +27,39 @@ import java.awt.Rectangle;
  */
 public class DialogoFacturacion extends java.awt.Dialog {
 
+    InterfazMetre controlador = null;
+    Factura fac;
+    
     public static final boolean ACEPTAR = true;
     public static final boolean CANCELAR = false;
 
     private boolean estado = CANCELAR;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoFacturacion(java.awt.Frame parent, String Subtitulo,
-            String Pregunta, String Datos) {
+    public DialogoFacturacion(java.awt.Frame parent,Factura f) {
         super(parent, true);
         initComponents();
-        this.lSubtitulo.setText(Subtitulo);
-        this.lConfirma.setText(Pregunta);
-        this.tConfirma.setText(Datos);
+
+        controlador = (InterfazMetre) parent;
+        fac = f;
+        ArrayList<Pedido> pedidos = fac.getPedidos();
+        ArrayList<ElementoPedido> elems;
+        float total = 0;
+        String datos = new String();
+        String nombre;
+        for (int i=0;i<pedidos.size();i++){
+            elems = pedidos.get(i).obtieneElementos();
+            for (int j=0;j<elems.size();j++){
+                nombre = elems.get(j).getElemento().getNombre();
+                datos += nombre;
+                for (int z=0;z<50-nombre.length();z++)
+                    datos += " ";
+                datos += String.valueOf(elems.get(j).getElemento().getPrecio())+"€\n";
+                total += elems.get(j).getElemento().getPrecio();
+            }
+        }
+        this.ltotal.setText("Total: "+String.valueOf(total)+"€");
+        this.tConfirma.setText(datos);
     }
 
 
@@ -59,15 +82,22 @@ public class DialogoFacturacion extends java.awt.Dialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         pie = new javax.swing.JPanel();
-        bAceptar = new javax.swing.JButton();
         bCancelar1 = new javax.swing.JButton();
+        bImprimir = new javax.swing.JButton();
+        bAceptar = new javax.swing.JButton();
         cabecera = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
+        margenIzq = new javax.swing.JPanel();
+        margenDer = new javax.swing.JPanel();
+        pCentral = new javax.swing.JPanel();
         lConfirma = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tConfirma = new javax.swing.JTextArea();
+        ltotal = new javax.swing.JLabel();
+        margenSup = new javax.swing.JPanel();
+        margenInf = new javax.swing.JPanel();
 
         setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
@@ -78,28 +108,10 @@ public class DialogoFacturacion extends java.awt.Dialog {
         });
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
-        pie.setLayout(new java.awt.GridBagLayout());
+        pie.setPreferredSize(new java.awt.Dimension(478, 85));
+        pie.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 5));
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
-        bAceptar.setForeground(new java.awt.Color(80, 98, 143));
-        bAceptar.setText("Aceptar");
-        bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
-        bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
-        bAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Aceptar(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 25;
-        gridBagConstraints.ipady = 25;
-        gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
-        pie.add(bAceptar, gridBagConstraints);
-
-        bCancelar1.setFont(new java.awt.Font("Arial", 0, 14));
+        bCancelar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bCancelar1.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar1.setText("Cancelar");
         bCancelar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -111,13 +123,33 @@ public class DialogoFacturacion extends java.awt.Dialog {
                 bCancelar1Salir(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 25;
-        gridBagConstraints.ipady = 25;
-        gridBagConstraints.insets = new java.awt.Insets(9, 9, 9, 80);
-        pie.add(bCancelar1, gridBagConstraints);
+        pie.add(bCancelar1);
+
+        bImprimir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bImprimir.setForeground(new java.awt.Color(80, 98, 143));
+        bImprimir.setText("Imprimir");
+        bImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bImprimir.setMinimumSize(new java.awt.Dimension(100, 50));
+        bImprimir.setPreferredSize(new java.awt.Dimension(125, 75));
+        bImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bImprimir(evt);
+            }
+        });
+        pie.add(bImprimir);
+
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setForeground(new java.awt.Color(80, 98, 143));
+        bAceptar.setText("Aceptar");
+        bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
+        bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar(evt);
+            }
+        });
+        pie.add(bAceptar);
 
         add(pie, java.awt.BorderLayout.SOUTH);
 
@@ -127,7 +159,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Confirmación");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -141,9 +173,9 @@ public class DialogoFacturacion extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lSubtitulo.setText("Confirma");
+        lSubtitulo.setText("Facturar pedido");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -160,18 +192,23 @@ public class DialogoFacturacion extends java.awt.Dialog {
         cuerpo.setBackground(new java.awt.Color(255, 255, 255));
         cuerpo.setMinimumSize(new java.awt.Dimension(500, 550));
         cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
-        cuerpo.setLayout(new java.awt.GridBagLayout());
+        cuerpo.setLayout(new java.awt.BorderLayout());
 
-        lConfirma.setFont(new java.awt.Font("Arial", 0, 14));
+        margenIzq.setOpaque(false);
+        cuerpo.add(margenIzq, java.awt.BorderLayout.EAST);
+
+        margenDer.setOpaque(false);
+        cuerpo.add(margenDer, java.awt.BorderLayout.WEST);
+
+        pCentral.setLayout(new java.awt.BorderLayout());
+
+        lConfirma.setBackground(new java.awt.Color(255, 255, 255));
+        lConfirma.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lConfirma.setForeground(new java.awt.Color(80, 98, 143));
-        lConfirma.setText("Mensaje");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        cuerpo.add(lConfirma, gridBagConstraints);
+        lConfirma.setText("¿Desea marcar la factura como pagada?");
+        lConfirma.setOpaque(true);
+        lConfirma.setPreferredSize(new java.awt.Dimension(259, 30));
+        pCentral.add(lConfirma, java.awt.BorderLayout.NORTH);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 480));
 
@@ -180,7 +217,24 @@ public class DialogoFacturacion extends java.awt.Dialog {
         tConfirma.setPreferredSize(new java.awt.Dimension(164, 400));
         jScrollPane1.setViewportView(tConfirma);
 
-        cuerpo.add(jScrollPane1, new java.awt.GridBagConstraints());
+        pCentral.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        ltotal.setBackground(new java.awt.Color(255, 255, 255));
+        ltotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ltotal.setForeground(new java.awt.Color(80, 98, 143));
+        ltotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ltotal.setText("Total:");
+        ltotal.setOpaque(true);
+        ltotal.setPreferredSize(new java.awt.Dimension(36, 30));
+        pCentral.add(ltotal, java.awt.BorderLayout.SOUTH);
+
+        cuerpo.add(pCentral, java.awt.BorderLayout.CENTER);
+
+        margenSup.setOpaque(false);
+        cuerpo.add(margenSup, java.awt.BorderLayout.NORTH);
+
+        margenInf.setOpaque(false);
+        cuerpo.add(margenInf, java.awt.BorderLayout.SOUTH);
 
         add(cuerpo, java.awt.BorderLayout.CENTER);
 
@@ -204,17 +258,28 @@ public class DialogoFacturacion extends java.awt.Dialog {
         this.dispose();
     }//GEN-LAST:event_Aceptar
 
+    private void bImprimir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bImprimir
+        controlador.imetre.imprimeFactura(fac.getPedidos().get(0).getCodMesa());
+    }//GEN-LAST:event_bImprimir
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar1;
+    private javax.swing.JButton bImprimir;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel cuerpo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lConfirma;
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
+    private javax.swing.JLabel ltotal;
+    private javax.swing.JPanel margenDer;
+    private javax.swing.JPanel margenInf;
+    private javax.swing.JPanel margenIzq;
+    private javax.swing.JPanel margenSup;
+    private javax.swing.JPanel pCentral;
     private javax.swing.JPanel pie;
     private javax.swing.JTextArea tConfirma;
     // End of variables declaration//GEN-END:variables
