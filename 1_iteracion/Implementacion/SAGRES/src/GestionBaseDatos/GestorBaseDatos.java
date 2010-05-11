@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import javax.sql.rowset.serial.SerialBlob;
+import javax.swing.ImageIcon;
 import utilidades.Imagen;
 
 /**
@@ -92,8 +93,26 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public void eliminaElemento(Elemento elemento) {
         try {
-            java.sql.PreparedStatement borrado = this.Conexion.prepareStatement("DELETE FROM elemento WHERE elemento_id=" + elemento.getCodigoElemento());
-            borrado.executeUpdate();
+            if (elemento instanceof ElementoBebida) {
+                java.sql.PreparedStatement borrado = this.Conexion.prepareStatement("DELETE FROM elemento WHERE elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM elementoBebida WHERE elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM incluyeBebida WHERE elementoBebida_elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM tieneBebida WHERE elementoBebida_elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+            }
+            else {
+                java.sql.PreparedStatement borrado = this.Conexion.prepareStatement("DELETE FROM elemento WHERE elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM elementoPlato WHERE elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM incluyePlato WHERE elementoPlato_elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+                borrado = this.Conexion.prepareStatement("DELETE FROM tieneIngrediente WHERE elementoComida_elemento_elemento_id=" + elemento.getCodigoElemento());
+                borrado.executeUpdate();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,10 +185,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void nuevoElementoBebida(ElementoBebida elemento, Seccion seccion) {
+        ImageIcon defaultPhoto;
         try {
             // Insertamos el elemento
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"
-                    + "VALUES ('?','?',?,'?','?','?')");
+                    + "VALUES (?,?,?,?,?,?)");
             inserccion.setString(1, elemento.getNombre());
             inserccion.setString(2, elemento.getDescripcion());
             inserccion.setInt(3, 0);
@@ -184,9 +204,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             int id_elemento = idElemento.getInt(1);
             // Insertamos la imagen en la tabla
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
-            actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
+            if (elemento.getFoto() == null)
+                defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
+            else
+                defaultPhoto = elemento.getFoto();
+            actualizacion.setBytes(1, Imagen.imageIconToByteArray(defaultPhoto));
+            actualizacion.executeUpdate();
             // Insertamos en elementoBebida
-            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoBebida VALUES('?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoBebida(elemento_elemento_id) VALUES(?)");
             inserccion.setInt(1, id_elemento);
             inserccion.executeUpdate();
             // Para cada Bebida, sacamos su idBebida e insertamos junto con idElemento en tieneBebida
@@ -197,14 +222,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 Map.Entry entry = (Map.Entry) it.next();
                 Producto bebida = (Producto) entry.getKey();
                 Float cantidad = (Float) entry.getValue();
-                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneBebida VALUES('?','?','?')");
+                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneBebida(elementoBebida_elemento_elemento_id,productoBebida_producto_producto_id,cantidad) VALUES(?,?,?)");
                 inserccion.setInt(1, id_elemento);
                 inserccion.setInt(2, bebida.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
             }
             // Insertamos el elemento en su sección
-            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeBebida VALUES ('?','?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeBebida(seccionBebida_seccion_seccion_id,elementoBebida_elemento_elemento_id) VALUES (?, ?)");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
@@ -214,10 +239,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
     }
 
     public void nuevoElementoPlato(ElementoPlato elemento, Seccion seccion) {
+        ImageIcon defaultPhoto;
         try {
             // Insertamos el elemento
-            java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"
-                    + "VALUES ('?','?',?,'?','?','?')");
+            java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento (nombre,descripcion,disponible,divi,divi_max,precio)"
+                    + "VALUES (?,?,?,?,?,?)");
             inserccion.setString(1, elemento.getNombre());
             inserccion.setString(2, elemento.getDescripcion());
             inserccion.setInt(3, 0);
@@ -232,10 +258,16 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             int id_elemento = idElemento.getInt(1);
             // Insertamos la imagen en la tabla
             java.sql.PreparedStatement actualizacion = this.Conexion.prepareStatement("UPDATE elemento SET foto=? WHERE elemento_id=" + id_elemento);
-            actualizacion.setBytes(1, Imagen.imageIconToByteArray(elemento.getFoto()));
+                        if (elemento.getFoto() == null)
+                defaultPhoto = new ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"));
+            else
+                defaultPhoto = elemento.getFoto();
+            actualizacion.setBytes(1, Imagen.imageIconToByteArray(defaultPhoto));
+            actualizacion.executeUpdate();
             // Insertamos en elementoPlato
-            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoPlato VALUES('?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO elementoPlato(elemento_elemento_id, tiempo_elaboracion) VALUES(?, ?)");
             inserccion.setInt(1, id_elemento);
+            inserccion.setInt(2, elemento.getTiempoElaboracion());
             inserccion.executeUpdate();
             // Para cada Ingrediente, sacamos su idIngrediente e insertamos junto con idElemento en tieneIngrediente
 
@@ -245,14 +277,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                 Map.Entry entry = (Map.Entry) it.next();
                 Producto ingrediente = (Producto) entry.getKey();
                 Float cantidad = (Float) entry.getValue();
-                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneIngrediente VALUES('?','?','?')");
+                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneIngrediente (elementoComida_elemento_elemento_id, productoIngrediente_producto_producto_id, cantidad)" +
+                        " VALUES(?,?,?)");
                 inserccion.setInt(1, id_elemento);
                 inserccion.setInt(2, ingrediente.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
             }
             // Insertamos el elemento en su sección
-            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyePlato VALUES ('?','?')");
+            inserccion = this.Conexion.prepareStatement("INSERT INTO incluyePlato (seccionComida_seccion_seccion_id, elementoPlato_elemento_elemento_id) VALUES (?,?)");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
@@ -508,8 +541,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
     public HashSet<Seccion> obtieneSecciones() {
         HashSet<Seccion> listaSecciones = new HashSet<Seccion>();
-        HashSet<ElementoBebida> listaElementosB = new HashSet<ElementoBebida>();
-        HashSet<ElementoPlato> listaElementosP = new HashSet<ElementoPlato>();
+        HashSet<ElementoBebida> listaElementosB;
+        HashSet<ElementoPlato> listaElementosP;
         HashMap<Bebida, Float> listaBebida = null;
         HashMap<Ingrediente, Float> listaIngredientes = null;
         try {
@@ -523,6 +556,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             // Para cada seccion obtenida, creamos su objeto e insertamos en el HashSet
             ResultSet datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionBebida WHERE seccion.seccion_id = seccionBebida.seccion_seccion_id");
             while (datosSeccion.next()) {
+                listaElementosB = new HashSet<ElementoBebida>();
                 // Si estamos en una SeccionBebida sacamos todos los elementos de la seccion
                 consulta = this.Conexion.createStatement();
                 ResultSet datosElementosBebida = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio FROM elemento, incluyeBebida WHERE elemento.elemento_id = incluyeBebida.elementoBebida_elemento_elemento_id AND incluyeBebida.seccionBebida_seccion_seccion_id ="+datosSeccion.getInt(1));
@@ -550,6 +584,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
             datosSeccion = consulta.executeQuery("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionComida WHERE seccion.seccion_id = seccionComida.seccion_seccion_id");
             while (datosSeccion.next()) {
                 // Si estamos en una SeccionComida sacamos todos los elementos de la seccion
+                listaElementosP = new HashSet<ElementoPlato>();
                 consulta = this.Conexion.createStatement();
                 ResultSet datosElementosPlato = consulta.executeQuery("SELECT elemento.elemento_id, elemento.nombre, elemento.descripcion, elemento.disponible, elemento.foto, elemento.divi, elemento.divi_max, elemento.precio, elementoPlato.tiempo_elaboracion FROM elemento, elementoPlato , incluyePlato WHERE elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id AND " +
                         "elemento.elemento_id = elementoPlato.elemento_elemento_id AND incluyePlato.seccionComida_seccion_seccion_id ="+datosSeccion.getInt(1));

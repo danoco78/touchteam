@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +26,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
     //private ICarta gestorCarta;
     //private IPreparaCarta carta;
     private ICocinero icocinero;
+    ArrayList<Seccion> listaSecciones;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoEliminarElemento(java.awt.Frame parent, /*ICarta GestorCarta, IPreparaCarta Carta*/ ICocinero iCocinero) {
@@ -33,7 +35,8 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         //this.gestorCarta = GestorCarta;
         //this.carta = Carta;
         this.icocinero = iCocinero;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Collections.sort(listaSecciones);
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
@@ -266,7 +269,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         ArrayList<Elemento> listaElementos;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
         Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
         if (seccion instanceof SeccionBebida)
             listaElementos = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
@@ -297,7 +300,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             ArrayList<Elemento> lista;
             Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
             if (seccion instanceof SeccionBebida)

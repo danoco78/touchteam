@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -50,6 +51,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private ArrayList seleccionados;
     private ImageIcon imagen;
     private Elemento elemento;
+    ArrayList<Seccion> listaSecciones;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarElemento(java.awt.Frame parent,/* ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto*/ ICocinero iCocinero) {
@@ -60,7 +62,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         this.gestorProducto = GestorProducto;*/
         this.icocinero = iCocinero;
         this.estado = 1;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Collections.sort(listaSecciones);
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
@@ -664,7 +667,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 14));
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -732,7 +735,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+                    //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
                     Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion.getClass() == SeccionComida.class) {
                         try {
@@ -828,7 +831,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         int select = this.tProductoSeccion.getSelectedRow();
         if (select != -1) {
             this.bSiguiente.setEnabled(true);
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> listaElementos;
             if (seccion instanceof SeccionBebida)
@@ -882,7 +885,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+           // ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             Seccion seccion =  listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> lista;
             if (seccion instanceof SeccionBebida)

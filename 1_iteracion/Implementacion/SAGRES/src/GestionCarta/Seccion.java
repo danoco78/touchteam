@@ -5,7 +5,7 @@ package GestionCarta;
  * Divisiones en que se encuentra dividida la carta del restaurante.
  * @author Carlos Salas Morales
  */
-public class Seccion {
+public class Seccion implements Comparable {
     Carta carta;
     public String nombre;
     int codigoSeccion;
@@ -29,5 +29,8 @@ public class Seccion {
         return this.codigoSeccion;
     }
 
-   //public void anadeElemento(Elemento elemento){}
+    public int compareTo(Object obj) {
+        Seccion seccion = (Seccion)obj;
+        return this.codigoSeccion - seccion.getCodigoSeccion();
+    }
 }
