@@ -12,12 +12,8 @@
 package Vista.InterfazCocinero;
 
 import GestionPedidos.ElementoColaCocina;
-import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import utilidades.PanelEspacioVertical;
 import utilidades.PanelPedidoPorMesa;
 

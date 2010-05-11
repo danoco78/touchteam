@@ -5,8 +5,6 @@ import ControladorPrincipal.ICocinero;
 import GestionCarta.Elemento;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utilidades.*;
 import GestionPedidos.*;
 
@@ -177,17 +175,31 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
         ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
+        ElementoColaCocina ele3 = new ElementoColaCocina(2, ElementoColaCocina.PREPARANDOSE, "La carne ");
+        ElementoColaCocina ele4 = new ElementoColaCocina(3, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha ");
+        
         ele.asocia(new Elemento(2, "Hamburguesa con queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",
                 true, null, 5, 5, 10));
         ele2.asocia(new Elemento(2, "Hamburguesa sin queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",
                 true, null, 5, 5, 10));
-        for(int i=0; i<5; ++i){
-            peds.add(new Pedido(5, i, 0, null));
-            for(int j=0; j<4; ++j)
-                peds.get(i).asocia(ele2);
-        }
+        ele3.asocia(new Elemento(2, "Carne a la plancha",
+                "Deliciosa carne de cerdo cocinada a su gusto",
+                true, null, 5, 5, 10));
+        ele4.asocia(new Elemento(2, "Sandwich Mixto",
+                "Nuestro sandwich especial",
+                true, null, 5, 5, 10));
+
+        peds.add(new Pedido(5,0,0,null));
+        peds.get(0).asocia(ele2);
+        peds.get(0).asocia(ele3);
+        peds.get(0).asocia(ele4);
+
+        peds.add(new Pedido(5,1,0,null));
+        peds.get(1).asocia(ele2);
+        peds.get(1).asocia(ele3);
+        peds.get(1).asocia(ele4);
 
         // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
         // independientemente de la prueba

@@ -30,7 +30,6 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
 
     }
     public ElementoPedido getAsociado(){
-        System.out.println("estado: " + elem.getEstado()+ "  comentario: " +elem.getComentario());
         return elem;
     }
 }
