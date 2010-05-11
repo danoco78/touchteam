@@ -719,7 +719,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 break;
             case 3:
                 String subtitulo = this.lSubtitulo.getText();
-                String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
+                String pregunta = "¿Confirma que desea modificar el siguiente Elemento?";
                 String texto = "Nombre: " + this.tNombre.getText()
                         + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nPrecio: " + ((Float) this.tPrecio.getValue())
@@ -728,7 +728,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad" + producto.getCantidad();
+                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad: " + producto.getCantidad();
                 }
 
                 DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
