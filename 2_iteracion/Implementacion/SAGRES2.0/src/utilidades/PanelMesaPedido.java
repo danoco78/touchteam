@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 /**
  *
@@ -105,7 +106,17 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     public void setPendientes(int num){
         switch (filtro){
             case PanelMesaPedido.COCINA:
-                pendientes.setText(String.valueOf(num)+" platos pendientes");
+                 switch(num){
+                    case 0:
+                        pendientes.setText("No hay ningún plato preparándose");
+                        break;
+                    case 1:
+                        pendientes.setText("Hay "+ num + " plato preparándose.");
+                        break;
+                    default:
+                        pendientes.setText("Hay "+ num+ " platos preparándose.");
+                        break;
+                }
                 break;
             case PanelMesaPedido.BAR:
                 pendientes.setText(String.valueOf(num) + " bebidas pendientes");
@@ -370,6 +381,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
                         num = cpadre.icocinero.getNumPlatosEnCola();
                         borrar = true;
+                        cpadre.panelColaCocinero.actualizarVista();
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
