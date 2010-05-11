@@ -145,7 +145,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                     break;
                 case PanelColaFacturas.PARAFACTURAR:
                     DialogoFacturacion confirmar = new DialogoFacturacion(controlador,Integer.parseInt(boton.getName()));
-                    confirmar.setLocationRelativeTo(m);
+                    confirmar.setLocationRelativeTo(controlador);
                     confirmar.setVisible(true);
                     if(confirmar.isAceptado())
                         borrar = true;
