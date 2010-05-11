@@ -12,6 +12,9 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionPedidos.ElementoPedido;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -20,11 +23,15 @@ import GestionCarta.Elemento;
 public class PanelRealizarPedido extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
+    ArrayList<ElementoPedido> elementosPedido;
+    ArrayList<Elemento> elementos;
 
     /** Creates new form PanelRealizarPedido */
     public PanelRealizarPedido(PanelGeneralCliente panelGeneralCliente) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
+        this.elementosPedido = new ArrayList();
+        this.elementos = new ArrayList();
     }
 
     /** This method is called from within the constructor to
@@ -68,16 +75,30 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     public javax.swing.JPanel PanelElementosPedido;
     // End of variables declaration//GEN-END:variables
 
-    public void anadirElemento(Elemento elementoMarcado) {
-        PanelElementosPedido.add(new PanelElementoPedido(elementoMarcado,this));
+    public void anadirElementoPedido(Elemento elemento, String comentario) {
+        ElementoPedido elementoPedido = new ElementoPedido(elemento.getCodigoElemento(), 0, comentario);
+        PanelElementosPedido.add(new PanelElementoPedido(elementoPedido, elemento.getNombre(),this));
+        elementosPedido.add(elementoPedido);
+        elementos.add(elemento);
     }
 
     public void quitarElemento(PanelElementoPedido panelElementoPedido) {
         PanelElementosPedido.remove(panelElementoPedido);
+        elementosPedido.remove(panelElementoPedido.elementoPedido);
+        this.repaint();
+        this.revalidate();
     }
 
     public int getNumElementos() {
         return this.PanelElementosPedido.getComponentCount();
+    }
+
+    public ArrayList<ElementoPedido> getElementosPedido() {
+        return this.elementosPedido;
+    }
+
+    public ArrayList<Elemento> getElementos() {
+        return this.elementos;
     }
 
 }

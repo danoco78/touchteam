@@ -17,6 +17,8 @@ import java.util.HashSet;
  */
 public interface ICliente {
 
+    //public abstract ArrayList<Elemento> iniciaNuevoPedido();
+
     public abstract ArrayList<Pedido> iniciaModificaPedido(Integer codMesa);
 
     public abstract boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);

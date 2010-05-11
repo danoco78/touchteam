@@ -12,6 +12,7 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionPedidos.ElementoPedido;
 
 /**
  *
@@ -20,14 +21,14 @@ import GestionCarta.Elemento;
 public class PanelElementoPedido extends javax.swing.JPanel {
 
     PanelRealizarPedido panelRealizarPedido;
-    Elemento elemento;
+    ElementoPedido elementoPedido;
 
     /** Creates new form PanelElementoPedido */
-    public PanelElementoPedido(Elemento elemento, PanelRealizarPedido panelRealizarPedido) {
+    public PanelElementoPedido(ElementoPedido elementoPedido, String nomElemento, PanelRealizarPedido panelRealizarPedido) {
         initComponents();
-        this.LabelNombreElemento.setText(elemento.getNombre());
+        this.LabelNombreElemento.setText(nomElemento);
         this.panelRealizarPedido=panelRealizarPedido;
-        this.elemento=elemento;
+        this.elementoPedido=elementoPedido;
     }
 
     /** This method is called from within the constructor to

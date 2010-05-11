@@ -14,6 +14,7 @@ package Vista.InterfazCliente;
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
 import GestionCarta.Seccion;
+import GestionPedidos.ElementoPedido;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -458,10 +459,12 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     private void anadirElementoAPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirElementoAPedido
         if(elementoMarcado!=null){
-            this.panelRealizarPedido.anadirElemento(elementoMarcado);
+            this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, this.TextoComentarios.getText());
             this.TextoComentarios.setEnabled(false);
             this.TextoComentarios.setText("");
             this.elementoMarcado=null;
+            this.panelRealizarPedido.repaint();
+            this.panelRealizarPedido.revalidate();
         }
     }//GEN-LAST:event_anadirElementoAPedido
 
@@ -606,6 +609,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             this.BotonAnadir.setVisible(false);
             this.TextoComentarios.setText("");
             this.TextoComentarios.setEnabled(false);
+
+            ArrayList<ElementoPedido> elementosPedido = this.panelRealizarPedido.getElementosPedido();
+            ArrayList<Elemento> listaElementos = this.panelRealizarPedido.getElementos();
+            this.panelPedidoRealizado.anadirElementosPedido(listaElementos);
+            this.icliente.nuevoPedido(1, elementosPedido);
         }else{
             JOptionPane.showMessageDialog(this,
                               "Debe seleccionar, al menos, un elemento.",
