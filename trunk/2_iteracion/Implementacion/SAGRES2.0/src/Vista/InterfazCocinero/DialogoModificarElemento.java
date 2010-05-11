@@ -11,7 +11,7 @@ import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -728,7 +728,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                     texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad" + producto.getCantidad();
                 }
 
-                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {

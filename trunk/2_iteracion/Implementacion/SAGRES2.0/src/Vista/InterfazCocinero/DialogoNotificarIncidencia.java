@@ -7,7 +7,7 @@ import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -420,7 +420,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 String texto = "Nombre: " + this.lNombre.getText()
                         + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nCantidad Afectada: " + (Float) this.tCantidadAfectada.getValue();
-                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {

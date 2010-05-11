@@ -7,7 +7,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
@@ -315,7 +315,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         String pregunta = "¿Confirma que desea eliminar la siguiente bebida?";
         String texto = "Nombre: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,0)+
                 "\nCantidad: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,1);
-        DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+        DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
