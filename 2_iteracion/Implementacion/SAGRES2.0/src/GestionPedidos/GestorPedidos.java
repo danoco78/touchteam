@@ -11,7 +11,6 @@ import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
 import java.util.HashMap;
@@ -200,17 +199,21 @@ public class GestorPedidos implements IGestorPedidos {
         int estado;
 
         ArrayList<ElementoPedido> elementos = p.obtieneElementos();
-        Elemento elem;
+        ElementoPlato elem;
         HashMap<Producto,Float> prods;
 
-        if(elementos.contains(ele)) existe = true;
+        existe = elementos.contains(ele);
+
         if(existe){
             estado = ele.getEstado();
             if(estado == ElementoColaCocina.ENCOLA){
                p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
                ele.setEstado(ElementoColaCocina.PREPARANDOSE);
                this.iPedidosBD.actualizaPedido(p);
-               elem = ele.getElemento();
+               System.out.println("Hasta aqui llego bien");
+               //TODO Arreglar, casting, es necesario tiempo Elaboracion
+               elem = new ElementoPlato(ele.getElemento(),10);
+               System.out.println("Aqui ya fallo");
                prods = elem.getProductos();
                Iterator ite = prods.entrySet().iterator();
                Producto prod;

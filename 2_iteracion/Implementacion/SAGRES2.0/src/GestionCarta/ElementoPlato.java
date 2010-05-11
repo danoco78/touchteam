@@ -31,6 +31,12 @@ public class ElementoPlato extends Elemento {
         this.setDivisionesMaximas(divisionesMaximas);
     }
 
+    public ElementoPlato(Elemento ele, int tiempo_elaboracion){
+        super(ele.getCodigoElemento(), ele.getDescripcion(), ele.getDivisionesMaximas(), ele.getFoto(),
+                ele.getNombre(), ele.getPrecio());
+        this.tiempoElaboracion = tiempo_elaboracion;
+    }
+
     public int getTiempoElaboracion() {
         return tiempoElaboracion;
     }

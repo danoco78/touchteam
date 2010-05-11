@@ -107,7 +107,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
         pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pendientes.setText("7 platos preparándose");
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);
 
         add(pInf, java.awt.BorderLayout.SOUTH);
