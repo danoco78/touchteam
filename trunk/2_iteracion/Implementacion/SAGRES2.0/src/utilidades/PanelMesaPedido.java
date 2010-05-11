@@ -350,7 +350,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             borrar = false;
             switch(filtro){
                 case PanelMesaPedido.BAR:
-                    //TODO Comprobar cuando es la ultima bebida a borrar
                     if (numBebidas == 1){
                         String texto = new String();
                         ArrayList<ElementoPedido> elems = pedActual.obtieneElementos();
@@ -359,7 +358,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                                 texto += elems.get(i).getElemento().getNombre()+"\n";
                         }
                         DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
-                        //confirmar.setLocationRelativeTo(m);
+                        confirmar.setLocationRelativeTo(m);
                         confirmar.setVisible(true);
                         if(confirmar.isAceptado())
                             borrar = true;
@@ -369,9 +368,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     
                     try {
                         if (borrar){
-                            ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.getInteger(boton.getName()));
+                            ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                             mpadre.imetre.seleccionaBebida(pedActual, eleB);
                             num = mpadre.imetre.getNumBebidasEnCola();
+                            numBebidas--;
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
