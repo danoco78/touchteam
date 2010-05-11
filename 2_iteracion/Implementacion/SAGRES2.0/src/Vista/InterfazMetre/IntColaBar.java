@@ -37,8 +37,8 @@ public class IntColaBar extends javax.swing.JPanel {
         initComponents();
 
         pmp = new PanelMesaPedido(i);
-        colaIzq = new PanelColaFacturas();
-        colaDer = new PanelColaFacturas();
+        colaIzq = new PanelColaFacturas(i,PanelColaFacturas.PARAIMPRIMIR);
+        colaDer = new PanelColaFacturas(i,PanelColaFacturas.PARAFACTURAR);
         
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);

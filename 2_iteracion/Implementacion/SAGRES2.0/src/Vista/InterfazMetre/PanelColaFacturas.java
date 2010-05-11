@@ -11,6 +11,7 @@
 
 package Vista.InterfazMetre;
 
+import GestionPedidos.Factura;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -22,11 +23,19 @@ import utilidades.PanelEspacioVertical;
  * @author Samuel Guirado Navarro
  */
 public class PanelColaFacturas extends javax.swing.JPanel {
-    
-    /** Creates new form PanelColaFacturas */
-    public PanelColaFacturas() {
-        initComponents();
 
+    int filtro;
+    InterfazMetre controlador;
+    
+    public static final int PARAIMPRIMIR = 0;
+    public static final int PARAFACTURAR = 1;
+
+    /** Creates new form PanelColaFacturas */
+    public PanelColaFacturas(InterfazMetre im, int tipo) {
+        initComponents();
+        controlador = im;
+        filtro = tipo;
+        
         //TODO Borrar
         for (int i=0;i<20;i++){
             JButton boton = new JButton();
@@ -53,6 +62,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(codigo)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
         boton.setFocusPainted(false);
         boton.addActionListener(new ManejaEventos(boton,pev));
+        boton.setName(String.valueOf(codigo));
 
         centro.add(boton);
         centro.add(pev);
@@ -119,6 +129,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
         JButton boton;
         PanelEspacioVertical panel;
+        boolean borrar;
 
         public ManejaEventos(JButton b,PanelEspacioVertical p){
             boton = b;
@@ -126,10 +137,27 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-            centro.remove(boton);
-            centro.remove(panel);
-            centro.repaint();
-            centro.revalidate();
+            borrar = false;
+            switch(filtro){
+                case PanelColaFacturas.PARAIMPRIMIR:
+                    controlador.imetre.imprimeFactura(Integer.getInteger(boton.getName()));
+                    borrar = true;
+                    break;
+                case PanelColaFacturas.PARAFACTURAR:
+                    Factura f = controlador.imetre.getFactura(Integer.valueOf(boton.getName()));
+                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,"Facturar pedido", "¿Desea marcar la factura como pagada?",texto);
+                    //confirmar.setLocationRelativeTo(m);
+                    confirmar.setVisible(true);
+                    if(confirmar.isAceptado())
+                        borrar = true;
+                    break;
+            }
+            if (borrar){
+                centro.remove(boton);
+                centro.remove(panel);
+                centro.repaint();
+                centro.revalidate();
+            }
         }
     }
 }
