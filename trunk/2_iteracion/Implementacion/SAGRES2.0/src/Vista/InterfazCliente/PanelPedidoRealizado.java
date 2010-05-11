@@ -11,6 +11,12 @@
 
 package Vista.InterfazCliente;
 
+import GestionCarta.Elemento;
+import GestionPedidos.ElementoPedido;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+
 /**
  *
  * @author Carlos
@@ -20,6 +26,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     /** Creates new form PanelPedidoRealizado */
     public PanelPedidoRealizado() {
         initComponents();
+        this.TextoListaComida.setText("");
     }
 
     /** This method is called from within the constructor to
@@ -78,8 +85,14 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     private javax.swing.JTextPane TextoListaComida;
     // End of variables declaration//GEN-END:variables
 
-    public void anadirElemento(String nomElemento) {
-        TextoListaComida.setText(TextoListaComida.getText()+"\n- "+nomElemento);
+    public void anadirElementosPedido(ArrayList<Elemento> listaElementos) {
+        Iterator it = listaElementos.iterator();
+
+        while(it.hasNext()){
+            Elemento elemento = (Elemento) it.next();
+
+            this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
+        }
     }
 
 }
