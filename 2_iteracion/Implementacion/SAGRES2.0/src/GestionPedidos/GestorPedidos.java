@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import utilidades.Pair;
 
 /**
@@ -266,6 +267,10 @@ public class GestorPedidos implements IGestorPedidos {
             throw new Exception("La bebida no existe en ese pedido.");
         }
         return exito;
+    }
+
+    public Factura getFactura(int codMesa){
+        return this.iPedidosBD.getFactura(codMesa);
     }
 }
 
