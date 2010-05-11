@@ -5,7 +5,7 @@ import ControladorPrincipal.ICocinero;
 import ControladorPrincipal.IMetre;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -480,7 +480,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                         + "\nCantidad Disponible: " + ((Float) this.tDisponible.getValue())
                         + "\nCantidad Máxima: " + ((Float) this.tMaximo.getValue())
                         + "\nCantidad Mínima: " + ((Float) this.tMinimo.getValue());
-                DialogoComfirmacion confirmar = new DialogoComfirmacion(null, subtitulo, pregunta, texto);
+                DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {

@@ -21,7 +21,7 @@ import java.awt.Rectangle;
  *
  * @author Daniel
  */
-public class DialogoComfirmacion extends java.awt.Dialog {
+public class DialogoConfirmacion extends java.awt.Dialog {
 
     public static final boolean ACEPTAR = true;
     public static final boolean CANCELAR = false;
@@ -29,7 +29,7 @@ public class DialogoComfirmacion extends java.awt.Dialog {
     private boolean estado = CANCELAR;
 
     /** Creates new form DialogoAnadirElemento */
-    public DialogoComfirmacion(java.awt.Frame parent, String Subtitulo,
+    public DialogoConfirmacion(java.awt.Frame parent, String Subtitulo,
             String Pregunta, String Datos) {
         super(parent, true);
         initComponents();
@@ -79,7 +79,7 @@ public class DialogoComfirmacion extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -126,7 +126,7 @@ public class DialogoComfirmacion extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Confirmación");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -140,7 +140,7 @@ public class DialogoComfirmacion extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
         cabecera.add(lTitulo, gridBagConstraints);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Confirma");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -161,7 +161,7 @@ public class DialogoComfirmacion extends java.awt.Dialog {
         cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        lConfirma.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lConfirma.setFont(new java.awt.Font("Arial", 0, 14));
         lConfirma.setForeground(new java.awt.Color(80, 98, 143));
         lConfirma.setText("Mensaje");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -192,13 +192,13 @@ public class DialogoComfirmacion extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void bCancelar1Salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelar1Salir
-        this.estado = DialogoComfirmacion.CANCELAR;
+        this.estado = DialogoConfirmacion.CANCELAR;
         this.setVisible(false);
         this.dispose();
 }//GEN-LAST:event_bCancelar1Salir
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
-        this.estado = DialogoComfirmacion.ACEPTAR;
+        this.estado = DialogoConfirmacion.ACEPTAR;
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_Aceptar

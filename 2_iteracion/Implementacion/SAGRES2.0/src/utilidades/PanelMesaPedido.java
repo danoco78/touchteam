@@ -16,7 +16,7 @@ import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 import java.awt.event.ActionEvent;
@@ -356,7 +356,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                             if (elems.get(i) instanceof ElementoColaBar)
                                 texto += elems.get(i).getElemento().getNombre()+"\n";
                         }
-                        DialogoComfirmacion confirmar = new DialogoComfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
+                        DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         //confirmar.setLocationRelativeTo(m);
                         confirmar.setVisible(true);
                         if(confirmar.isAceptado())

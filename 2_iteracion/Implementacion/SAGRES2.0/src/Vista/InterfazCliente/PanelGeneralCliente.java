@@ -16,7 +16,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import GestionPedidos.ElementoPedido;
-import Vista.DialogoComfirmacion;
+import Vista.DialogoConfirmacion;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -634,7 +634,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
             System.out.println(listaTotal);
             
-            DialogoComfirmacion dialogo = new DialogoComfirmacion(interfazCliente,
+            DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
                     "Realizar Pedido",
                     "",
                     listaTotal);
