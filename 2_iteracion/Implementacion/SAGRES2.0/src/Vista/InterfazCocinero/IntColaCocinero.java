@@ -17,7 +17,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public Integer pendientes = 0;
     PanelImagen panelImagen;
     public PanelMesaPedido pmpizq;
-    PreparandosePanel pmpder;
+    public PreparandosePanel pmpder;
     protected ICocinero icocinero;
     public InterfazCocinero interfaz = null;
 
@@ -177,6 +177,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
         ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
         ElementoColaCocina ele3 = new ElementoColaCocina(2, ElementoColaCocina.PREPARANDOSE, "La carne ");
         ElementoColaCocina ele4 = new ElementoColaCocina(3, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha ");
+        ElementoColaCocina ele5 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
+        ElementoColaCocina ele6 = new ElementoColaCocina(2, ElementoColaCocina.PREPARANDOSE, "La carne ");
+        ElementoColaCocina ele7 = new ElementoColaCocina(3, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha ");
         
         ele.asocia(new Elemento(2, "Hamburguesa con queso",
                 "Deliciosa carne de vacuno a la parrilla con queso fresco",
@@ -190,6 +193,18 @@ public class IntColaCocinero extends javax.swing.JPanel {
         ele4.asocia(new Elemento(2, "Sandwich Mixto",
                 "Nuestro sandwich especial",
                 true, null, 5, 5, 10));
+                ele2.asocia(new Elemento(2, "Hamburguesa sin queso",
+                "Deliciosa carne de vacuno a la parrilla con queso fresco",
+                true, null, 5, 5, 10));
+        ele5.asocia(new Elemento(2, "Carne a la plancha",
+                "Deliciosa carne de cerdo cocinada a su gusto",
+                true, null, 5, 5, 10));
+        ele6.asocia(new Elemento(2, "Sandwich Mixto",
+                "Nuestro sandwich especial",
+                true, null, 5, 5, 10));
+        ele7.asocia(new Elemento(2, "Sandwich Mixto",
+                "Nuestro sandwich especial",
+                true, null, 5, 5, 10));
 
         peds.add(new Pedido(5,0,0,null));
         peds.get(0).asocia(ele2);
@@ -197,9 +212,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
         peds.get(0).asocia(ele4);
 
         peds.add(new Pedido(5,1,0,null));
-        peds.get(1).asocia(ele2);
-        peds.get(1).asocia(ele3);
-        peds.get(1).asocia(ele4);
+        peds.get(1).asocia(ele5);
+        peds.get(1).asocia(ele6);
+        peds.get(1).asocia(ele7);
 
         // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
         // independientemente de la prueba

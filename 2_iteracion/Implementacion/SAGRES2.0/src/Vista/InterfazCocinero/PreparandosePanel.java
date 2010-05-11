@@ -26,6 +26,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
     Pedido pedActual = null;
     java.awt.Dimension oldTama;
     public IntColaCocinero colaCocineroPadre = null;
+    int npreparandose = 0;
     
     /** Creates new form PanelMesaPedido */
     public PreparandosePanel(IntColaCocinero padre) {
@@ -62,6 +63,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
     }
 
     public void setMensaje(int n){
+        npendientes = n;
         switch(n){
             case 0:
                 pendientes.setText("No hay ningún plato preparándose");
@@ -180,4 +182,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
         return Total;
     }
 
+    public void incPreparandose(){
+       npreparandose++;
+       setMensaje(npreparandose);
+    }
+    public void decPreparandose(){
+
+       npreparandose--;
+       setMensaje(npreparandose);
+    }
 }
