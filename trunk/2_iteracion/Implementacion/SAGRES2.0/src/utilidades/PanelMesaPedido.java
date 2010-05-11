@@ -347,8 +347,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     if (numBebidas == 1){
                         String texto = new String();
                         ArrayList<ElementoPedido> elems = p.obtieneElementos();
-                        for (int i=0;i<elems.size();i++)
-                            texto += elems.get(i).getElemento().getNombre()+"\n";
+                        for (int i=0;i<elems.size();i++){
+                            if (elems.get(i) instanceof ElementoColaBar)
+                                texto += elems.get(i).getElemento().getNombre()+"\n";
+                        }
                         DialogoComfirmacion confirmar = new DialogoComfirmacion(m,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         //confirmar.setLocationRelativeTo(m);
                         confirmar.setVisible(true);
