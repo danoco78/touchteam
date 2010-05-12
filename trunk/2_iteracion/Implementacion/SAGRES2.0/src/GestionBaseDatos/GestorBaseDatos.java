@@ -1287,5 +1287,33 @@ System.out.println(elemPed.getCodElementoPedido());
             return -1;
         }
     }
+    
+    public ArrayList<Integer> getFacturasEnCola(){
+        ArrayList<Integer> mesas = new ArrayList();
+        try{
+            java.sql.Statement consulta = this.Conexion.createStatement();
+            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=0");
+            while (codigosMesas.next())
+                mesas.add(codigosMesas.getInt(1));
+        }catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return mesas;
+    }
+
+    public ArrayList<Integer> getFacturasImprimidas() {
+        ArrayList<Integer> mesas = new ArrayList();
+        try{
+            java.sql.Statement consulta = this.Conexion.createStatement();
+            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=1");
+            while (codigosMesas.next())
+                mesas.add(codigosMesas.getInt(1));
+        }catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return mesas;
+    }
 }
 

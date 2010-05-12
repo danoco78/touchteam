@@ -33,4 +33,8 @@ public interface IPedidosBD {
     public int getCodigoPedido();
 
     public int getCodigoElementoPedido();
+    
+    public ArrayList<Integer> getFacturasEnCola();
+
+    public ArrayList<Integer> getFacturasImprimidas();
 }
