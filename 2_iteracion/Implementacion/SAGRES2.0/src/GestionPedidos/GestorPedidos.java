@@ -139,10 +139,8 @@ public class GestorPedidos implements IGestorPedidos {
                 pedido = ped;
             }
         }
-        if(pedido == null){
-                // throw new Exception("No hay siguiente pedido en cola de cocina");
-        }
-        System.out.println("Holaaaaaaaa");
+        if(pedido == null)
+                 throw new Exception("No hay siguiente pedido en cola de cocina");
         return pedido;
     }
 
@@ -153,12 +151,12 @@ public class GestorPedidos implements IGestorPedidos {
         this.iImpresion.imprimeFactura(f);
     }
 
-    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
-        if(this.nuevoPedido(codMesa, elems)){
-            return true;
-        }
+    public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
+        return new ArrayList<Pedido>(); //Para quitar errores
+    }
 
-        return false;
+    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
+        return true;
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elementosPedido){
@@ -310,11 +308,13 @@ public class GestorPedidos implements IGestorPedidos {
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa){
         return this.iPedidosBD.getPedidosModificablesMesa(codMesa);
     }
+    
+    public ArrayList<Integer> getFacturasEnCola(){
+        return this.iPedidosBD.getFacturasEnCola();
+    }
 
-    public Pedido getSiguientePedidoCocina() {
-
-         // TODO Esta implementación no está reflejada en el diseño
-        return this.iPedidosBD.getSiguientePedidoCocina();
+    public ArrayList<Integer> getFacturasImprimidas(){
+        return this.iPedidosBD.getFacturasImprimidas();
     }
 }
 
