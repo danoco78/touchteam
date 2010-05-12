@@ -34,6 +34,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Constraints>
