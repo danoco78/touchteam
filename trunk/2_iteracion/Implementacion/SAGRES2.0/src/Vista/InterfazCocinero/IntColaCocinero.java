@@ -141,30 +141,15 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private javax.swing.JPanel principalSur;
     // End of variables declaration//GEN-END:variables
 
-
-    /*private void setInfoPendientes(int n){
-        switch(n){
-            case 0:
-                this.pmpizq.setMensaje("No hay ningún plato pendiente");
-                break;
-            case 1:
-                this.pmpizq.setMensaje("Hay " + n + " plato pendiente");
-                break;
-            default:
-                this.pmpizq.setMensaje("Hay " + n + " platos pendientes");
-                break;
-        }
-        
-    }*/
    
 
     public void actualizarVista(){
 
 
-        // Prueba para comprobar que funciona
-        //ArrayList<Pedido> peds = new ArrayList<Pedido>();
+        //Prueba para comprobar que funciona
+        ArrayList<Pedido> peds = new ArrayList<Pedido>();
         
-        /*try {
+        try {
             peds = this.icocinero.getPedidosCocinaPreparandose();
             if(peds != null){
                 this.pmpder.autoCompletar(peds);
@@ -173,9 +158,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
 
-        Pedido ped = new Pedido(5, 2, 0, null);
+        /*Pedido ped = new Pedido(5, 2, 0, null);
         ElementoColaCocina ele = new ElementoColaCocina(1, 0, "Del tiempo, por favor");
         ele.asocia(new Elemento(2, "Agua",
                 "Agua embotellada marca Bezoya",
@@ -185,7 +170,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
         // independientemente de la prueba
-        this.pmpizq.addPedido(ped);
+        this.pmpizq.addPedido(ped);*/
 
        /* ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
         ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");

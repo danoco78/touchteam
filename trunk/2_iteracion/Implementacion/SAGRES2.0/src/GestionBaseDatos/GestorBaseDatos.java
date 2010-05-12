@@ -842,24 +842,31 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                     elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
                             resElemPed.getString(3));
                     //TODO Resolver esta consulta
-                    ResultSet resElem = consulta.executeQuery("");
+                    ResultSet resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible," +
+                            " foto, divi, divi_max, precio FROM elemento " +
+                            "WHERE elemento_id IN " +
+                            "( SELECT elemento_elemento_id FROM elementoPlato WHERE elemento_elemento_id IN " +
+                            "( SELECT elementoColaCocina WHERE elementoPedido_elementoPedido_id IN " +
+                            "( SELECT elementoPedido_id FROM elementoPedido)))");
                     Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
                             resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
                             ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
-                    //TODO Resolver esta consulta
-                    ResultSet resProds = consulta.executeQuery("");
+
+                    ResultSet  resProds = consulta.executeQuery( "SELECT producto_id," +
+                            " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
+                            "( SELECT productoIngrediente_producto_producto_id " +
+                            "FROM tieneIngrediente WHERE elementoComida_elemento_elemento_id IN " +
+                            "(SELECT elemento_elemento_id FROM elementoPlato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
                     while(resProds.next()){
-                        Producto prod = new Producto(resProds.getInt(1),resProds.getString(2),
+                        Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
                                 resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
                                 Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
-                        elemento.asocia(prod);
+                        //TODO Corregir error con la cantidad
+                        ((ElementoPlato)elemento).asocia(prod, new Float(10.0));
                     }
                     elemPed.asocia(elemento);
                 }
-                ElementoColaBar temp = new ElementoColaBar();
-                    if(elemPed instanceof ElementoColaBar) //Si es ColaBar
-                         p.asocia((ElementoColaBar)elemPed);
-                    else
+                    if(elemPed instanceof ElementoColaCocina) //Si es ColaCocina
                          p.asocia((ElementoColaCocina)elemPed);
                 noFacturados.add(p);
             }
