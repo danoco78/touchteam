@@ -19,7 +19,6 @@ public class HebraColaPedidos implements Runnable {
     InterfazCocinero cpadre;
     boolean end;
     Pedido actual = null ,p = null;
-    int numBebidas=-1,numPlatos=-1,aux;
 
     int filtro;
 
@@ -48,18 +47,11 @@ public class HebraColaPedidos implements Runnable {
                 switch (filtro){
                     case BAR:
                         p = mpadre.imetre.getSiguientePedidoBar();
-                        System.out.println("Paso por aqui");
                         if (p == actual) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
                             mpadre.panelColaBar.pmp.addPedido(actual);
-                        }
-
-                        aux = mpadre.imetre.getNumBebidasEnCola();
-                        if (aux!=numBebidas){
-                            numBebidas = aux;
-                            mpadre.panelColaBar.pmp.setPendientes(numBebidas);
                         }
                         break;
                     case COCINA:
@@ -70,12 +62,6 @@ public class HebraColaPedidos implements Runnable {
                             actual = p;
                             cpadre.panelColaCocinero.pmpizq.addPedido(actual);
                             cpadre.panelColaCocinero.actualizarVista();
-                        }
-
-                        aux = cpadre.icocinero.getNumPlatosEnCola();
-                        if (aux!=numPlatos){
-                            numPlatos = aux;
-                            cpadre.panelColaCocinero.pmpizq.setPendientes(numPlatos);
                         }
                         break;
                 }

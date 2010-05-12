@@ -246,11 +246,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         centro2.setBackground(new java.awt.Color(255, 255, 255));
         centro2.setLayout(new java.awt.BorderLayout());
 
-        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12));
+        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         infoMesaPedido.setForeground(new java.awt.Color(80, 98, 143));
+        infoMesaPedido.setDoubleBuffered(true);
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
         centro2.add(infoMesaPedido, java.awt.BorderLayout.NORTH);
 
+        scroll.setDoubleBuffered(true);
         scroll.setOpaque(false);
 
         panelInfoPedido.setBackground(new java.awt.Color(255, 255, 255));
@@ -305,6 +307,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pendientes.setFont(new java.awt.Font("Arial", 0, 18));
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pendientes.setDoubleBuffered(true);
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);
 
         add(pInf, java.awt.BorderLayout.SOUTH);
