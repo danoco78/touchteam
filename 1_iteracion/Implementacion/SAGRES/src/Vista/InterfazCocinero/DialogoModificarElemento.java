@@ -845,6 +845,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.tPrecio.setValue(elemento.getPrecio());
             this.TImgen.setText("Imagen Actual");
             this.imagen = elemento.getFoto();
+            if (seccion instanceof SeccionComida)
+                this.tTiempo.setValue(new Integer(((ElementoPlato)elemento).getTiempoElaboracion()));
             ArrayList<Producto> listaProductos = new ArrayList<Producto>(this.icocinero.obtieneIngredientes());
             disponibles = listaProductos;
             DefaultTableModel modelo = new DefaultTableModel();
