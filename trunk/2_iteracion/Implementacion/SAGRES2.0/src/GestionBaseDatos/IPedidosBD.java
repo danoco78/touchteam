@@ -5,10 +5,12 @@
 
 package GestionBaseDatos;
 
+import GestionCarta.Elemento;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
+import utilidades.Pair;
 
 /**
  *
@@ -22,8 +24,12 @@ public interface IPedidosBD {
     public Factura getFactura(int codMesa);
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
     public void actualizaFactura(Factura f);
-    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems);
+    public boolean nuevoPedido(Pedido pedido);
 
     // TODO No esta reflejada en el diseño
     public Pedido getSiguientePedidoBar();
+
+    public int getCodigoPedido();
+
+    public int getCodigoElementoPedido();
 }

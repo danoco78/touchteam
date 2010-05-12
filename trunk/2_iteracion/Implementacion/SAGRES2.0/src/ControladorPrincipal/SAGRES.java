@@ -169,7 +169,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.ipedidos.modificaPedido(codPedido, elems);
     }
 
-    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems){
+    public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
         return this.ipedidos.nuevoPedido(codMesa, elems);
     }
 

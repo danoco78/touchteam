@@ -35,6 +35,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import utilidades.Pair;
 
 /**
  *
@@ -628,14 +629,14 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     public void realizarPedido() {
         if(this.panelRealizarPedido.getNumElementos()>0){
-            ArrayList<Elemento> listaElementos = this.panelRealizarPedido.getElementos();
+            ArrayList<Pair<Elemento, String> > elementosComentarios = this.panelRealizarPedido.getElementosComentarios();
             String listaComida = "PLATOS:";
             String listaBebida = "BEBIDAS:";
 
-            Iterator it = listaElementos.iterator();
-
+            Iterator it = elementosComentarios.iterator();
             while(it.hasNext()){
-                Elemento elemento = (Elemento) it.next();
+                Pair<Elemento, String> par = (Pair<Elemento, String>) it.next();
+                Elemento elemento = par.getFirst();
 
                 if(elemento instanceof ElementoPlato){
                     listaComida=listaComida.concat("\n- "+elemento.getNombre());
@@ -664,10 +665,17 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 this.TextoComentarios.setText("");
                 this.TextoComentarios.setEnabled(false);
 
-                this.panelPedidoRealizado.anadirPedido(listaElementos);
+                ArrayList<Elemento> listaElementos = new ArrayList();
 
-                ArrayList<ElementoPedido> elementosPedido = this.panelRealizarPedido.getElementosPedido();
-                this.icliente.nuevoPedido(this.codMesa, elementosPedido);
+                it = elementosComentarios.iterator();
+                while(it.hasNext()){
+                    Pair<Elemento, String> par = (Pair<Elemento, String>) it.next();
+                    Elemento elemento = par.getFirst();
+                    listaElementos.add(elemento);
+                }
+
+                this.panelPedidoRealizado.anadirPedido(listaElementos);
+                this.icliente.nuevoPedido(this.codMesa, elementosComentarios);
 
                 this.elementoMarcado=null;
                 this.panelRealizarPedido.limpiar();
