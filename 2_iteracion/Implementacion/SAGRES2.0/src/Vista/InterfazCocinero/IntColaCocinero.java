@@ -20,6 +20,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public PanelMesaPedido pmpizq;
     public PreparandosePanel pmpder;
     public InterfazCocinero interfaz;
+    ArrayList<Pedido> listaPedidos;
     
     /** Creates new form IntGestionCarta */
     public IntColaCocinero(InterfazCocinero i) {
@@ -35,11 +36,12 @@ public class IntColaCocinero extends javax.swing.JPanel {
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         
-        /*pmpder = new PreparandosePanel(this);
+        pmpder = new PreparandosePanel(this);
         pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
-        this.actualizarVista();*/
+        this.listaPedidos = new ArrayList();
+        //this.actualizarVista();
     }
 
     @Override
@@ -142,9 +144,28 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
    
 
-    public void actualizarVista(){
+    public void actualizarVista(Pedido p, ElementoColaCocina ele){
 
 
+        int codPed = p.getCodPedido(),pos = -1;
+        System.out.println("codPed es: " + codPed);
+        boolean encontrado = false;
+        for(int i=0;i<listaPedidos.size() && !encontrado ;i++){
+            if(listaPedidos.get(i).getCodPedido() == codPed){
+                encontrado = true;
+                pos = i;
+            }
+        }
+        if(!encontrado)
+            listaPedidos.add(p);
+        else{
+            listaPedidos.remove(pos);
+            listaPedidos.add(p);
+        }
+
+        this.pmpder.autoCompletar(listaPedidos);
+        this.pmpder.repaint();
+        this.pmpder.revalidate();
         //Prueba para comprobar que funciona
         //ArrayList<Pedido> peds = new ArrayList<Pedido>();
         
