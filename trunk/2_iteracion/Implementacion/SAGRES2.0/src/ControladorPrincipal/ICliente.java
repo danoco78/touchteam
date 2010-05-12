@@ -31,5 +31,5 @@ public interface ICliente {
 
     public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
-    public abstract ArrayList<Pedido> getPedidos(int codMesa);
+    public abstract ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
 }

@@ -282,8 +282,8 @@ public class GestorPedidos implements IGestorPedidos {
         return this.iPedidosBD.getFactura(codMesa);
     }
 
-    public ArrayList<Pedido> getPedidos(int codMesa){
-        return this.iPedidosBD.getPedidos(codMesa);
+    public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa){
+        return this.iPedidosBD.getPedidosModificablesMesa(codMesa);
     }
 }
 

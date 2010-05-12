@@ -44,6 +44,6 @@ public interface IGestorPedidos {
 
     public Factura getFactura(int codMesa);
 
-    public ArrayList<Pedido> getPedidos(int codMesa);
+    public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
 
 }

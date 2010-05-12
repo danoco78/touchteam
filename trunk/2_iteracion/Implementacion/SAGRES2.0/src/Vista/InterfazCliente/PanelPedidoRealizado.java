@@ -13,6 +13,7 @@ package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     public PanelPedidoRealizado(PanelGeneralCliente panelGeneralCliente, int codMesa) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
-        this.panelGeneralCliente.icliente.getPedidos(codMesa);
+        ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.getPedidosModificablesMesa(codMesa);
     }
 
     /** This method is called from within the constructor to
