@@ -6,6 +6,7 @@
 package GestionPedidos;
 import java.util.ArrayList;
 import GestionCarta.*;
+import utilidades.Pair;
 
 /**
  *
@@ -27,7 +28,7 @@ public interface IGestorPedidos {
 
     public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);
 
-    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems);
+    public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido);
 

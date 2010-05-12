@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.HashSet;
+import utilidades.Pair;
 
 /**
  * @author Gaspar
@@ -23,7 +24,7 @@ public interface ICliente {
 
     public abstract boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);
 
-    public abstract boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems);
+    public abstract boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
     public abstract ArrayList<ElementoPedido> obtieneElementos(Integer codPedido);
     

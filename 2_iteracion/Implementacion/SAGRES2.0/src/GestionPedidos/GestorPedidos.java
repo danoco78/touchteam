@@ -9,6 +9,7 @@ import ControladorImpresora.IImpresion;
 import java.util.ArrayList;
 import GestionCarta.*;
 import GestionBaseDatos.IPedidosBD;
+import GestionCarta.ElementoPlato;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.util.Collection;
@@ -158,8 +159,30 @@ public class GestorPedidos implements IGestorPedidos {
         return true;
     }
 
-    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems){
-        return this.iPedidosBD.nuevoPedido(codMesa, elems);
+    public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elementosPedido){
+        int codPedido = this.iPedidosBD.getCodigoPedido();
+        Pedido pedido = new Pedido(codPedido, codMesa, 0, new java.util.Date());
+
+        Iterator it = elementosPedido.iterator();
+        int codEP = this.iPedidosBD.getCodigoElementoPedido();
+        while(it.hasNext()){
+            Pair<Elemento,String> temp = (Pair<Elemento, String>) it.next();
+            Elemento elem = temp.getFirst();
+
+            ElementoPedido elemPedido;
+            if(elem instanceof ElementoPlato){
+                elemPedido = new ElementoColaCocina(codEP, 0, temp.getSecond());
+                elemPedido.asocia(elem);
+                pedido.asocia((ElementoColaCocina) elemPedido);
+            }else{
+                elemPedido = new ElementoColaBar(codEP, 0, temp.getSecond());
+                elemPedido.asocia(elem);
+                pedido.asocia((ElementoColaBar) elemPedido);
+            }
+            codEP++;
+        }
+
+        return this.iPedidosBD.nuevoPedido(pedido);
     }
 
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido){

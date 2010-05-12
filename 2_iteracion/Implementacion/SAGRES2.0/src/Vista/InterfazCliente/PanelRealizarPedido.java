@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JPanel;
+import utilidades.Pair;
 
 /**
  *
@@ -26,15 +27,13 @@ import javax.swing.JPanel;
 public class PanelRealizarPedido extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
-    ArrayList<ElementoPedido> elementosPedido;
-    ArrayList<Elemento> listaElementos;
+    ArrayList<Pair<Elemento,String> > listaElementosComentarios;
 
     /** Creates new form PanelRealizarPedido */
     public PanelRealizarPedido(PanelGeneralCliente panelGeneralCliente) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
-        this.elementosPedido = new ArrayList();
-        this.listaElementos = new ArrayList();
+        this.listaElementosComentarios = new ArrayList();
     }
 
     /** This method is called from within the constructor to
@@ -81,14 +80,13 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     public void anadirElementoPedido(Elemento elemento, String comentario) {
         ElementoPedido elementoPedido = new ElementoPedido(elemento.getCodigoElemento(), 0, comentario);
         PanelElementosPedido.add(new PanelElementoPedido(elementoPedido, elemento,this));
-        elementosPedido.add(elementoPedido);
-        listaElementos.add(elemento);
+        listaElementosComentarios.add(new Pair(elemento, comentario));
     }
 
+    @SuppressWarnings("element-type-mismatch")
     public void quitarElemento(PanelElementoPedido panelElementoPedido) {
         this.PanelElementosPedido.remove(panelElementoPedido);
-        this.listaElementos.remove(panelElementoPedido.elemento);
-        this.elementosPedido.remove(panelElementoPedido.elementoPedido);
+        this.listaElementosComentarios.remove(panelElementoPedido.elemento);
         this.repaint();
         this.revalidate();
     }
@@ -97,17 +95,12 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         return this.PanelElementosPedido.getComponentCount();
     }
 
-    public ArrayList<ElementoPedido> getElementosPedido() {
-        return this.elementosPedido;
-    }
-
-    public ArrayList<Elemento> getElementos() {
-        return this.listaElementos;
+    public ArrayList<Pair<Elemento,String> > getElementosComentarios() {
+        return this.listaElementosComentarios;
     }
 
     public void limpiar() {
-        this.elementosPedido=new ArrayList();
-        this.listaElementos=new ArrayList();
+        this.listaElementosComentarios=new ArrayList();
         this.PanelElementosPedido.removeAll();
     }
 

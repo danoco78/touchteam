@@ -73,4 +73,8 @@ public class Pedido {
     public void asocia(ElementoColaBar elem){
         elementos.add(elem);
     }
+
+    public ArrayList<ElementoPedido> getElementos() {
+        return this.elementos;
+    }
 }
