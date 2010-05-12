@@ -23,12 +23,14 @@ import java.util.Iterator;
 public class PanelListaPedido extends javax.swing.JPanel {
 
     PanelGeneralCliente PGC;
+    private int codPedido;
 
     /** Creates new form PanelListaPedido */
-    public PanelListaPedido(ArrayList<Elemento> listaElementos, PanelGeneralCliente PGC) {
+    public PanelListaPedido(ArrayList<Elemento> listaElementos, PanelGeneralCliente PGC, int codPedido) {
         initComponents();
 
         this.PGC=PGC;
+        this.codPedido=codPedido;
 
         this.TextoListaComida.setText("");
         this.TextoListaBebida.setText("");
@@ -94,7 +96,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modificarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPedido
-        this.PGC.iniciaModificaPedido();
+        this.PGC.iniciaModificaPedido(this.codPedido);
     }//GEN-LAST:event_modificarPedido
 
 

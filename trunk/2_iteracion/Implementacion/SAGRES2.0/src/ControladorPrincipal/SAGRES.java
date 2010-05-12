@@ -161,12 +161,8 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         this.ipedidos.imprimeFactura(codMesa);
     }
 
-    public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
-        return this.ipedidos.iniciaModificaPedido(codMesa);
-    }
-
-    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
-        return this.ipedidos.modificaPedido(codPedido, elems);
+    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
+        return this.ipedidos.modificaPedido(codPedido, codMesa, elems);
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems){

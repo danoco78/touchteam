@@ -153,12 +153,12 @@ public class GestorPedidos implements IGestorPedidos {
         this.iImpresion.imprimeFactura(f);
     }
 
-    public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
-        return new ArrayList<Pedido>(); //Para quitar errores
-    }
+    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
+        if(this.nuevoPedido(codMesa, elems)){
+            return true;
+        }
 
-    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
-        return true;
+        return false;
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elementosPedido){

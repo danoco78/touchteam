@@ -18,11 +18,7 @@ import utilidades.Pair;
  */
 public interface ICliente {
 
-    //public abstract ArrayList<Elemento> iniciaNuevoPedido();
-
-    public abstract ArrayList<Pedido> iniciaModificaPedido(Integer codMesa);
-
-    public abstract boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);
+    public abstract boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
     public abstract boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
@@ -33,4 +29,6 @@ public interface ICliente {
     public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
     public abstract ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
+
+    //public abstract void eliminaPedido(int codPedido);
 }

@@ -89,9 +89,15 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.panelPedidoRealizado = new PanelPedidoRealizado(this, codMesa);
         this.PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
 
-        ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
+        if(panelPedidoRealizado.actualizar()==0){
+            ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
+            this.pedidoRealizado=false;
+        }else{
+            ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "PedidoRealizado");
+            this.BotonAnadir.setVisible(false);
+            this.pedidoRealizado=true;
+        }
 
-        this.pedidoRealizado=false;
         this.elementoMarcado = null;
     }
 
@@ -661,7 +667,6 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
 
             if(dialogo.isAceptado()){
-                this.cambiarPanelEste();
                 this.TextoComentarios.setText("");
                 this.TextoComentarios.setEnabled(false);
 
@@ -674,13 +679,21 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                     listaElementos.add(elemento);
                 }
 
-                this.panelPedidoRealizado.anadirPedido(listaElementos);
-                this.icliente.nuevoPedido(this.codMesa, elementosComentarios);
+                int codPedidoActivo=this.panelRealizarPedido.getCodPedidoActivo();
+
+                if(codPedidoActivo==-1){
+                    this.icliente.nuevoPedido(this.codMesa, elementosComentarios);
+                }else{
+                    this.icliente.modificaPedido(codPedidoActivo, this.codMesa, elementosComentarios);
+                }
+                
+                this.panelPedidoRealizado.actualizar();
 
                 this.elementoMarcado=null;
                 this.panelRealizarPedido.limpiar();
-
                 this.pedidoRealizado=true;
+                
+                this.cambiarPanelEste();
             }
         }else{
             JOptionPane.showMessageDialog(this,
@@ -696,19 +709,51 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.BotonAnadir.setVisible(!this.BotonAnadir.isVisible());
     }
 
-    public void iniciaModificaPedido() {
+    public void iniciaModificaPedido(int codPedido) {
         DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
-                    "Modificar Pedido",
-                    "",
-                    "¿Está seguro de que desea modificar su pedido?" +
-                    "\nEsto lo anulará y cuando termine se enviará como uno nuevo.");
+                    "Modificar Pedido",                    
+                    "¿Está seguro de que desea modificar su pedido?"
+                    ,"\nEsto lo anulará y cuando termine se enviará como uno nuevo.");
 
-            dialogo.setLocationRelativeTo(interfazCliente);
-            dialogo.show();
+        dialogo.setLocationRelativeTo(interfazCliente);
+        dialogo.show();
 
-            /*if(dialogo.isAceptado()){
-                ArrayList<Pedido> listaPedidos = this.icliente.getPedidosModificablesMesa(1);
-            }*/
+        if(dialogo.isAceptado()){
+            ArrayList<Pedido> listaPedidos = this.icliente.getPedidosModificablesMesa(codPedido);
+
+            Pedido pedido = null;
+            Iterator it = listaPedidos.iterator();
+            while(it.hasNext() && pedido==null){
+                Pedido aux = (Pedido) it.next();
+                if(aux.getCodPedido()==codPedido){
+                    pedido=aux;
+                }
+            }
+
+            ArrayList<ElementoPedido> elementosPedido = pedido.obtieneElementos();
+            it = elementosPedido.iterator();
+            while(it.hasNext()){
+                ElementoPedido elemPed = (ElementoPedido) it.next();
+                elementoMarcado=elemPed.getElemento();
+                this.anadirElementoAPedido(null);
+            }
+
+            this.cambiarPanelEste();
+        }
+    }
+
+    public void eliminarPedido(int codPedido) {
+        DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
+                    "Eliminar Pedido",
+                    "¿Está seguro de que desea eliminar su pedido?",
+                    "");
+
+        dialogo.setLocationRelativeTo(interfazCliente);
+        dialogo.show();
+
+        if(dialogo.isAceptado()){
+            //exito = this.icliente.eliminaPedido(codPedido);
+        }
     }
 
 }

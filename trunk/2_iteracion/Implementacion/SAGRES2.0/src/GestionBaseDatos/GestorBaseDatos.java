@@ -974,53 +974,55 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             // Obtengo todos lo elementos de la carta registrados en el sistema. Asi los objetos seran los mismos en los pedidos
             Statement consulta = (Statement) this.Conexion.createStatement();
             // Obtengo los pedidos en estado modificable de la mesa identificado por el codigo codMesa
-            ResultSet resultado = consulta.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where estado = 0 AND mesa_id = "+codMesa);
+            ResultSet resultado = consulta.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where estado = 0 AND mesa_id = 1");
+
             while(resultado.next()){
                 Pedido pedido = new Pedido(resultado.getInt(1),resultado.getInt(2), resultado.getInt(3), resultado.getDate(4));
                 ResultSet resElemPed = consulta.executeQuery(" select elementoPedido_id,estado,comentario from elementopedido where elementoPedido_id IN (select elementoPedido_elementoPedido_id from tieneelemento where pedido_pedido_id = "+resultado.getInt(1)+")");
 
                 while(resElemPed.next()){
                     ElementoPedido elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),resElemPed.getString(3));
+
                     ResultSet resElem;
                     ResultSet resProds;
                     Elemento elem;
+System.out.println(elemPed.getCodElementoPedido());
+                    if(elemPed instanceof ElementoColaCocina){
+                        //PLATOS
+                        resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento WHERE elemento_id IN " +
+                                "(SELECT elementoPlato_elemento_elemento_id FROM asociaplato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+elemPed.getCodElementoPedido()+")");
+                        resElem.next();
 
-                    //PLATOS
-                    resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento WHERE elemento_id IN " +
-                            "( SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id IN " +
-                            "( SELECT elementocolacocina WHERE elementoPedido_elementoPedido_id IN " +
-                            "( SELECT elementoPedido_id FROM elementopedido)))");
+                        elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
+                        System.out.println(elem.getCodigoElemento());
+                        resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
+                                "( SELECT productoIngrediente_producto_producto_id FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
+                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) +")) ");
 
-                    resElem.next();
-                    elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
-                    resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
-                            "( SELECT productoIngrediente_producto_producto_id FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
-                            "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) +")) ");
 
-                    while(resProds.next()){
-                        Producto prod = new Producto(resProds.getInt(1), resProds.getString(2), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5), (ImageIcon) resProds.getBlob(6));
-                        ((ElementoPlato) elem).asocia((Ingrediente) prod, Float.NaN);
+                        while(resProds.next()){
+                            Producto prod = new Producto(resProds.getInt(1), resProds.getString(2), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5), (ImageIcon) resProds.getBlob(6));
+                            ((ElementoPlato) elem).asocia((Ingrediente) prod, Float.NaN);
+                        }
+                        elemPed.asocia(elem);
+                        pedido.asocia((ElementoColaCocina) elemPed);
+                    }else{
+                            //BEBIDAS
+                        resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento WHERE elemento_id IN " +
+                                "( SELECT elemento_elemento_id FROM elementobebida WHERE elemento_elemento_id IN " +
+                                "( SELECT elementocolabar WHERE elementoPedido_elementoPedido_id IN " +
+                                "( SELECT elementoPedido_id FROM elementopedido)))");
+                        resElem.next();
+                        elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
+                        resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
+                                "( SELECT productoBebida_producto_producto_id FROM tienebebida WHERE elementoBebida_elemento_elemento_id IN " +
+                                "(SELECT elemento_elemento_id FROM elementobebida WHERE elemento_elemento_id = "+resElem.getInt(1) +")) ");
+
+                        while(resProds.next()){
+                            Producto prod = new Producto(resProds.getInt(1), resProds.getString(2), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5), (ImageIcon) resProds.getBlob(6));
+                            ((ElementoPlato) elem).asocia((Ingrediente) prod, Float.NaN);
+                        }
                     }
-                    elemPed.asocia(elem);
-                    pedido.asocia((ElementoColaCocina) elemPed);
-
-                    //BEBIDAS
-                    resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento WHERE elemento_id IN " +
-                            "( SELECT elemento_elemento_id FROM elementobebida WHERE elemento_elemento_id IN " +
-                            "( SELECT elementocolabar WHERE elementoPedido_elementoPedido_id IN " +
-                            "( SELECT elementoPedido_id FROM elementopedido)))");
-                    resElem.next();
-                    elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
-                    resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
-                            "( SELECT productoBebida_producto_producto_id FROM tienebebida WHERE elementoBebida_elemento_elemento_id IN " +
-                            "(SELECT elemento_elemento_id FROM elementobebida WHERE elemento_elemento_id = "+resElem.getInt(1) +")) ");
-
-                    while(resProds.next()){
-                        Producto prod = new Producto(resProds.getInt(1), resProds.getString(2), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5), (ImageIcon) resProds.getBlob(6));
-                        ((ElementoPlato) elem).asocia((Ingrediente) prod, Float.NaN);
-                    }
-                    elemPed.asocia(elem);
-                    pedido.asocia((ElementoColaBar) elemPed);
                 }
 
                 pedidos.add(pedido);
