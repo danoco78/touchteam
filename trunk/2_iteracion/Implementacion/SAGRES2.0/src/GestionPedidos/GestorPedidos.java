@@ -139,8 +139,10 @@ public class GestorPedidos implements IGestorPedidos {
                 pedido = ped;
             }
         }
-        if(pedido == null)
-                 throw new Exception("No hay siguiente pedido en cola de cocina");
+        if(pedido == null){
+                // throw new Exception("No hay siguiente pedido en cola de cocina");
+        }
+        System.out.println("Holaaaaaaaa");
         return pedido;
     }
 
