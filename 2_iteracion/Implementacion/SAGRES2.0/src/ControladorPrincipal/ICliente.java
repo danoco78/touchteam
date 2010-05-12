@@ -29,7 +29,7 @@ public interface ICliente {
     
     public abstract HashSet<Seccion> obtieneSecciones();
 
-    public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
+    public abstract HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion);
 
-    public HashSet<Elemento> obtieneElementos();
+    public abstract ArrayList<Pedido> getPedidos(int codMesa);
 }

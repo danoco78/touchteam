@@ -23,9 +23,12 @@ import java.util.Iterator;
  */
 public class PanelPedidoRealizado extends javax.swing.JPanel {
 
+    PanelGeneralCliente panelGeneralCliente;
     /** Creates new form PanelPedidoRealizado */
-    public PanelPedidoRealizado() {
+    public PanelPedidoRealizado(PanelGeneralCliente panelGeneralCliente, int codMesa) {
         initComponents();
+        this.panelGeneralCliente=panelGeneralCliente;
+        this.panelGeneralCliente.icliente.getPedidos(codMesa);
     }
 
     /** This method is called from within the constructor to
@@ -61,7 +64,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void anadirPedido(ArrayList<Elemento> listaElementos) {
-        this.PanelPedido.add(new PanelListaPedido(listaElementos));
+        this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente));
     }
 
 }

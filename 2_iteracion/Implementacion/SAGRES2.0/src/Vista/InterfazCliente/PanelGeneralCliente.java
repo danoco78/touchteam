@@ -16,6 +16,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
@@ -44,6 +45,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     protected ICliente icliente;
 
     private InterfazCliente interfazCliente;
+    private int codMesa = 1;
 
     private JPanel hojasSeccionEntrantes = new JPanel();
     private int i_entrantes;
@@ -83,7 +85,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         this.panelRealizarPedido = new PanelRealizarPedido(this);
         this.PanelGeneralEste.add(panelRealizarPedido,"RealizarPedido");
-        this.panelPedidoRealizado = new PanelPedidoRealizado();
+        this.panelPedidoRealizado = new PanelPedidoRealizado(this);
         this.PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
 
         ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
@@ -466,12 +468,19 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     private void anadirElementoAPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirElementoAPedido
         if(elementoMarcado!=null){
-            this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, this.TextoComentarios.getText());
-            this.TextoComentarios.setEnabled(false);
-            this.TextoComentarios.setText("");
-            this.elementoMarcado=null;
-            this.panelRealizarPedido.repaint();
-            this.panelRealizarPedido.revalidate();
+            if(this.TextoComentarios.getText().length()<=45){
+                this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, this.TextoComentarios.getText());
+                this.TextoComentarios.setEnabled(false);
+                this.TextoComentarios.setText("");
+                this.elementoMarcado=null;
+                this.panelRealizarPedido.repaint();
+                this.panelRealizarPedido.revalidate();
+            }else{
+                JOptionPane.showMessageDialog(this,
+                                          "Debe añadir un comentario menor de 45 caracteres.",
+                                          "El elemento no puede añadirse",
+                                          JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_anadirElementoAPedido
 
@@ -658,7 +667,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 this.panelPedidoRealizado.anadirPedido(listaElementos);
 
                 ArrayList<ElementoPedido> elementosPedido = this.panelRealizarPedido.getElementosPedido();
-                this.icliente.nuevoPedido(1, elementosPedido);
+                this.icliente.nuevoPedido(this.codMesa, elementosPedido);
 
                 this.elementoMarcado=null;
                 this.panelRealizarPedido.limpiar();
@@ -677,6 +686,21 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     public void cambiarPanelEste() {
         ((CardLayout) PanelGeneralEste.getLayout()).next(PanelGeneralEste);
         this.BotonAnadir.setVisible(!this.BotonAnadir.isVisible());
+    }
+
+    public void iniciaModificaPedido() {
+        DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
+                    "Modificar Pedido",
+                    "",
+                    "¿Está seguro de que desea modificar su pedido?" +
+                    "\nEsto lo anulará y cuando termine se enviará como uno nuevo.");
+
+            dialogo.setLocationRelativeTo(interfazCliente);
+            dialogo.show();
+
+            if(dialogo.isAceptado()){
+                ArrayList<Pedido> listaPedidos = this.icliente.getPedidos(1);
+            }
     }
 
 }
