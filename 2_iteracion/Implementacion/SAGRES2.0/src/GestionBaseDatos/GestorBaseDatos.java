@@ -829,6 +829,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
         Statement consulta;
         ElementoPedido elemPed = null;
+        ResultSet resElemPed;
         try {
             consulta = (Statement) this.Conexion.createStatement();
             ResultSet resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
@@ -836,12 +837,16 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             while (resultado.next()) {
                 Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
-                ResultSet resElemPed = consulta.executeQuery("SELECT elementoPedido_id, estado, " +
+                Statement consulta2 = (Statement) this.Conexion.createStatement();
+                resElemPed = consulta2.executeQuery("SELECT elementoPedido_id, estado, " +
                         "comentario FROM elementopedido WHERE elementoPedido_id IN (SELECT elementoPedido_elementoPedido_id " +
                         "FROM tieneelemento WHERE pedido_pedido_id = "+resultado.getInt(1)+")");
+
                 while(resElemPed.next()){
+                    
                     elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
                             resElemPed.getString(3));
+                    System.out.println("resultado es nulo3");
                     //TODO Resolver esta consulta
                     ResultSet resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible," +
                             " foto, divi, divi_max, precio FROM elemento " +
@@ -849,29 +854,37 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                             "( SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id IN " +
                             "( SELECT elementoPedido_elementoPedido_id FROM elementocolacocina WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementoPedido)))");
-                    Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
-                            resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
-                            ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
-
-                    ResultSet  resProds = consulta.executeQuery( "SELECT producto_id," +
-                            " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
-                            "( SELECT productoIngrediente_producto_producto_id " +
-                            "FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
-                            "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
-                    while(resProds.next()){
-                        Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
-                                resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
-                                Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
-                        //TODO Corregir error con la cantidad
-                        ((ElementoPlato)elemento).asocia(prod, new Float(10.0));
-                    }
-                    elemPed.asocia(elemento);
+                    if(resElem.next()){
+                        Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
+                                resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
+                                ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
+                        System.out.println("resultado es nulo 5");
+                        ResultSet  resProds = consulta.executeQuery( "SELECT producto_id," +
+                                " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
+                                "( SELECT productoIngrediente_producto_producto_id " +
+                                "FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
+                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
+                        System.out.println("resultado es nulo4");
+                        while(resProds.next()){
+                            Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
+                                    resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
+                                    Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
+                            //TODO Corregir error con la cantidad
+                            ((ElementoPlato)elemento).asocia(prod, new Float(10.0));
+                        }
+                        elemPed.asocia(elemento);
+                     }
+                    resElem.close();
+                     System.out.println("resultado es nulo 6");
                 }
+
+
                     if(elemPed instanceof ElementoColaCocina) //Si es ColaCocina
                          p.asocia((ElementoColaCocina)elemPed);
-                noFacturados.add(p);
             }
+
         } catch (SQLException ex) {
+            //System.err.println("Error al obtener los pedidos no facturados");
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -883,14 +896,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         int numplatos=-1;
         try {
             consulta = (Statement) this.Conexion.createStatement();
-            ResultSet resultado = consulta.executeQuery("SELECT count(elementoPedido_elementoPedido_id)" +
-                    "FROM elementoColaCocina WHERE elementoPedido_elementoPedido_id IN" +
-                    " (SELECT elementoPedido_id FROM elementoPedido WHERE estado = 0)");
+            ResultSet resultado = consulta.executeQuery("SELECT COUNT( elementoPedido_elementoPedido_id) " +
+                                                        "FROM elementoPedido,elementoColaCocina WHERE elementoPedido_id = " +
+                                                        "elementoPedido_elementoPedido_id AND estado = 0");
+            resultado.next();
             numplatos = resultado.getInt(1);
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al obtener el numero de platos");
         }
 
         return numplatos;
@@ -910,7 +924,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return numbebidas;
     }
 
@@ -978,6 +991,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                             "( SELECT elementocolacocina WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementopedido)))");
 
+                    resElem.next();
                     elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
                     resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
                             "( SELECT productoIngrediente_producto_producto_id FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
@@ -995,7 +1009,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                             "( SELECT elemento_elemento_id FROM elementobebida WHERE elemento_elemento_id IN " +
                             "( SELECT elementocolabar WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementopedido)))");
-
+                    resElem.next();
                     elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), (ImageIcon) resElem.getBlob(5), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
                     resProds = consulta.executeQuery( "SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
                             "( SELECT productoBebida_producto_producto_id FROM tienebebida WHERE elementoBebida_elemento_elemento_id IN " +
@@ -1014,7 +1028,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
             return pedidos;
         } catch (SQLException ex) {
-            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error al obtener los pedidos modificables de una mesa");
         }
         return pedidos;
     }

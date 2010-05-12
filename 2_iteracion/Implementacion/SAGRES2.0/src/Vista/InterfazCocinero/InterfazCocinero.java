@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import utilidades.HebraColaPedidos;
+//import utilidades.HebraPendientes;
 
 /**
  *
@@ -23,6 +24,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
     public IntColaCocinero panelColaCocinero;
 
     HebraColaPedidos hebra = null;
+    //HebraPendientes hebrapend = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";
@@ -36,7 +38,8 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero(this);
-        //this.hebra = new HebraColaPedidos(this);
+        this.hebra = new HebraColaPedidos(this);
+        //this.hebrapend = new HebraPendientes(this);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
@@ -57,8 +60,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelIngrediente.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelColaCocinero.bGestionProductos.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARPRODUCTOS));
-        //this.panelColaCocinero.pmpizq.addActionListener(new ManejaEventos(this, ManejaEventos.PREPARARPLATOPENDIENTE));
-        //this.panelColaCocinero.pmpder.addActionListener(new ManejaEventos(this, ManejaEventos.PLATOCOCINADO));
+
     }
 
 
@@ -146,10 +148,6 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     break;
                 case ManejaEventos.GESTIONARPRODUCTOS:
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
-                    break;
-                case ManejaEventos.PREPARARPLATOPENDIENTE:
-                    break;
-                case ManejaEventos.PLATOCOCINADO:
                     break;
             }
             if (dialogo != null) {

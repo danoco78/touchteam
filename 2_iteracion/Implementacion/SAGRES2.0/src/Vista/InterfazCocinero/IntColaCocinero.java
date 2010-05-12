@@ -146,9 +146,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
         //Prueba para comprobar que funciona
-        ArrayList<Pedido> peds = new ArrayList<Pedido>();
+        //ArrayList<Pedido> peds = new ArrayList<Pedido>();
         
-        try {
+        /*try {
             peds = this.interfaz.icocinero.getPedidosCocinaPreparandose();
             if(!peds.isEmpty()){
                 this.pmpder.autoCompletar(peds);
@@ -160,7 +160,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
         /*Pedido ped = new Pedido(5, 2, 0, null);
         ElementoColaCocina ele = new ElementoColaCocina(1, 0, "Del tiempo, por favor");
