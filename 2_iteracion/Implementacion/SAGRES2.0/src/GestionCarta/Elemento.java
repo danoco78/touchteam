@@ -141,12 +141,6 @@ public class Elemento {
         HashMap<Producto,Float> result = new HashMap();
         if(this instanceof ElementoBebida){
             HashMap<Bebida,Float> bebidas = ((ElementoBebida)this).getListaBebidas();
-            /*Collection c = (Collection)bebidas;
-            Iterator ite = c.iterator();
-            while(ite.hasNext()){
-                result.put(((Pair<Producto,Float>)ite.next()).getFirst()
-                        , ((Pair<Producto,Float>)ite.next()).getSecond());
-            }*/
             Iterator ite = bebidas.entrySet().iterator();
             Producto prod;
             Float cantidad;
@@ -160,12 +154,6 @@ public class Elemento {
         }
         else{
             HashMap<Ingrediente,Float> ingredientes = ((ElementoPlato)this).getListaIngredientes();
-            /*Collection c = (Collection)ingredientes;
-            Iterator ite = c.iterator();
-            while(ite.hasNext()){
-                result.put(((Pair<Producto,Float>)ite.next()).getFirst()
-                        , ((Pair<Producto,Float>)ite.next()).getSecond());
-            }*/
             Iterator ite = ingredientes.entrySet().iterator();
             Producto prod;
             Float cantidad;

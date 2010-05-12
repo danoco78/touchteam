@@ -889,6 +889,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             numplatos = resultado.getInt(1);
 
         } catch (SQLException ex) {
+
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
