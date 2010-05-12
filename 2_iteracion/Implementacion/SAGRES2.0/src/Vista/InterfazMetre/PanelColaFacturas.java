@@ -90,6 +90,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
         scrollPane.setBackground(new java.awt.Color(255, 255, 255));
         scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setDoubleBuffered(true);
         scrollPane.setOpaque(false);
 
         centro.setBackground(new java.awt.Color(255, 255, 255));
