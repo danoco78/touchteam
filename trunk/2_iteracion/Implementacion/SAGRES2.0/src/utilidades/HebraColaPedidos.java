@@ -48,6 +48,7 @@ public class HebraColaPedidos implements Runnable {
                 switch (filtro){
                     case BAR:
                         p = mpadre.imetre.getSiguientePedidoBar();
+                        System.out.println("Paso por aqui");
                         if (p == actual) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
