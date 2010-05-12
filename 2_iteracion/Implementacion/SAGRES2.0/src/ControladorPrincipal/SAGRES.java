@@ -104,10 +104,6 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.icarta.obtieneElementosConProducto(pro);
     }
 
-    /*public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
-        return this.icarta.obtieneElementosDeSeccion(seccion);
-    }*/
-
     public HashSet<Producto> obtieneIngredientes() {
         return this.iproducto.obtieneIngredientes();
     }
@@ -218,5 +214,9 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public ArrayList<Integer> getFacturasImprimidas(){
         return this.ipedidos.getFacturasImprimidas();
+    }
+
+    public boolean eliminaPedido(int codPedido){
+        return this.ipedidos.eliminaPedido(codPedido);
     }
 }

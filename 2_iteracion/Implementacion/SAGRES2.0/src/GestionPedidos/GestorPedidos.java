@@ -316,5 +316,9 @@ public class GestorPedidos implements IGestorPedidos {
     public ArrayList<Integer> getFacturasImprimidas(){
         return this.iPedidosBD.getFacturasImprimidas();
     }
+
+    public boolean eliminaPedido(int codPedido){
+        return this.iPedidosBD.eliminaPedido(codPedido);
+    }
 }
 

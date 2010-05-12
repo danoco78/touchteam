@@ -49,6 +49,7 @@ public interface IGestorPedidos {
     
     public ArrayList<Integer> getFacturasEnCola();
 
-    public ArrayList<Integer> getFacturasImprimidas();
+    public boolean eliminaPedido(int codPedido);
 
+    public ArrayList<Integer> getFacturasImprimidas();
 }
