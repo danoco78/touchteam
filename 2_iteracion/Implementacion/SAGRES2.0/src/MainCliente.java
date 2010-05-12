@@ -9,7 +9,6 @@ import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
 import Vista.InterfazCliente.InterfazCliente;
-import Vista.InterfazCliente.PanelGeneralCliente;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

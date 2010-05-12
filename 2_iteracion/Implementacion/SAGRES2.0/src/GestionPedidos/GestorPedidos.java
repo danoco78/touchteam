@@ -12,7 +12,6 @@ import GestionBaseDatos.IPedidosBD;
 import GestionCarta.ElementoPlato;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
 import java.util.HashMap;
