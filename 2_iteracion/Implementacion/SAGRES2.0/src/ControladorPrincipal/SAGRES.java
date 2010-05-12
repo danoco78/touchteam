@@ -161,8 +161,12 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         this.ipedidos.imprimeFactura(codMesa);
     }
 
-    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
-        return this.ipedidos.modificaPedido(codPedido, codMesa, elems);
+    public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){
+        return this.ipedidos.iniciaModificaPedido(codMesa);
+    }
+
+    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
+        return this.ipedidos.modificaPedido(codPedido, elems);
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems){
@@ -192,10 +196,6 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.ipedidos.seleccionaPlato(p, ele);
     }
 
-    public void imprimeFactura(int codMesa) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public boolean seleccionaBebida(Pedido pe, ElementoColaBar e) throws Exception{
         return this.ipedidos.seleccionaBebida(pe, e);
     }
@@ -211,8 +211,12 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa){
         return this.ipedidos.getPedidosModificablesMesa(codMesa);
     }
+    
+    public ArrayList<Integer> getFacturasEnCola(){
+        return this.ipedidos.getFacturasEnCola();
+    }
 
-    public Pedido getSiguientePedidoCocina() {
-        return this.ipedidos.getSiguientePedidoCocina();
+    public ArrayList<Integer> getFacturasImprimidas(){
+        return this.ipedidos.getFacturasImprimidas();
     }
 }

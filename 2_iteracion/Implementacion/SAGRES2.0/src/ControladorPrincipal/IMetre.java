@@ -11,6 +11,7 @@ import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import GestionStock.GestionIncidencias.Incidencia;
 import GestionStock.GestionProductos.Producto;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -34,5 +35,8 @@ public interface IMetre {
     public abstract boolean seleccionaBebida(Pedido pe, ElementoColaBar e)throws Exception;
 
     public Factura getFactura(int codMesa);
+
+    public ArrayList<Integer> getFacturasEnCola();
+    public ArrayList<Integer> getFacturasImprimidas();
     
 }
