@@ -153,7 +153,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
         return this.ipedidos.getSiguientePedidoCocinaEncola();
     }
 
-    public void imprimeFactura(Integer codMesa){
+    public void imprimeFactura(int codMesa){
         this.ipedidos.imprimeFactura(codMesa);
     }
 
