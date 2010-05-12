@@ -159,7 +159,7 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems){
-        return true;
+        return this.iPedidosBD.nuevoPedido(codMesa, elems);
     }
 
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido){
@@ -280,6 +280,10 @@ public class GestorPedidos implements IGestorPedidos {
 
     public Factura getFactura(int codMesa){
         return this.iPedidosBD.getFactura(codMesa);
+    }
+
+    public ArrayList<Pedido> getPedidos(int codMesa){
+        return this.iPedidosBD.getPedidos(codMesa);
     }
 }
 

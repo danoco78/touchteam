@@ -211,4 +211,8 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public Factura getFactura(int codMesa){
         return this.ipedidos.getFactura(codMesa);
     }
+
+    public ArrayList<Pedido> getPedidos(int codMesa){
+        return this.ipedidos.getPedidos(codMesa);
+    }
 }

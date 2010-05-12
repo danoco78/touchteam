@@ -1011,8 +1011,55 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         }
     }
 
+    public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems) {
+        try {
+            // Obtenemos el último id que se insertó
+            java.sql.Statement consulta = this.Conexion.createStatement();
+            ResultSet idPedido = consulta.executeQuery("SELECT MAX(pedido_id) FROM pedido");
+            idPedido.next();
+            int id_pedido = idPedido.getInt(1);
+            ++id_pedido;
+            // Insertamos el pedido
+            java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO pedido(pedido_id,mesa_id,estado,fecha)"
+                    + " VALUES (?,?,?,?)");
+            inserccion.setInt(1, id_pedido);
+            inserccion.setInt(2, codMesa);
+            inserccion.setInt(3, 0);
+            java.util.Date fecha = new java.util.Date();
+            inserccion.setDate(4, new Date(fecha.getTime()));
+            inserccion.executeUpdate();
+            // Para cada ElementoPedido:
+                //-creamos su fila en la base de datos (1)
+                //-sacamos su idPedido e insertamos junto con idElemento en tieneelemento (2)
 
+            ResultSet idElementoPedido = consulta.executeQuery("SELECT MAX(elementoPedido_id) FROM elementopedido");
+            idElementoPedido.next();
+            int id_elementopedido = idElementoPedido.getInt(1);
 
+            Iterator it = elems.iterator();
+            while (it.hasNext()) {
+                ElementoPedido elementoPedido = (ElementoPedido) it.next();
+                ++id_elementopedido;
+                //(1)                
+                inserccion = this.Conexion.prepareStatement("INSERT INTO elementopedido(elementoPedido_id,estado,comentario) VALUES(?,?,?)");
+                inserccion.setInt(1, id_elementopedido);
+                inserccion.setInt(2, 0);
+                inserccion.setString(3, elementoPedido.getComentario());
+                inserccion.executeUpdate();
+
+                //(2)
+                inserccion = this.Conexion.prepareStatement("INSERT INTO tieneelemento(elementoPedido_elementoPedido_id,pedido_pedido_id) VALUES(?,?)");
+                inserccion.setInt(1, id_elementopedido);
+                inserccion.setInt(2, id_pedido);
+                inserccion.executeUpdate();
+            }
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
     //TODO Este método no está reflejado en el diseño
     public Pedido getSiguientePedidoBar() {

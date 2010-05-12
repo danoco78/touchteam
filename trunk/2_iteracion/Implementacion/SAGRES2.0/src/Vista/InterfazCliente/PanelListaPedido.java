@@ -22,9 +22,13 @@ import java.util.Iterator;
  */
 public class PanelListaPedido extends javax.swing.JPanel {
 
+    PanelGeneralCliente PGC;
+
     /** Creates new form PanelListaPedido */
-    public PanelListaPedido(ArrayList<Elemento> listaElementos) {
+    public PanelListaPedido(ArrayList<Elemento> listaElementos, PanelGeneralCliente PGC) {
         initComponents();
+
+        this.PGC=PGC;
 
         this.TextoListaComida.setText("");
         this.TextoListaBebida.setText("");
@@ -71,6 +75,11 @@ public class PanelListaPedido extends javax.swing.JPanel {
         BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
         BotonModificar.setText("Modificar");
+        BotonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarPedido(evt);
+            }
+        });
         PanelListaComida.add(BotonModificar, java.awt.BorderLayout.PAGE_END);
 
         add(PanelListaComida, java.awt.BorderLayout.CENTER);
@@ -83,6 +92,10 @@ public class PanelListaPedido extends javax.swing.JPanel {
 
         add(PanelListaBebida, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void modificarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPedido
+        this.PGC.iniciaModificaPedido();
+    }//GEN-LAST:event_modificarPedido
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
