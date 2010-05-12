@@ -116,26 +116,26 @@ public class GestorPedidos implements IGestorPedidos {
         Integer estado=-1;
         boolean encontrado = false;
         Date fecha=null, fechaPedido=null;
-        while(iterador.hasNext()){
+        while(iterador.hasNext()){ //Iteramos sobre los pedidos no facturados aun
             Pedido ped = ((Pedido)iterador.next());
-            elementos = ped.obtieneElementos();
+            elementos = ped.obtieneElementos(); //Obtenemos los ElementosPedidos de un pedido
             Iterator ite2 = elementos.iterator();
-            while (ite2.hasNext() && !encontrado){
-                elemP = (ElementoPedido)ite2.next();
-                if(elemP instanceof ElementoColaCocina){
+            while (ite2.hasNext() && !encontrado){ //Iteramos sobre ellos
+                elemP = (ElementoPedido)ite2.next(); //Obtenemos el siguiente
+                if(elemP instanceof ElementoColaCocina){ //Si es de tipo ColaCocina
                     estado = elemP.getEstado();
-                    if(estado == ElementoColaCocina.ENCOLA)
+                    if(estado == ElementoColaCocina.ENCOLA) // Y el estado es en cola, ponemos una señal a true
                         encontrado = true;
                 }
             }
-            if(encontrado){
+            if(encontrado){ //Obtenemos su fecha del pedido actual
                 fecha = ped.getFecha();
             }
             if( encontrado && pedido != null){
-                fechaPedido = pedido.getFecha();
+                fechaPedido = pedido.getFecha(); //Obtenemos la fecha del pedido guardado por ahora
             }
             if(ite2.next() instanceof ElementoColaCocina && encontrado &&
-                    (pedido == null || fecha.before(fechaPedido))){
+                    (pedido == null || fecha.before(fechaPedido))){  //Comparamos y si es mas reciente, asignamos
                 pedido = ped;
             }
         }
