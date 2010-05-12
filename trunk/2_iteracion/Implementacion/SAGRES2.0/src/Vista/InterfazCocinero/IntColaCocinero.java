@@ -35,11 +35,11 @@ public class IntColaCocinero extends javax.swing.JPanel {
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         
-        pmpder = new PreparandosePanel(this);
+        /*pmpder = new PreparandosePanel(this);
         pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
-        this.actualizarVista();
+        this.actualizarVista();*/
     }
 
     @Override

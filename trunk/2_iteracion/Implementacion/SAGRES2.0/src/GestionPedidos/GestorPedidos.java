@@ -310,5 +310,11 @@ public class GestorPedidos implements IGestorPedidos {
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa){
         return this.iPedidosBD.getPedidosModificablesMesa(codMesa);
     }
+
+    public Pedido getSiguientePedidoCocina() {
+
+         // TODO Esta implementación no está reflejada en el diseño
+        return this.iPedidosBD.getSiguientePedidoCocina();
+    }
 }
 

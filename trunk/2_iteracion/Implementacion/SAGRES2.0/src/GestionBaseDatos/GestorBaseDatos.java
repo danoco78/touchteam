@@ -827,13 +827,13 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
     }
     public ArrayList<Pedido> obtienePedidosNoFacturados(){
         ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
-        Statement consulta;
+        ResultSet resultado;
         ElementoPedido elemPed = null;
-        ResultSet resElemPed;
         try {
-            consulta = (Statement) this.Conexion.createStatement();
-            ResultSet resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
-
+            Statement consulta = (Statement) this.Conexion.createStatement();
+            resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
+            ResultSet resElemPed;
+ 
             while (resultado.next()) {
                 Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
@@ -1187,6 +1187,74 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        return ped;
+    }
+
+    public Pedido getSiguientePedidoCocina() {
+        Pedido ped = null;
+        try {
+            Statement consulta = (Statement) this.Conexion.createStatement();
+            // Obtengo los pedidos cuyo estado es distinto de Facturado y tiene elementosColaCocina en Cola
+            ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha " +
+                                                            "FROM pedido, tieneElemento, elementoPedido, elementoColaCocina " +
+                                                            "WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id " +
+                                                            "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
+                                                            "AND elementoPedido_id = elementoColaCocina.elementoPedido_elementoPedido_id " +
+                                                            "AND elementoPedido.estado =0 GROUP BY pedido_id " +
+                                                            "HAVING COUNT( elementoColaCocina.elementoPedido_elementoPedido_id ) >0");
+            if (tablaPedidos.next()){
+                HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
+                // Obtengo los elementoPedido asociados al pedido
+                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
+                Statement consulta2 = (Statement) this.Conexion.createStatement();
+                ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
+                ResultSet codigoElemento;
+                ElementoColaBar eleCB;
+                ElementoColaCocina eleCC;
+                boolean encontrado;
+                Iterator<Elemento> it;
+                Elemento ele = null;
+                Statement consulta3 = (Statement) this.Conexion.createStatement();
+                while (tablaElementosPedido.next()){
+                    //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
+                    codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                    if (!codigoElemento.next()){
+                        // No es un plato es una bebida
+                        codigoElemento = consulta3.executeQuery("SELECT elementoBebida_elemento_elemento_id FROM asociaBebida WHERE elementoColaBar_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                        codigoElemento.next();
+                        eleCB = new ElementoColaBar(tablaElementosPedido.getInt(1),tablaElementosPedido.getInt(2),tablaElementosPedido.getString(3));
+                        // Busco el objeto elemento de carta
+                        encontrado = false;
+                        for (it = elementosCarta.iterator();it.hasNext() && !encontrado;){
+                            ele = it.next();
+                            if (ele.getCodigoElemento() == codigoElemento.getInt(1))
+                                encontrado = true;
+                        }
+                        // Asocio el elemento de la Carta al elemento pedido
+                        eleCB.asocia(ele);
+                        //Asocio el elementoColaBar al pedido
+                        ped.asocia(eleCB);
+                    }
+                    else{
+                        eleCC = new ElementoColaCocina(tablaElementosPedido.getInt(1),tablaElementosPedido.getInt(2),tablaElementosPedido.getString(3));
+                        // Busco el objeto elemento de carta
+                        encontrado = false;
+                        for (it = elementosCarta.iterator();it.hasNext() && !encontrado;){
+                            ele = it.next();
+                            if (ele.getCodigoElemento() == codigoElemento.getInt(1))
+                                encontrado = true;
+                        }
+                        // Asocio el elemento de la Carta al elemento pedido
+                        eleCC.asocia(ele);
+                        // Asocio el elementoColaCocina al pedido
+                        ped.asocia(eleCC);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return ped;
     }
 

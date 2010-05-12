@@ -28,6 +28,7 @@ public interface IPedidosBD {
 
     // TODO No esta reflejada en el diseño
     public Pedido getSiguientePedidoBar();
+    public Pedido getSiguientePedidoCocina();
 
     public int getCodigoPedido();
 
