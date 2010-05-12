@@ -52,4 +52,6 @@ public interface IGestorPedidos {
     public boolean eliminaPedido(int codPedido);
 
     public ArrayList<Integer> getFacturasImprimidas();
+
+    public Pedido getSiguientePedidoCocina();
 }

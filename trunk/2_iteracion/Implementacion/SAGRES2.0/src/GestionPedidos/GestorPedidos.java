@@ -320,5 +320,9 @@ public class GestorPedidos implements IGestorPedidos {
     public boolean eliminaPedido(int codPedido){
         return this.iPedidosBD.eliminaPedido(codPedido);
     }
+
+    public Pedido getSiguientePedidoCocina(){
+        return iPedidosBD.getSiguientePedidoCocina();
+    }
 }
 
