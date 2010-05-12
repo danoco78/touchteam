@@ -50,6 +50,37 @@ INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
 INSERT INTO carta (carta_id, ultima_modificacion) VALUES
 (1, '2010-04-07');
 
+
+--
+-- Volcar la base de datos para la tabla 'seccion'
+--
+
+INSERT INTO seccion (seccion_id, nombre) VALUES
+(1, 'Entrantes'),
+(2, 'Carnes'),
+(3, 'Pescados'),
+(4, 'Postres'),
+(5, 'Refrescos'),
+(6, 'Vinos');
+
+--
+-- Volcar la base de datos para la tabla 'seccionbebida'
+--
+
+INSERT INTO seccionbebida (seccion_seccion_id) VALUES
+(5),
+(6);
+
+--
+-- Volcar la base de datos para la tabla 'seccioncomida'
+--
+
+INSERT INTO seccioncomida (seccion_seccion_id) VALUES
+(1),
+(2),
+(3),
+(4);
+
 --
 -- Volcar la base de datos para la tabla 'comanda'
 --
@@ -283,37 +314,6 @@ INSERT INTO productoingrediente (producto_producto_id) VALUES
 --
 -- Volcar la base de datos para la tabla 'restaurante'
 --
-
-
---
--- Volcar la base de datos para la tabla 'seccion'
---
-
-INSERT INTO seccion (seccion_id, nombre) VALUES
-(1, 'Entrantes'),
-(2, 'Carnes'),
-(3, 'Pescados'),
-(4, 'Postres'),
-(5, 'Refrescos'),
-(6, 'Vinos');
-
---
--- Volcar la base de datos para la tabla 'seccionbebida'
---
-
-INSERT INTO seccionbebida (seccion_seccion_id) VALUES
-(5),
-(6);
-
---
--- Volcar la base de datos para la tabla 'seccioncomida'
---
-
-INSERT INTO seccioncomida (seccion_seccion_id) VALUES
-(1),
-(2),
-(3),
-(4);
 
 --
 -- Volcar la base de datos para la tabla 'tienebebida'
