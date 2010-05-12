@@ -5,7 +5,6 @@
 
 package utilidades;
 
-import GestionPedidos.Pedido;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
 

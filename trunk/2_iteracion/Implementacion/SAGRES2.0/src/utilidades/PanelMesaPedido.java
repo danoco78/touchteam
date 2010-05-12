@@ -60,6 +60,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pedActual = ped;
 
         panelInfoPedido.removeAll();
+        panelInfoPedido.repaint();
         
         infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
 
