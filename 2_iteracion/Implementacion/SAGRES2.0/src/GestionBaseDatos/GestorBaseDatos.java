@@ -831,15 +831,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         ElementoPedido elemPed = null;
         try {
             consulta = (Statement) this.Conexion.createStatement();
-            ResultSet resultado = consulta.executeQuery("select pedidoid, mesaid, estado, fecha from pedido" +
-                    "where estado <> 2;");
+            ResultSet resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
 
             while (resultado.next()) {
                 Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
-                ResultSet resElemPed = consulta.executeQuery(" select elementoPedido_id, estado, " +
-                        "comentario from elementoPedido where elementoPedido_id IN (select elementoPedido_id " +
-                        "from tieneElemento where pedido_pedido_id = "+resultado.getInt(1)+"); ");
+                ResultSet resElemPed = consulta.executeQuery("SELECT elementoPedido_id, estado, " +
+                        "comentario FROM elementopedido WHERE elementoPedido_id IN (SELECT elementoPedido_elementoPedido_id " +
+                        "FROM tieneelemento WHERE pedido_pedido_id = "+resultado.getInt(1)+")");
                 while(resElemPed.next()){
                     elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
                             resElemPed.getString(3));
@@ -847,8 +846,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                     ResultSet resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible," +
                             " foto, divi, divi_max, precio FROM elemento " +
                             "WHERE elemento_id IN " +
-                            "( SELECT elemento_elemento_id FROM elementoPlato WHERE elemento_elemento_id IN " +
-                            "( SELECT elementoColaCocina WHERE elementoPedido_elementoPedido_id IN " +
+                            "( SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id IN " +
+                            "( SELECT elementoPedido_elementoPedido_id FROM elementocolacocina WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementoPedido)))");
                     Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
                             resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
@@ -857,8 +856,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                     ResultSet  resProds = consulta.executeQuery( "SELECT producto_id," +
                             " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
                             "( SELECT productoIngrediente_producto_producto_id " +
-                            "FROM tieneIngrediente WHERE elementoComida_elemento_elemento_id IN " +
-                            "(SELECT elemento_elemento_id FROM elementoPlato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
+                            "FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
+                            "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
                     while(resProds.next()){
                         Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
                                 resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
@@ -920,7 +919,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+"'");
             actPedido.setInt(1, p.getEstado());
             actPedido.executeUpdate();
-            java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementoPedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
+            java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementopedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
             ArrayList<ElementoPedido> elementos = p.obtieneElementos();
             Iterator ite = elementos.iterator();
             while (ite.hasNext()){
@@ -942,7 +941,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         Factura fac = null;
         try{
             Statement consulta = (Statement) this.Conexion.createStatement();
-            ResultSet factura = consulta.executeQuery("SELECT factura_id,estado,fecha FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND estado = 1");
+            ResultSet factura = consulta.executeQuery("SELECT factura_id,estado,fecha FROM factura,facturapedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND estado = 1");
             factura.next();
             fac = new Factura(factura.getInt(1),factura.getInt(2),factura.getDate(3));
             ArrayList<Pedido> pedidos = this.getPedidosModificablesMesa(codMesa);

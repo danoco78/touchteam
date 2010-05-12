@@ -20,7 +20,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
     private IntPrincipalCocinero panelPrincipal = null;
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
-    public IntColaCocinero panelColaCocinero = null;
+    public IntColaCocinero panelColaCocinero;
 
     HebraColaPedidos hebra = null;
 

@@ -19,8 +19,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     PanelImagen panelImagen;
     public PanelMesaPedido pmpizq;
     public PreparandosePanel pmpder;
-    protected ICocinero icocinero;
-    public InterfazCocinero interfaz = null;
+    public InterfazCocinero interfaz;
     
     /** Creates new form IntGestionCarta */
     public IntColaCocinero(InterfazCocinero i) {
@@ -150,11 +149,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
         ArrayList<Pedido> peds = new ArrayList<Pedido>();
         
         try {
-            peds = this.icocinero.getPedidosCocinaPreparandose();
-            if(peds != null){
+            peds = this.interfaz.icocinero.getPedidosCocinaPreparandose();
+            if(!peds.isEmpty()){
                 this.pmpder.autoCompletar(peds);
-                this.pmpder.repaint();
-                this.pmpder.revalidate();
+                //this.pmpder.repaint();
+                //this.pmpder.revalidate();
+            }
+            else{
+                System.out.println("Pedidos está vacío.");
             }
         } catch (Exception ex) {
             Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);

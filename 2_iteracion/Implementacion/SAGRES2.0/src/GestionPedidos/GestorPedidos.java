@@ -180,8 +180,7 @@ public class GestorPedidos implements IGestorPedidos {
         Iterator<Pedido> ite = noFacturados.iterator();
         Boolean romper = false;
         int estado;
-
-        while(ite.hasNext()){
+        while(ite.hasNext() && !noFacturados.isEmpty()){
             romper = false;
             Pedido p = ((Pedido)ite.next());
             elementos = p.obtieneElementos();
@@ -217,6 +216,7 @@ public class GestorPedidos implements IGestorPedidos {
                 p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
                 ele.setEstado(ElementoColaBar.PREPARADO);
                 this.iPedidosBD.actualizaPedido(p);
+                //elem = new ElementoPlato(ele.getElemento(),10); Alternativa pachanguera
                 elem = (ElementoPlato) ele.getElemento();
                 prods = elem.getProductos();
                 Iterator ite = prods.entrySet().iterator();
