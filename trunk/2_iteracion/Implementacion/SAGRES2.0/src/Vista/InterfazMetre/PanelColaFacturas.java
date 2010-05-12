@@ -13,6 +13,7 @@ package Vista.InterfazMetre;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import utilidades.PanelEspacioVertical;
 
@@ -36,7 +37,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         filtro = tipo;
         
         //TODO Borrar
-        for (int i=0;i<20;i++){
+        /*for (int i=0;i<20;i++){
             JButton boton = new JButton();
             PanelEspacioVertical pev = new PanelEspacioVertical();
             boton.setBackground(new java.awt.Color(211, 223, 253));
@@ -49,23 +50,34 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
             centro.add(boton);
             centro.add(pev);
-        }
+        }*/
     }
 
-    public void addMesa(int codigo){
-        JButton boton = new JButton();
-        PanelEspacioVertical pev = new PanelEspacioVertical();
+    public void addMesas(ArrayList<Integer> mesas){
+        JButton boton;
+        PanelEspacioVertical pev;
 
-        boton.setBackground(new java.awt.Color(211, 223, 253));
-        boton.setForeground(new java.awt.Color(80, 98, 143));
-        boton.setFont(new java.awt.Font("Arial", 0, 18));
-        boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(codigo)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
-        boton.setFocusPainted(false);
-        boton.addActionListener(new ManejaEventos(boton,pev));
-        boton.setName(String.valueOf(codigo));
+        centro.removeAll();
+        centro.repaint();
+        
+        for (int i=0;i<mesas.size();i++){
+            boton = new JButton();
+            pev = new PanelEspacioVertical();
+            boton.setBackground(new java.awt.Color(211, 223, 253));
+            boton.setForeground(new java.awt.Color(80, 98, 143));
+            boton.setFont(new java.awt.Font("Arial", 0, 18));
+            boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(mesas.get(i))+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+            boton.setFocusPainted(false);
+            boton.addActionListener(new ManejaEventos(boton,pev));
+            boton.setName(String.valueOf(mesas.get(i)));
 
-        centro.add(boton);
-        centro.add(pev);
+            centro.add(boton);
+            centro.add(pev);
+        }
+
+        centro.repaint();
+        centro.revalidate();
+        
     }
 
     /** This method is called from within the constructor to

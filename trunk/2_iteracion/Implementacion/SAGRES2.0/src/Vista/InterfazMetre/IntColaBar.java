@@ -29,8 +29,8 @@ import utilidades.PanelMesaPedido;
 public class IntColaBar extends javax.swing.JPanel {
 
     public PanelMesaPedido pmp = null;
-    PanelColaFacturas colaIzq = null;
-    PanelColaFacturas colaDer = null;
+    public PanelColaFacturas colaIzq = null;
+    public PanelColaFacturas colaDer = null;
     
     /** Creates new form IntColaBar */
     public IntColaBar(InterfazMetre i) {

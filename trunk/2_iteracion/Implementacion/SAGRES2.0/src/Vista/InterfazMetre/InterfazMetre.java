@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import utilidades.HebraColaPedidos;
+import utilidades.HebraFacturacion;
+import utilidades.HebraPendientes;
 
 /**
  *
@@ -23,6 +25,8 @@ public class InterfazMetre extends javax.swing.JFrame {
     public IntColaBar panelColaBar = null;
 
     HebraColaPedidos hebra = null;
+    HebraPendientes hebra2 = null;
+    HebraFacturacion hebra3 = null;
 
     protected static final String BEBIDA = "Bebida";
     protected static final String COLA = "Cola";
@@ -33,6 +37,8 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar(this);
         this.hebra = new HebraColaPedidos(this);
+        this.hebra2 = new HebraPendientes(this);
+        this.hebra3 = new HebraFacturacion(this);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
