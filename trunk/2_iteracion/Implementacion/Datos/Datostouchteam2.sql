@@ -14,6 +14,25 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 --
+-- Volcar la base de datos para la tabla 'pedido'
+--
+
+INSERT INTO pedido (pedido_id, mesa_id, estado, fecha) VALUES
+(1, 1, 0, '2010-05-11'),
+(2, 1, 0, '2010-05-11');
+
+--
+-- Volcar la base de datos para la tabla 'elementopedido'
+--
+
+INSERT INTO elementopedido (elementoPedido_id, estado, comentario) VALUES
+(1, 0, 'Del tiempo, por favor'),
+(2, 0, 'Muy fria'),
+(3, 0, 'Caliente, por favor'),
+(4, 0, 'Fresquiiisimo'),
+(5, 0, 'En copa grande');
+
+--
 -- Volcar la base de datos para la tabla 'asociabebida'
 --
 
@@ -99,18 +118,6 @@ INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
 -- Volcar la base de datos para la tabla 'elementocolacocina'
 --
 
-
---
--- Volcar la base de datos para la tabla 'elementopedido'
---
-
-INSERT INTO elementopedido (elementoPedido_id, estado, comentario) VALUES
-(1, 0, 'Del tiempo, por favor'),
-(2, 0, 'Muy fria'),
-(3, 0, 'Caliente, por favor'),
-(4, 0, 'Fresquiiisimo'),
-(5, 0, 'En copa grande');
-
 --
 -- Volcar la base de datos para la tabla 'elementoplato'
 --
@@ -170,14 +177,6 @@ INSERT INTO incluyeplato (seccionComida_seccion_seccion_id, elementoPlato_elemen
 (3, 12),
 (4, 13),
 (4, 14);
-
---
--- Volcar la base de datos para la tabla 'pedido'
---
-
-INSERT INTO pedido (pedido_id, mesa_id, estado, fecha) VALUES
-(1, 1, 0, '2010-05-11'),
-(2, 1, 0, '2010-05-11');
 
 --
 -- Volcar la base de datos para la tabla 'pedidoproveedor'
