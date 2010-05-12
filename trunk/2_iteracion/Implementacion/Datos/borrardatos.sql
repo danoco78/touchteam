@@ -1,6 +1,6 @@
 
-
-
+delete from facturapedido where 1;
+delete from factura where 1;
 delete from productobebida where 1;
 delete from productoingrediente where 1;
 delete from producto where 1;
@@ -15,6 +15,8 @@ delete from elementocolabar where 1;
 delete from elementocolacocina where 1;
 delete from elementopedido where 1;
 delete from pedido where 1;
+delete from factura where 1;
+delete from facturapedido where 1;
 
 
 

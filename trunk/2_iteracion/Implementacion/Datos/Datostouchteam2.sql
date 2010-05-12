@@ -190,10 +190,16 @@ INSERT INTO asociaplato (elementoColaCocina_elementoPedido_elementoPedido_id, el
 -- Volcar la base de datos para la tabla 'factura'
 --
 
+INSERT INTO factura(factura_id, estado, fecha) VALUES
+(1, 0,'2010-05-11');
 
 --
 -- Volcar la base de datos para la tabla 'facturapedido'
 --
+
+INSERT INTO facturapedido(pedido_pedido_id, factura_factura_id) VALUES
+(2,1),
+(1,1);
 
 
 --
