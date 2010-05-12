@@ -45,5 +45,8 @@ public interface ICocinero {
     public abstract int getNumPlatosEnCola();
     public abstract ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
     public abstract boolean seleccionaPlato(Pedido p, ElementoColaCocina ele)throws Exception;
+
+
+    public Pedido getSiguientePedidoCocina();
     
 }

@@ -55,13 +55,14 @@ public class HebraColaPedidos implements Runnable {
                         }
                         break;
                     case COCINA:
-                        p = cpadre.icocinero.getSiguientePedidoCocinaEnCola();
+                        //p = cpadre.icocinero.getSiguientePedidoCocinaEnCola();
+                        p = cpadre.icocinero.getSiguientePedidoCocina();
                         if (p == actual) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
                             cpadre.panelColaCocinero.pmpizq.addPedido(actual);
-                            cpadre.panelColaCocinero.actualizarVista();
+                            //cpadre.panelColaCocinero.actualizarVista();
                         }
                         break;
                 }
