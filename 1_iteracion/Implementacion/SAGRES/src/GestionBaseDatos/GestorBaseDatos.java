@@ -177,7 +177,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
 
             actualizacion.executeUpdate();//Actualizamos el ElementoPlato
 
-            actualizacion = this.Conexion.prepareStatement("UPDATE elementoplato SET tiempo_elaboracion=? where elemento_elemento_id='" + codigoElemento + "'");
+            actualizacion = this.Conexion.prepareStatement("UPDATE elementoPlato SET tiempo_elaboracion=? where elemento_elemento_id='" + codigoElemento + "'");
+            actualizacion.setInt(1, elemento.getTiempoElaboracion());
             actualizacion.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,7 +315,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                     listaBebida.put(bebida, cantidad);
                 }
                 // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                 listaElementos.add(elemento);
             }
 
@@ -333,7 +334,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                     listaIngredientes.put(ingrediente, cantidad);
                 }
                 // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                 listaElementos.add(elemento);
             }
         } catch (SQLException ex) {
@@ -364,7 +365,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaBebida.put(bebida, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -386,7 +387,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaIngredientes.put(ingrediente, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -418,7 +419,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaBebida.put(bebida, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementos.add(elemento);
                 }
             } else {
@@ -438,7 +439,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaIngredientes.put(ingrediente, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -573,7 +574,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaBebida.put(bebida, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementosB.add(elemento);
                 }
                 SeccionBebida seccion = new SeccionBebida(datosSeccion.getInt(1), datosSeccion.getString(2), carta, listaElementosB);
@@ -601,7 +602,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD {
                         listaIngredientes.put(ingrediente, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementosP.add(elemento);
                 }
                 SeccionComida seccion = new SeccionComida(datosSeccion.getInt(1), datosSeccion.getString(2), carta, listaElementosP);
