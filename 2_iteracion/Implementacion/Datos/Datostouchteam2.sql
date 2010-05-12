@@ -44,22 +44,6 @@ INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
 (5);
 
 --
--- Volcar la base de datos para la tabla 'asociabebida'
---
-
-INSERT INTO asociabebida (elementoColaBar_elementoPedido_elementoPedido_id, elementoBebida_elemento_elemento_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
-
---
--- Volcar la base de datos para la tabla 'asociaplato'
---
-
-
---
 -- Volcar la base de datos para la tabla 'carta'
 --
 
@@ -131,6 +115,21 @@ INSERT INTO elementoplato (elemento_elemento_id, tiempo_elaboracion) VALUES
 (12, 20),
 (13, 3),
 (14, 2);
+
+--
+-- Volcar la base de datos para la tabla 'asociabebida'
+--
+
+INSERT INTO asociabebida (elementoColaBar_elementoPedido_elementoPedido_id, elementoBebida_elemento_elemento_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
+
+--
+-- Volcar la base de datos para la tabla 'asociaplato'
+--
 
 --
 -- Volcar la base de datos para la tabla 'factura'
