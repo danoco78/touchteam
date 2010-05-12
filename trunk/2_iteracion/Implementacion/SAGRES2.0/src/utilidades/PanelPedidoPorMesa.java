@@ -31,16 +31,14 @@ import javax.swing.JPanel;
  */
 public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
-    public static final int PLATO = 0;
-    public static final int BEBIDA = 1;
-    int filtro;
+
     Pedido ped;
     public PreparandosePanel prepPanel = null;
     JPanel papa = null;
     PanelEspacioVertical pe = null;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, int filtro, PreparandosePanel padre, JPanel papa,
+    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, JPanel papa,
             PanelEspacioVertical pe) {
 
         this.pe = pe;
@@ -49,7 +47,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         initComponents();
         this.ped = ped;
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
-        this.filtro = filtro;
+
         this.autoCompletar();
     }
 
@@ -63,7 +61,6 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
         ArrayList<ElementoPedido> lista = ped.obtieneElementos();
         for(int i=0; i<lista.size(); ++i){
-            if(filtro == PLATO){
                 if(lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
                     BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
                     b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.interfaz
@@ -71,13 +68,6 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                     pPedidos.add(b);
                     this.pPedidos.add(new PanelEspacioVertical());
                 }
-            }else{
-                if(lista.get(i) instanceof ElementoColaBar){
-                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
-                    pPedidos.add(b);
-                    this.pPedidos.add(new PanelEspacioVertical());
-                }
-            }
         }
     }
 
