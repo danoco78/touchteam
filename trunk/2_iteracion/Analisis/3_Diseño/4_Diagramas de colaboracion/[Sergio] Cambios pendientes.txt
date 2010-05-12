@@ -1,4 +1,12 @@
-1. Para reducir la cantidad de cada producto, se llama a getProductos
- de elemento "elemento->getProductos()"devuelve un hashMap<Producto,float>
- con producto y cantidad.
-__________________________________________
+Nueva consulta para obtener pedidos no facturados:
+
+SELECT pedido_id, mesa_id, pedido.estado, fecha FROM pedido, tieneElemento,
+ elementoPedido, elementoColaBar WHERE pedido.estado <> 2 AND 
+pedido_id = pedido_pedido_id AND
+ tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id AND
+ elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id AND
+ elementoPedido.estado =0 GROUP BY pedido_id 
+HAVING COUNT( elementoColaBar.elementoPed ido_id ) >0
+
+trae los codigos de los pedidos k tiene algun elementoColaBar sin preparar
+y si pasamos un filtro pos podemos cambiarlo pa k mire los elementoColaCocina
