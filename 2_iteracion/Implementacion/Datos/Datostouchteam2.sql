@@ -30,7 +30,12 @@ INSERT INTO elementopedido (elementoPedido_id, estado, comentario) VALUES
 (2, 0, 'Muy fria'),
 (3, 0, 'Caliente, por favor'),
 (4, 0, 'Fresquiiisimo'),
-(5, 0, 'En copa grande');
+(5, 0, 'En copa grande'),
+(6, 0, 'Poco hecha'),
+(7, 0, 'Muy hecha'),
+(8, 0, 'Sin patatas'),
+(9, 0, 'Sin salsa'),
+(10, 0, 'Sin ketchup');
 
 --
 -- Volcar la base de datos para la tabla 'elementocolabar'
@@ -42,6 +47,17 @@ INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
 (3),
 (4),
 (5);
+
+--
+-- Volcar la base de datos para la tabla 'elementocolacocina'
+--
+
+INSERT INTO elementocolacocina (elementoPedido_elementoPedido_id) VALUES
+(6),
+(7),
+(8),
+(9),
+(10);
 
 --
 -- Volcar la base de datos para la tabla 'carta'
@@ -161,6 +177,14 @@ INSERT INTO asociabebida (elementoColaBar_elementoPedido_elementoPedido_id, elem
 --
 -- Volcar la base de datos para la tabla 'asociaplato'
 --
+
+
+INSERT INTO asociaplato (elementoColaCocina_elementoPedido_elementoPedido_id, elementoPlato_elemento_elemento_id) VALUES
+(6, 7),
+(7, 8),
+(8, 9),
+(9, 10),
+(10, 11);
 
 --
 -- Volcar la base de datos para la tabla 'factura'
@@ -335,8 +359,13 @@ INSERT INTO tieneelemento (elementoPedido_elementoPedido_id, pedido_pedido_id) V
 (1, 1),
 (2, 1),
 (3, 1),
+(6, 1),
+(7, 1),
 (4, 2),
-(5, 2);
+(5, 2),
+(8, 2),
+(9, 2),
+(10, 2);
 
 --
 -- Volcar la base de datos para la tabla 'tienefactura'
