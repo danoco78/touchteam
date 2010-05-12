@@ -33,6 +33,17 @@ INSERT INTO elementopedido (elementoPedido_id, estado, comentario) VALUES
 (5, 0, 'En copa grande');
 
 --
+-- Volcar la base de datos para la tabla 'elementocolabar'
+--
+
+INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
+(1),
+(2),
+(3),
+(4),
+(5);
+
+--
 -- Volcar la base de datos para la tabla 'asociabebida'
 --
 
@@ -102,17 +113,6 @@ INSERT INTO elementobebida (elemento_elemento_id) VALUES
 (4),
 (5),
 (6);
-
---
--- Volcar la base de datos para la tabla 'elementocolabar'
---
-
-INSERT INTO elementocolabar (elementoPedido_elementoPedido_id) VALUES
-(1),
-(2),
-(3),
-(4),
-(5);
 
 --
 -- Volcar la base de datos para la tabla 'elementocolacocina'
