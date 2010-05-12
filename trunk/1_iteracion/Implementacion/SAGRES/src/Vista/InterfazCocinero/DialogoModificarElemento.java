@@ -724,7 +724,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                         + "\nDescripción: " + this.tDescripcion.getText()
                         + "\nPrecio: " + ((Float) this.tPrecio.getValue())
                         + "\nPorciones: " + ((Integer) this.tPorciones.getValue())
-                        + "\nPorciones: " + ((Integer) this.tTiempo.getValue());
+                        + "\nTiempo de elaboración: " + ((Integer) this.tTiempo.getValue());
                 texto += "\n Esta compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
