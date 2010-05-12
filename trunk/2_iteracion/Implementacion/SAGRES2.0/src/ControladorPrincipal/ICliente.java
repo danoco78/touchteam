@@ -30,5 +30,5 @@ public interface ICliente {
 
     public abstract ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
 
-    //public abstract void eliminaPedido(int codPedido);
+    public abstract boolean eliminaPedido(int codPedido);
 }

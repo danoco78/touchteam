@@ -25,6 +25,7 @@ public interface IPedidosBD {
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
     public void actualizaFactura(Factura f);
     public boolean nuevoPedido(Pedido pedido);
+    public boolean eliminaPedido(int codPedido);
 
     // TODO No esta reflejada en el diseño
     public Pedido getSiguientePedidoBar();
