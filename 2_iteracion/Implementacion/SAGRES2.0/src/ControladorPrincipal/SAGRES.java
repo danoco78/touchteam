@@ -219,4 +219,12 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public boolean eliminaPedido(int codPedido){
         return this.ipedidos.eliminaPedido(codPedido);
     }
+
+    public Pedido getSiguientePedidoCocina() {
+       return this.ipedidos.getSiguientePedidoCocina();
+    }
+
+    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento, String>> elems) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
