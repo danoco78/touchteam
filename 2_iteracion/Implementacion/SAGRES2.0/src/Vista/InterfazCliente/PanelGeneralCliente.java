@@ -85,7 +85,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         this.panelRealizarPedido = new PanelRealizarPedido(this);
         this.PanelGeneralEste.add(panelRealizarPedido,"RealizarPedido");
-        this.panelPedidoRealizado = new PanelPedidoRealizado(this);
+        this.panelPedidoRealizado = new PanelPedidoRealizado(this, codMesa);
         this.PanelGeneralEste.add(panelPedidoRealizado,"PedidoRealizado");
 
         ((CardLayout) PanelGeneralEste.getLayout()).show(PanelGeneralEste, "RealizarPedido");
@@ -698,9 +698,9 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             dialogo.setLocationRelativeTo(interfazCliente);
             dialogo.show();
 
-            if(dialogo.isAceptado()){
-                ArrayList<Pedido> listaPedidos = this.icliente.getPedidos(1);
-            }
+            /*if(dialogo.isAceptado()){
+                ArrayList<Pedido> listaPedidos = this.icliente.getPedidosModificablesMesa(1);
+            }*/
     }
 
 }

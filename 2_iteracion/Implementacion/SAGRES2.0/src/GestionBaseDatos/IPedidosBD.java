@@ -20,7 +20,7 @@ public interface IPedidosBD {
     public int getNumBebidasEnCola();
     public void actualizaPedido(Pedido p);
     public Factura getFactura(int codMesa);
-    public ArrayList<Pedido> getPedidos(int codMesa);
+    public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
     public void actualizaFactura(Factura f);
     public boolean nuevoPedido(Integer codMesa, ArrayList<ElementoPedido> elems);
 
