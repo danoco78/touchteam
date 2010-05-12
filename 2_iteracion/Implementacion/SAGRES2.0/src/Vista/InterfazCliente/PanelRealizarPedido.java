@@ -14,6 +14,7 @@ package Vista.InterfazCliente;
 import GestionCarta.Elemento;
 import GestionCarta.ElementoPlato;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Pedido;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,12 +29,14 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
     ArrayList<Pair<Elemento,String> > listaElementosComentarios;
+    private int codPedidoActivo;
 
     /** Creates new form PanelRealizarPedido */
     public PanelRealizarPedido(PanelGeneralCliente panelGeneralCliente) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
         this.listaElementosComentarios = new ArrayList();
+        this.codPedidoActivo=-1;
     }
 
     /** This method is called from within the constructor to
@@ -89,6 +92,10 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         this.listaElementosComentarios.remove(panelElementoPedido.elemento);
         this.repaint();
         this.revalidate();
+
+        if(this.codPedidoActivo!=-1 && this.listaElementosComentarios.isEmpty()){
+            this.panelGeneralCliente.eliminarPedido(codPedidoActivo);
+        }
     }
 
     public int getNumElementos() {
@@ -102,6 +109,10 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     public void limpiar() {
         this.listaElementosComentarios=new ArrayList();
         this.PanelElementosPedido.removeAll();
+    }
+
+    public int getCodPedidoActivo() {
+        return this.codPedidoActivo;
     }
 
 }

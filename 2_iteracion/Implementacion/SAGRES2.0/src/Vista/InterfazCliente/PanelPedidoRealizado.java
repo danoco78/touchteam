@@ -25,11 +25,12 @@ import java.util.Iterator;
 public class PanelPedidoRealizado extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
+    private int codMesa;
     /** Creates new form PanelPedidoRealizado */
     public PanelPedidoRealizado(PanelGeneralCliente panelGeneralCliente, int codMesa) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
-        ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.getPedidosModificablesMesa(codMesa);
+        this.codMesa=codMesa;
     }
 
     /** This method is called from within the constructor to
@@ -64,8 +65,30 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPedido;
     // End of variables declaration//GEN-END:variables
 
-    public void anadirPedido(ArrayList<Elemento> listaElementos) {
-        this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente));
+    public void anadirPedido(ArrayList<Elemento> listaElementos, int codPedido) {
+        this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente,codPedido));
+    }
+
+    public int actualizar() {
+
+        ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.getPedidosModificablesMesa(codMesa);
+        ArrayList<ElementoPedido> listaElementosPedido = new ArrayList();
+        ArrayList<Elemento> listaElementos = new ArrayList();
+        Iterator itPedidos = pedidos.iterator();
+        while(itPedidos.hasNext()){
+            Pedido pedido = (Pedido) itPedidos.next();
+            listaElementosPedido = pedido.obtieneElementos();
+
+            Iterator itElementos = listaElementosPedido.iterator();
+            while(itElementos.hasNext()){
+                ElementoPedido elementoPedido = (ElementoPedido) itElementos.next();
+                listaElementos.add(elementoPedido.getElemento());
+            }
+
+            this.anadirPedido(listaElementos,pedido.getCodPedido());
+        }
+
+        return pedidos.size();
     }
 
 }
