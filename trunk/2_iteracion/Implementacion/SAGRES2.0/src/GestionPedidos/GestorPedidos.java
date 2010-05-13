@@ -211,7 +211,7 @@ public class GestorPedidos implements IGestorPedidos {
                 ElementoPedido ep = (ElementoPedido)ite2.next();
                 if(ep instanceof ElementoColaCocina ){ //Si es ColaCocina
                      estado = ep.getEstado();
-                     if(estado == ElementoColaCocina.PREPARADO ) romper = true;
+                     if(estado == ElementoColaCocina.PREPARANDOSE ) romper = true;
                 }
             }
             if(romper){
@@ -234,11 +234,10 @@ public class GestorPedidos implements IGestorPedidos {
 
         if(existe){
             estado = ele.getEstado();
-            if(estado == ElementoColaBar.ENCOLA){
+            if(estado == ElementoColaCocina.ENCOLA){
                 p.setEstado(Pedido.BLOQUEADO); //Cambiamos los estados
-                ele.setEstado(ElementoColaBar.PREPARADO);
+                ele.setEstado(ElementoColaCocina.PREPARANDOSE);
                 this.iPedidosBD.actualizaPedido(p);
-                //elem = new ElementoPlato(ele.getElemento(),10); Alternativa pachanguera
                 elem = (ElementoPlato) ele.getElemento();
                 prods = elem.getProductos();
                 Iterator ite = prods.entrySet().iterator();
@@ -251,6 +250,9 @@ public class GestorPedidos implements IGestorPedidos {
                     cantidad = (Float)entrada.getValue();
                     this.iProducto.restarCantidadProducto(prod,cantidad);
                 }
+            }
+            else if(estado == ElementoColaCocina.PREPARANDOSE){
+                ele.setEstado(ElementoColaCocina.PREPARADO);
             }
             else{
                 exito = false;
