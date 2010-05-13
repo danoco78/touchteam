@@ -6,7 +6,6 @@
 package ControladorPrincipal;
 
 import GestionCarta.Elemento;
-import GestionCarta.ElementoBebida;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;

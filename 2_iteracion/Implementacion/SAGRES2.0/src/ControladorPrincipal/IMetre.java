@@ -28,15 +28,14 @@ public interface IMetre {
     public abstract HashSet<Producto> obtenerBebidas();
     public abstract HashSet<Elemento> obtieneElementosConProducto(Producto pro);
 
-    public abstract void confirmaPagoFactura(int codMesa);
-    public abstract void imprimeFactura(int codMesa);
     public abstract int getNumBebidasEnCola();
     public abstract Pedido getSiguientePedidoBar()throws Exception;
     public abstract boolean seleccionaBebida(Pedido pe, ElementoColaBar e)throws Exception;
 
     public Factura getFactura(int codMesa);
-
     public ArrayList<Integer> getFacturasEnCola();
     public ArrayList<Integer> getFacturasImprimidas();
+    public abstract void confirmaPagoFactura(int codMesa);
+    public abstract void imprimeFactura(int codMesa);
     
 }
