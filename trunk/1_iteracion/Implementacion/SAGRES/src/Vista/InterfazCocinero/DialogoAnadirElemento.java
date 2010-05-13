@@ -48,8 +48,10 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private IPreparaCarta carta;*/
     private ICocinero icocinero;
     private ArrayList<Producto> disponibles;
+    private ArrayList<Producto> disponiblesSel;
     private ArrayList seleccionados;
     private ArrayList<Seccion> listaSecciones;
+    private ArrayList<Producto> listaProductos;
 
 
     /** Creates new form DialogoAnadirElemento */
@@ -511,6 +513,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pProductosDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         tFiltro.setText("Escriba aquí para filtrar");
+        tFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tFiltroMouseClicked(evt);
+            }
+        });
         tFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tFiltroKeyReleased(evt);
@@ -721,9 +728,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 Iterator<Seccion> it = listaSecciones.iterator();
                 for(int i = 0; i< this.bSeccion.getSelectedIndex(); i++ ) it.next();
                 Seccion sec = it.next();
-                HashSet<Producto> listaProductos = this.icocinero.obtieneProductosSeccion(sec);
+                listaProductos = new ArrayList(this.icocinero.obtieneProductosSeccion(sec));
+                Collections.sort(listaProductos);
                 Iterator<Producto> itpro = listaProductos.iterator();
                 disponibles = new ArrayList<Producto>(listaProductos);
+                this.disponiblesSel = disponibles;
                 DefaultTableModel modelo = new DefaultTableModel();
                 modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
                 modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
@@ -836,8 +845,9 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private void seleccionaProducto(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionaProducto
         int select = this.tProductosDisponibles.getSelectedRow();
         if (select != -1) {
-            Producto productoSeleccionado = (Producto) this.disponibles.get(select);
-            this.disponibles.remove(select);
+            //Producto productoSeleccionado = (Producto) this.disponibles.get(select);
+            Producto productoSeleccionado = (Producto) this.disponiblesSel.get(select);
+            this.disponiblesSel.remove(select);
             ((DefaultTableModel) this.tProductosDisponibles.getModel()).removeRow(select);
             this.seleccionados.add(productoSeleccionado);
             Object[] obj = new Object[3];
@@ -881,7 +891,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             Producto productoSeleccionado = (Producto) this.seleccionados.get(select);
             this.seleccionados.remove(select);
             ((DefaultTableModel) this.tProductosAsociados.getModel()).removeRow(select);
-            this.disponibles.add(productoSeleccionado);
+            this.disponiblesSel.add(productoSeleccionado);
             Object[] obj = new Object[3];
             obj[0] = productoSeleccionado.getNombre();
             obj[1] = productoSeleccionado.getCantidad();
@@ -891,6 +901,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     }//GEN-LAST:event_BorrarAsociados
 
     private void tFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFiltroKeyReleased
+        // Array temporal con los productos mostrados tras filtrar
+        this.disponiblesSel = new ArrayList<Producto>();
         Iterator<Producto> iterador = disponibles.iterator();
        
         for (int j = this.tProductosDisponibles.getRowCount() - 1; j >= 0 ; j--){
@@ -906,9 +918,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 obj[1] = producto.getCantidad();
                 obj[2] = producto.getImagen();
                 ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
+                this.disponiblesSel.add(producto);
             }
         }
     }//GEN-LAST:event_tFiltroKeyReleased
+
+    private void tFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tFiltroMouseClicked
+        this.tFiltro.setText("");
+    }//GEN-LAST:event_tFiltroMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
