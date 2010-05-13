@@ -119,6 +119,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pProductosDisponibles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tProductosDisponibles = new javax.swing.JTable();
+        tFiltro = new javax.swing.JTextField();
         pAtributoPlato2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tProductosAsociados = new javax.swing.JTable();
@@ -509,6 +510,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         pProductosDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        tFiltro.setText("Escriba aquí para filtrar");
+        tFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tFiltroKeyReleased(evt);
+            }
+        });
+        pProductosDisponibles.add(tFiltro, java.awt.BorderLayout.PAGE_START);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -520,9 +529,9 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pAtributoPlato2.setBackground(new java.awt.Color(255, 255, 255));
         pAtributoPlato2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Productos asociados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
         pAtributoPlato2.setForeground(new java.awt.Color(80, 98, 143));
-        pAtributoPlato2.setMinimumSize(new java.awt.Dimension(450, 250));
+        pAtributoPlato2.setMinimumSize(new java.awt.Dimension(450, 200));
         pAtributoPlato2.setOpaque(false);
-        pAtributoPlato2.setPreferredSize(new java.awt.Dimension(450, 250));
+        pAtributoPlato2.setPreferredSize(new java.awt.Dimension(450, 200));
         pAtributoPlato2.setLayout(new java.awt.BorderLayout());
 
         jScrollPane3.setOpaque(false);
@@ -551,8 +560,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             }
         });
         tProductosAsociados.setGridColor(new java.awt.Color(211, 223, 253));
-        tProductosAsociados.setMinimumSize(new java.awt.Dimension(450, 250));
-        tProductosAsociados.setPreferredSize(new java.awt.Dimension(450, 250));
+        tProductosAsociados.setMinimumSize(new java.awt.Dimension(450, 200));
+        tProductosAsociados.setPreferredSize(new java.awt.Dimension(450, 200));
         tProductosAsociados.getTableHeader().setResizingAllowed(false);
         tProductosAsociados.getTableHeader().setReorderingAllowed(false);
         tProductosAsociados.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -881,6 +890,26 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         }
     }//GEN-LAST:event_BorrarAsociados
 
+    private void tFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFiltroKeyReleased
+        Iterator<Producto> iterador = disponibles.iterator();
+       
+        for (int j = this.tProductosDisponibles.getRowCount() - 1; j >= 0 ; j--){
+            ((DefaultTableModel) this.tProductosDisponibles.getModel()).removeRow(j);
+        }
+       
+        while(iterador.hasNext()){
+            Producto producto = iterador.next();
+
+            if (producto.getNombre().toLowerCase().contains(this.tFiltro.getText().toLowerCase())){
+                Object[] obj = new Object[3];
+                obj[0] = producto.getNombre();
+                obj[1] = producto.getCantidad();
+                obj[2] = producto.getImagen();
+                ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
+            }
+        }
+    }//GEN-LAST:event_tFiltroKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
     private javax.swing.JButton bAnterior;
@@ -917,6 +946,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private javax.swing.JPanel pie;
     private javax.swing.JScrollPane scrollTabla;
     private javax.swing.JTextArea tDescripcion;
+    private javax.swing.JTextField tFiltro;
     private javax.swing.JTextField tNombre;
     private javax.swing.JFormattedTextField tPorciones;
     private javax.swing.JFormattedTextField tPrecio;
