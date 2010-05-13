@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  * @author Jose David Dionisio Ruiz
  */
-public class Producto {
+public class Producto implements Comparable {
     private float cantidad;
     private int codPro;
     private float maximo;
@@ -155,4 +155,11 @@ public class Producto {
 
         return false;
     }
+
+    public int compareTo(Object o) {
+        Producto producto = (Producto)o;
+
+        return this.nombre.compareTo(producto.getNombre());
+    }
+
 }
