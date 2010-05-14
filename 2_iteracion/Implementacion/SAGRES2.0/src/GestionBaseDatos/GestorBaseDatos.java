@@ -827,58 +827,61 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
     }
     public ArrayList<Pedido> obtienePedidosNoFacturados(){
         ArrayList<Pedido> noFacturados = new ArrayList<Pedido>();
-        ResultSet resultado;
+
         ElementoPedido elemPed = null;
         try {
             Statement consulta = (Statement) this.Conexion.createStatement();
-            resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
-            ResultSet resElemPed;
+            ResultSet resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
  
             while (resultado.next()) {
-                Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
+                int codPedido = resultado.getInt(1);
+                Pedido p = new Pedido(codPedido, resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
-                resElemPed = consulta2.executeQuery("SELECT elementoPedido_id, estado, " +
+                ResultSet resElemPed = consulta2.executeQuery("SELECT elementoPedido_id, estado, " +
                         "comentario FROM elementopedido WHERE elementoPedido_id IN (SELECT elementoPedido_elementoPedido_id " +
-                        "FROM tieneelemento WHERE pedido_pedido_id = "+resultado.getInt(1)+")");
+                        "FROM tieneelemento WHERE pedido_pedido_id = "+codPedido+")");
 
                 while(resElemPed.next()){
                     
                     elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
                             resElemPed.getString(3));
-                    System.out.println("resultado es nulo3");
-                    //TODO Resolver esta consulta
-                    ResultSet resElem = consulta.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible," +
-                            " foto, divi, divi_max, precio FROM elemento " +
-                            "WHERE elemento_id IN " +
+                    ResultSet resElem = consulta.executeQuery("SELECT elemento_id, nombre, descripcion, disponible, " +
+                            "foto, divi, divi_max, precio,tiempo_elaboracion FROM elemento, elementoplato " +
+                            "WHERE elemento_elemento_id = elemento_id AND elemento_id IN " +
                             "( SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id IN " +
-                            "( SELECT elementoPedido_elementoPedido_id FROM elementocolacocina WHERE elementoPedido_elementoPedido_id IN " +
+                            "( SELECT elementoPedido_elementoPedido_id FROM elementocolacocina " +
+                            "WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementoPedido)))");
                     if(resElem.next()){
-                        Elemento elemento = new Elemento(resElem.getInt(1), resElem.getString(2),
+                        int codElemPlato = resElem.getInt(1);
+                        ElementoPlato elemento = new ElementoPlato(codElemPlato, resElem.getString(2),
                                 resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
-                                ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8));
-                        System.out.println("resultado es nulo 5");
+                                ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8),resElem.getInt(9));
+
                         ResultSet  resProds = consulta.executeQuery( "SELECT producto_id," +
                                 " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
                                 "( SELECT productoIngrediente_producto_producto_id " +
                                 "FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
-                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+resElem.getInt(1) + ") ) ");
-                        System.out.println("resultado es nulo4");
+                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+codElemPlato + ") ) ");
+    
                         while(resProds.next()){
-                            Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
+                            int codIngrediente = resProds.getInt(1);
+                            Ingrediente prod = new Ingrediente(codIngrediente,resProds.getString(2),
                                     resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
-                                    Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int)resElem.getBlob(6).length())));
+                                    Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int)resProds.getBlob(6).length())));
+
+                            ResultSet resCantidad = consulta.executeQuery("Select cantidad FROM tieneingrediente " +
+                                    "WHERE elementoComida_elemento_elemento_id = " + codElemPlato +
+                                    " AND productoIngrediente_producto_producto_id = " + codIngrediente);
                             //TODO Corregir error con la cantidad
-                            ((ElementoPlato)elemento).asocia(prod, new Float(10.0));
+                            resCantidad.next();
+                            elemento.asocia(prod, resCantidad.getFloat(1));
                         }
                         elemPed.asocia(elemento);
                      }
-                    resElem.close();
-                     System.out.println("resultado es nulo 6");
+        
                 }
-
-
                     if(elemPed instanceof ElementoColaCocina) //Si es ColaCocina
                          p.asocia((ElementoColaCocina)elemPed);
             }

@@ -41,7 +41,12 @@ public class IntColaCocinero extends javax.swing.JPanel {
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
         this.listaPedidos = new ArrayList();
-        //this.actualizarVista();
+        try {
+            //this.actualizarVista();
+            interfaz.icocinero.getPedidosCocinaPreparandose();
+        } catch (Exception ex) {
+            Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -148,7 +153,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
 
         int codPed = p.getCodPedido(),pos = -1;
-        System.out.println("codPed es: " + codPed);
         boolean encontrado = false;
         for(int i=0;i<listaPedidos.size() && !encontrado ;i++){
             if(listaPedidos.get(i).getCodPedido() == codPed){
