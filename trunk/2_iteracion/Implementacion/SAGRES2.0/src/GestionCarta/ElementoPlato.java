@@ -22,6 +22,11 @@ public class ElementoPlato extends Elemento {
         this.tiempoElaboracion = tiempoElaboracion;
     }
 
+    public ElementoPlato(int codigo, String nombre, String descripcion, boolean disponible, ImageIcon foto, int divi, int divisionesMaximas ,  float precio,int tiempoElaboracion) {
+        super(codigo,nombre, descripcion, disponible,foto, divi, divisionesMaximas, precio);
+        this.tiempoElaboracion = tiempoElaboracion;
+        this.listaIngredientes = new HashMap<Ingrediente,Float>();
+    }
     public void modifica(String nombre, String descripcion, ImageIcon foto, int tiempo, float precio, int divisionesMaximas){
         this.setNombre(nombre);
         this.setDescripcion(descripcion);
@@ -35,6 +40,7 @@ public class ElementoPlato extends Elemento {
         super(ele.getCodigoElemento(), ele.getDescripcion(), ele.getDivisionesMaximas(), ele.getFoto(),
                 ele.getNombre(), ele.getPrecio());
         this.tiempoElaboracion = tiempo_elaboracion;
+        this.listaIngredientes = new HashMap<Ingrediente,Float>();
     }
 
     public int getTiempoElaboracion() {
