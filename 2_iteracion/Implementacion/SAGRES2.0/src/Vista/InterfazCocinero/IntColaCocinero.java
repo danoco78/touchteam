@@ -42,11 +42,17 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         this.listaPedidos = new ArrayList();
         try {
-            //this.actualizarVista();
-            interfaz.icocinero.getPedidosCocinaPreparandose();
+            listaPedidos = this.interfaz.icocinero.getPedidosCocinaPreparandose();
+            System.out.println("Hay " + listaPedidos.size() + " pedidos preparandose.");
         } catch (Exception ex) {
-            Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
+        if(!listaPedidos.isEmpty()){
+            this.pmpder.autoCompletar(listaPedidos);
+            this.pmpder.repaint();
+            this.pmpder.revalidate();
+        }
+
     }
 
     @Override

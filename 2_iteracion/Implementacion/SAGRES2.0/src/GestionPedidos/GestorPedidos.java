@@ -197,6 +197,7 @@ public class GestorPedidos implements IGestorPedidos {
 
     public ArrayList<Pedido> getPedidosCocinaPreparandose() throws Exception{
         ArrayList<Pedido> noFacturados = this.iPedidosBD.obtienePedidosNoFacturados();
+        System.out.println("Hay " + noFacturados.size() + " pedidos no facturados.");
         ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
         ArrayList<ElementoPedido> elementos = new ArrayList<ElementoPedido>();
         Iterator<Pedido> ite = noFacturados.iterator();
@@ -218,8 +219,8 @@ public class GestorPedidos implements IGestorPedidos {
                 pedidos.add(p);
             }
         }
-        if(pedidos.isEmpty())
-            throw new Exception("No hay pedidos preparándose en la cola de cocina");
+        /*if(pedidos.isEmpty())
+            throw new Exception("No hay pedidos preparándose en la cola de cocina");*/
         return pedidos;
     }
 
