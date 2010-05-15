@@ -834,18 +834,22 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             ResultSet resultado = consulta.executeQuery("SELECT pedido_id, mesa_id, estado, fecha FROM pedido WHERE estado <> 2");
  
             while (resultado.next()) {
-                int codPedido = resultado.getInt(1);
-                Pedido p = new Pedido(codPedido, resultado.getInt(2),
+                System.out.println("Aqui entro 1.");
+                Pedido p = new Pedido(resultado.getInt(1), resultado.getInt(2),
                         resultado.getInt(3),resultado.getDate(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
                 ResultSet resElemPed = consulta2.executeQuery("SELECT elementoPedido_id, estado, " +
                         "comentario FROM elementopedido WHERE elementoPedido_id IN (SELECT elementoPedido_elementoPedido_id " +
-                        "FROM tieneelemento WHERE pedido_pedido_id = "+codPedido+")");
+                        "FROM tieneelemento WHERE pedido_pedido_id = "+p.getCodPedido()+")");
 
                 while(resElemPed.next()){
-                    
+
                     elemPed = new ElementoPedido(resElemPed.getInt(1),resElemPed.getInt(2),
                             resElemPed.getString(3));
+                    System.out.println("Creo un elementoPedido con  codigo: " +
+                            elemPed.getCodElementoPedido() + " , estado = " +
+                            elemPed.getEstado() + " comentario: " +
+                            elemPed.getComentario());
                     ResultSet resElem = consulta.executeQuery("SELECT elemento_id, nombre, descripcion, disponible, " +
                             "foto, divi, divi_max, precio,tiempo_elaboracion FROM elemento, elementoplato " +
                             "WHERE elemento_elemento_id = elemento_id AND elemento_id IN " +
@@ -854,8 +858,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                             "WHERE elementoPedido_elementoPedido_id IN " +
                             "( SELECT elementoPedido_id FROM elementoPedido)))");
                     if(resElem.next()){
-                        int codElemPlato = resElem.getInt(1);
-                        ElementoPlato elemento = new ElementoPlato(codElemPlato, resElem.getString(2),
+                        ElementoPlato elemento = new ElementoPlato(resElem.getInt(1), resElem.getString(2),
                                 resElem.getString(3), resElem.getBoolean(4),Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(5)).getBytes(1, (int)resElem.getBlob(5).length()))
                                 ,resElem.getInt(6), resElem.getInt(7),resElem.getFloat(8),resElem.getInt(9));
 
@@ -863,18 +866,18 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                                 " nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " +
                                 "( SELECT productoIngrediente_producto_producto_id " +
                                 "FROM tieneingrediente WHERE elementoComida_elemento_elemento_id IN " +
-                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+codElemPlato + ") ) ");
+                                "(SELECT elemento_elemento_id FROM elementoplato WHERE elemento_elemento_id = "+elemento.getCodigoElemento()+ ") ) ");
     
                         while(resProds.next()){
-                            int codIngrediente = resProds.getInt(1);
-                            Ingrediente prod = new Ingrediente(codIngrediente,resProds.getString(2),
+   
+                            Ingrediente prod = new Ingrediente(resProds.getInt(1),resProds.getString(2),
                                     resProds.getInt(3),resProds.getInt(4),resProds.getInt(5),
                                     Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int)resProds.getBlob(6).length())));
 
-                            ResultSet resCantidad = consulta.executeQuery("Select cantidad FROM tieneingrediente " +
-                                    "WHERE elementoComida_elemento_elemento_id = " + codElemPlato +
-                                    " AND productoIngrediente_producto_producto_id = " + codIngrediente);
-                            //TODO Corregir error con la cantidad
+                           ResultSet resCantidad = consulta.executeQuery("Select cantidad FROM tieneingrediente " +
+                                    "WHERE elementoComida_elemento_elemento_id = " + elemento.getCodigoElemento() +
+                                    " AND productoIngrediente_producto_producto_id = " + prod.getCodPro());
+
                             resCantidad.next();
                             elemento.asocia(prod, resCantidad.getFloat(1));
                         }
@@ -888,7 +891,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
         } catch (SQLException ex) {
             //System.err.println("Error al obtener los pedidos no facturados");
-            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
         return noFacturados;
