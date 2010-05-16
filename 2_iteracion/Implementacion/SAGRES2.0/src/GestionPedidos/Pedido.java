@@ -77,4 +77,8 @@ public class Pedido {
     public ArrayList<ElementoPedido> getElementos() {
         return this.elementos;
     }
+
+    public boolean equals(Pedido p){
+        return this.codPedido == p.getCodPedido();
+    }
 }
