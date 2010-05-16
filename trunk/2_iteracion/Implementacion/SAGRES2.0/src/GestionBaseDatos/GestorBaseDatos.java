@@ -961,7 +961,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         Factura fac = null;
         try{
             Statement consulta = (Statement) this.Conexion.createStatement();
-            ResultSet factura = consulta.executeQuery("SELECT factura_id,estado,fecha FROM factura,facturapedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND estado = 1");
+            ResultSet factura = consulta.executeQuery("SELECT factura_id,factura.estado,factura.fecha FROM factura,facturapedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND pedido.estado = 1");
             factura.next();
             fac = new Factura(factura.getInt(1),factura.getInt(2),factura.getDate(3));
             ArrayList<Pedido> pedidos = this.getPedidosModificablesMesa(codMesa);
