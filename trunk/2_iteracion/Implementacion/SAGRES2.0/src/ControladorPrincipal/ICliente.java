@@ -31,7 +31,7 @@ public interface ICliente {
 
     public abstract boolean eliminaPedido(int codPedido);
 
-    public abstract boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido);
+    public abstract boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento, String> > elementosPedido);
     
     public abstract Factura pideFactura(int codMesa);
 

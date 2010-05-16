@@ -36,6 +36,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import utilidades.HebraPedidosModificables;
 import utilidades.Pair;
 
 /**
@@ -69,6 +70,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     private PanelElementoCarta panelElementoCarta;
 
+    private HebraPedidosModificables hebra = new HebraPedidosModificables(this.interfazCliente);
+
     /** Creates new form PanelGeneralCliente */
     public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente) throws Exception {
         initComponents();
@@ -100,6 +103,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
 
         this.elementoMarcado = null;
+
+        this.hebra.start();
     }
 
     @Override
@@ -685,7 +690,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 if(codPedidoActivo==-1){
                     this.icliente.nuevoPedido(this.codMesa, elementosComentarios);
                 }else{
-                    this.icliente.modificaPedido(codPedidoActivo, elementosComentarios);
+                    this.icliente.modificaPedido(codPedidoActivo, this.codMesa, elementosComentarios);
                 }
                 
                 this.panelPedidoRealizado.actualizar();

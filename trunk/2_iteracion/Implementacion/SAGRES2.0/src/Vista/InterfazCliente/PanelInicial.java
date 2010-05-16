@@ -16,9 +16,11 @@ package Vista.InterfazCliente;
  * @author Carlos
  */
 public class PanelInicial extends javax.swing.JPanel {
+    InterfazCliente interfazCliente;
 
     /** Creates new form PanelInicial */
-    public PanelInicial() {
+    public PanelInicial(InterfazCliente interfazCliente) {
+        this.interfazCliente=interfazCliente;
         initComponents();
     }
 
@@ -31,11 +33,27 @@ public class PanelInicial extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LabelImagenInicio = new javax.swing.JLabel();
+
         setLayout(new java.awt.BorderLayout());
+
+        LabelImagenInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"))); // NOI18N
+        LabelImagenInicio.setText("jLabel1");
+        LabelImagenInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                empezar(evt);
+            }
+        });
+        add(LabelImagenInicio, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void empezar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezar
+        interfazCliente.empezar();
+    }//GEN-LAST:event_empezar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelImagenInicio;
     // End of variables declaration//GEN-END:variables
 
 }

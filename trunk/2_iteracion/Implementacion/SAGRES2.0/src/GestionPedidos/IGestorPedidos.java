@@ -49,7 +49,7 @@ public interface IGestorPedidos {
 
     public boolean eliminaPedido(int codPedido);
 
-    public boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido);
+    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento, String> > elementosPedido);
 
     public ArrayList<Integer> getFacturasImprimidas();
 

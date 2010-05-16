@@ -154,9 +154,9 @@ public class GestorPedidos implements IGestorPedidos {
         return new ArrayList<Pedido>(); //Para quitar errores
     }
 
-    public boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido){
+    public boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento, String> > elementosPedido){
         if(this.eliminaPedido(codPedido)){
-            return this.nuevoPedido(codPedido, elementosPedido);
+            return this.nuevoPedido(codMesa, elementosPedido);
         }
         return false;
     }
