@@ -14,8 +14,17 @@ package Vista.InterfazCliente;
 import GestionCarta.Elemento;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import utilidades.PanelImagen;
 
 /**
  *
@@ -36,11 +45,8 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
-        this.LabelPrecio.setText(Double.toString(elemento.getPrecio()));
-        Icon foto = elemento.getFoto();
-        JLabel LabelFoto = new JLabel(foto,JLabel.CENTER);
-        LabelFoto.setVisible(true);
-        this.PanelFoto.add(LabelFoto,java.awt.BorderLayout.CENTER);
+        this.LabelPrecio.setText(Double.toString(elemento.getPrecio()));/*
+        this.PanelCentral.add(this.iconToImage(elemento.getFoto()), java.awt.BorderLayout.EAST);*/
     }
 
     /** This method is called from within the constructor to
@@ -61,6 +67,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelPrecio = new javax.swing.JPanel();
         LabelPrecio = new javax.swing.JLabel();
         PanelFoto = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         PanelMargenArriba = new javax.swing.JPanel();
         PanelMargenAbajo = new javax.swing.JPanel();
         PanelMargenIzquierda = new javax.swing.JPanel();
@@ -120,6 +127,8 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelFoto.setBackground(new java.awt.Color(255, 255, 255));
         PanelFoto.setPreferredSize(new java.awt.Dimension(150, 150));
         PanelFoto.setLayout(new java.awt.BorderLayout());
+        PanelFoto.add(jLabel1, java.awt.BorderLayout.CENTER);
+
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
@@ -177,6 +186,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPrecio;
     private javax.swing.JScrollPane ScrollDescripcion;
     private javax.swing.JTextPane TextoDescripcion;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
     public Elemento getElemento(){
@@ -192,4 +202,22 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         this.PanelDatos.setBackground(new Color(255,255,255));
         this.TextoDescripcion.setBackground(new Color(255,255,255));
     }
+
+    static Image iconToImage(Icon icon) {
+          if (icon instanceof ImageIcon) {
+              return ((ImageIcon)icon).getImage();
+          } else {
+              int w = icon.getIconWidth();
+              int h = icon.getIconHeight();
+              GraphicsEnvironment ge =
+                GraphicsEnvironment.getLocalGraphicsEnvironment();
+              GraphicsDevice gd = ge.getDefaultScreenDevice();
+              GraphicsConfiguration gc = gd.getDefaultConfiguration();
+              BufferedImage image = gc.createCompatibleImage(w, h);
+              Graphics2D g = image.createGraphics();
+              icon.paintIcon(null, g, 0, 0);
+              g.dispose();
+              return image;
+          }
+      }
 }
