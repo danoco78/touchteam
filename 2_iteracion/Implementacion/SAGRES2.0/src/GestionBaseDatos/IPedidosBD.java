@@ -38,4 +38,14 @@ public interface IPedidosBD {
     public ArrayList<Integer> getFacturasEnCola();
 
     public ArrayList<Integer> getFacturasImprimidas();
+    
+    public Factura getFactNoPagada(int codMesa);
+
+    public int getCodigoFactura();
+
+    public ArrayList<Pedido> obtienePedidosMesa(int codMesa);
+
+    public boolean nuevaFactura(Factura f);
+
+    public boolean eliminaFactura(int codMesa);
 }
