@@ -9,6 +9,7 @@ import GestionCarta.Elemento;
 import GestionCarta.Seccion;
 import java.util.ArrayList;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import java.util.HashSet;
 import utilidades.Pair;
@@ -17,8 +18,6 @@ import utilidades.Pair;
  * @author Gaspar
  */
 public interface ICliente {
-
-    public abstract boolean modificaPedido(Integer codPedido, Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
     public abstract boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
@@ -31,4 +30,10 @@ public interface ICliente {
     public abstract ArrayList<Pedido> getPedidosModificablesMesa(int codMesa);
 
     public abstract boolean eliminaPedido(int codPedido);
+
+    public abstract boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido);
+    
+    public abstract Factura pideFactura(int codMesa);
+
+    public abstract ArrayList<Pedido> obtienePedidosMesa(int codMesa);
 }

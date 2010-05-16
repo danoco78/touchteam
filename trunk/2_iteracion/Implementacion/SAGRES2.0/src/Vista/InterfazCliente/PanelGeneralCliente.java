@@ -16,6 +16,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoPlato;
 import GestionCarta.Seccion;
 import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
 import java.awt.BasicStroke;
@@ -684,7 +685,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 if(codPedidoActivo==-1){
                     this.icliente.nuevoPedido(this.codMesa, elementosComentarios);
                 }else{
-                    this.icliente.modificaPedido(codPedidoActivo, this.codMesa, elementosComentarios);
+                    this.icliente.modificaPedido(codPedidoActivo, elementosComentarios);
                 }
                 
                 this.panelPedidoRealizado.actualizar();
@@ -719,7 +720,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         dialogo.show();
 
         if(dialogo.isAceptado()){
-            ArrayList<Pedido> listaPedidos = this.icliente.getPedidosModificablesMesa(codPedido);
+            ArrayList<Pedido> listaPedidos = this.icliente.obtienePedidosMesa(codMesa);
 
             Pedido pedido = null;
             Iterator it = listaPedidos.iterator();
@@ -735,9 +736,16 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             while(it.hasNext()){
                 ElementoPedido elemPed = (ElementoPedido) it.next();
                 elementoMarcado=elemPed.getElemento();
-                this.anadirElementoAPedido(null);
+                this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, elemPed.getComentario());
+                this.TextoComentarios.setEnabled(false);
+                this.TextoComentarios.setText("");
+                this.panelRealizarPedido.repaint();
+                this.panelRealizarPedido.revalidate();
             }
 
+            this.elementoMarcado=null;
+            this.panelRealizarPedido.setPedidoActivo(codPedido);
+            this.pedidoRealizado=false;
             this.cambiarPanelEste();
         }
     }
@@ -752,8 +760,43 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         dialogo.show();
 
         if(dialogo.isAceptado()){
-            //exito = this.icliente.eliminaPedido(codPedido);
+            this.icliente.eliminaPedido(codPedido);
+            this.panelPedidoRealizado.actualizar();
+            this.cambiarPanelEste();
         }
+    }
+
+    public void verFactura() {
+        Factura f = this.icliente.pideFactura(codMesa);
+        ArrayList<Pedido> listaPedidos = f.getPedidos();
+
+        String cuenta="";
+        Double total = 0.0;
+        int numPedido = 1;
+        Iterator itPedidos = listaPedidos.iterator();
+        while(itPedidos.hasNext()){
+            Pedido pedido = (Pedido) itPedidos.next();
+            cuenta=cuenta.concat("PEDIDO "+numPedido+"\n\n");
+            ArrayList<ElementoPedido> listaElementosPedido = pedido.getElementos();
+            Iterator itElementosPedido = listaElementosPedido.iterator();
+            while(itElementosPedido.hasNext()){
+                ElementoPedido elemPed = (ElementoPedido) itElementosPedido.next();
+                cuenta = cuenta.concat(elemPed.getElemento().getNombre()+" "+elemPed.getElemento().getPrecio()+"€\n");
+                total+=elemPed.getElemento().getPrecio();
+            }
+            cuenta=cuenta.concat("\n");
+            numPedido++;
+        }
+
+        cuenta=cuenta.concat("\nTOTAL: "+total+"€");
+
+        DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
+                    "Ver Factura",
+                    "Quedó registrada la siguiente factura:",
+                    cuenta);
+
+        dialogo.setLocationRelativeTo(interfazCliente);
+        dialogo.show();
     }
 
 }

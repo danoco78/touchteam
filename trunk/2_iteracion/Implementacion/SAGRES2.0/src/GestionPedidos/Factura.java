@@ -25,6 +25,7 @@ public class Factura {
         this.codFactura = codFactura;
         this.estado = estado;
         this.fecha = fecha;
+        this.pedidosAsociados = new ArrayList();
     }
     public Integer getCodFactura() {
         return codFactura;

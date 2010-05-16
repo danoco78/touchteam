@@ -26,8 +26,6 @@ public interface IGestorPedidos {
 
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa);
 
-    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems);
-
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elems);
 
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido);
@@ -51,7 +49,13 @@ public interface IGestorPedidos {
 
     public boolean eliminaPedido(int codPedido);
 
+    public boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido);
+
     public ArrayList<Integer> getFacturasImprimidas();
 
     public Pedido getSiguientePedidoCocina();
+    
+    public Factura pideFactura(int codMesa);
+
+    public ArrayList<Pedido> obtienePedidosMesa(int codMesa);
 }

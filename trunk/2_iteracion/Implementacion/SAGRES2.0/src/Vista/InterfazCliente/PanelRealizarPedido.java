@@ -89,13 +89,26 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     @SuppressWarnings("element-type-mismatch")
     public void quitarElemento(PanelElementoPedido panelElementoPedido) {
         this.PanelElementosPedido.remove(panelElementoPedido);
-        this.listaElementosComentarios.remove(panelElementoPedido.elemento);
+
+        Iterator it = this.listaElementosComentarios.iterator();
+        boolean borrado=false;
+        while(it.hasNext() && !borrado){
+            Elemento elemento = (Elemento) ((Pair<Elemento, String>) it.next()).getFirst();
+            if(elemento.equals(panelElementoPedido.elemento)){
+                it.remove();
+                borrado=true;
+            }
+        }
+
+        if(this.listaElementosComentarios.isEmpty()){
+            if(this.codPedidoActivo!=-1){
+                this.panelGeneralCliente.eliminarPedido(codPedidoActivo);
+            }else{
+                this.panelGeneralCliente.cambiarPanelEste();
+            }
+        }
         this.repaint();
         this.revalidate();
-
-        if(this.codPedidoActivo!=-1 && this.listaElementosComentarios.isEmpty()){
-            this.panelGeneralCliente.eliminarPedido(codPedidoActivo);
-        }
     }
 
     public int getNumElementos() {
@@ -113,6 +126,10 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     public int getCodPedidoActivo() {
         return this.codPedidoActivo;
+    }
+
+    public void setPedidoActivo(int codPedido) {
+        this.codPedidoActivo=codPedido;
     }
 
 }

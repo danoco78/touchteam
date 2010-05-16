@@ -51,13 +51,22 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         PanelPedido.setLayout(new java.awt.GridLayout(0, 1));
         add(PanelPedido, java.awt.BorderLayout.CENTER);
 
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Ver Factura");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
         BotonVerFactura.setPreferredSize(new java.awt.Dimension(89, 50));
+        BotonVerFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verFactura(evt);
+            }
+        });
         add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void verFactura(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verFactura
+        this.panelGeneralCliente.verFactura();
+    }//GEN-LAST:event_verFactura
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -70,15 +79,14 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     }
 
     public int actualizar() {
-
-        ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.getPedidosModificablesMesa(codMesa);
-        ArrayList<ElementoPedido> listaElementosPedido = new ArrayList();
-        ArrayList<Elemento> listaElementos = new ArrayList();
+        this.PanelPedido.removeAll();
+        ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.obtienePedidosMesa(codMesa);
         Iterator itPedidos = pedidos.iterator();
         while(itPedidos.hasNext()){
             Pedido pedido = (Pedido) itPedidos.next();
-            listaElementosPedido = pedido.obtieneElementos();
+            ArrayList<ElementoPedido> listaElementosPedido = pedido.obtieneElementos();
 
+            ArrayList<Elemento> listaElementos = new ArrayList();
             Iterator itElementos = listaElementosPedido.iterator();
             while(itElementos.hasNext()){
                 ElementoPedido elementoPedido = (ElementoPedido) itElementos.next();

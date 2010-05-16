@@ -154,13 +154,16 @@ public class GestorPedidos implements IGestorPedidos {
         return new ArrayList<Pedido>(); //Para quitar errores
     }
 
-    public boolean modificaPedido(Integer codPedido, ArrayList<ElementoPedido> elems){
-        return true;
+    public boolean modificaPedido(Integer codPedido, ArrayList<Pair<Elemento, String> > elementosPedido){
+        if(this.eliminaPedido(codPedido)){
+            return this.nuevoPedido(codPedido, elementosPedido);
+        }
+        return false;
     }
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elementosPedido){
         int codPedido = this.iPedidosBD.getCodigoPedido();
-        Pedido pedido = new Pedido(codPedido, codMesa, 0, new java.util.Date());
+        Pedido pedido = new Pedido(codMesa, codPedido, 0, new java.util.Date());
 
         Iterator it = elementosPedido.iterator();
         int codEP = this.iPedidosBD.getCodigoElementoPedido();
@@ -325,6 +328,30 @@ public class GestorPedidos implements IGestorPedidos {
 
     public Pedido getSiguientePedidoCocina(){
         return iPedidosBD.getSiguientePedidoCocina();
+    }
+
+    public Factura pideFactura(int codMesa){
+        //Eliminamos la anterior factura asociada a la mesa
+        this.iPedidosBD.eliminaFactura(codMesa);
+
+        //Creamos una nueva factura
+        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), codMesa, new Date());
+
+        //Asociamos los pedidos correspondientes
+        ArrayList<Pedido> listaPedidos = this.iPedidosBD.obtienePedidosMesa(codMesa);
+        Iterator it = listaPedidos.iterator();
+        while(it.hasNext()){
+            Pedido pedido = (Pedido) it.next();
+            f.asocia(pedido);
+        }
+
+        this.iPedidosBD.nuevaFactura(f);
+
+        return f;
+    }
+
+    public ArrayList<Pedido> obtienePedidosMesa(int codMesa){
+        return this.iPedidosBD.obtienePedidosMesa(codMesa);
     }
 }
 
