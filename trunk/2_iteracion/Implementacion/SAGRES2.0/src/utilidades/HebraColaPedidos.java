@@ -47,7 +47,7 @@ public class HebraColaPedidos implements Runnable {
                 switch (filtro){
                     case BAR:
                         p = mpadre.imetre.getSiguientePedidoBar();
-                        if (p == actual) {
+                        if (actual != null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
@@ -57,7 +57,7 @@ public class HebraColaPedidos implements Runnable {
                     case COCINA:
                         //p = cpadre.icocinero.getSiguientePedidoCocinaEnCola();
                         p = cpadre.icocinero.getSiguientePedidoCocina();
-                        if (p == actual) {
+                        if (actual != null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
