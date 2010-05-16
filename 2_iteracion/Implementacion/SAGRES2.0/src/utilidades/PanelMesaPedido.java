@@ -35,7 +35,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
     Pedido pedActual = null;
     int filtro;
-    int numBebidas;
+    int numPendientes;
     InterfazMetre mpadre;
     InterfazCocinero cpadre;
     
@@ -69,7 +69,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         PanelEspacioVertical pev;
         Elemento ele;
 
-        numBebidas = 0;
+        numPendientes = 0;
         for (int i = 0; i < lista.size(); ++i) {
             if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
                     || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
@@ -84,16 +84,14 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 boton.setFocusPainted(false);
                 boton.setName(String.valueOf(i));
-                if (filtro == BAR){
+                if (filtro == BAR)
                     boton.addActionListener(new ManejaEventos(boton, pev));
-                    numBebidas++;
-                }
-                else{
+                else
                     boton.addActionListener(new ManejaEventos(boton, pev));
-                }
 
                 panelInfoPedido.add(boton);
                 panelInfoPedido.add(pev);
+                numPendientes++;
             }
         }
 
@@ -354,7 +352,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             borrar = false;
             switch(filtro){
                 case PanelMesaPedido.BAR:
-                    if (numBebidas == 1){
+                    if (numPendientes == 1){
                         String texto = new String();
                         ArrayList<ElementoPedido> elems = pedActual.obtieneElementos();
                         for (int i=0;i<elems.size();i++){
@@ -364,8 +362,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         confirmar.setLocationRelativeTo(mpadre);
                         confirmar.setVisible(true);
-                        if(confirmar.isAceptado())
+                        if(confirmar.isAceptado()){
                             borrar = true;
+                            infoMesaPedido.setText("");
+                        }
                     }
                     else
                         borrar = true;
@@ -375,20 +375,22 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                             ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                             mpadre.imetre.seleccionaBebida(pedActual, eleB);
                             num = mpadre.imetre.getNumBebidasEnCola();
-                            numBebidas--;
+                            numPendientes--;
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 case PanelMesaPedido.COCINA:
-                    
-                    ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
+                    if (numPendientes == 1)
+                        infoMesaPedido.setText("");
                     try {
+                        ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
                         num = cpadre.icocinero.getNumPlatosEnCola();
                         borrar = true;
                         cpadre.panelColaCocinero.actualizarVista(pedActual,eleC);
+                        numPendientes--;
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
