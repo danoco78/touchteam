@@ -63,8 +63,8 @@ public class GestorImpresora implements IImpresion{
             hora = calendario.get(Calendar.HOUR_OF_DAY)+":"+"0"+calendario.get(Calendar.MINUTE);
         else
             hora = calendario.get(Calendar.HOUR_OF_DAY)+":"+calendario.get(Calendar.MINUTE);
-        fecha = calendario.get(Calendar.DAY_OF_WEEK)+" "+calendario.get(Calendar.DAY_OF_MONTH)+", "+
-                calendario.get(Calendar.MONTH)+" "+calendario.get(Calendar.YEAR);
+        fecha = this.getDiaSemana(calendario.get(Calendar.DAY_OF_WEEK))+", "+calendario.get(Calendar.DAY_OF_MONTH)+" de "+
+                this.getMes(calendario.get(Calendar.MONTH))+" de "+calendario.get(Calendar.YEAR);
         
         texto.add("**BIENVENIDOS**");
         texto.add("Duerme Mucho -- Granada");
@@ -101,13 +101,56 @@ public class GestorImpresora implements IImpresion{
             linea += "-";
         texto.add(linea);
 
-        linea = "-";
-        for (int i=0;i<55;i++)
-            linea += "-";
-        texto.add(linea);
-
         texto.add("Gracias por su visita");
         
         Impresora.imprime(texto);
     }
+
+    private String getDiaSemana(int dia){
+            switch(dia){
+                case Calendar.MONDAY:
+                    return "Lunes";
+                case Calendar.TUESDAY:
+                    return "Martes";
+                case Calendar.WEDNESDAY:
+                    return "Miercoles";
+                case Calendar.THURSDAY:
+                    return "Jueves";
+                case Calendar.FRIDAY:
+                    return "Viernes";
+                case Calendar.SATURDAY:
+                    return "Sabado";
+                default:
+                    return "Domingo";
+            }
+        }
+
+        private String getMes(int mes){
+            switch(mes){
+                case Calendar.JANUARY:
+                    return "Enero";
+                case Calendar.FEBRUARY:
+                    return "Febrero";
+                case Calendar.MARCH:
+                    return "Marzo";
+                case Calendar.APRIL:
+                    return "Abril";
+                case Calendar.MAY:
+                    return "Mayo";
+                case Calendar.JUNE:
+                    return "Junio";
+                case Calendar.JULY:
+                    return "Julio";
+                case Calendar.AUGUST:
+                    return "Agosto";
+                case Calendar.SEPTEMBER:
+                    return "Septiembre";
+                case Calendar.OCTOBER:
+                    return "Octubre";
+                case Calendar.NOVEMBER:
+                    return "Nombiembre";
+                default:
+                    return "Diciembre";
+            }
+        }
 }
