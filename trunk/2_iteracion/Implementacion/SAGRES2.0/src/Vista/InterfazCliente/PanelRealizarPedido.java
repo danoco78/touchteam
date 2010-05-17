@@ -100,7 +100,7 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
             }
         }
 
-        if(this.listaElementosComentarios.isEmpty()){
+        if(this.vacio()){
             if(this.codPedidoActivo!=-1){
                 this.panelGeneralCliente.eliminarPedido(codPedidoActivo);
             }else{
@@ -130,6 +130,10 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
 
     public void setPedidoActivo(int codPedido) {
         this.codPedidoActivo=codPedido;
+    }
+
+    public boolean vacio(){
+        return this.listaElementosComentarios.isEmpty();
     }
 
 }

@@ -11,6 +11,13 @@
 
 package Vista.InterfazCliente;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Carlos
@@ -22,8 +29,12 @@ public class PanelInicial extends javax.swing.JPanel {
     public PanelInicial(InterfazCliente interfazCliente) {
         this.interfazCliente=interfazCliente;
         initComponents();
+        this.PanelCentral.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
+                    java.awt.Toolkit.getDefaultToolkit().getScreenSize().height);
+        this.repaint();
+        this.revalidate();
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -33,27 +44,33 @@ public class PanelInicial extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelCentral = new javax.swing.JPanel();
         LabelImagenInicio = new javax.swing.JLabel();
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setLayout(new java.awt.BorderLayout());
 
+        PanelCentral.setLayout(new java.awt.BorderLayout());
+
         LabelImagenInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"))); // NOI18N
-        LabelImagenInicio.setText("jLabel1");
         LabelImagenInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 empezar(evt);
             }
         });
-        add(LabelImagenInicio, java.awt.BorderLayout.CENTER);
+        PanelCentral.add(LabelImagenInicio, java.awt.BorderLayout.CENTER);
+
+        add(PanelCentral, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void empezar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezar
         interfazCliente.empezar();
-    }//GEN-LAST:event_empezar
+}//GEN-LAST:event_empezar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelImagenInicio;
+    private javax.swing.JPanel PanelCentral;
     // End of variables declaration//GEN-END:variables
 
 }
