@@ -187,6 +187,7 @@ public class GestorPedidos implements IGestorPedidos {
             }
             else if(estado == ElementoColaCocina.PREPARANDOSE){
                 ele.setEstado(ElementoColaCocina.PREPARADO);
+                this.iPedidosBD.actualizaPedido(p);
             }
             else{
                 exito = false;

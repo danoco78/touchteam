@@ -24,8 +24,6 @@ import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import utilidades.Pair;
 import com.mysql.jdbc.Connection;
 import java.io.ByteArrayInputStream;
 import java.sql.DriverManager;
@@ -36,7 +34,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import javax.sql.rowset.serial.SerialBlob;
-import javax.swing.Icon;
 import utilidades.Imagen;
 
 /**
@@ -836,10 +833,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                                                             "FROM pedido, tieneelemento, elementopedido, elementocolacocina " +
                                                             "WHERE pedido.estado <> 2 AND elementoPedido.estado = 1 AND pedido_id = pedido_pedido_id " +
                                                             "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
-                                                            "AND elementoPedido_id = elementoColaCocina.elementoPedido_elementoPedido_id ");
+                                                            "AND elementoPedido_id = elementoColaCocina.elementoPedido_elementoPedido_id "
+                                                            + " GROUP BY pedido_id");
 
+           HashSet<Elemento> elementosCarta = this.obtieneElementos();
            while (tablaPedidos.next()){
-                HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
+
                 // Obtengo los elementoPedido asociados al pedido
                 ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
@@ -1221,10 +1220,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                 Statement consulta3 = (Statement) this.Conexion.createStatement();
                 while (tablaElementosPedido.next()){
                     //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
-                    codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                    codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaplato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
                     if (!codigoElemento.next()){
                         // No es un plato es una bebida
-                        codigoElemento = consulta3.executeQuery("SELECT elementoBebida_elemento_elemento_id FROM asociaBebida WHERE elementoColaBar_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
+                        codigoElemento = consulta3.executeQuery("SELECT elementoBebida_elemento_elemento_id FROM asociabebida WHERE elementoColaBar_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
                         codigoElemento.next();
                         eleCB = new ElementoColaBar(tablaElementosPedido.getInt(1),tablaElementosPedido.getInt(2),tablaElementosPedido.getString(3));
                         // Busco el objeto elemento de carta
@@ -1359,7 +1358,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         ArrayList<Integer> mesas = new ArrayList();
         try{
             java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=0");
+            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturapedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=0");
             while (codigosMesas.next())
                 mesas.add(codigosMesas.getInt(1));
         }catch (SQLException ex) {
@@ -1373,7 +1372,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         ArrayList<Integer> mesas = new ArrayList();
         try{
             java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=1");
+            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturapedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=1");
             while (codigosMesas.next())
                 mesas.add(codigosMesas.getInt(1));
         }catch (SQLException ex) {
