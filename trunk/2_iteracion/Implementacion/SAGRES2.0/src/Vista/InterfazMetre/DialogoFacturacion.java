@@ -43,7 +43,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
 
         controlador = (InterfazMetre) parent;
         this.codMesa = codMesa;
-        fac = controlador.imetre.getFactura(codMesa);
+        fac = controlador.imetre.getFactura(this.codMesa);
         ArrayList<Pedido> pedidos = fac.getPedidos();
         ArrayList<ElementoPedido> elems;
         float total = 0;
