@@ -897,6 +897,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             obj[1] = productoSeleccionado.getCantidad();
             obj[2] = productoSeleccionado.getImagen();
             ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
+            this.tFiltroKeyReleased(null);
         }
     }//GEN-LAST:event_BorrarAsociados
 
