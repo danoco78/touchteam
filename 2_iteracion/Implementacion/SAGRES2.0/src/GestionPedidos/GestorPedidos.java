@@ -99,7 +99,7 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public void imprimeFactura(Integer codMesa){
-        Factura f = this.iPedidosBD.getFactura(codMesa);
+        Factura f = this.getFactura(codMesa);
         f.modificaEstado(Factura.IMPRIMIDO);
         this.iPedidosBD.actualizaFactura(f);
         this.iImpresion.imprimeFactura(f);
