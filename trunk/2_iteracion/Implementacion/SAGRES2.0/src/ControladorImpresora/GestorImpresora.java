@@ -52,7 +52,7 @@ public class GestorImpresora implements IImpresion{
     public void imprimeFactura(Factura f){
         ArrayList<String> texto = new ArrayList();
         ArrayList<Pedido> pedidos = f.getPedidos();
-        ArrayList<ElementoPedido> elementosPedido = new ArrayList();
+        ArrayList<ElementoPedido> elementosPedido;
         String linea;
         String nombre;
         String hora;
@@ -74,17 +74,32 @@ public class GestorImpresora implements IImpresion{
             linea += "-";
         texto.add(linea);
 
+        float total = 0;
         for (int i=0;i<pedidos.size();i++){
             elementosPedido = pedidos.get(i).obtieneElementos();
             for (int j=0;j<elementosPedido.size();j++){
+                linea = "";
                 nombre = elementosPedido.get(j).getElemento().getNombre();
-                linea = nombre;
+                linea += nombre;
                 for (int z=0;z<50-nombre.length();z++)
                     linea += " ";
-                linea += elementosPedido.get(j).getElemento().getPrecio();
+                linea += String.valueOf(elementosPedido.get(j).getElemento().getPrecio())+"€";
+                total += elementosPedido.get(j).getElemento().getPrecio();
+                texto.add(linea);
             }
-            texto.add(linea);
         }
+
+        linea = "*";
+        for (int i=0;i<55;i++)
+            linea += "*";
+        texto.add(linea);
+
+        linea = " ";
+        for (int i=0;i<40;i++)
+            linea += " ";
+        linea += "Total: ";
+        linea += String.valueOf(total);
+        texto.add(linea);
 
         linea = "-";
         for (int i=0;i<55;i++)
