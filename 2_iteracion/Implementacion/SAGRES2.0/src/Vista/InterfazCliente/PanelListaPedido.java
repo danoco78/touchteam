@@ -15,6 +15,7 @@ import GestionCarta.Elemento;
 import GestionCarta.ElementoPlato;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +27,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
     private int codPedido;
 
     /** Creates new form PanelListaPedido */
-    public PanelListaPedido(ArrayList<Elemento> listaElementos, PanelGeneralCliente PGC, int codPedido) {
+    public PanelListaPedido(ArrayList<Elemento> listaElementos, PanelGeneralCliente PGC, int codPedido, int estado) {
         initComponents();
 
         this.PGC=PGC;
@@ -45,6 +46,10 @@ public class PanelListaPedido extends javax.swing.JPanel {
             }else{
                 this.TextoListaBebida.setText(this.TextoListaBebida.getText()+"\n- "+elemento.getNombre());
             }
+        }
+
+        if(estado!=0){
+            this.BotonModificar.setEnabled(false);
         }
     }
 
@@ -96,7 +101,14 @@ public class PanelListaPedido extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modificarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPedido
-        this.PGC.iniciaModificaPedido(this.codPedido);
+        if(this.BotonModificar.isEnabled()){
+            this.PGC.iniciaModificaPedido(this.codPedido);
+        }else{
+            JOptionPane.showMessageDialog(this,
+                              "El pedido ha empezado a prepararse.",
+                              "El pedido no puede ser modificado",
+                              JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_modificarPedido
 
 
