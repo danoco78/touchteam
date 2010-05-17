@@ -70,7 +70,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     private PanelElementoCarta panelElementoCarta;
 
-    private HebraPedidosModificables hebra = new HebraPedidosModificables(this.interfazCliente);
+    private HebraPedidosModificables hebra = new HebraPedidosModificables(this);
 
     /** Creates new form PanelGeneralCliente */
     public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente) throws Exception {
@@ -79,7 +79,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.icliente=icliente;
         this.setDoubleBuffered(true);
         cargarCarta();
-
+this.icliente.getPedidosModificablesMesa(codMesa);
         this.seccion=0; //Entrantes
         ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
         this.PanelPaginaAnterior.setVisible(false);
@@ -755,7 +755,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
     }
 
-    public void eliminarPedido(int codPedido) {
+    public void eliminarPedido(int codPedido) throws InterruptedException {
         DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
                     "Eliminar Pedido",
                     "¿Está seguro de que desea eliminar su pedido?",
@@ -802,6 +802,10 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         dialogo.setLocationRelativeTo(interfazCliente);
         dialogo.show();
+    }
+
+    public void comprobarPedidos() {
+        this.panelPedidoRealizado.actualizar();
     }
 
 }

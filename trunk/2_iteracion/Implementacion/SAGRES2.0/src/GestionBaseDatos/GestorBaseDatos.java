@@ -1339,6 +1339,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                 borrado.executeUpdate();
             }
 
+            //Borramos el pedido de la factura asociada
+            borrado = this.Conexion.prepareStatement("DELETE facturapedido FROM facturapedido WHERE pedido_pedido_id = "+codPedido);
+            borrado.executeUpdate();
+
+
             //Borramos el pedido
             borrado = this.Conexion.prepareStatement("DELETE pedido FROM pedido WHERE pedido_id = "+codPedido);
             borrado.executeUpdate();

@@ -6,6 +6,7 @@
 package utilidades;
 
 import Vista.InterfazCliente.InterfazCliente;
+import Vista.InterfazCliente.PanelGeneralCliente;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,10 +16,10 @@ import java.util.logging.Logger;
  */
 public class HebraPedidosModificables extends Thread {
     
-    InterfazCliente interfazCliente;
+    PanelGeneralCliente panelGeneralCliente;
 
-    public HebraPedidosModificables(InterfazCliente interfazCliente) {
-        this.interfazCliente = interfazCliente;
+    public HebraPedidosModificables(PanelGeneralCliente panelGeneralCliente) {
+        this.panelGeneralCliente = panelGeneralCliente;
     }
 
     @Override
@@ -26,7 +27,8 @@ public class HebraPedidosModificables extends Thread {
         try {
             while(true){
                 HebraPedidosModificables.sleep(5000);
-                //System.out.println("HOLA");
+                this.panelGeneralCliente.comprobarPedidos();
+                System.out.println("Comprobado el estado de los pedidos");
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(HebraPedidosModificables.class.getName()).log(Level.SEVERE, null, ex);

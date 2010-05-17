@@ -74,8 +74,8 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPedido;
     // End of variables declaration//GEN-END:variables
 
-    public void anadirPedido(ArrayList<Elemento> listaElementos, int codPedido) {
-        this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente,codPedido));
+    public void anadirPedido(ArrayList<Elemento> listaElementos, int codPedido, int estado) {
+        this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente, codPedido, estado));
     }
 
     public int actualizar() {
@@ -93,8 +93,11 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 listaElementos.add(elementoPedido.getElemento());
             }
 
-            this.anadirPedido(listaElementos,pedido.getCodPedido());
+            this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
         }
+
+        this.PanelPedido.repaint();
+        this.PanelPedido.revalidate();
 
         return pedidos.size();
     }
