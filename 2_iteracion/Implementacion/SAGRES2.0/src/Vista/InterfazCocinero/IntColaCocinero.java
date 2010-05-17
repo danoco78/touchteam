@@ -1,14 +1,10 @@
 
 package Vista.InterfazCocinero;
 
-import ControladorPrincipal.ICocinero;
-import GestionCarta.Elemento;
 import java.awt.*;
 import java.util.ArrayList;
 import utilidades.*;
 import GestionPedidos.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -43,7 +39,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.listaPedidos = new ArrayList();
         try {
             listaPedidos = this.interfaz.icocinero.getPedidosCocinaPreparandose();
-            System.out.println("Hay " + listaPedidos.size() + " pedidos preparandose.");
         } catch (Exception ex) {
             
         }
@@ -157,7 +152,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     public void actualizarVista(Pedido p, ElementoColaCocina ele){
 
-
         int codPed = p.getCodPedido(),pos = -1;
         boolean encontrado = false;
         for(int i=0;i<listaPedidos.size() && !encontrado ;i++){
@@ -176,82 +170,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.pmpder.autoCompletar(listaPedidos);
         this.pmpder.repaint();
         this.pmpder.revalidate();
-        //Prueba para comprobar que funciona
-        //ArrayList<Pedido> peds = new ArrayList<Pedido>();
-        
-        /*try {
-            peds = this.interfaz.icocinero.getPedidosCocinaPreparandose();
-            if(!peds.isEmpty()){
-                this.pmpder.autoCompletar(peds);
-                //this.pmpder.repaint();
-                //this.pmpder.revalidate();
-            }
-            else{
-                System.out.println("Pedidos está vacío.");
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(IntColaCocinero.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
-        /*Pedido ped = new Pedido(5, 2, 0, null);
-        ElementoColaCocina ele = new ElementoColaCocina(1, 0, "Del tiempo, por favor");
-        ele.asocia(new Elemento(2, "Agua",
-                "Agua embotellada marca Bezoya",
-                true, null, 5, 5, 10));
-        for(int j=0; j<4; ++j)
-                ped.asocia(ele);
-
-        // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
-        // independientemente de la prueba
-        this.pmpizq.addPedido(ped);*/
-
-       /* ElementoColaCocina ele = new ElementoColaCocina(1, ElementoColaCocina.ENCOLA, "La carne poco hecha por favor.");
-        ElementoColaCocina ele2 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
-        ElementoColaCocina ele3 = new ElementoColaCocina(2, ElementoColaCocina.PREPARANDOSE, "La carne ");
-        ElementoColaCocina ele4 = new ElementoColaCocina(3, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha ");
-        ElementoColaCocina ele5 = new ElementoColaCocina(1, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha por favor.");
-        ElementoColaCocina ele6 = new ElementoColaCocina(2, ElementoColaCocina.PREPARANDOSE, "La carne ");
-        ElementoColaCocina ele7 = new ElementoColaCocina(3, ElementoColaCocina.PREPARANDOSE, "La carne poco hecha ");
-        
-        ele.asocia(new Elemento(2, "Hamburguesa con queso",
-                "Deliciosa carne de vacuno a la parrilla con queso fresco",
-                true, null, 5, 5, 10));
-        ele2.asocia(new Elemento(2, "Hamburguesa sin queso",
-                "Deliciosa carne de vacuno a la parrilla con queso fresco",
-                true, null, 5, 5, 10));
-        ele3.asocia(new Elemento(2, "Carne a la plancha",
-                "Deliciosa carne de cerdo cocinada a su gusto",
-                true, null, 5, 5, 10));
-        ele4.asocia(new Elemento(2, "Sandwich Mixto",
-                "Nuestro sandwich especial",
-                true, null, 5, 5, 10));
-                ele2.asocia(new Elemento(2, "Hamburguesa sin queso",
-                "Deliciosa carne de vacuno a la parrilla con queso fresco",
-                true, null, 5, 5, 10));
-        ele5.asocia(new Elemento(2, "Carne a la plancha",
-                "Deliciosa carne de cerdo cocinada a su gusto",
-                true, null, 5, 5, 10));
-        ele6.asocia(new Elemento(2, "Sandwich Mixto",
-                "Nuestro sandwich especial",
-                true, null, 5, 5, 10));
-        ele7.asocia(new Elemento(2, "Sandwich Mixto",
-                "Nuestro sandwich especial",
-                true, null, 5, 5, 10));
-
-        peds.add(new Pedido(5,0,0,null));
-        peds.get(0).asocia(ele2);
-        peds.get(0).asocia(ele3);
-        peds.get(0).asocia(ele4);
-
-        peds.add(new Pedido(5,1,0,null));
-        peds.get(1).asocia(ele5);
-        peds.get(1).asocia(ele6);
-        peds.get(1).asocia(ele7);
-
-        this.pmpder.autoCompletar(peds);
-        Pedido aux = new Pedido(5, 30, 0, null);
-        aux.asocia(ele);
-        this.pmpizq.addPedido(aux);*/
 
     }
 }

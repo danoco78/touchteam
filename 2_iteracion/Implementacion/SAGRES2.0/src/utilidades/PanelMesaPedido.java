@@ -120,7 +120,17 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 }
                 break;
             case PanelMesaPedido.BAR:
-                pendientes.setText(String.valueOf(num) + " bebidas pendientes");
+                switch(num){
+                    case 0:
+                        pendientes.setText("No hay ninguna bebida pendiente");
+                        break;
+                    case 1:
+                        pendientes.setText("Hay "+ num + " bebida pendiente.");
+                        break;
+                    default:
+                        pendientes.setText("Hay "+ num+ " bebidas pendiente.");
+                        break;
+                }
                 break;
         }
     }
