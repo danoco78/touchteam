@@ -54,59 +54,14 @@ public class GestorPedidos implements IGestorPedidos {
 
     public Pedido getSiguientePedidoBar()throws Exception{
 
-        // TODO Esta implementación no está reflejada en el diseño
         return this.iPedidosBD.getSiguientePedidoBar();
 
-
-
-
-        /*ArrayList<Pedido> noFacturados;
-        ArrayList<ElementoPedido> elementos;
-        noFacturados = iPedidosBD.obtienePedidosNoFacturados();
-
-        Pedido pedido = null;
-        ElementoPedido elemP = null;
-        Pedido ped;
-        
-        Iterator<Pedido> iterador = noFacturados.iterator();
-        Integer estado=-1;
-        boolean encontrado = false;
-        Date fecha=null, fechaPedido=null;
-        while(iterador.hasNext()){
-            encontrado = false;
-            ped = ((Pedido)iterador.next());
-            elementos = ped.obtieneElementos();
-            Iterator<ElementoPedido> ite2 = elementos.iterator();
-            while (ite2.hasNext() && !encontrado){
-                elemP = ite2.next();
-                if(elemP instanceof ElementoColaBar){
-                    estado = ((ElementoColaBar)elemP).getEstado();
-                    if(estado == ElementoColaBar.ENCOLA)
-                        encontrado = true;
-                }
-            }
-            if(encontrado){
-                fecha = ped.getFecha();
-                if (pedido != null){
-                    fechaPedido = pedido.getFecha();
-                    pedido = ped;
-                }
-                else{
-                    if (fecha.before(fechaPedido)){
-                        pedido = ped;
-                    }
-                }
-            }
-        }
-        if(pedido == null)
-                 throw new Exception("No hay siguiente pedido en cola de bar");
-        return pedido;*/
     }
 
     public Pedido getSiguientePedidoCocinaEncola()throws Exception{
         ArrayList<Pedido> noFacturados;
         ArrayList<ElementoPedido> elementos;
-        noFacturados = iPedidosBD.obtienePedidosNoFacturados();
+        noFacturados = iPedidosBD.obtienePedidosPreparandose();
         ElementoPedido elemP = null;
 
         Pedido pedido = null;
@@ -199,32 +154,7 @@ public class GestorPedidos implements IGestorPedidos {
     }
 
     public ArrayList<Pedido> getPedidosCocinaPreparandose() throws Exception{
-        ArrayList<Pedido> noFacturados = this.iPedidosBD.obtienePedidosNoFacturados();
-        System.out.println("Hay " + noFacturados.size() + " pedidos no facturados.");
-        ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-        ArrayList<ElementoPedido> elementos = new ArrayList<ElementoPedido>();
-        Iterator<Pedido> ite = noFacturados.iterator();
-        Boolean romper = false;
-        int estado;
-        while(ite.hasNext() && !noFacturados.isEmpty()){
-            romper = false;
-            Pedido p = ((Pedido)ite.next());
-            elementos = p.obtieneElementos();
-            Iterator ite2 = elementos.iterator();
-            while(ite2.hasNext() && !romper){
-                ElementoPedido ep = (ElementoPedido)ite2.next();
-                if(ep instanceof ElementoColaCocina ){ //Si es ColaCocina
-                     estado = ep.getEstado();
-                     if(estado == ElementoColaCocina.PREPARANDOSE ) romper = true;
-                }
-            }
-            if(romper){
-                pedidos.add(p);
-            }
-        }
-        /*if(pedidos.isEmpty())
-            throw new Exception("No hay pedidos preparándose en la cola de cocina");*/
-        return pedidos;
+        return this.iPedidosBD.obtienePedidosPreparandose();
     }
 
     public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception {

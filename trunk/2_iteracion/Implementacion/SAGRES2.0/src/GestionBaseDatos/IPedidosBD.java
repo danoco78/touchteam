@@ -17,7 +17,7 @@ import utilidades.Pair;
  * @author Gaspar
  */
 public interface IPedidosBD {
-    public ArrayList<Pedido> obtienePedidosNoFacturados();
+    public ArrayList<Pedido> obtienePedidosPreparandose();
     public int getNumPlatosEnCola();
     public int getNumBebidasEnCola();
     public void actualizaPedido(Pedido p);

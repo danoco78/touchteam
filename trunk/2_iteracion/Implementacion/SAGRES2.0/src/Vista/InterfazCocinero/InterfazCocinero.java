@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import utilidades.HebraColaPedidos;
-//import utilidades.HebraPendientes;
+import utilidades.HebraPendientes;
 
 /**
  *
@@ -24,7 +24,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
     public IntColaCocinero panelColaCocinero;
 
     HebraColaPedidos hebra = null;
-    //HebraPendientes hebrapend = null;
+    HebraPendientes hebrapend = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";
@@ -39,7 +39,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero(this);
         this.hebra = new HebraColaPedidos(this);
-        //this.hebrapend = new HebraPendientes(this);
+        this.hebrapend = new HebraPendientes(this);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
