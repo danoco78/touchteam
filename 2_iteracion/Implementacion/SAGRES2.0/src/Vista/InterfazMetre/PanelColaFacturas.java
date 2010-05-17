@@ -150,6 +150,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
         public void actionPerformed(ActionEvent e) {
             borrar = false;
+            //TODO Es mejor pasar directamente el objeto factura a los metodos. De esta forma nos ahorramos muchas consultas innecesarias
             switch(filtro){
                 case PanelColaFacturas.PARAIMPRIMIR:
                     controlador.imetre.imprimeFactura(Integer.parseInt(boton.getName()));
@@ -159,8 +160,10 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                     DialogoFacturacion confirmar = new DialogoFacturacion(controlador,Integer.parseInt(boton.getName()));
                     confirmar.setLocationRelativeTo(controlador);
                     confirmar.setVisible(true);
-                    if(confirmar.isAceptado())
+                    if(confirmar.isAceptado()){
+                        controlador.imetre.confirmaPagoFactura(Integer.parseInt(boton.getName()));
                         borrar = true;
+                    }
                     break;
             }
             if (borrar){
