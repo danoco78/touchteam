@@ -14,6 +14,7 @@ package Vista.InterfazCliente;
 import GestionCarta.Elemento;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -37,16 +38,19 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     
     /** Creates new form PanelElementoCarta */
     public PanelElementoCarta(Elemento elemento, PanelGeneralCliente PGC) {
-        initComponents();
-
-        this.PGC=PGC;
         this.elemento=elemento;
+        this.PGC=PGC;
         this.seleccionado=false;
+        
+        initComponents();
 
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
-        this.LabelPrecio.setText(Double.toString(elemento.getPrecio()));/*
-        this.PanelCentral.add(this.iconToImage(elemento.getFoto()), java.awt.BorderLayout.EAST);*/
+        this.LabelPrecio.setText(Double.toString(elemento.getPrecio())+"€");
+        ImageIcon foto = new ImageIcon();
+        foto.setImage(new BufferedImage(150, 175, BufferedImage.TYPE_INT_RGB));
+        foto.getImage().getGraphics().drawImage((this.elemento.getFoto()).getImage(), 0, 0, 150, 175, this);
+        this.LabelFoto.setIcon(foto);
     }
 
     /** This method is called from within the constructor to
@@ -67,7 +71,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelPrecio = new javax.swing.JPanel();
         LabelPrecio = new javax.swing.JLabel();
         PanelFoto = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        LabelFoto = new javax.swing.JLabel();
         PanelMargenArriba = new javax.swing.JPanel();
         PanelMargenAbajo = new javax.swing.JPanel();
         PanelMargenIzquierda = new javax.swing.JPanel();
@@ -124,10 +128,13 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         PanelCentral.add(PanelDatos, java.awt.BorderLayout.CENTER);
 
-        PanelFoto.setBackground(new java.awt.Color(255, 255, 255));
-        PanelFoto.setPreferredSize(new java.awt.Dimension(150, 150));
         PanelFoto.setLayout(new java.awt.BorderLayout());
-        PanelFoto.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        LabelFoto.setIcon((ImageIcon) this.elemento.getFoto());
+        LabelFoto.setLabelFor(LabelFoto);
+        LabelFoto.setBorder(new javax.swing.border.MatteBorder(null));
+        LabelFoto.setOpaque(true);
+        PanelFoto.add(LabelFoto, java.awt.BorderLayout.CENTER);
 
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
 
@@ -162,10 +169,8 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         }
         
         if(!this.seleccionado){
-            seleccionado=true;
             PGC.marcarElemento(this);
         }else{
-            seleccionado=false;
             PGC.desmarcarElemento();
             this.desmarcar();
         }
@@ -173,6 +178,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelFoto;
     private javax.swing.JLabel LabelNombre;
     private javax.swing.JLabel LabelPrecio;
     private javax.swing.JPanel PanelCentral;
@@ -186,7 +192,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPrecio;
     private javax.swing.JScrollPane ScrollDescripcion;
     private javax.swing.JTextPane TextoDescripcion;
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
     public Elemento getElemento(){
@@ -194,16 +199,18 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     }
 
     public void marcar(){
+        this.seleccionado=true;
         this.PanelDatos.setBackground(new Color(153,204,255));
         this.TextoDescripcion.setBackground(new Color(153,204,255));
     }
 
     public void desmarcar(){
+        this.seleccionado=false;
         this.PanelDatos.setBackground(new Color(255,255,255));
         this.TextoDescripcion.setBackground(new Color(255,255,255));
     }
 
-    static Image iconToImage(Icon icon) {
+    public Image iconToImage(Icon icon) {
           if (icon instanceof ImageIcon) {
               return ((ImageIcon)icon).getImage();
           } else {

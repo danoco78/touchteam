@@ -38,8 +38,6 @@ public class InterfazCliente extends javax.swing.JFrame {
             this.panelInicial = new PanelInicial(this);
             this.PanelPrincipal.add("PanelGeneralCliente", this.panelGeneralCliente);
             this.PanelPrincipal.add("PanelInicial", this.panelInicial);
-            this.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-                    java.awt.Toolkit.getDefaultToolkit().getScreenSize().height);
             ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } catch (Exception ex) {

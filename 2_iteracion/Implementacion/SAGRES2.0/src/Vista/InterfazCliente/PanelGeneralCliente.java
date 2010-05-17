@@ -79,7 +79,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.icliente=icliente;
         this.setDoubleBuffered(true);
         cargarCarta();
-this.icliente.getPedidosModificablesMesa(codMesa);
+        
         this.seccion=0; //Entrantes
         ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
         this.PanelPaginaAnterior.setVisible(false);
@@ -630,13 +630,19 @@ this.icliente.getPedidosModificablesMesa(codMesa);
             this.panelElementoCarta.desmarcar();
         }
 
-        panelElementoCarta.marcar();
+        this.panelElementoCarta=panelElementoCarta;
+
+        this.panelElementoCarta.marcar();
     }
 
     public void desmarcarElemento() {
         this.TextoComentarios.setEnabled(false);
-        elementoMarcado=null;
-        panelElementoCarta=null;
+        this.elementoMarcado=null;
+        this.panelElementoCarta=null;
+        if(this.panelRealizarPedido.vacio()){
+            this.pedidoRealizado=true;
+            this.cambiarPanelEste();
+        }
     }
 
     public void realizarPedido() {
@@ -755,7 +761,7 @@ this.icliente.getPedidosModificablesMesa(codMesa);
         }
     }
 
-    public void eliminarPedido(int codPedido) throws InterruptedException {
+    public void eliminarPedido(int codPedido) {
         DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
                     "Eliminar Pedido",
                     "¿Está seguro de que desea eliminar su pedido?",
