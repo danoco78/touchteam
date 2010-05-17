@@ -58,7 +58,6 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         PanelEspacioVertical pev;
 
         centro.removeAll();
-        centro.repaint();
         
         for (int i=0;i<mesas.size();i++){
             boton = new JButton();
