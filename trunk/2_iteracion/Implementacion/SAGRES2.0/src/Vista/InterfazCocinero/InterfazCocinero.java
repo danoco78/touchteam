@@ -23,8 +23,8 @@ public class InterfazCocinero extends javax.swing.JFrame {
     private IntGestionIngrediente panelIngrediente = null;
     public IntColaCocinero panelColaCocinero;
 
-    HebraColaPedidos hebra = null;
-    HebraPendientes hebrapend = null;
+    public HebraColaPedidos hebra = null;
+    public HebraPendientes hebrapend = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";

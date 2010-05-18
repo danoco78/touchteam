@@ -171,6 +171,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                 centro.remove(panel);
                 centro.repaint();
                 centro.revalidate();
+                controlador.hebra3.run();
             }
         }
     }
