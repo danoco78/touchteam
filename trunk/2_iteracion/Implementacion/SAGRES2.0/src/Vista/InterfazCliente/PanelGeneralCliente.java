@@ -761,19 +761,25 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
     }
 
-    public void eliminarPedido(int codPedido) {
-        DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
-                    "Eliminar Pedido",
-                    "¿Está seguro de que desea eliminar su pedido?",
-                    "");
+    public void eliminarPedido(int codPedido, boolean modificando) {
+        if(modificando){
+            DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
+                        "Eliminar Pedido",
+                        "¿Está seguro de que desea eliminar su pedido?",
+                        "");
 
-        dialogo.setLocationRelativeTo(interfazCliente);
-        dialogo.show();
+            dialogo.setLocationRelativeTo(interfazCliente);
+            dialogo.show();
 
-        if(dialogo.isAceptado()){
-            this.icliente.eliminaPedido(codPedido);
-            this.panelPedidoRealizado.actualizar();
-            this.cambiarPanelEste();
+            if(dialogo.isAceptado()){
+                this.icliente.eliminaPedido(codPedido);
+                this.panelPedidoRealizado.actualizar();
+                this.cambiarPanelEste();
+            }
+        }else{
+                this.icliente.eliminaPedido(codPedido);
+                this.panelPedidoRealizado.actualizar();
+                this.cambiarPanelEste();
         }
     }
 

@@ -48,6 +48,7 @@ public class PanelInicial extends javax.swing.JPanel {
         LabelImagenInicio = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setPreferredSize(new java.awt.Dimension(1754, 1240));
         setLayout(new java.awt.BorderLayout());
 
         PanelCentral.setLayout(new java.awt.BorderLayout());
