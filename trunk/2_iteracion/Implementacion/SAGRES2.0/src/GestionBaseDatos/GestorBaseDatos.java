@@ -1438,8 +1438,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             java.sql.Statement consulta = this.Conexion.createStatement();
             ResultSet resultado = consulta.executeQuery("SELECT MAX(factura_id) FROM factura");
             resultado.next();
-            int codEP = resultado.getInt(1)+1;
-            return codEP;
+            int codFactura = resultado.getInt(1)+1;
+            return codFactura;
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
@@ -1575,6 +1575,21 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public int getCodigoMesa(){
+        try {
+            // Obtenemos el último id que se insertó
+            java.sql.Statement consulta = this.Conexion.createStatement();
+            ResultSet resultado = consulta.executeQuery("SELECT MAX(mesa_id) FROM pedido");
+            resultado.next();
+            int codMesa = resultado.getInt(1)+1;
+            return codMesa;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
     }
 }
 

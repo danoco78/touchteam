@@ -94,7 +94,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
 
         add(PanelListas, java.awt.BorderLayout.CENTER);
 
-        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16));
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
         BotonModificar.setText("Modificar");
         BotonModificar.addActionListener(new java.awt.event.ActionListener() {

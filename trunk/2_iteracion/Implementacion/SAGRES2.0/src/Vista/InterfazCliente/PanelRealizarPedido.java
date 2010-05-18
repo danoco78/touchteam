@@ -101,6 +101,7 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         }
 
         if(this.vacio()){
+            this.panelGeneralCliente.pedidoRealizado=true;
             if(this.codPedidoActivo!=-1){
                 this.panelGeneralCliente.eliminarPedido(codPedidoActivo, true);
             }else{
