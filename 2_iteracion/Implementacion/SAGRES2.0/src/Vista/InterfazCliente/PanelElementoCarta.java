@@ -47,10 +47,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
         this.LabelPrecio.setText(Double.toString(elemento.getPrecio())+"€");
-        ImageIcon foto = new ImageIcon();
-        foto.setImage(new BufferedImage(150, 175, BufferedImage.TYPE_INT_RGB));
-        foto.getImage().getGraphics().drawImage((this.elemento.getFoto()).getImage(), 0, 0, 150, 175, this);
-        this.LabelFoto.setIcon(foto);
+        
     }
 
     /** This method is called from within the constructor to

@@ -93,7 +93,11 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 listaElementos.add(elementoPedido.getElemento());
             }
 
-            this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
+            if(pedido.getEstado()!=2){
+                this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
+            }else{
+                this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
+            }
         }
 
         this.PanelPedido.repaint();
