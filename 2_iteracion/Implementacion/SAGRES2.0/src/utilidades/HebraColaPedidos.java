@@ -8,6 +8,8 @@ package utilidades;
 import GestionPedidos.Pedido;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,29 +48,65 @@ public class HebraColaPedidos implements Runnable {
             try {
                 switch (filtro){
                     case BAR:
-                        p = mpadre.imetre.getSiguientePedidoBar();
+                        /*p = mpadre.imetre.getSiguientePedidoBar();
                         if (actual != null && p!=null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
                             if (actual != null)
                                 mpadre.panelColaBar.pmp.addPedido(actual);
-                        }
+                        }*/
+                        actualizaColaBar();
                         break;
                     case COCINA:
-                        p = cpadre.icocinero.getSiguientePedidoCocina();
+                        /*p = cpadre.icocinero.getSiguientePedidoCocina();
                         if (actual != null && p!= null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
                             if(actual != null)
                                 cpadre.panelColaCocinero.pmpizq.addPedido(actual);
-                        }
+                        }*/
+                        actualizaColaCocina();
                         break;
                 }
             } catch (Exception ex) {
                 end = true;
             }
+        }
+    }
+
+    public void actualizaColaBar(){
+        try {
+            p = mpadre.imetre.getSiguientePedidoBar();
+            if (actual != null && p != null && actual.equals(p)) {
+                Thread.sleep(5000); // 5 Segundos
+            } else {
+                actual = p;
+                if (actual != null) 
+                    mpadre.panelColaBar.pmp.addPedido(actual);
+                else
+                    Thread.sleep(5000); // 5 Segundos
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(HebraColaPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void actualizaColaCocina(){
+        try{
+            p = cpadre.icocinero.getSiguientePedidoCocina();
+            if (actual != null && p!= null && actual.equals(p)) {
+                Thread.sleep(5000); // 5 Segundos
+            } else {
+                actual = p;
+                if(actual != null)
+                    cpadre.panelColaCocinero.pmpizq.addPedido(actual);
+                else
+                    Thread.sleep(5000); // 5 Segundos
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(HebraColaPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

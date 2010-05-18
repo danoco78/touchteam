@@ -7,6 +7,8 @@ package utilidades;
 
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,22 +47,24 @@ public class HebraPendientes implements Runnable {
             try {
                 switch (filtro){
                     case BAR:
-                        aux = mpadre.imetre.getNumBebidasEnCola();
+                        /*aux = mpadre.imetre.getNumBebidasEnCola();
                         if (aux!=numBebidas){
                             numBebidas = aux;
                             mpadre.panelColaBar.pmp.setPendientes(numBebidas);
                         }
                         else
-                            Thread.sleep(5000);
+                            Thread.sleep(5000);*/
+                        actualizaBebidasPendientes();
                         break;
                     case COCINA:
-                        aux = cpadre.icocinero.getNumPlatosEnCola();
+                        /*aux = cpadre.icocinero.getNumPlatosEnCola();
                         if (aux!=numPlatos){
                             numPlatos = aux;
                             cpadre.panelColaCocinero.pmpizq.setPendientes(numPlatos);
                         }
                         else
-                            Thread.sleep(5000);
+                            Thread.sleep(5000);*/
+                        actualizaPlatosPendientes();
                         break;
                 }
             } catch (Exception ex) {
@@ -68,4 +72,33 @@ public class HebraPendientes implements Runnable {
             }
         }
     }
+
+    public void actualizaBebidasPendientes(){
+        try {
+            aux = mpadre.imetre.getNumBebidasEnCola();
+            if (aux != numBebidas) {
+                numBebidas = aux;
+                mpadre.panelColaBar.pmp.setPendientes(numBebidas);
+            } else {
+                Thread.sleep(5000);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HebraPendientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void actualizaPlatosPendientes(){
+        try {
+            aux = cpadre.icocinero.getNumPlatosEnCola();
+            if (aux != numPlatos) {
+                numPlatos = aux;
+                cpadre.panelColaCocinero.pmpizq.setPendientes(numPlatos);
+            } else {
+                Thread.sleep(5000);
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HebraPendientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
