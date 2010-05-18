@@ -372,10 +372,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         confirmar.setLocationRelativeTo(mpadre);
                         confirmar.setVisible(true);
-                        if(confirmar.isAceptado()){
+                        if(confirmar.isAceptado())
                             borrar = true;
-                            infoMesaPedido.setText("");
-                        }
                     }
                     else
                         borrar = true;
@@ -384,7 +382,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         if (borrar){
                             ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                             mpadre.imetre.seleccionaBebida(pedActual, eleB);
-                            num = mpadre.imetre.getNumBebidasEnCola();
+                            //num = mpadre.imetre.getNumBebidasEnCola();
+                            mpadre.hebra2.actualizaBebidasPendientes();
                             numPendientes--;
                         }
                     } catch (Exception ex) {
@@ -392,12 +391,11 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     }
                     break;
                 case PanelMesaPedido.COCINA:
-                    if (numPendientes == 1)
-                        infoMesaPedido.setText("");
                     try {
                         ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
-                        num = cpadre.icocinero.getNumPlatosEnCola();
+                        //num = cpadre.icocinero.getNumPlatosEnCola();
+                        cpadre.hebrapend.actualizaPlatosPendientes();
                         borrar = true;
                         cpadre.panelColaCocinero.actualizarVista(pedActual,eleC);
                         numPendientes--;
@@ -413,13 +411,14 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 panelInfoPedido.remove(panel);
                 panelInfoPedido.repaint();
                 panelInfoPedido.revalidate();
-                /*if (numPendientes == 0){
+                if (numPendientes == 0){
+                    infoMesaPedido.setText("");
                     if (filtro == PanelMesaPedido.BAR)
-                        mpadre.hebra.run();
+                        mpadre.hebra.actualizaColaBar();
                     else
-                        cpadre.hebra.run();
-                }*/
-                setPendientes(num);
+                        cpadre.hebra.actualizaColaCocina();
+                }
+                //setPendientes(num);
             }
         }
     }
