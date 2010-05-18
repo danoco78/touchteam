@@ -48,7 +48,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     protected ICliente icliente;
 
     private InterfazCliente interfazCliente;
-    private int codMesa = 1;
+    private int codMesa;
 
     private JPanel hojasSeccionEntrantes = new JPanel();
     private int i_entrantes;
@@ -77,6 +77,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         initComponents();
         this.interfazCliente=interfazCliente;
         this.icliente=icliente;
+        this.codMesa = 1;
         this.setDoubleBuffered(true);
         cargarCarta();
         
@@ -485,9 +486,9 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, this.TextoComentarios.getText());
                 this.TextoComentarios.setEnabled(false);
                 this.TextoComentarios.setText("");
-                this.elementoMarcado=null;
                 this.panelRealizarPedido.repaint();
                 this.panelRealizarPedido.revalidate();
+                this.desmarcarElemento();
             }else{
                 JOptionPane.showMessageDialog(this,
                                           "Debe añadir un comentario menor de 45 caracteres.",
@@ -638,6 +639,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     public void desmarcarElemento() {
         this.TextoComentarios.setEnabled(false);
         this.elementoMarcado=null;
+        this.panelElementoCarta.desmarcar();
         this.panelElementoCarta=null;
         if(this.panelRealizarPedido.vacio()){
             this.pedidoRealizado=true;

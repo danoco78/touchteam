@@ -103,6 +103,12 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         this.PanelPedido.repaint();
         this.PanelPedido.revalidate();
 
+        if(pedidos.size()==0){
+            this.BotonVerFactura.setEnabled(false);
+        }else{
+            this.BotonVerFactura.setEnabled(true);
+        }
+
         return pedidos.size();
     }
 
