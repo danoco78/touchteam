@@ -115,7 +115,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         pendientes.setText("Hay "+ num + " plato pendiente.");
                         break;
                     default:
-                        pendientes.setText("Hay "+ num+ " platos pendiente.");
+                        pendientes.setText("Hay "+ num+ " platos pendientes.");
                         break;
                 }
                 break;
@@ -128,7 +128,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         pendientes.setText("Hay "+ num + " bebida pendiente.");
                         break;
                     default:
-                        pendientes.setText("Hay "+ num+ " bebidas pendiente.");
+                        pendientes.setText("Hay "+ num+ " bebidas pendientes.");
                         break;
                 }
                 break;
@@ -401,6 +401,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         borrar = true;
                         cpadre.panelColaCocinero.actualizarVista(pedActual,eleC);
                         numPendientes--;
+
                     } catch (Exception ex) {
                         Logger.getLogger(PanelMesaPedido.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -412,6 +413,12 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 panelInfoPedido.remove(panel);
                 panelInfoPedido.repaint();
                 panelInfoPedido.revalidate();
+                /*if (numPendientes == 0){
+                    if (filtro == PanelMesaPedido.BAR)
+                        mpadre.hebra.run();
+                    else
+                        cpadre.hebra.run();
+                }*/
                 setPendientes(num);
             }
         }

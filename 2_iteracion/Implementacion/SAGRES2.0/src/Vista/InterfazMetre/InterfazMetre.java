@@ -24,9 +24,9 @@ public class InterfazMetre extends javax.swing.JFrame {
     private IntGestionBebidas panelPrincipal = null;
     public IntColaBar panelColaBar = null;
 
-    HebraColaPedidos hebra = null;
-    HebraPendientes hebra2 = null;
-    HebraFacturacion hebra3 = null;
+    public HebraColaPedidos hebra = null;
+    public HebraPendientes hebra2 = null;
+    public HebraFacturacion hebra3 = null;
 
     protected static final String BEBIDA = "Bebida";
     protected static final String COLA = "Cola";

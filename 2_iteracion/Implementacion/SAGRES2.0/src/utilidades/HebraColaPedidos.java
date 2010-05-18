@@ -47,22 +47,22 @@ public class HebraColaPedidos implements Runnable {
                 switch (filtro){
                     case BAR:
                         p = mpadre.imetre.getSiguientePedidoBar();
-                        if (actual != null && actual.equals(p)) {
+                        if (actual != null && p!=null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
-                            mpadre.panelColaBar.pmp.addPedido(actual);
+                            if (actual != null)
+                                mpadre.panelColaBar.pmp.addPedido(actual);
                         }
                         break;
                     case COCINA:
-                        //p = cpadre.icocinero.getSiguientePedidoCocinaEnCola();
                         p = cpadre.icocinero.getSiguientePedidoCocina();
-                        if (actual != null && actual.equals(p)) {
+                        if (actual != null && p!= null && actual.equals(p)) {
                             Thread.sleep(5000); // 5 Segundos
                         } else {
                             actual = p;
-                            cpadre.panelColaCocinero.pmpizq.addPedido(actual);
-                            //cpadre.panelColaCocinero.actualizarVista();
+                            if(actual != null)
+                                cpadre.panelColaCocinero.pmpizq.addPedido(actual);
                         }
                         break;
                 }
