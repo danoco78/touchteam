@@ -12,9 +12,7 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
-import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -23,9 +21,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import utilidades.PanelImagen;
 
 /**
  *
@@ -47,6 +42,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
         this.LabelPrecio.setText(Double.toString(elemento.getPrecio())+"€");
+        this.LabelFoto.setIcon(this.elemento.getFoto());
         
     }
 

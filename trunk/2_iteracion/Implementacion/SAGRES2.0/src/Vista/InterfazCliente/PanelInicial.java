@@ -11,10 +11,6 @@
 
 package Vista.InterfazCliente;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
@@ -29,10 +25,15 @@ public class PanelInicial extends javax.swing.JPanel {
     public PanelInicial(InterfazCliente interfazCliente) {
         this.interfazCliente=interfazCliente;
         initComponents();
-        this.PanelCentral.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-                    java.awt.Toolkit.getDefaultToolkit().getScreenSize().height);
-        this.repaint();
-        this.revalidate();
+        ImageIcon fotoInicio = new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"));
+        ImageIcon aux = new ImageIcon();
+        aux.setImage(new BufferedImage(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
+                java.awt.Toolkit.getDefaultToolkit().getScreenSize().height,
+                BufferedImage.TYPE_INT_RGB));
+        aux.getImage().getGraphics().drawImage(fotoInicio.getImage(), 0, 0, 
+                java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
+                java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, null);
+        this.LabelImagenInicio.setIcon(aux);
     }
     
     /** This method is called from within the constructor to
@@ -53,7 +54,6 @@ public class PanelInicial extends javax.swing.JPanel {
 
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
-        LabelImagenInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"))); // NOI18N
         LabelImagenInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 empezar(evt);
