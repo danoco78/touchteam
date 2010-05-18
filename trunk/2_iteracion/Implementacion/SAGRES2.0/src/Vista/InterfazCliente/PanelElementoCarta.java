@@ -42,7 +42,10 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         this.LabelNombre.setText(elemento.getNombre());
         this.TextoDescripcion.setText(elemento.getDescripcion());
         this.LabelPrecio.setText(Double.toString(elemento.getPrecio())+"€");
-        this.LabelFoto.setIcon(this.elemento.getFoto());
+        ImageIcon foto = new ImageIcon();
+        foto.setImage(new BufferedImage(175,175, BufferedImage.TYPE_INT_RGB));
+        foto.getImage().getGraphics().drawImage(((ImageIcon) this.elemento.getFoto()).getImage(), 0, 0,175,175,null);
+        this.LabelFoto.setIcon(foto);
         
     }
 

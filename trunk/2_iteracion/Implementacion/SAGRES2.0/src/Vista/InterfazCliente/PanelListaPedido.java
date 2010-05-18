@@ -33,8 +33,8 @@ public class PanelListaPedido extends javax.swing.JPanel {
         this.PGC=PGC;
         this.codPedido=codPedido;
 
-        this.TextoListaComida.setText("");
-        this.TextoListaBebida.setText("");
+        this.TextoListaComida.setText("PLATOS:\n");
+        this.TextoListaBebida.setText("BEBIDAS:\n");
         
         Iterator it = listaElementos.iterator();
 
@@ -49,7 +49,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
         }
 
         if(estado!=0){
-            this.BotonModificar.setEnabled(false);
+            this.BotonModificar.setVisible(false);
         }
     }
 
@@ -62,15 +62,18 @@ public class PanelListaPedido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelListas = new javax.swing.JPanel();
         PanelListaComida = new javax.swing.JPanel();
         ScrollListaComida = new javax.swing.JScrollPane();
         TextoListaComida = new javax.swing.JTextPane();
-        BotonModificar = new javax.swing.JButton();
         PanelListaBebida = new javax.swing.JPanel();
         ScrollBebida = new javax.swing.JScrollPane();
         TextoListaBebida = new javax.swing.JEditorPane();
+        BotonModificar = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
+
+        PanelListas.setLayout(new java.awt.BorderLayout());
 
         PanelListaComida.setLayout(new java.awt.BorderLayout());
 
@@ -78,6 +81,18 @@ public class PanelListaPedido extends javax.swing.JPanel {
         ScrollListaComida.setViewportView(TextoListaComida);
 
         PanelListaComida.add(ScrollListaComida, java.awt.BorderLayout.CENTER);
+
+        PanelListas.add(PanelListaComida, java.awt.BorderLayout.CENTER);
+
+        PanelListaBebida.setLayout(new java.awt.BorderLayout());
+
+        ScrollBebida.setViewportView(TextoListaBebida);
+
+        PanelListaBebida.add(ScrollBebida, java.awt.BorderLayout.CENTER);
+
+        PanelListas.add(PanelListaBebida, java.awt.BorderLayout.SOUTH);
+
+        add(PanelListas, java.awt.BorderLayout.CENTER);
 
         BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
@@ -87,17 +102,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
                 modificarPedido(evt);
             }
         });
-        PanelListaComida.add(BotonModificar, java.awt.BorderLayout.PAGE_END);
-
-        add(PanelListaComida, java.awt.BorderLayout.CENTER);
-
-        PanelListaBebida.setLayout(new java.awt.BorderLayout());
-
-        ScrollBebida.setViewportView(TextoListaBebida);
-
-        PanelListaBebida.add(ScrollBebida, java.awt.BorderLayout.CENTER);
-
-        add(PanelListaBebida, java.awt.BorderLayout.SOUTH);
+        add(BotonModificar, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void modificarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPedido
@@ -116,6 +121,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
     private javax.swing.JButton BotonModificar;
     private javax.swing.JPanel PanelListaBebida;
     private javax.swing.JPanel PanelListaComida;
+    private javax.swing.JPanel PanelListas;
     private javax.swing.JScrollPane ScrollBebida;
     private javax.swing.JScrollPane ScrollListaComida;
     private javax.swing.JEditorPane TextoListaBebida;

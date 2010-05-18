@@ -337,7 +337,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                         listaBebida.put(bebida, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(1)).getBytes(1, (int) datosElementosBebida.getBlob(1).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -359,7 +359,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                         listaIngredientes.put(ingrediente, cantidad);
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(1)).getBytes(1, (int) datosElementosPlato.getBlob(1).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
