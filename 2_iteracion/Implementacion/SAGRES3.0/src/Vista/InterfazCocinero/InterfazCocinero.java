@@ -94,8 +94,6 @@ public class InterfazCocinero extends javax.swing.JFrame {
 
         //Eventos para la segunda iteracion
         protected static final int GESTIONARPRODUCTOS = 13;
-        protected static final int PREPARARPLATOPENDIENTE = 14;
-        protected static final int PLATOCOCINADO = 15;
 
         public ManejaEventos(JFrame Padre, int TipoEvento){
             this.padre = Padre;

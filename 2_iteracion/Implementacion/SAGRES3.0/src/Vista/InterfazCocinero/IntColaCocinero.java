@@ -39,7 +39,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.listaPedidos = new ArrayList();
         try {
             listaPedidos = this.interfaz.icocinero.getPedidosCocinaPreparandose();
-            System.out.println("Hay " + listaPedidos.size() + " pedidos preparandose.");
         } catch (Exception ex) {
             
         }
