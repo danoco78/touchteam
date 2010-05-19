@@ -9,6 +9,8 @@ import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
 import Vista.InterfazCocinero.InterfazCocinero;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -80,6 +82,9 @@ public class MainCocina {
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
             InterfazCocinero interfaz = new InterfazCocinero(controlador);
+            interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+            interfaz.setExtendedState(InterfazCocinero.MAXIMIZED_BOTH);
+            interfaz.setMinimumSize(new Dimension(800,600));
             dCarga.Progreso(100);
             dCarga.setVisible(false);
             dCarga.dispose();
