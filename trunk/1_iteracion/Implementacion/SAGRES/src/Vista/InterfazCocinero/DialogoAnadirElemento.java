@@ -27,8 +27,11 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.RowFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import utilidades.ImageRenderer;
 
 /**
@@ -48,10 +51,16 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private IPreparaCarta carta;*/
     private ICocinero icocinero;
     private ArrayList<Producto> disponibles;
-    private ArrayList<Producto> disponiblesSel;
+    //private ArrayList<Producto> disponiblesSel;
     private ArrayList seleccionados;
     private ArrayList<Seccion> listaSecciones;
     private ArrayList<Producto> listaProductos;
+
+    private TableRowSorter<TableModel> modeloOrdenadoProductosDisponibles;
+
+    private DefaultTableModel modeloProductosdisponibles;
+
+
 
 
     /** Creates new form DialogoAnadirElemento */
@@ -732,19 +741,35 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 Collections.sort(listaProductos);
                 Iterator<Producto> itpro = listaProductos.iterator();
                 disponibles = new ArrayList<Producto>(listaProductos);
-                this.disponiblesSel = disponibles;
-                DefaultTableModel modelo = new DefaultTableModel();
-                modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
-                modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
-                modelo.addColumn(this.tProductosDisponibles.getColumnName(2));
-                modelo.setRowCount(listaProductos.size());
-                this.tProductosDisponibles.setModel(modelo);
+                //this.disponiblesSel = disponibles;
+                modeloProductosdisponibles = new DefaultTableModel() {
+                    @Override
+                    public Class getColumnClass(int columna) {
+                        switch (columna){
+                            case 0:
+                                return String.class;
+                            case 1:
+                                return Float.class;
+                            case 2:
+                                return ImageIcon.class;
+                            default:
+                                return Producto.class;
+                        }
+                    }
+                };
+                modeloProductosdisponibles.addColumn("Nombre");
+                modeloProductosdisponibles.addColumn("Cantidad");
+                modeloProductosdisponibles.addColumn("Imagen");
+                modeloProductosdisponibles.addColumn("Producto");
+                modeloProductosdisponibles.setRowCount(listaProductos.size());
+                this.tProductosDisponibles.setModel(modeloProductosdisponibles);
                 this.tProductosDisponibles.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
                 this.tProductosDisponibles.setRowHeight(50);
                 for (int i = 0; i < disponibles.size(); i++) {
                     this.tProductosDisponibles.setValueAt(disponibles.get(i).getNombre(), i, 0);
                     this.tProductosDisponibles.setValueAt(disponibles.get(i).getCantidad(), i, 1);
                     this.tProductosDisponibles.setValueAt(disponibles.get(i).getImagen(), i, 2);
+                    this.tProductosDisponibles.setValueAt(disponibles.get(i), i, 3);
                 }
                 cl.next(this.cuerpo);
                 break;
@@ -846,8 +871,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         int select = this.tProductosDisponibles.getSelectedRow();
         if (select != -1) {
             //Producto productoSeleccionado = (Producto) this.disponibles.get(select);
-            Producto productoSeleccionado = (Producto) this.disponiblesSel.get(select);
-            this.disponiblesSel.remove(select);
+            //Producto productoSeleccionado = (Producto) this.disponiblesSel.get(select);
+            Producto productoSeleccionado = (Producto) this.tProductosDisponibles.getValueAt(select, 3);
+            //this.disponiblesSel.remove(select);
+            //System.out.println("Fila :" + select + " Producto: " + productoSeleccionado.getNombre());
+            //System.out.println("Fila :" + select + " Producto: " + this.tProductosDisponibles.getValueAt(select, 0));
             ((DefaultTableModel) this.tProductosDisponibles.getModel()).removeRow(select);
             this.seleccionados.add(productoSeleccionado);
             Object[] obj = new Object[3];
@@ -888,22 +916,26 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
     private void BorrarAsociados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrarAsociados
         if (this.tProductosAsociados.getSelectedColumn() == 0) {
             int select = this.tProductosAsociados.getSelectedRow();
-            Producto productoSeleccionado = (Producto) this.seleccionados.get(select);
-            this.seleccionados.remove(select);
-            ((DefaultTableModel) this.tProductosAsociados.getModel()).removeRow(select);
-            this.disponiblesSel.add(productoSeleccionado);
-            Object[] obj = new Object[3];
-            obj[0] = productoSeleccionado.getNombre();
-            obj[1] = productoSeleccionado.getCantidad();
-            obj[2] = productoSeleccionado.getImagen();
-            ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
-            this.tFiltroKeyReleased(null);
+            if (select != -1){
+                Producto productoSeleccionado = (Producto) this.seleccionados.get(select);
+                this.seleccionados.remove(select);
+                ((DefaultTableModel) this.tProductosAsociados.getModel()).removeRow(select);
+                //this.disponiblesSel.add(productoSeleccionado);
+
+                Object[] obj = new Object[4];
+                obj[0] = productoSeleccionado.getNombre();
+                obj[1] = productoSeleccionado.getCantidad();
+                obj[2] = productoSeleccionado.getImagen();
+                obj[3] = productoSeleccionado;
+                ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
+                this.tFiltroKeyReleased(null);
+            }
         }
     }//GEN-LAST:event_BorrarAsociados
 
     private void tFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tFiltroKeyReleased
         // Array temporal con los productos mostrados tras filtrar
-        this.disponiblesSel = new ArrayList<Producto>();
+     /*   this.disponiblesSel = new ArrayList<Producto>();
         Iterator<Producto> iterador = disponibles.iterator();
        
         for (int j = this.tProductosDisponibles.getRowCount() - 1; j >= 0 ; j--){
@@ -922,6 +954,11 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.disponiblesSel.add(producto);
             }
         }
+      *
+      */
+        modeloOrdenadoProductosDisponibles = new TableRowSorter<TableModel>(modeloProductosdisponibles);
+        this.tProductosDisponibles.setRowSorter(modeloOrdenadoProductosDisponibles);
+        modeloOrdenadoProductosDisponibles.setRowFilter(RowFilter.regexFilter("(?i)" + this.tFiltro.getText(), 0));
     }//GEN-LAST:event_tFiltroKeyReleased
 
     private void tFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tFiltroMouseClicked
