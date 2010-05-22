@@ -27,14 +27,7 @@ public class ElementoPlato extends Elemento {
         this.tiempoElaboracion = tiempoElaboracion;
         this.listaIngredientes = new HashMap<Ingrediente,Float>();
     }
-
-    public ElementoPlato(Elemento ele, int tiempo_elaboracion){
-        super(ele.getCodigoElemento(), ele.getDescripcion(), ele.getDivisionesMaximas(), ele.getFoto(),
-                ele.getNombre(), ele.getPrecio());
-        this.tiempoElaboracion = tiempo_elaboracion;
-        this.listaIngredientes = new HashMap<Ingrediente,Float>();
-    }
-
+    
     public void modifica(String nombre, String descripcion, ImageIcon foto, int tiempo, float precio, int divisionesMaximas){
         this.setNombre(nombre);
         this.setDescripcion(descripcion);
