@@ -1095,7 +1095,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
                     if(resElem.next()){
                         elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int) resElem.getBlob(1).length())), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
-                        ElementoPlato elemPlato = new ElementoPlato(elem,0);
 
                         //Asociamos los ingredientes
                         Statement consultaIngredientes = (Statement) this.Conexion.createStatement();
@@ -1558,7 +1557,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
                     if(resElem.next()){
                         elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int) resElem.getBlob(1).length())), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
-                        ElementoPlato elemPlato = new ElementoPlato(elem,0);
 
                         //Asociamos los ingredientes
                         Statement consultaIngredientes = (Statement) this.Conexion.createStatement();
