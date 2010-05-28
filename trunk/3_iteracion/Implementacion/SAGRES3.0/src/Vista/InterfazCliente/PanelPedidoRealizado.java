@@ -15,8 +15,8 @@ import GestionCarta.Elemento;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
+import utilidades.PanelEspacioVertical;
 
 /**
  *
@@ -31,6 +31,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
         this.codMesa=codMesa;
+        this.actualizar();
     }
 
     /** This method is called from within the constructor to
@@ -42,14 +43,26 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ScrollPanelPedido = new javax.swing.JScrollPane();
         PanelPedido = new javax.swing.JPanel();
+        pBotonVerFactura = new javax.swing.JPanel();
+        pMargenSup = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         PanelPedido.setOpaque(false);
-        PanelPedido.setLayout(new java.awt.GridLayout(0, 1));
-        add(PanelPedido, java.awt.BorderLayout.CENTER);
+        PanelPedido.setLayout(new javax.swing.BoxLayout(PanelPedido, javax.swing.BoxLayout.Y_AXIS));
+        ScrollPanelPedido.setViewportView(PanelPedido);
+
+        add(ScrollPanelPedido, java.awt.BorderLayout.CENTER);
+
+        pBotonVerFactura.setOpaque(false);
+        pBotonVerFactura.setLayout(new java.awt.BorderLayout());
+
+        pMargenSup.setOpaque(false);
+        pBotonVerFactura.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
         BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
@@ -61,7 +74,9 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 verFactura(evt);
             }
         });
-        add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
+        pBotonVerFactura.add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
+
+        add(pBotonVerFactura, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void verFactura(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verFactura
@@ -72,10 +87,14 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonVerFactura;
     private javax.swing.JPanel PanelPedido;
+    private javax.swing.JScrollPane ScrollPanelPedido;
+    private javax.swing.JPanel pBotonVerFactura;
+    private javax.swing.JPanel pMargenSup;
     // End of variables declaration//GEN-END:variables
 
     public void anadirPedido(ArrayList<Elemento> listaElementos, int codPedido, int estado) {
         this.PanelPedido.add(new PanelListaPedido(listaElementos, panelGeneralCliente, codPedido, estado));
+        this.PanelPedido.add(new PanelEspacioVertical());
     }
 
     public int actualizar() {
@@ -100,14 +119,14 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
             }
         }
 
-        this.PanelPedido.repaint();
-        this.PanelPedido.revalidate();
-
         if(pedidos.size()==0){
             this.BotonVerFactura.setEnabled(false);
         }else{
             this.BotonVerFactura.setEnabled(true);
         }
+
+        this.PanelPedido.revalidate();
+        this.PanelPedido.repaint();
 
         return pedidos.size();
     }
