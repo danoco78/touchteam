@@ -50,8 +50,12 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         BotonVerFactura = new javax.swing.JButton();
 
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(200, 200));
         setLayout(new java.awt.BorderLayout());
 
+        ScrollPanelPedido.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        PanelPedido.setBackground(new java.awt.Color(255, 255, 255));
         PanelPedido.setOpaque(false);
         PanelPedido.setLayout(new javax.swing.BoxLayout(PanelPedido, javax.swing.BoxLayout.Y_AXIS));
         ScrollPanelPedido.setViewportView(PanelPedido);
@@ -62,6 +66,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         pBotonVerFactura.setLayout(new java.awt.BorderLayout());
 
         pMargenSup.setOpaque(false);
+        pMargenSup.setLayout(new java.awt.BorderLayout());
         pBotonVerFactura.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
         BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -112,7 +117,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 listaElementos.add(elementoPedido.getElemento());
             }
 
-            if(pedido.getEstado()!=2){
+            if(pedido.getEstado()<2){
                 this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
             }else{
                 this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);

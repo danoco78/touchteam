@@ -26,6 +26,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -163,18 +164,26 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelGeneralCentro.setLayout(new java.awt.BorderLayout(0, 5));
 
         PanelComentarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        PanelComentarios.setMinimumSize(new java.awt.Dimension(80, 100));
         PanelComentarios.setOpaque(false);
+        PanelComentarios.setPreferredSize(new java.awt.Dimension(201, 150));
         PanelComentarios.setLayout(new java.awt.BorderLayout());
 
         ScrollComentarios.setBorder(null);
 
+        TextoComentarios.setBackground(new java.awt.Color(255, 255, 255));
         TextoComentarios.setEnabled(false);
         TextoComentarios.setPreferredSize(new java.awt.Dimension(106, 50));
+        TextoComentarios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextoComentariosKeyTyped(evt);
+            }
+        });
         ScrollComentarios.setViewportView(TextoComentarios);
 
         PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
 
-        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16));
         BotonAnadir.setForeground(new java.awt.Color(80, 98, 143));
         BotonAnadir.setText("Añadir");
         BotonAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -493,6 +502,14 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_anadirElementoAPedido
+
+    private void TextoComentariosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoComentariosKeyTyped
+        if(evt.getKeyChar() == '\n'){
+            if(TextoComentarios.getText().length() > 0)
+                TextoComentarios.setText(TextoComentarios.getText().substring(0, TextoComentarios.getText().length()-1));
+            this.anadirElementoAPedido(new java.awt.event.ActionEvent(new Object(), 0, new String()));
+        }
+    }//GEN-LAST:event_TextoComentariosKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
