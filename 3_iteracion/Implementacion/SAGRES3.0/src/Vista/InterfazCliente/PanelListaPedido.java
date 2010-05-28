@@ -12,6 +12,7 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionCarta.ElementoBebida;
 import GestionCarta.ElementoPlato;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,21 +35,23 @@ public class PanelListaPedido extends javax.swing.JPanel {
         this.codPedido=codPedido;
 
         this.TextoListaComida.setText("PLATOS:\n");
-        this.TextoListaBebida.setText("BEBIDAS:\n");
-        
         Iterator it = listaElementos.iterator();
-
         while(it.hasNext()){
             Elemento elemento = (Elemento) it.next();
-
             if(elemento instanceof ElementoPlato){
                 this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
-            }else{
-                this.TextoListaBebida.setText(this.TextoListaBebida.getText()+"\n- "+elemento.getNombre());
+            }
+        }
+        this.TextoListaComida.setText(this.TextoListaComida.getText()+"BEBIDAS:\n");
+        it = listaElementos.iterator();
+        while(it.hasNext()){
+            Elemento elemento = (Elemento) it.next();
+            if(elemento instanceof ElementoBebida){
+                this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
             }
         }
 
-        if(estado!=0){
+        if(estado >0 ){
             this.BotonModificar.setVisible(false);
         }
     }
@@ -67,8 +70,6 @@ public class PanelListaPedido extends javax.swing.JPanel {
         PanelPedidoRealizado = new javax.swing.JPanel();
         ScrollListaComida = new javax.swing.JScrollPane();
         TextoListaComida = new javax.swing.JTextPane();
-        ScrollBebida = new javax.swing.JScrollPane();
-        TextoListaBebida = new javax.swing.JEditorPane();
         pBotonModificar = new javax.swing.JPanel();
         pMargenSup = new javax.swing.JPanel();
         BotonModificar = new javax.swing.JButton();
@@ -77,10 +78,12 @@ public class PanelListaPedido extends javax.swing.JPanel {
         pMargenArr = new javax.swing.JPanel();
         pMargenAba = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
+        PanelListas.setOpaque(false);
         PanelListas.setLayout(new java.awt.BorderLayout());
 
         PanelPedidoRealizado.setLayout(new javax.swing.BoxLayout(PanelPedidoRealizado, javax.swing.BoxLayout.Y_AXIS));
@@ -94,13 +97,6 @@ public class PanelListaPedido extends javax.swing.JPanel {
 
         PanelPedidoRealizado.add(ScrollListaComida);
 
-        ScrollBebida.setBorder(null);
-
-        TextoListaBebida.setBorder(null);
-        ScrollBebida.setViewportView(TextoListaBebida);
-
-        PanelPedidoRealizado.add(ScrollBebida);
-
         ScrollPedido.setViewportView(PanelPedidoRealizado);
 
         PanelListas.add(ScrollPedido, java.awt.BorderLayout.CENTER);
@@ -111,7 +107,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
         pMargenSup.setOpaque(false);
         pBotonModificar.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
-        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16));
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
         BotonModificar.setText("Modificar");
         BotonModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,10 +150,8 @@ public class PanelListaPedido extends javax.swing.JPanel {
     private javax.swing.JButton BotonModificar;
     private javax.swing.JPanel PanelListas;
     private javax.swing.JPanel PanelPedidoRealizado;
-    private javax.swing.JScrollPane ScrollBebida;
     private javax.swing.JScrollPane ScrollListaComida;
     private javax.swing.JScrollPane ScrollPedido;
-    private javax.swing.JEditorPane TextoListaBebida;
     private javax.swing.JTextPane TextoListaComida;
     private javax.swing.JPanel pBotonModificar;
     private javax.swing.JPanel pMargenAba;
