@@ -22,17 +22,13 @@ import Vista.DialogoConfirmacion;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dialog.ModalityType;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -630,9 +626,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         if(this.panelElementoCarta!=null){
             this.panelElementoCarta.desmarcar();
         }
-
         this.panelElementoCarta=panelElementoCarta;
-
         this.panelElementoCarta.marcar();
     }
 
@@ -677,8 +671,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                     listaTotal);
 
             dialogo.setLocationRelativeTo(interfazCliente);
-            dialogo.show();
-
+            dialogo.setVisible(true);
 
             if(dialogo.isAceptado()){
                 this.TextoComentarios.setText("");
@@ -714,7 +707,6 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                               "Debe añadir, al menos, un elemento.",
                               "El pedido no puede ser realizado",
                               JOptionPane.INFORMATION_MESSAGE);
-
         }
     }
 
@@ -730,7 +722,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                     ,"\nEsto lo anulará y cuando termine se enviará como uno nuevo.");
 
         dialogo.setLocationRelativeTo(interfazCliente);
-        dialogo.show();
+        dialogo.setVisible(true);
 
         if(dialogo.isAceptado()){
             ArrayList<Pedido> listaPedidos = this.icliente.obtienePedidosMesa(codMesa);
@@ -771,7 +763,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                         "");
 
             dialogo.setLocationRelativeTo(interfazCliente);
-            dialogo.show();
+            dialogo.setVisible(true);
 
             if(dialogo.isAceptado()){
                 this.icliente.eliminaPedido(codPedido);
@@ -815,7 +807,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                     cuenta);
 
         dialogo.setLocationRelativeTo(interfazCliente);
-        dialogo.show();
+        dialogo.setVisible(true);
     }
 
     public void comprobarPedidos() {

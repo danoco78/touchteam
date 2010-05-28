@@ -37,6 +37,7 @@ public class DialogoDeCarga extends javax.swing.JFrame {
         Progreso.setPreferredSize(new java.awt.Dimension(146, 30));
         getContentPane().add(Progreso, java.awt.BorderLayout.PAGE_END);
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 51));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/LogoSagres.png"))); // NOI18N
