@@ -5,12 +5,9 @@
 
 package GestionBaseDatos;
 
-import GestionCarta.Elemento;
-import GestionPedidos.ElementoPedido;
 import GestionPedidos.Factura;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
-import utilidades.Pair;
 
 /**
  *
@@ -27,7 +24,6 @@ public interface IPedidosBD {
     public boolean nuevoPedido(Pedido pedido);
     public boolean eliminaPedido(int codPedido);
 
-    // TODO No esta reflejada en el diseño
     public Pedido getSiguientePedidoBar();
     public Pedido getSiguientePedidoCocina();
 

@@ -886,7 +886,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                                                             "WHERE pedido.estado <> 2 AND elementoPedido.estado = 1 AND pedido_id = pedido_pedido_id " +
                                                             "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
                                                             "AND elementoPedido_id = elementoColaCocina.elementoPedido_elementoPedido_id "
-                                                            + " GROUP BY pedido_id");
+                                                            + " GROUP BY pedido_id ORDER BY fecha;");
 
            HashSet<Elemento> elementosCarta = this.obtieneElementos();
            while (tablaPedidos.next()){
@@ -1225,19 +1225,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         }
     }
 
-    //TODO Este método no está reflejado en el diseño
     public Pedido getSiguientePedidoBar() {
         Pedido ped = null;
         try {
             Statement consulta = (Statement) this.Conexion.createStatement();
             // Obtengo los pedidos cuyo estado es distinto de Facturado y tiene elementosColaBar en Cola
-            ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha " +
-                                                            "FROM pedido, tieneelemento, elementopedido, elementocolabar " +
-                                                            "WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id " +
-                                                            "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
-                                                            "AND elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id " +
-                                                            "AND elementoPedido.estado =0 GROUP BY pedido_id " +
-                                                            "HAVING COUNT( elementoColaBar.elementoPedido_elementoPedido_id ) >0");
+            ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha FROM pedido, tieneelemento, elementopedido, elementocolabar WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id AND elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id AND elementoPedido.estado =0 GROUP BY pedido_id HAVING COUNT( elementoColaBar.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
             if (tablaPedidos.next()){
                 HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
                 // Obtengo los elementoPedido asociados al pedido
@@ -1305,7 +1298,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                                                             "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
                                                             "AND elementoPedido_id = elementoColaCocina.elementoPedido_elementoPedido_id " +
                                                             "AND elementoPedido.estado =0 GROUP BY pedido_id " +
-                                                            "HAVING COUNT( elementoColaCocina.elementoPedido_elementoPedido_id ) >0");
+                                                            "HAVING COUNT( elementoColaCocina.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
             if (tablaPedidos.next()){
                 HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
                 // Obtengo los elementoPedido asociados al pedido
