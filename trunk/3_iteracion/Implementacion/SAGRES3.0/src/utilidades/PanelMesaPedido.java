@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 
 /**
  *
@@ -78,9 +77,24 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 ele = lista.get(i).getElemento();
 
                 boton.setBackground(new java.awt.Color(211, 223, 253));
-                boton.setFont(new java.awt.Font("Arial", 0, 12));
+                boton.setFont(new java.awt.Font("Arial", 0, 18));
                 boton.setForeground(new java.awt.Color(80, 98, 143));
-                boton.setText("<html>\n<body> \n<br></br>\n" + ele.getNombre() + " \n<br></br>\n<br></br>\n<font color=\"#000000\">" + lista.get(i).getComentario() + "</font>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+                String Datos = lista.get(i).getComentario();
+                int cols;
+                // TODO Cambiar el getWidth por diferencia de posicion en pantalla de X
+                cols = boton.getWidth()/(boton.getFont().getSize()-4);
+                String dats = "";
+                int count=1;
+                //if(Datos.length() > cols){
+                for(int j=0; j<Datos.length(); ++j){
+                    dats = dats+String.valueOf(Datos.charAt(j));
+                    if(count > cols && (Datos.charAt(j)==' ' || Datos.charAt(j)=='\n')){
+                        dats = dats+"<br>";
+                        count = 0;
+                    }
+                    ++count;
+                }
+                boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br></body></html>");
                 boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 boton.setFocusPainted(false);
                 boton.setName(String.valueOf(i));
@@ -232,7 +246,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
         pCentral.add(margenIzq, java.awt.BorderLayout.LINE_START);
 
-        centro.setBackground(new java.awt.Color(255, 255, 255));
+        centro.setBackground(new java.awt.Color(235, 235, 255));
         centro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 2));
         centro.setLayout(new java.awt.BorderLayout());
 
@@ -253,6 +267,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         centro.add(margenIzq2, java.awt.BorderLayout.WEST);
 
         centro2.setBackground(new java.awt.Color(255, 255, 255));
+        centro2.setOpaque(false);
         centro2.setLayout(new java.awt.BorderLayout());
 
         infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -261,10 +276,11 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
         centro2.add(infoMesaPedido, java.awt.BorderLayout.NORTH);
 
+        scroll.setBorder(null);
         scroll.setDoubleBuffered(true);
         scroll.setOpaque(false);
 
-        panelInfoPedido.setBackground(new java.awt.Color(255, 255, 255));
+        panelInfoPedido.setBackground(new java.awt.Color(235, 235, 255));
         panelInfoPedido.setLayout(new javax.swing.BoxLayout(panelInfoPedido, javax.swing.BoxLayout.Y_AXIS));
         scroll.setViewportView(panelInfoPedido);
 

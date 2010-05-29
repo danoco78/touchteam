@@ -6,6 +6,34 @@ Interfaz de cliente
 - Se ha hecho que al seleccionar un elemento de la carta, automáticamente se marque el campo de escritura de comentarios.
 - Se han quitado los mensajes de salida durante la ejecución.
 - Se han tratado las excepciones de forma más discreta.
+- Se ha quitado el dialogo de confirmacion a la hora de eliminar un pedido.
+- Se han añadido funciones de comprobación de estado de los pedidos para asegurar la consistencia de datos a la hora de modificarlos.
+- Se ha cambiado los parámetros de algunas funciones.
+- Se ha añadido documentación a las cabeceras.
+# Añadir listas de pedidos para comprobar si son iguales al actualizar la vista y no reconstruir la interfaz de usuario.
+
+Cola de cocina y bar "En cola"
+- Se ha agrandado el tamaño del texto
+- Se ha aprovechado mejor el espacio de los botones
+- Se ha aplicado un filtro de manejo de espacio para los comentarios.
+# Arreglar el filtro obteniendo su posición en pantalla (U obteniendo su graphics y pidiendole el tamaño de su area de pintado).
+
+Interfaz de bar
+(Cola)
+# Hacer que detecte que se ha eliminado un pedido.
+
+Interfaz de cocina
+(Cola)
+# No permitir que suelte un diálogo de confirmación para cerrar un pedido si aún tiene elementos "En cola".
+
 
 Diálogo de confirmación
 - Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
+- Se ha añadido un filtro sobre el texto para que nunca salga de pantalla, añadiendo nuevas lineas cuando esto vaya a ocurrir.
+# Utilizar este mismo filtro para el panel de comentarios.
+
+Gestor de base de datos
+- Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
+
+Comanda
+- Se ha eliminado la clase comanda (No estaba reflejada en los diagramas).

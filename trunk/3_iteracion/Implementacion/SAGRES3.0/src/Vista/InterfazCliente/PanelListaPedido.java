@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlos Modificado por Sergio
+ * @author Carlos, Modificado por Sergio
  */
 public class PanelListaPedido extends javax.swing.JPanel {
 

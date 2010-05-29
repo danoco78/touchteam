@@ -23,8 +23,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.interfaz = i;
         initComponents();
         this.setDoubleBuffered(true);
-        panelImagen = new PanelImagen("/Vista/InterfazCocinero/imagenes/LogoSagres_interfaz.png");
-        this.panelCentroNorte.add(panelImagen);
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
@@ -54,7 +52,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(30, 40, 90) ,getWidth() ,getHeight(), new Color(155, 155, 200) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
     }
@@ -72,6 +70,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         bGestionProductos = new javax.swing.JButton();
         panelHora = new javax.swing.JPanel();
         panelCentroNorte = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         principalIzquierda = new javax.swing.JPanel();
         principalDerecha = new javax.swing.JPanel();
         principalSur = new javax.swing.JPanel();
@@ -86,7 +85,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.setOpaque(false);
         principalNorte.setLayout(new java.awt.BorderLayout());
 
-        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18));
         bGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
         bGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
         bGestionProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +101,12 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.add(panelHora, java.awt.BorderLayout.EAST);
 
         panelCentroNorte.setOpaque(false);
+        panelCentroNorte.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
+        panelCentroNorte.add(jLabel1, java.awt.BorderLayout.CENTER);
+
         principalNorte.add(panelCentroNorte, java.awt.BorderLayout.CENTER);
 
         add(principalNorte, java.awt.BorderLayout.PAGE_START);
@@ -137,6 +142,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton bGestionProductos;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelHora;

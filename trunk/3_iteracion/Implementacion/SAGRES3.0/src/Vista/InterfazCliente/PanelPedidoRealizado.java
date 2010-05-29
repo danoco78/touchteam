@@ -20,7 +20,7 @@ import utilidades.PanelEspacioVertical;
 
 /**
  *
- * @author Carlos Modificado por Sergio
+ * @author Carlos, Modificado por Sergio
  */
 public class PanelPedidoRealizado extends javax.swing.JPanel {
 

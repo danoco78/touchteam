@@ -13,7 +13,7 @@ package Vista;
 
 /**
  *
- * @author Daniel
+ * @author Daniel, modificado por Sergio
  */
 public class DialogoDeCarga extends javax.swing.JFrame {
 
