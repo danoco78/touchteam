@@ -64,9 +64,14 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
+        centro = new javax.swing.JPanel();
         lConfirma = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tConfirma = new javax.swing.JTextArea();
+        pIzq = new javax.swing.JPanel();
+        pDer = new javax.swing.JPanel();
+        pArr = new javax.swing.JPanel();
+        pAba = new javax.swing.JPanel();
 
         setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
@@ -83,8 +88,8 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bAceptar.setMinimumSize(new java.awt.Dimension(100, 50));
-        bAceptar.setPreferredSize(new java.awt.Dimension(125, 75));
+        bAceptar.setMinimumSize(new java.awt.Dimension(50, 50));
+        bAceptar.setPreferredSize(new java.awt.Dimension(100, 50));
         bAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Aceptar(evt);
@@ -104,7 +109,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         bCancelar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bCancelar1.setMargin(new java.awt.Insets(20, 20, 20, 20));
         bCancelar1.setMinimumSize(new java.awt.Dimension(100, 50));
-        bCancelar1.setPreferredSize(new java.awt.Dimension(125, 75));
+        bCancelar1.setPreferredSize(new java.awt.Dimension(100, 50));
         bCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bCancelar1Salir(evt);
@@ -158,29 +163,40 @@ public class DialogoConfirmacion extends java.awt.Dialog {
 
         cuerpo.setBackground(new java.awt.Color(255, 255, 255));
         cuerpo.setMinimumSize(new java.awt.Dimension(500, 550));
-        cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
-        cuerpo.setLayout(new java.awt.GridBagLayout());
+        cuerpo.setPreferredSize(new java.awt.Dimension(500, 500));
+        cuerpo.setLayout(new java.awt.BorderLayout());
 
-        lConfirma.setFont(new java.awt.Font("Arial", 0, 14));
+        centro.setOpaque(false);
+        centro.setLayout(new java.awt.BorderLayout());
+
+        lConfirma.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lConfirma.setForeground(new java.awt.Color(80, 98, 143));
         lConfirma.setText("Mensaje");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        cuerpo.add(lConfirma, gridBagConstraints);
+        centro.add(lConfirma, java.awt.BorderLayout.NORTH);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 480));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 400));
 
         tConfirma.setColumns(20);
         tConfirma.setEditable(false);
         tConfirma.setRows(5);
-        tConfirma.setPreferredSize(new java.awt.Dimension(164, 400));
+        tConfirma.setPreferredSize(new java.awt.Dimension(164, 300));
         jScrollPane1.setViewportView(tConfirma);
 
-        cuerpo.add(jScrollPane1, new java.awt.GridBagConstraints());
+        centro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        cuerpo.add(centro, java.awt.BorderLayout.CENTER);
+
+        pIzq.setOpaque(false);
+        cuerpo.add(pIzq, java.awt.BorderLayout.WEST);
+
+        pDer.setOpaque(false);
+        cuerpo.add(pDer, java.awt.BorderLayout.EAST);
+
+        pArr.setOpaque(false);
+        cuerpo.add(pArr, java.awt.BorderLayout.NORTH);
+
+        pAba.setOpaque(false);
+        cuerpo.add(pAba, java.awt.BorderLayout.SOUTH);
 
         add(cuerpo, java.awt.BorderLayout.CENTER);
 
@@ -210,11 +226,16 @@ public class DialogoConfirmacion extends java.awt.Dialog {
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar1;
     private javax.swing.JPanel cabecera;
+    private javax.swing.JPanel centro;
     private javax.swing.JPanel cuerpo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lConfirma;
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
+    private javax.swing.JPanel pAba;
+    private javax.swing.JPanel pArr;
+    private javax.swing.JPanel pDer;
+    private javax.swing.JPanel pIzq;
     private javax.swing.JPanel pie;
     private javax.swing.JTextArea tConfirma;
     // End of variables declaration//GEN-END:variables

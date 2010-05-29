@@ -26,7 +26,6 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -117,8 +116,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         g2.setStroke(new BasicStroke(3));
         g2.setColor(new Color(150, 172, 229));
-        g2.drawLine(PanelCarta.getX()+(PanelCarta.getWidth()/2), PanelCarta.getY(),
-                    PanelCarta.getX()+(PanelCarta.getWidth()/2), PanelCarta.getY()+PanelCarta.getHeight()-2);
+        g2.drawLine(PanelCarta.getX()+10+(PanelCarta.getWidth()/2), PanelCarta.getY() +12,
+                    PanelCarta.getX()+10+(PanelCarta.getWidth()/2), PanelCarta.getY()+10+PanelCarta.getHeight()-2);
     }
 
     /** This method is called from within the constructor to
@@ -131,14 +130,14 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private void initComponents() {
 
         GrupoBotonesSecciones = new javax.swing.ButtonGroup();
-        PanelGeneralEste = new javax.swing.JPanel();
+        pCentral = new javax.swing.JPanel();
         PanelGeneralCentro = new javax.swing.JPanel();
         PanelComentarios = new javax.swing.JPanel();
         ScrollComentarios = new javax.swing.JScrollPane();
         TextoComentarios = new javax.swing.JEditorPane();
         BotonAnadir = new javax.swing.JButton();
         PanelCartaBotones = new javax.swing.JPanel();
-        PanelCarta = new javax.swing.JPanel();
+        PanelCarta = new PanelHojasLibro();
         PanelHojas = new javax.swing.JPanel();
         PanelPasarPaginas = new javax.swing.JPanel();
         PanelPaginaAnterior = new javax.swing.JPanel();
@@ -151,27 +150,31 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         BotonCarnes = new javax.swing.JToggleButton();
         BotonBebidas = new javax.swing.JToggleButton();
         BotonPostres = new javax.swing.JToggleButton();
+        PanelGeneralEste = new javax.swing.JPanel();
+        pSup = new javax.swing.JPanel();
+        pInf = new javax.swing.JPanel();
+        pDer = new javax.swing.JPanel();
+        pIzq = new javax.swing.JPanel();
 
         setOpaque(false);
-        setLayout(new java.awt.BorderLayout(10, 0));
+        setLayout(new java.awt.BorderLayout());
 
-        PanelGeneralEste.setOpaque(false);
-        PanelGeneralEste.setPreferredSize(new java.awt.Dimension(200, 200));
-        PanelGeneralEste.setLayout(new java.awt.CardLayout(2, 1));
-        add(PanelGeneralEste, java.awt.BorderLayout.EAST);
+        pCentral.setOpaque(false);
+        pCentral.setLayout(new java.awt.BorderLayout(10, 0));
 
         PanelGeneralCentro.setOpaque(false);
         PanelGeneralCentro.setLayout(new java.awt.BorderLayout(0, 5));
 
         PanelComentarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         PanelComentarios.setMinimumSize(new java.awt.Dimension(80, 100));
-        PanelComentarios.setOpaque(false);
         PanelComentarios.setPreferredSize(new java.awt.Dimension(201, 150));
         PanelComentarios.setLayout(new java.awt.BorderLayout());
 
         ScrollComentarios.setBorder(null);
+        ScrollComentarios.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ScrollComentarios.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        TextoComentarios.setBackground(new java.awt.Color(255, 255, 255));
+        TextoComentarios.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         TextoComentarios.setEnabled(false);
         TextoComentarios.setPreferredSize(new java.awt.Dimension(106, 50));
         TextoComentarios.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -183,7 +186,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
 
-        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonAnadir.setForeground(new java.awt.Color(80, 98, 143));
         BotonAnadir.setText("Añadir");
         BotonAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -205,10 +208,12 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelCarta.setLayout(new java.awt.BorderLayout());
 
         PanelHojas.setBackground(new java.awt.Color(255, 255, 255));
+        PanelHojas.setOpaque(false);
         PanelHojas.setLayout(new java.awt.CardLayout(1, 1));
         PanelCarta.add(PanelHojas, java.awt.BorderLayout.CENTER);
 
         PanelPasarPaginas.setBackground(new java.awt.Color(255, 255, 255));
+        PanelPasarPaginas.setOpaque(false);
         PanelPasarPaginas.setPreferredSize(new java.awt.Dimension(100, 50));
         PanelPasarPaginas.setLayout(new java.awt.BorderLayout());
 
@@ -241,6 +246,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelCartaBotones.add(PanelCarta, java.awt.BorderLayout.CENTER);
 
         PanelBotones.setOpaque(false);
+        PanelBotones.setPreferredSize(new java.awt.Dimension(395, 50));
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
         GrupoBotonesSecciones.add(BotonEntrantes);
@@ -308,7 +314,26 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelGeneralCentro.add(PanelCartaBotones, java.awt.BorderLayout.CENTER);
 
-        add(PanelGeneralCentro, java.awt.BorderLayout.CENTER);
+        pCentral.add(PanelGeneralCentro, java.awt.BorderLayout.CENTER);
+
+        PanelGeneralEste.setOpaque(false);
+        PanelGeneralEste.setPreferredSize(new java.awt.Dimension(200, 200));
+        PanelGeneralEste.setLayout(new java.awt.CardLayout(2, 1));
+        pCentral.add(PanelGeneralEste, java.awt.BorderLayout.EAST);
+
+        add(pCentral, java.awt.BorderLayout.CENTER);
+
+        pSup.setOpaque(false);
+        add(pSup, java.awt.BorderLayout.NORTH);
+
+        pInf.setOpaque(false);
+        add(pInf, java.awt.BorderLayout.SOUTH);
+
+        pDer.setOpaque(false);
+        add(pDer, java.awt.BorderLayout.EAST);
+
+        pIzq.setOpaque(false);
+        add(pIzq, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void paginaSiguiente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paginaSiguiente
@@ -497,7 +522,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             }else{
                 JOptionPane.showMessageDialog(this,
                                           "Debe añadir un comentario menor de 45 caracteres.",
-                                          "El elemento no puede añadirse",
+                                          "El elemento no se ha añadido",
                                           JOptionPane.INFORMATION_MESSAGE);
             }
         }
@@ -508,6 +533,9 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             if(TextoComentarios.getText().length() > 0)
                 TextoComentarios.setText(TextoComentarios.getText().substring(0, TextoComentarios.getText().length()-1));
             this.anadirElementoAPedido(new java.awt.event.ActionEvent(new Object(), 0, new String()));
+        }
+        if(this.TextoComentarios.getText().length() >= 44){
+            TextoComentarios.setText(TextoComentarios.getText().substring(0, 44));
         }
     }//GEN-LAST:event_TextoComentariosKeyTyped
 
@@ -534,6 +562,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPasarPaginas;
     private javax.swing.JScrollPane ScrollComentarios;
     private javax.swing.JEditorPane TextoComentarios;
+    private javax.swing.JPanel pCentral;
+    private javax.swing.JPanel pDer;
+    private javax.swing.JPanel pInf;
+    private javax.swing.JPanel pIzq;
+    private javax.swing.JPanel pSup;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCarta() throws Exception {
@@ -829,6 +862,10 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     public void comprobarPedidos() {
         this.panelPedidoRealizado.actualizar();
+    }
+
+    void marcarCampoDeTexto() {
+        this.TextoComentarios.requestFocusInWindow();
     }
 
 }

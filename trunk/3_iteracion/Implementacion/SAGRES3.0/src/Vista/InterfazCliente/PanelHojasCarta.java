@@ -98,36 +98,44 @@ public class PanelHojasCarta extends javax.swing.JPanel {
         PanelCentral.setLayout(new java.awt.GridLayout(1, 0, 10, 5));
 
         PanelHojaIzquierda.setBackground(new java.awt.Color(255, 255, 255));
+        PanelHojaIzquierda.setOpaque(false);
         PanelHojaIzquierda.setPreferredSize(new java.awt.Dimension(50, 150));
         PanelHojaIzquierda.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
 
         PanelElementoArribaI.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoArribaI.setOpaque(false);
         PanelElementoArribaI.setLayout(new java.awt.BorderLayout());
         PanelHojaIzquierda.add(PanelElementoArribaI);
 
         PanelElementoCentroI.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoCentroI.setOpaque(false);
         PanelElementoCentroI.setLayout(new java.awt.BorderLayout());
         PanelHojaIzquierda.add(PanelElementoCentroI);
 
         PanelElementoAbajoI.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoAbajoI.setOpaque(false);
         PanelElementoAbajoI.setLayout(new java.awt.BorderLayout());
         PanelHojaIzquierda.add(PanelElementoAbajoI);
 
         PanelCentral.add(PanelHojaIzquierda);
 
         PanelHojaDerecha.setBackground(new java.awt.Color(255, 255, 255));
+        PanelHojaDerecha.setOpaque(false);
         PanelHojaDerecha.setPreferredSize(new java.awt.Dimension(50, 150));
         PanelHojaDerecha.setLayout(new java.awt.GridLayout(3, 0, 5, 5));
 
         PanelElementoArribaD.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoArribaD.setOpaque(false);
         PanelElementoArribaD.setLayout(new java.awt.BorderLayout());
         PanelHojaDerecha.add(PanelElementoArribaD);
 
         PanelElementoCentroD.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoCentroD.setOpaque(false);
         PanelElementoCentroD.setLayout(new java.awt.BorderLayout());
         PanelHojaDerecha.add(PanelElementoCentroD);
 
         PanelElementoAbajoD.setBackground(new java.awt.Color(255, 255, 255));
+        PanelElementoAbajoD.setOpaque(false);
         PanelElementoAbajoD.setLayout(new java.awt.BorderLayout());
         PanelHojaDerecha.add(PanelElementoAbajoD);
 
