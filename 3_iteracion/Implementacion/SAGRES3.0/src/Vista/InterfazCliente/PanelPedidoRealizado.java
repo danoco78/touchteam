@@ -20,7 +20,7 @@ import utilidades.PanelEspacioVertical;
 
 /**
  *
- * @author Carlos
+ * @author Carlos Modificado por Sergio
  */
 public class PanelPedidoRealizado extends javax.swing.JPanel {
 
@@ -119,9 +119,8 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
 
             if(pedido.getEstado()<2){
                 this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
-            }else{
-                this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
             }
+            //this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
         }
 
         if(pedidos.size()==0){

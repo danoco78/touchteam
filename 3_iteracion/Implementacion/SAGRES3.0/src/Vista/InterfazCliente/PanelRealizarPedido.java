@@ -12,18 +12,14 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
-import GestionCarta.ElementoPlato;
 import GestionPedidos.ElementoPedido;
-import GestionPedidos.Pedido;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import javax.swing.JPanel;
 import utilidades.Pair;
 
 /**
  *
- * @author Carlos
+ * @author Carlos, Modificado por Sergio
  */
 public class PanelRealizarPedido extends javax.swing.JPanel {
 
@@ -103,7 +99,7 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         if(this.vacio()){
             this.panelGeneralCliente.pedidoRealizado=true;
             if(this.codPedidoActivo!=-1){
-                this.panelGeneralCliente.eliminarPedido(codPedidoActivo, true);
+                this.panelGeneralCliente.eliminarPedido(codPedidoActivo);
             }else{
                 this.panelGeneralCliente.cambiarPanelEste();
             }

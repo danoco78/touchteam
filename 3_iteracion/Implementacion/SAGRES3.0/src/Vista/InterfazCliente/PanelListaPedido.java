@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlos
+ * @author Carlos Modificado por Sergio
  */
 public class PanelListaPedido extends javax.swing.JPanel {
 
@@ -107,9 +107,10 @@ public class PanelListaPedido extends javax.swing.JPanel {
         pMargenSup.setBackground(new java.awt.Color(255, 255, 255));
         pBotonModificar.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
-        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
         BotonModificar.setText("Modificar");
+        BotonModificar.setPreferredSize(new java.awt.Dimension(103, 40));
         BotonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificarPedido(evt);
@@ -135,13 +136,17 @@ public class PanelListaPedido extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modificarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPedido
-        if(this.BotonModificar.isEnabled()){
+        Integer estado = this.PGC.obtieneEstadoPedido(codPedido);
+        if(estado == 0){
             this.PGC.iniciaModificaPedido(this.codPedido);
-        }else{
+        }else if(estado > 0){
             JOptionPane.showMessageDialog(this,
                               "El pedido ha empezado a prepararse, ",
                               "ya no puede ser modificado",
                               JOptionPane.INFORMATION_MESSAGE);
+            this.BotonModificar.setVisible(false);
+        }else{
+            this.PGC.eliminarPedido(codPedido);
         }
     }//GEN-LAST:event_modificarPedido
 

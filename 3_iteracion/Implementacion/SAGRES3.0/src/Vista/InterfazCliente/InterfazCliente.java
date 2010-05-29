@@ -13,14 +13,11 @@ package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
 import java.awt.CardLayout;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
  *
- * @author Carlos
+ * @author Carlos Modificado por Sergio
  */
 public class InterfazCliente extends javax.swing.JFrame {
 

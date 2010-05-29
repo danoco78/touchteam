@@ -37,7 +37,7 @@ import utilidades.Pair;
 
 /**
  *
- * @author Carlos
+ * @author Carlos, modificado por Sergio
  */
 public class PanelGeneralCliente extends javax.swing.JPanel {
 
@@ -805,26 +805,31 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
     }
 
-    public void eliminarPedido(int codPedido, boolean modificando) {
-        if(modificando){
-            DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
-                        "Eliminar Pedido",
-                        "¿Está seguro de que desea eliminar su pedido?",
-                        "");
+    /**
+     * Elimina un pedido del sistema
+     * @param codPedido Pedido a eliminar
+     */
+    public void eliminarPedido(int codPedido) {
+        //if(modificando){
+        //DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
+        //            "Eliminar Pedido",
+        //            "¿Está seguro de que desea eliminar su pedido?",
+        //            "Se borrará el pedido de su lista pedidos.\n" +
+        //            "Recuerde que siempre podrá realizar otros despues.");
 
-            dialogo.setLocationRelativeTo(interfazCliente);
-            dialogo.setVisible(true);
+        //dialogo.setLocationRelativeTo(interfazCliente);
+        //dialogo.setVisible(true);
 
-            if(dialogo.isAceptado()){
-                this.icliente.eliminaPedido(codPedido);
-                this.panelPedidoRealizado.actualizar();
-                this.cambiarPanelEste();
-            }
-        }else{
-                this.icliente.eliminaPedido(codPedido);
-                this.panelPedidoRealizado.actualizar();
-                this.cambiarPanelEste();
-        }
+        //if(dialogo.isAceptado()){
+        this.icliente.eliminaPedido(codPedido);
+        this.panelPedidoRealizado.actualizar();
+        this.cambiarPanelEste();
+        //}
+        //}//else{
+        //        this.icliente.eliminaPedido(codPedido);
+        //        this.panelPedidoRealizado.actualizar();
+        //        this.cambiarPanelEste();
+        //}
     }
 
     public void verFactura() {
@@ -868,4 +873,25 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         this.TextoComentarios.requestFocusInWindow();
     }
 
+    /**
+     * Obtiene el estado de un pedido de la mesa al que pertenece el panel general
+     * @param codpedido Pedido del que obtiene el estado
+     * @return int con el estado, -1 si el pedido no se ha encontrado
+     */
+    Integer obtieneEstadoPedido(int codpedido){
+        ArrayList<Pedido> pedidosMesa = this.icliente.obtienePedidosMesa(codMesa);
+        Iterator<Pedido> it = pedidosMesa.iterator();
+        Pedido ped;
+        boolean encontrado = false;
+        Integer estado = -1;
+
+        while(it.hasNext() && !encontrado){
+            ped = it.next();
+            if(ped.getCodPedido().equals(codpedido)){
+                estado = ped.getEstado();
+                encontrado = true;
+            }
+        }
+        return estado;
+    }
 }
