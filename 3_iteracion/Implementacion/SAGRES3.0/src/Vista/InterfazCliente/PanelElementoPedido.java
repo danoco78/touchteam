@@ -45,8 +45,11 @@ public class PanelElementoPedido extends javax.swing.JPanel {
         LabelNombreElemento = new javax.swing.JLabel();
         BotonQuitarElemento = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(210, 210, 255));
         setLayout(new java.awt.BorderLayout());
 
+        LabelNombreElemento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        LabelNombreElemento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelNombreElemento.setText("jLabel1");
         LabelNombreElemento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(LabelNombreElemento, java.awt.BorderLayout.CENTER);

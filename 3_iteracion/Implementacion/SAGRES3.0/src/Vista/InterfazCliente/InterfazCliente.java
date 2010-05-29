@@ -13,11 +13,10 @@ package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
 import java.awt.CardLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import utilidades.PanelImagen;
 
 /**
  *
@@ -40,8 +39,15 @@ public class InterfazCliente extends javax.swing.JFrame {
             this.PanelPrincipal.add("PanelInicial", this.panelInicial);
             ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            // Intento de poner a pantalla completa
+            //GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //GraphicsDevice dScreen = ge.getDefaultScreenDevice();
+            //if(dScreen.isFullScreenSupported()){
+                //this.setUndecorated(false);
+                //dScreen.setFullScreenWindow(this);
+            //}
         } catch (Exception ex) {
-            Logger.getLogger(InterfazCliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error:" +ex.getMessage());
         }
 
     }

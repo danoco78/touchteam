@@ -68,10 +68,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         LabelPrecio = new javax.swing.JLabel();
         PanelFoto = new javax.swing.JPanel();
         LabelFoto = new javax.swing.JLabel();
-        PanelMargenArriba = new javax.swing.JPanel();
-        PanelMargenAbajo = new javax.swing.JPanel();
-        PanelMargenIzquierda = new javax.swing.JPanel();
-        PanelMargenDerecha = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -82,8 +78,8 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         });
         setLayout(new java.awt.BorderLayout());
 
+        PanelCentral.setBackground(new java.awt.Color(255, 255, 255));
         PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
-        PanelCentral.setOpaque(false);
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
         PanelDatos.setBackground(new java.awt.Color(255, 255, 255));
@@ -135,27 +131,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelCentral.add(PanelFoto, java.awt.BorderLayout.EAST);
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
-
-        PanelMargenArriba.setOpaque(false);
-        PanelMargenArriba.setPreferredSize(new java.awt.Dimension(5, 5));
-        PanelMargenArriba.setLayout(new java.awt.BorderLayout());
-        add(PanelMargenArriba, java.awt.BorderLayout.NORTH);
-
-        PanelMargenAbajo.setOpaque(false);
-        PanelMargenAbajo.setPreferredSize(new java.awt.Dimension(5, 5));
-        PanelMargenAbajo.setLayout(new java.awt.BorderLayout());
-        add(PanelMargenAbajo, java.awt.BorderLayout.SOUTH);
-
-        PanelMargenIzquierda.setBackground(new java.awt.Color(255, 255, 255));
-        PanelMargenIzquierda.setOpaque(false);
-        PanelMargenIzquierda.setPreferredSize(new java.awt.Dimension(5, 5));
-        PanelMargenIzquierda.setLayout(new java.awt.BorderLayout());
-        add(PanelMargenIzquierda, java.awt.BorderLayout.WEST);
-
-        PanelMargenDerecha.setOpaque(false);
-        PanelMargenDerecha.setPreferredSize(new java.awt.Dimension(5, 5));
-        PanelMargenDerecha.setLayout(new java.awt.BorderLayout());
-        add(PanelMargenDerecha, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarElemento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarElemento
@@ -166,6 +141,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         
         if(!this.seleccionado){
             PGC.marcarElemento(this);
+            PGC.marcarCampoDeTexto();
         }else{
             PGC.desmarcarElemento();
             this.desmarcar();
@@ -181,10 +157,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelDatos;
     private javax.swing.JPanel PanelDescripcion;
     private javax.swing.JPanel PanelFoto;
-    private javax.swing.JPanel PanelMargenAbajo;
-    private javax.swing.JPanel PanelMargenArriba;
-    private javax.swing.JPanel PanelMargenDerecha;
-    private javax.swing.JPanel PanelMargenIzquierda;
     private javax.swing.JPanel PanelPrecio;
     private javax.swing.JScrollPane ScrollDescripcion;
     private javax.swing.JTextPane TextoDescripcion;

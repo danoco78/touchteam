@@ -5,10 +5,7 @@
 
 package utilidades;
 
-import Vista.InterfazCliente.InterfazCliente;
 import Vista.InterfazCliente.PanelGeneralCliente;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,10 +25,10 @@ public class HebraPedidosModificables extends Thread {
             while(true){
                 HebraPedidosModificables.sleep(5000);
                 this.panelGeneralCliente.comprobarPedidos();
-                System.out.println("Comprobado el estado de los pedidos");
+                //System.out.println("Comprobado el estado de los pedidos");
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(HebraPedidosModificables.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error, se interrumpio la hebra \"HebraPedidosModificables\" "+ex.getMessage());
         }
     }
 }

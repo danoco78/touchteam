@@ -51,10 +51,10 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
         PanelElementosPedido = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
 
-        setLayout(new java.awt.BorderLayout());
+        setLayout(new java.awt.BorderLayout(0, 10));
 
         PanelElementosPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
-        PanelElementosPedido.setLayout(new java.awt.GridLayout(10, 0));
+        PanelElementosPedido.setLayout(new java.awt.GridLayout(10, 0, 0, 3));
         add(PanelElementosPedido, java.awt.BorderLayout.CENTER);
 
         BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));

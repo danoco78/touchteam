@@ -34,20 +34,28 @@ public class PanelListaPedido extends javax.swing.JPanel {
         this.PGC=PGC;
         this.codPedido=codPedido;
 
-        this.TextoListaComida.setText("PLATOS:\n");
+        this.TextoListaComida.setText("PLATOS:");
         Iterator it = listaElementos.iterator();
+        int count = 0; // Cuenta los elementos introducidos
         while(it.hasNext()){
             Elemento elemento = (Elemento) it.next();
             if(elemento instanceof ElementoPlato){
                 this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
+                count++;
             }
         }
-        this.TextoListaComida.setText(this.TextoListaComida.getText()+"BEBIDAS:\n");
-        it = listaElementos.iterator();
-        while(it.hasNext()){
-            Elemento elemento = (Elemento) it.next();
-            if(elemento instanceof ElementoBebida){
-                this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
+        if(count < listaElementos.size()){ // Si todos los que habian eran platos, hemos terminado
+            if(count == 0){ // Si no se introdujo ningun plato, borramos el mensaje "PLATOS"
+                this.TextoListaComida.setText("BEBIDAS:");
+            }else{
+                this.TextoListaComida.setText(this.TextoListaComida.getText()+"\nBEBIDAS:");
+            }
+            it = listaElementos.iterator();
+            while(it.hasNext()){
+                Elemento elemento = (Elemento) it.next();
+                if(elemento instanceof ElementoBebida){
+                    this.TextoListaComida.setText(this.TextoListaComida.getText()+"\n- "+elemento.getNombre());
+                }
             }
         }
 
@@ -66,8 +74,6 @@ public class PanelListaPedido extends javax.swing.JPanel {
     private void initComponents() {
 
         PanelListas = new javax.swing.JPanel();
-        ScrollPedido = new javax.swing.JScrollPane();
-        PanelPedidoRealizado = new javax.swing.JPanel();
         ScrollListaComida = new javax.swing.JScrollPane();
         TextoListaComida = new javax.swing.JTextPane();
         pBotonModificar = new javax.swing.JPanel();
@@ -86,8 +92,6 @@ public class PanelListaPedido extends javax.swing.JPanel {
         PanelListas.setOpaque(false);
         PanelListas.setLayout(new java.awt.BorderLayout());
 
-        PanelPedidoRealizado.setLayout(new javax.swing.BoxLayout(PanelPedidoRealizado, javax.swing.BoxLayout.Y_AXIS));
-
         ScrollListaComida.setBorder(null);
         ScrollListaComida.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
@@ -95,16 +99,12 @@ public class PanelListaPedido extends javax.swing.JPanel {
         TextoListaComida.setEditable(false);
         ScrollListaComida.setViewportView(TextoListaComida);
 
-        PanelPedidoRealizado.add(ScrollListaComida);
-
-        ScrollPedido.setViewportView(PanelPedidoRealizado);
-
-        PanelListas.add(ScrollPedido, java.awt.BorderLayout.CENTER);
+        PanelListas.add(ScrollListaComida, java.awt.BorderLayout.CENTER);
 
         pBotonModificar.setOpaque(false);
         pBotonModificar.setLayout(new java.awt.BorderLayout());
 
-        pMargenSup.setOpaque(false);
+        pMargenSup.setBackground(new java.awt.Color(255, 255, 255));
         pBotonModificar.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
         BotonModificar.setFont(new java.awt.Font("Arial", 1, 16));
@@ -121,16 +121,16 @@ public class PanelListaPedido extends javax.swing.JPanel {
 
         add(PanelListas, java.awt.BorderLayout.CENTER);
 
-        pMargenIzq.setOpaque(false);
+        pMargenIzq.setBackground(new java.awt.Color(255, 255, 255));
         add(pMargenIzq, java.awt.BorderLayout.WEST);
 
-        pMargenDer.setOpaque(false);
+        pMargenDer.setBackground(new java.awt.Color(255, 255, 255));
         add(pMargenDer, java.awt.BorderLayout.EAST);
 
-        pMargenArr.setOpaque(false);
+        pMargenArr.setBackground(new java.awt.Color(255, 255, 255));
         add(pMargenArr, java.awt.BorderLayout.NORTH);
 
-        pMargenAba.setOpaque(false);
+        pMargenAba.setBackground(new java.awt.Color(255, 255, 255));
         add(pMargenAba, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -149,9 +149,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonModificar;
     private javax.swing.JPanel PanelListas;
-    private javax.swing.JPanel PanelPedidoRealizado;
     private javax.swing.JScrollPane ScrollListaComida;
-    private javax.swing.JScrollPane ScrollPedido;
     private javax.swing.JTextPane TextoListaComida;
     private javax.swing.JPanel pBotonModificar;
     private javax.swing.JPanel pMargenAba;
