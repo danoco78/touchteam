@@ -19,6 +19,7 @@ import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -81,8 +82,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 boton.setForeground(new java.awt.Color(80, 98, 143));
                 String Datos = lista.get(i).getComentario();
                 int cols;
-                // TODO Cambiar el getWidth por diferencia de posicion en pantalla de X
-                cols = boton.getWidth()/(boton.getFont().getSize()-4);
+                Rectangle rect = panelInfoPedido.getBounds();
+                cols = (int)rect.getWidth()/(boton.getFont().getSize());
                 String dats = "";
                 int count=1;
                 //if(Datos.length() > cols){
@@ -399,7 +400,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                             ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                             mpadre.imetre.seleccionaBebida(pedActual, eleB);
                             //num = mpadre.imetre.getNumBebidasEnCola();
-                            mpadre.hebra2.actualizaBebidasPendientes();
+                            mpadre.hebra.actualizaBebidasPendientes();
                             numPendientes--;
                         }
                     } catch (Exception ex) {
@@ -411,7 +412,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                         cpadre.icocinero.seleccionaPlato(pedActual, eleC);
                         //num = cpadre.icocinero.getNumPlatosEnCola();
-                        cpadre.hebrapend.actualizaPlatosPendientes();
+                        cpadre.hebra.actualizaPlatosPendientes();
                         borrar = true;
                         cpadre.panelColaCocinero.actualizarVista(pedActual,eleC);
                         numPendientes--;

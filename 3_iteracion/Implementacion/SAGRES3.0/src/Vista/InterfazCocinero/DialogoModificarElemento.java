@@ -901,7 +901,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
             }
             this.bSiguiente.setEnabled(true);
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_seleccionarSeccion
 
     private void quitarAsociados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitarAsociados

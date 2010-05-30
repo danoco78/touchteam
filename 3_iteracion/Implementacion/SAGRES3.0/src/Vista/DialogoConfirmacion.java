@@ -38,7 +38,8 @@ public class DialogoConfirmacion extends java.awt.Dialog {
 
         // Filtro
         int cols;
-        cols = this.centro.getWidth()/(this.tConfirma.getFont().getSize()-4);
+        Rectangle rect = centro.getBounds();
+        cols = (int) (rect.getWidth() / (this.tConfirma.getFont().getSize()*0.7));
         String dats = "";
         int count=1;
         if(Datos.length() > cols){

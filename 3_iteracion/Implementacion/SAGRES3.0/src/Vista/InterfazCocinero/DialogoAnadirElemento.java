@@ -60,7 +60,10 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         this.carta = Carta;*/
         this.icocinero = iCocinero;
         this.estado = 1;
-        HashSet<Seccion> listaSecciones = this.icocinero.obtieneSecciones();
+        //HashSet<Seccion> lSeccionesLocal = this.icocinero.obtieneSecciones();
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        java.util.Collections.sort(listaSecciones);
+
         Iterator<Seccion> iterador = listaSecciones.iterator();
 
         while(iterador.hasNext()){
@@ -841,7 +844,8 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //ArrayList<Seccion> lSeccionesLocal = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+
             Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> lista;
             if (seccion instanceof SeccionBebida)
@@ -860,7 +864,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
             }
             this.bSiguiente.setEnabled(true);
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_seleccionarSeccion
 
     private void BorrarAsociados(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrarAsociados

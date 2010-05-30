@@ -35,22 +35,6 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         initComponents();
         controlador = im;
         filtro = tipo;
-        
-        //TODO Borrar
-        /*for (int i=0;i<20;i++){
-            JButton boton = new JButton();
-            PanelEspacioVertical pev = new PanelEspacioVertical();
-            boton.setBackground(new java.awt.Color(211, 223, 253));
-            boton.setForeground(new java.awt.Color(80, 98, 143));
-            boton.setFont(new java.awt.Font("Arial", 0, 18));
-            boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+(i+1)+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
-            boton.setFocusPainted(false);
-            boton.addActionListener(new ManejaEventos(boton,pev));
-            boton.setName(String.valueOf(i+1));
-
-            centro.add(boton);
-            centro.add(pev);
-        }*/
     }
 
     public void addMesas(ArrayList<Integer> mesas){
@@ -150,7 +134,7 @@ public class PanelColaFacturas extends javax.swing.JPanel {
 
         public void actionPerformed(ActionEvent e) {
             borrar = false;
-            //TODO Es mejor pasar directamente el objeto factura a los metodos. De esta forma nos ahorramos muchas consultas innecesarias
+            //Seria mejor pasar directamente el objeto factura a los metodos. De esta forma nos ahorramos muchas consultas innecesarias
             switch(filtro){
                 case PanelColaFacturas.PARAIMPRIMIR:
                     controlador.imetre.imprimeFactura(Integer.parseInt(boton.getName()));

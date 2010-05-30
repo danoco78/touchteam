@@ -11,7 +11,6 @@
 
 package utilidades;
 
-import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
@@ -30,7 +29,6 @@ import javax.swing.JPanel;
  * @author redder
  */
 public class PanelPedidoPorMesa extends javax.swing.JPanel {
-
 
     Pedido ped;
     public PreparandosePanel prepPanel = null;
