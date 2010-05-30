@@ -1532,7 +1532,9 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
         ArrayList<Pedido> pedidos = new ArrayList();
         try {
             Statement consultaPedidos = (Statement) this.Conexion.createStatement();
-            ResultSet resultado = consultaPedidos.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where mesa_id = " + codMesa);
+            // TODO Descartar los pedidos facturados
+            // Hay que añadir a la consulta: AND estado < 2
+            ResultSet resultado = consultaPedidos.executeQuery(" SELECT pedido_id,mesa_id,estado,fecha FROM pedido WHERE mesa_id = " + codMesa + " AND estado < 2");
             while (resultado.next()) {
                 Pedido pedido = new Pedido(resultado.getInt(2), resultado.getInt(1), resultado.getInt(3), resultado.getDate(4));
                 Statement consultaElemPed = (Statement) this.Conexion.createStatement();

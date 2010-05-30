@@ -138,7 +138,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
             PGC.cambiarPanelEste();
             PGC.pedidoRealizado=false;
         }
-        
         if(!this.seleccionado){
             PGC.marcarElemento(this);
             PGC.marcarCampoDeTexto();

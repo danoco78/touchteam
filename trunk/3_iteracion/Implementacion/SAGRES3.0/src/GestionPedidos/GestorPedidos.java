@@ -266,7 +266,7 @@ public class GestorPedidos implements IGestorPedidos {
         this.iPedidosBD.eliminaFactura(codMesa);
 
         //Creamos una nueva factura
-        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Date());
+        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Date()); // TODO new Timestamp
 
         //Asociamos los pedidos correspondientes
         ArrayList<Pedido> listaPedidos = this.iPedidosBD.obtienePedidosMesa(codMesa);

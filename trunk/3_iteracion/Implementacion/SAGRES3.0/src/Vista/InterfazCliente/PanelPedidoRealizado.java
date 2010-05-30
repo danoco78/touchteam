@@ -12,6 +12,8 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
@@ -106,6 +108,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         this.PanelPedido.removeAll();
         ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.obtienePedidosMesa(codMesa);
         Iterator itPedidos = pedidos.iterator();
+        boolean todosPagados = true;
         while(itPedidos.hasNext()){
             Pedido pedido = (Pedido) itPedidos.next();
             ArrayList<ElementoPedido> listaElementosPedido = pedido.obtieneElementos();
@@ -117,21 +120,44 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 listaElementos.add(elementoPedido.getElemento());
             }
 
-            if(pedido.getEstado()<2){
-                this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
+            if(pedido.getEstado() != Pedido.FACTURADO){
+                ArrayList<ElementoPedido> elementos = pedido.getElementos();
+                Iterator<ElementoPedido> it = elementos.iterator();
+                boolean mostrar = false;
+                // Iteramos sobre todos los elementos, si todos han sido preparados...
+                // ...no lo mostramos en la interfaz
+                while(it.hasNext() && !mostrar){
+                    ElementoPedido ep = it.next();
+                    if(ep instanceof ElementoColaBar){
+                        if(ep.getEstado() != ElementoColaBar.PREPARADO){
+                            mostrar = true;
+                        }
+                    }else if(ep instanceof ElementoColaCocina){
+                        if(ep.getEstado() != ElementoColaCocina.PREPARADO){
+                            mostrar = true;
+                        }
+                    }
+                }
+                if(mostrar)
+                    this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
+                todosPagados = false;
             }
             //this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
         }
 
-        if(pedidos.size()==0){
-            this.BotonVerFactura.setEnabled(false);
+        if(todosPagados == true){
+            this.panelGeneralCliente.volverAlInicio();
         }else{
-            this.BotonVerFactura.setEnabled(true);
+            if(pedidos.size()==0){
+                this.BotonVerFactura.setEnabled(false);
+            }else{
+                this.BotonVerFactura.setEnabled(true);
+            }
+
+            this.PanelPedido.repaint();
+            this.PanelPedido.revalidate();
         }
-
-        this.PanelPedido.revalidate();
-        this.PanelPedido.repaint();
-
+        
         return pedidos.size();
     }
 

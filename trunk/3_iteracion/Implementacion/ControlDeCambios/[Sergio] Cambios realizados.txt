@@ -10,13 +10,19 @@ Interfaz de cliente
 - Se han añadido funciones de comprobación de estado de los pedidos para asegurar la consistencia de datos a la hora de modificarlos.
 - Se ha cambiado los parámetros de algunas funciones.
 - Se ha añadido documentación a las cabeceras.
+- Ahora controla si se pagan todos los pedidos, vuelve al menú inicial de "Pulse la pantalla para comenzar".
+- Si al arrancar el terminal, encuentra que habia pedidos, pasa directamente a la vista general de cliente, sin pasar por el menú inicial.
+- Los pedidos cuyos elementos se han preparado completamente ya no se mostrarán en la vista.
+- Se ha corregido la modificación de pedidos, ya no hace uso de la función "modificarPedido" sino que elimina el pedido tal cual, como se especifica en el diseño 2º iteración.
 # Añadir listas de pedidos para comprobar si son iguales al actualizar la vista y no reconstruir la interfaz de usuario.
 
 Cola de cocina y bar "En cola"
 - Se ha agrandado el tamaño del texto
 - Se ha aprovechado mejor el espacio de los botones
 - Se ha aplicado un filtro de manejo de espacio para los comentarios.
-# Arreglar el filtro obteniendo su posición en pantalla (U obteniendo su graphics y pidiendole el tamaño de su area de pintado).
+
+HebraPendientes (Hebra que obtiene los elementos pendientes en bar y cocina)
+- Se ha eliminado esta clase, agregando su funcionalidad a HebraColaPedidos, simplificando el código y mejorando el rendimiento.
 
 Interfaz de bar
 (Cola)
@@ -30,10 +36,14 @@ Interfaz de cocina
 Diálogo de confirmación
 - Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
 - Se ha añadido un filtro sobre el texto para que nunca salga de pantalla, añadiendo nuevas lineas cuando esto vaya a ocurrir.
-# Utilizar este mismo filtro para el panel de comentarios.
 
 Gestor de base de datos
 - Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
+- Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
+
+Gestion de Stock
+AñadirElemento
+- Se ha corregido la lista de elementos que muestra cuando se pide una sección.
 
 Comanda
 - Se ha eliminado la clase comanda (No estaba reflejada en los diagramas).
