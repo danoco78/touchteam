@@ -139,6 +139,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
         Integer estado = this.PGC.obtieneEstadoPedido(codPedido);
         if(estado == 0){
             this.PGC.iniciaModificaPedido(this.codPedido);
+            this.PGC.decrementarNumPedidos();
         }else if(estado > 0){
             JOptionPane.showMessageDialog(this,
                               "El pedido ha empezado a prepararse, ",
@@ -147,6 +148,8 @@ public class PanelListaPedido extends javax.swing.JPanel {
             this.BotonModificar.setVisible(false);
         }else{
             this.PGC.eliminarPedido(codPedido);
+            System.err.println("Hay un error en el estado del pedido "+codPedido+
+                    "\nFuncion modificarPedido, en PanelListaPedido.");
         }
     }//GEN-LAST:event_modificarPedido
 

@@ -34,8 +34,15 @@ public class InterfazCliente extends javax.swing.JFrame {
             this.panelInicial = new PanelInicial(this);
             this.PanelPrincipal.add("PanelGeneralCliente", this.panelGeneralCliente);
             this.PanelPrincipal.add("PanelInicial", this.panelInicial);
-            ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
+            // TODO Debe obtener antes el codigo del fichero
+            if(this.iCliente.obtienePedidosMesa(1).isEmpty()){// <--- Cambiar el codigo
+                ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
+            }else{
+                this.empezar();
+            }
+
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            
             // Intento de poner a pantalla completa
             //GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //GraphicsDevice dScreen = ge.getDefaultScreenDevice();
@@ -74,6 +81,10 @@ public class InterfazCliente extends javax.swing.JFrame {
 
     public void empezar() {
         ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelGeneralCliente");
+    }
+
+    public void terminar() {
+        ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
     }
 
 }

@@ -62,6 +62,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
     int seccion; //Seccion que se muestra actualmente
     boolean pedidoRealizado;
+    int numPedidosHechos;
     private Elemento elementoMarcado;
 
     private PanelElementoCarta panelElementoCarta;
@@ -100,6 +101,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
 
         this.elementoMarcado = null;
+        numPedidosHechos = 0;
 
         this.hebra.start();
     }
@@ -516,9 +518,9 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 this.panelRealizarPedido.anadirElementoPedido(elementoMarcado, this.TextoComentarios.getText());
                 this.TextoComentarios.setEnabled(false);
                 this.TextoComentarios.setText("");
-                this.panelRealizarPedido.repaint();
-                this.panelRealizarPedido.revalidate();
                 this.desmarcarElemento();
+                this.panelRealizarPedido.revalidate();
+                this.panelRealizarPedido.repaint();
             }else{
                 JOptionPane.showMessageDialog(this,
                                           "Debe añadir un comentario menor de 45 caracteres.",
@@ -749,6 +751,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 this.elementoMarcado=null;
                 this.panelRealizarPedido.limpiar();
                 this.pedidoRealizado=true;
+                this.incrementarNumPedidos();
                 
                 this.cambiarPanelEste();
             }
@@ -799,9 +802,10 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             }
 
             this.elementoMarcado=null;
-            this.panelRealizarPedido.setPedidoActivo(codPedido);
+            //this.panelRealizarPedido.setPedidoActivo(codPedido);
             this.pedidoRealizado=false;
             this.cambiarPanelEste();
+            this.icliente.eliminaPedido(codPedido);
         }
     }
 
@@ -893,5 +897,18 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             }
         }
         return estado;
+    }
+    void incrementarNumPedidos(){
+        ++numPedidosHechos;
+    }
+
+    void decrementarNumPedidos(){
+        --numPedidosHechos;
+    }
+
+    public void volverAlInicio(){
+        if(numPedidosHechos > 0){
+            this.interfazCliente.terminar();
+        }
     }
 }

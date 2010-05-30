@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Factura {
     private Integer codFactura;
     private Integer estado;
-    private Date fecha;
+    private Date fecha; //TODO Cambiar fecha por java.sql.Timestamp
     private ArrayList<Pedido> pedidosAsociados;
 
     protected static final int ENCOLA = 0;
