@@ -36,12 +36,13 @@ import java.util.Set;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.ImageIcon;
 import utilidades.Imagen;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
  * @author Ángel Luis García, Carlos Salas, Daniel Guerrero y José David Dionisio
  */
-public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
+public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD,IEstadisticasBD {
 
     Connection Conexion;
 
@@ -1637,9 +1638,17 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
     }
 
-
-
-
-
+    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f){
+        return ;
+    }
+    public  DefaultCategoryDataset gananciasPorMes(Date i, Date f){
+        return;
+    }
+    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s){
+        return;
+    }
+    public  DefaultCategoryDataset obtieneListaPlatoMenosVendido(Date i, Date f, Seccion s){
+        return;
+    }
 }
 

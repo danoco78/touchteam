@@ -51,9 +51,11 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bGestionCarta = new javax.swing.JButton();
         bNotificcarPedido = new javax.swing.JButton();
         bGestionIngredientes = new javax.swing.JButton();
+        bEstaditicas = new javax.swing.JButton();
         bImprimirProductosaPedir = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
@@ -94,7 +96,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionCarta.setForeground(new java.awt.Color(80, 98, 143));
         bGestionCarta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Libreta.png"))); // NOI18N
         bGestionCarta.setText("Gestión de carta");
@@ -108,7 +110,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionCarta, gridBagConstraints);
 
-        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 14));
         bNotificcarPedido.setForeground(new java.awt.Color(80, 98, 143));
         bNotificcarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/NotificarLlegada.png"))); // NOI18N
         bNotificcarPedido.setText("Notificar recepción de pedido");
@@ -125,7 +127,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
 
-        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14));
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         bGestionIngredientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/GestionIngredientes.png"))); // NOI18N
         bGestionIngredientes.setText("Gestión de Ingredientes");
@@ -141,7 +143,19 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionIngredientes, gridBagConstraints);
 
-        bImprimirProductosaPedir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEstaditicas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEstaditicas.setForeground(new java.awt.Color(80, 98, 143));
+        bEstaditicas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Libreta.png"))); // NOI18N
+        bEstaditicas.setText("Estadisticas");
+        bEstaditicas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bEstaditicas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bEstaditicas.setMaximumSize(new java.awt.Dimension(300, 200));
+        bEstaditicas.setMinimumSize(new java.awt.Dimension(300, 200));
+        bEstaditicas.setPreferredSize(new java.awt.Dimension(300, 200));
+        bEstaditicas.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        cuerpo.add(bEstaditicas, new java.awt.GridBagConstraints());
+
+        bImprimirProductosaPedir.setFont(new java.awt.Font("Arial", 1, 14));
         bImprimirProductosaPedir.setForeground(new java.awt.Color(80, 98, 143));
         bImprimirProductosaPedir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/ImprimirLista.png"))); // NOI18N
         bImprimirProductosaPedir.setText("Imprimir productos a pedir");
@@ -162,6 +176,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    protected javax.swing.JButton bEstaditicas;
     protected javax.swing.JButton bGestionCarta;
     protected javax.swing.JButton bGestionIngredientes;
     protected javax.swing.JButton bImprimirProductosaPedir;
