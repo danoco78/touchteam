@@ -4,7 +4,6 @@
  */
 
 package ControladorPrincipal;
-
 import GestionCarta.Elemento;
 import GestionCarta.ICarta;
 import GestionCarta.Seccion;
@@ -22,10 +21,13 @@ import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
+import estadisticas.IGestorEstadisticas;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import utilidades.Pair;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.Date;
 
 /**
  *
@@ -38,6 +40,7 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     IIncidencia iincidencia;
     IPedidoProveedor ipedidoproveedor;
     IGestorPedidos ipedidos;
+    IGestorEstadisticas iEstadisticas;
 
     public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido,
             IGestorPedidos gpedidos){
@@ -225,5 +228,21 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
 
     public ArrayList<Pedido> obtienePedidosMesa(int codMesa){
         return this.ipedidos.obtienePedidosMesa(codMesa);
+    }
+     public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f){
+        return this.iEstadisticas.elementosAfectadosFaltaProductos(i, f);
+     }
+     public DefaultCategoryDataset gananciasPorMes(Date i, Date f){
+        return this.iEstadisticas.gananciasPorMes(i, f);
+     }
+     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s){
+        return this.iEstadisticas.obtieneListaPlatoMasPedido(i, f, s);
+     }
+     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Date i, Date f, Seccion s){
+        return this.iEstadisticas.obtieneListaPlatoMasPedido(i, f, s);
+     }
+
+    public DefaultCategoryDataset obtieneListaPlatoMenosVendido(Date i, Date f, Seccion s) {
+       return this.iEstadisticas.obtieneListaPlatoMenosPedido(i, f, s);
     }
 }

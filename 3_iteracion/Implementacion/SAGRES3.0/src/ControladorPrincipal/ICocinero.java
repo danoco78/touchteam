@@ -15,6 +15,8 @@ import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.Date;
 
 /**
  *
@@ -46,5 +48,8 @@ public interface ICocinero {
     public abstract ArrayList<Pedido> getPedidosCocinaPreparandose()throws Exception;
     public abstract boolean seleccionaPlato(Pedido p, ElementoColaCocina ele)throws Exception;
     public Pedido getSiguientePedidoCocina();
-    
+    public abstract DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f);
+    public abstract DefaultCategoryDataset gananciasPorMes(Date i, Date f);
+    public abstract DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s);
+    public abstract DefaultCategoryDataset obtieneListaPlatoMenosVendido(Date i, Date f, Seccion s);
 }
