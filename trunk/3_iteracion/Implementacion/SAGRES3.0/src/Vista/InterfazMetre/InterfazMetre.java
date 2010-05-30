@@ -5,13 +5,11 @@ package Vista.InterfazMetre;
 import ControladorPrincipal.IMetre;
 import java.awt.CardLayout;
 import java.awt.Dialog;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import utilidades.HebraColaPedidos;
 import utilidades.HebraFacturacion;
-import utilidades.HebraPendientes;
 
 /**
  *
@@ -25,7 +23,6 @@ public class InterfazMetre extends javax.swing.JFrame {
     public IntColaBar panelColaBar = null;
 
     public HebraColaPedidos hebra = null;
-    public HebraPendientes hebra2 = null;
     public HebraFacturacion hebra3 = null;
 
     protected static final String BEBIDA = "Bebida";
@@ -37,7 +34,6 @@ public class InterfazMetre extends javax.swing.JFrame {
         this.panelPrincipal = new IntGestionBebidas();
         this.panelColaBar = new IntColaBar(this);
         this.hebra = new HebraColaPedidos(this);
-        this.hebra2 = new HebraPendientes(this);
         this.hebra3 = new HebraFacturacion(this);
         getContentPane().add(this.panelColaBar,InterfazMetre.COLA);
         getContentPane().add(this.panelPrincipal,InterfazMetre.BEBIDA);

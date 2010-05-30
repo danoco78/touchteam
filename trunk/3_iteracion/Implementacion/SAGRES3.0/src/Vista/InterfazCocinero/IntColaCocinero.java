@@ -85,14 +85,9 @@ public class IntColaCocinero extends javax.swing.JPanel {
         principalNorte.setOpaque(false);
         principalNorte.setLayout(new java.awt.BorderLayout());
 
-        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18));
+        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         bGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
         bGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
-        bGestionProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bGestionProductosActionPerformed(evt);
-            }
-        });
         principalNorte.add(bGestionProductos, java.awt.BorderLayout.WEST);
 
         panelHora.setBackground(new java.awt.Color(255, 255, 255));
@@ -134,11 +129,6 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         add(principalCentro, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bGestionProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGestionProductosActionPerformed
-        // TODO Cambiar el panel por Gestion Productos
-    }//GEN-LAST:event_bGestionProductosActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton bGestionProductos;

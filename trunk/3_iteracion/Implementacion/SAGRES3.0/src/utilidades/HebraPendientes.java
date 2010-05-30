@@ -7,8 +7,6 @@ package utilidades;
 
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.InterfazMetre;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -75,29 +73,29 @@ public class HebraPendientes implements Runnable {
 
     public void actualizaBebidasPendientes(){
         try {
-            aux = mpadre.imetre.getNumBebidasEnCola();
+            
             if (aux != numBebidas) {
                 numBebidas = aux;
-                mpadre.panelColaBar.pmp.setPendientes(numBebidas);
+                
             } else {
                 Thread.sleep(5000);
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(HebraPendientes.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
 
     public void actualizaPlatosPendientes(){
         try {
-            aux = cpadre.icocinero.getNumPlatosEnCola();
+            
             if (aux != numPlatos) {
                 numPlatos = aux;
-                cpadre.panelColaCocinero.pmpizq.setPendientes(numPlatos);
+                
             } else {
                 Thread.sleep(5000);
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(HebraPendientes.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
         }
     }
 

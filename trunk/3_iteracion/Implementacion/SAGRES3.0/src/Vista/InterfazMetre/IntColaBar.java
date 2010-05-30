@@ -42,9 +42,6 @@ public class IntColaBar extends javax.swing.JPanel {
         
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
-
-        //TODO Borrar esto
-        //this.actualizarVista();
         
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
         centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
@@ -332,29 +329,5 @@ public class IntColaBar extends javax.swing.JPanel {
     private javax.swing.JLabel textoDer;
     private javax.swing.JLabel textoIzq;
     // End of variables declaration//GEN-END:variables
-
-    private void actualizarVista(){
-        // TODO obtener el numero de platos pendientes
-        //this.setInfoPendientes(pendientes);
-
-        // No es necesario obtener el numero de platos preparandose, lo actualiza
-        // PreparandosePanel automaticamente
-        //this.setInfoPreparandose(preparandose);
-
-        // TODO this.pmpder.autoCompletar(getPedidosCocinaPreparandose());
-        // Prueba para comprobar que funciona
-        Pedido ped = new Pedido(5, 2, 0, null);
-        ElementoColaBar ele = new ElementoColaBar(1, 0, "Del tiempo, por favor");
-        ele.asocia(new Elemento(2, "Agua",
-                "Agua embotellada marca Bezoya",
-                true, null, 5, 5, 10));
-            for(int j=0; j<4; ++j)
-                ped.asocia(ele);
-        
-        // Se supone que ya hemos obtenido la lista de pedidos, lo siguiente si se ejecuta
-        // independientemente de la prueba
-        this.pmp.addPedido(ped);
-
-    }
 
 }

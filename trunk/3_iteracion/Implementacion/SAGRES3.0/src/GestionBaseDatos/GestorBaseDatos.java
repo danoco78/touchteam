@@ -1232,7 +1232,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
             // Obtengo los pedidos cuyo estado es distinto de Facturado y tiene elementosColaBar en Cola
             ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha FROM pedido, tieneelemento, elementopedido, elementocolabar WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id AND elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id AND elementoPedido.estado =0 GROUP BY pedido_id HAVING COUNT( elementoColaBar.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
             if (tablaPedidos.next()){
-                HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
+                HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
                 ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
@@ -1300,7 +1300,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
                                                             "AND elementoPedido.estado =0 GROUP BY pedido_id " +
                                                             "HAVING COUNT( elementoColaCocina.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
             if (tablaPedidos.next()){
-                HashSet<Elemento> elementosCarta = this.obtieneElementos(); // TODO Arreglar la consulta. Los objetos de los productos no son iguales.
+                HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
                 ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();

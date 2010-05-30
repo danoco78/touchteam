@@ -27,7 +27,7 @@ public class ElementoPedido {
         this.comentario = comentario;
         //Las demás variables privadas se inicializan por defecto
         this.estado = 0;
-        //TODO Como asignar el codigo del elementopedido
+        //Como asignar el codigo del elementopedido
         //this.codElementoPedido = ;
     }
      /**

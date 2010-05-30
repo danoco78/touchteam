@@ -316,7 +316,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
                 this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
             }
             this.bAceptar.setEnabled(true);
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_seleccionarSeccion
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
