@@ -381,14 +381,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pAtributoPlato.setOpaque(false);
         pAtributoPlato.setLayout(new java.awt.GridBagLayout());
 
-        lDivision.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lDivision.setFont(new java.awt.Font("Arial", 0, 14));
         lDivision.setForeground(new java.awt.Color(80, 98, 143));
         lDivision.setText("El elemento se puede dividir en");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         pAtributoPlato.add(lDivision, gridBagConstraints);
 
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
         lPorciones.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones.setText("porciones/raciones");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -397,7 +397,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         pAtributoPlato.add(lPorciones, gridBagConstraints);
 
-        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14));
         lAyudaDivisiones.setForeground(new java.awt.Color(80, 98, 143));
         lAyudaDivisiones.setText("* indique 0 o vacio para hacerlo indivisible");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -430,7 +430,6 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.ipady = 47;
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(pAtributoPlato, gridBagConstraints);
-        pAtributoPlato.getAccessibleContext().setAccessibleName("Atributos del elemento");
 
         tPrecio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -541,7 +540,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
             },
             new String [] {
-                "Quitar", "Nombre", "cantidad"
+                "Quitar", "Nombre", "Cantidad (gr/l)"
             }
         ) {
             Class[] types = new Class [] {
@@ -765,6 +764,10 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
                     texto += "\n-Nombre: " + producto.getNombre() + ", Cantidad: " + (Float) this.tProductosAsociados.getModel().getValueAt(i, 2);
+                    if (producto instanceof Ingrediente)
+                        texto += " gr";
+                    else
+                        texto += " l";
                 }
 
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
