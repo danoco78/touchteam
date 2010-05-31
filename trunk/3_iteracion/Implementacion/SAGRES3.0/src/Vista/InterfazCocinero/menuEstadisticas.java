@@ -33,7 +33,6 @@ public class menuEstadisticas extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        menuEstaditicas = new javax.swing.JPanel();
         cabecera = new javax.swing.JPanel();
         contenedorDer = new javax.swing.JPanel();
         contenedorIzq = new javax.swing.JPanel();
@@ -42,16 +41,13 @@ public class menuEstadisticas extends javax.swing.JPanel {
         logo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
         bBalance = new javax.swing.JButton();
-        bPlatosMenosVendidos = new javax.swing.JButton();
-        bPlatosMasVendidos = new javax.swing.JButton();
         bPlatosNoServidos = new javax.swing.JButton();
+        bPlatosMasVendidos = new javax.swing.JButton();
+        bPlatosMenosVendidos = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("menuEstadisticas"); // NOI18N
-
-        menuEstaditicas.setBackground(new java.awt.Color(255, 255, 255));
-        menuEstaditicas.setOpaque(false);
-        menuEstaditicas.setLayout(new java.awt.BorderLayout());
+        setLayout(new java.awt.BorderLayout());
 
         cabecera.setMinimumSize(new java.awt.Dimension(50, 50));
         cabecera.setOpaque(false);
@@ -66,12 +62,21 @@ public class menuEstadisticas extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bVolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bVolver.setFont(new java.awt.Font("Arial", 1, 18));
         bVolver.setForeground(new java.awt.Color(80, 98, 143));
         bVolver.setText("Volver");
-        bVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bVolver.setPreferredSize(new java.awt.Dimension(100, 50));
-        contenedorIzq.add(bVolver, new java.awt.GridBagConstraints());
+        bVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVolverActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 27;
+        gridBagConstraints.ipady = 28;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 62, 0, 58);
+        contenedorIzq.add(bVolver, gridBagConstraints);
 
         cabecera.add(contenedorIzq, java.awt.BorderLayout.WEST);
 
@@ -84,13 +89,13 @@ public class menuEstadisticas extends javax.swing.JPanel {
 
         cabecera.add(contenedorCentral, java.awt.BorderLayout.CENTER);
 
-        menuEstaditicas.add(cabecera, java.awt.BorderLayout.PAGE_START);
+        add(cabecera, java.awt.BorderLayout.PAGE_START);
 
         cuerpo.setMinimumSize(new java.awt.Dimension(800, 600));
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bBalance.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bBalance.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bBalance.setForeground(new java.awt.Color(80, 98, 143));
         bBalance.setText("Balance Económico");
         bBalance.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -99,35 +104,29 @@ public class menuEstadisticas extends javax.swing.JPanel {
         bBalance.setMinimumSize(new java.awt.Dimension(300, 200));
         bBalance.setPreferredSize(new java.awt.Dimension(300, 200));
         bBalance.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        bBalance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bBalanceActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bBalance, gridBagConstraints);
-        bBalance.getAccessibleContext().setAccessibleName("Balance");
 
-        bPlatosMenosVendidos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bPlatosMenosVendidos.setForeground(new java.awt.Color(80, 98, 143));
-        bPlatosMenosVendidos.setText("Platos menos vendidos");
-        bPlatosMenosVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bPlatosMenosVendidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bPlatosMenosVendidos.setMaximumSize(new java.awt.Dimension(300, 200));
-        bPlatosMenosVendidos.setMinimumSize(new java.awt.Dimension(300, 200));
-        bPlatosMenosVendidos.setPreferredSize(new java.awt.Dimension(300, 200));
-        bPlatosMenosVendidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        bPlatosNoServidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bPlatosNoServidos.setForeground(new java.awt.Color(80, 98, 143));
+        bPlatosNoServidos.setText("<html>\n<body>\nPlatos No Servidos Por\n<br>\nFalta de Ingredientes\n</body>\n</html>");
+        bPlatosNoServidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bPlatosNoServidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bPlatosNoServidos.setMaximumSize(new java.awt.Dimension(300, 200));
+        bPlatosNoServidos.setMinimumSize(new java.awt.Dimension(300, 200));
+        bPlatosNoServidos.setPreferredSize(new java.awt.Dimension(300, 200));
+        bPlatosNoServidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        cuerpo.add(bPlatosMenosVendidos, gridBagConstraints);
+        cuerpo.add(bPlatosNoServidos, gridBagConstraints);
 
-        bPlatosMasVendidos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bPlatosMasVendidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bPlatosMasVendidos.setForeground(new java.awt.Color(80, 98, 143));
-        bPlatosMasVendidos.setText("Platos más vendidos");
+        bPlatosMasVendidos.setText("Plato Mas Pedido");
         bPlatosMasVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bPlatosMasVendidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bPlatosMasVendidos.setMaximumSize(new java.awt.Dimension(300, 200));
@@ -140,38 +139,27 @@ public class menuEstadisticas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bPlatosMasVendidos, gridBagConstraints);
 
-        bPlatosNoServidos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        bPlatosNoServidos.setForeground(new java.awt.Color(80, 98, 143));
-        bPlatosNoServidos.setText("<html>\n<body>\nPlatos no servidos por<br>\nfalta de ingredientes\n</body>\n</html>");
-        bPlatosNoServidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bPlatosNoServidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bPlatosNoServidos.setMaximumSize(new java.awt.Dimension(300, 200));
-        bPlatosNoServidos.setMinimumSize(new java.awt.Dimension(300, 200));
-        bPlatosNoServidos.setPreferredSize(new java.awt.Dimension(300, 200));
-        bPlatosNoServidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        bPlatosMenosVendidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bPlatosMenosVendidos.setForeground(new java.awt.Color(80, 98, 143));
+        bPlatosMenosVendidos.setText("Plato Menos Pedido");
+        bPlatosMenosVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bPlatosMenosVendidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bPlatosMenosVendidos.setMaximumSize(new java.awt.Dimension(300, 200));
+        bPlatosMenosVendidos.setMinimumSize(new java.awt.Dimension(300, 200));
+        bPlatosMenosVendidos.setPreferredSize(new java.awt.Dimension(300, 200));
+        bPlatosMenosVendidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        cuerpo.add(bPlatosNoServidos, gridBagConstraints);
+        cuerpo.add(bPlatosMenosVendidos, gridBagConstraints);
 
-        menuEstaditicas.add(cuerpo, java.awt.BorderLayout.CENTER);
-
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(menuEstaditicas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1083, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(menuEstaditicas, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 650, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-        );
+        add(cuerpo, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBalanceActionPerformed
+    private void bVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVolverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bBalanceActionPerformed
+}//GEN-LAST:event_bVolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -179,27 +167,17 @@ public class menuEstadisticas extends javax.swing.JPanel {
     protected javax.swing.JButton bPlatosMasVendidos;
     protected javax.swing.JButton bPlatosMenosVendidos;
     protected javax.swing.JButton bPlatosNoServidos;
-    protected javax.swing.JButton bVolver;
+    public javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel contenedorCentral;
     private javax.swing.JPanel contenedorDer;
     private javax.swing.JPanel contenedorIzq;
     private javax.swing.JPanel cuerpo;
     private javax.swing.JLabel logo;
-    private javax.swing.JPanel menuEstaditicas;
     // End of variables declaration//GEN-END:variables
 
     /**
     * @param args the command line arguments
     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                javax.swing.JFrame vent = new javax.swing.JFrame();
-                vent.getContentPane().add(new menuEstadisticas(), java.awt.BorderLayout.CENTER);
-                vent.setVisible(true);
-                vent.setSize(1024,800);
-            }
-        });
-    }
+   
 }

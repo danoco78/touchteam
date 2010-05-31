@@ -10,7 +10,7 @@
  */
 
 package Vista.InterfazCocinero;
-
+import utilidades.*;
 /**
  *
  * @author nabil
@@ -20,8 +20,9 @@ public class platoMenosVendido extends javax.swing.JPanel {
     /** Creates new form platoMenosVendido */
     public platoMenosVendido() {
         initComponents();
+        this.panelDER.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
+        this.panelDER.setPreferredSize(panelDER.getComponent(0).getPreferredSize());
     }
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -30,205 +31,212 @@ public class platoMenosVendido extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        cuerpo = new javax.swing.JPanel();
-        cabecera = new javax.swing.JPanel();
-        panel_volver = new javax.swing.JPanel();
-        bVolver = new javax.swing.JButton();
-        logo = new javax.swing.JLabel();
-        reloj = new javax.swing.JPanel();
-        cuerpoFecha = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        cabecera = new javax.swing.JPanel();
+        panelIZQ = new javax.swing.JPanel();
+        bVolver = new javax.swing.JButton();
+        panelDER = new javax.swing.JPanel();
+        panelCENTRO = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cuerpo = new javax.swing.JPanel();
+        cabeceraCuerpo = new javax.swing.JPanel();
+        FI = new javax.swing.JLabel();
+        fechaI = new javax.swing.JTextField();
+        FF = new javax.swing.JLabel();
+        fechaF = new javax.swing.JTextField();
+        bGenerar = new javax.swing.JButton();
+        Estadisticas = new javax.swing.JPanel();
+        imagenEstadisticas = new javax.swing.JLabel();
 
-        cabecera.setPreferredSize(new java.awt.Dimension(200, 133));
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
+        );
 
-        bVolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 100, Short.MAX_VALUE)
+        );
+
+        jLabel2.setText("jLabel2");
+
+        setBackground(new java.awt.Color(80, 98, 143));
+        setLayout(new java.awt.BorderLayout());
+
+        cabecera.setLayout(new java.awt.BorderLayout());
+
+        panelIZQ.setLayout(new java.awt.GridBagLayout());
+
+        bVolver.setFont(new java.awt.Font("Arial", 1, 18));
         bVolver.setForeground(new java.awt.Color(80, 98, 143));
         bVolver.setText("Volver");
-        bVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        bVolver.setPreferredSize(new java.awt.Dimension(100, 50));
+        bVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVolverActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 27;
+        gridBagConstraints.ipady = 28;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 62, 0, 58);
+        panelIZQ.add(bVolver, gridBagConstraints);
 
-        logo.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        logo.setForeground(new java.awt.Color(80, 98, 143));
-        logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
-        logo.setText("Platos Menos vendidos");
-        logo.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
-        logo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cabecera.add(panelIZQ, java.awt.BorderLayout.LINE_START);
 
-        org.jdesktop.layout.GroupLayout panel_volverLayout = new org.jdesktop.layout.GroupLayout(panel_volver);
-        panel_volver.setLayout(panel_volverLayout);
-        panel_volverLayout.setHorizontalGroup(
-            panel_volverLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, panel_volverLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(bVolver, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 196, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(81, 81, 81)
-                .add(logo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 401, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(42, 42, 42))
-        );
-        panel_volverLayout.setVerticalGroup(
-            panel_volverLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(panel_volverLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(panel_volverLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(bVolver, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .add(logo))
-                .addContainerGap())
-        );
+        panelDER.setLayout(new java.awt.BorderLayout());
+        cabecera.add(panelDER, java.awt.BorderLayout.LINE_END);
 
-        org.jdesktop.layout.GroupLayout relojLayout = new org.jdesktop.layout.GroupLayout(reloj);
-        reloj.setLayout(relojLayout);
-        relojLayout.setHorizontalGroup(
-            relojLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 0, Short.MAX_VALUE)
-        );
-        relojLayout.setVerticalGroup(
-            relojLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 149, Short.MAX_VALUE)
-        );
+        panelCENTRO.setLayout(new java.awt.GridBagLayout());
 
-        org.jdesktop.layout.GroupLayout cabeceraLayout = new org.jdesktop.layout.GroupLayout(cabecera);
-        cabecera.setLayout(cabeceraLayout);
-        cabeceraLayout.setHorizontalGroup(
-            cabeceraLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cabeceraLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(panel_volver, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(1441, 1441, 1441)
-                .add(reloj, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        cabeceraLayout.setVerticalGroup(
-            cabeceraLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, cabeceraLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(cabeceraLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, panel_volver, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, reloj, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(80, 98, 143));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Fecha inicio:");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
+        jLabel1.setText("Plato menos pedido");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelCENTRO.add(jLabel1, gridBagConstraints);
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 12));
-        jTextField1.setForeground(new java.awt.Color(80, 98, 143));
+        cabecera.add(panelCENTRO, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(80, 98, 143));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Fecha fin:");
+        add(cabecera, java.awt.BorderLayout.PAGE_START);
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 12));
-        jTextField2.setForeground(new java.awt.Color(80, 98, 143));
+        cuerpo.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.layout.GroupLayout cuerpoFechaLayout = new org.jdesktop.layout.GroupLayout(cuerpoFecha);
-        cuerpoFecha.setLayout(cuerpoFechaLayout);
-        cuerpoFechaLayout.setHorizontalGroup(
-            cuerpoFechaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cuerpoFechaLayout.createSequentialGroup()
-                .add(27, 27, 27)
-                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 154, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(35, 35, 35)
-                .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                .add(37, 37, 37)
-                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 162, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(41, 41, 41))
-        );
-        cuerpoFechaLayout.setVerticalGroup(
-            cuerpoFechaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cuerpoFechaLayout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
-                .add(cuerpoFechaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 63, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(31, 31, 31))
-        );
+        cabeceraCuerpo.setLayout(new java.awt.GridBagLayout());
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        FI.setFont(new java.awt.Font("Arial", 1, 18));
+        FI.setForeground(new java.awt.Color(80, 98, 143));
+        FI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FI.setText("Fecha inicio:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.insets = new java.awt.Insets(50, 19, 0, 14);
+        cabeceraCuerpo.add(FI, gridBagConstraints);
 
-        org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 711, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 312, Short.MAX_VALUE)
-        );
+        fechaI.setFont(new java.awt.Font("Arial", 0, 14));
+        fechaI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaIActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 111;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 35);
+        cabeceraCuerpo.add(fechaI, gridBagConstraints);
 
-        org.jdesktop.layout.GroupLayout cuerpoLayout = new org.jdesktop.layout.GroupLayout(cuerpo);
-        cuerpo.setLayout(cuerpoLayout);
-        cuerpoLayout.setHorizontalGroup(
-            cuerpoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cuerpoLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(cuerpoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(cabecera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 734, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(cuerpoFecha, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-        cuerpoLayout.setVerticalGroup(
-            cuerpoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(cuerpoLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(cabecera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 171, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(27, 27, 27)
-                .add(cuerpoFecha, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        FF.setFont(new java.awt.Font("Arial", 1, 18));
+        FF.setForeground(new java.awt.Color(80, 98, 143));
+        FF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FF.setText("Fecha fin:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 25;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.insets = new java.awt.Insets(50, 41, 0, 15);
+        cabeceraCuerpo.add(FF, gridBagConstraints);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 807, Short.MAX_VALUE)
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .add(0, 0, Short.MAX_VALUE)
-                    .add(cuerpo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 685, Short.MAX_VALUE)
-            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(layout.createSequentialGroup()
-                    .add(0, 0, Short.MAX_VALUE)
-                    .add(cuerpo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(0, 0, Short.MAX_VALUE)))
-        );
+        fechaF.setFont(new java.awt.Font("Arial", 0, 14));
+        fechaF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaFActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 26);
+        cabeceraCuerpo.add(fechaF, gridBagConstraints);
+
+        bGenerar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGenerar.setForeground(new java.awt.Color(80, 98, 143));
+        bGenerar.setText("Generar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.insets = new java.awt.Insets(50, 24, 0, 5);
+        cabeceraCuerpo.add(bGenerar, gridBagConstraints);
+
+        cuerpo.add(cabeceraCuerpo, java.awt.BorderLayout.PAGE_START);
+
+        Estadisticas.setLayout(new java.awt.GridBagLayout());
+
+        imagenEstadisticas.setBackground(new java.awt.Color(0, 0, 0));
+        imagenEstadisticas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagenEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
+        imagenEstadisticas.setMaximumSize(new java.awt.Dimension(800, 600));
+        imagenEstadisticas.setPreferredSize(new java.awt.Dimension(500, 400));
+        Estadisticas.add(imagenEstadisticas, new java.awt.GridBagConstraints());
+
+        cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);
+
+        add(cuerpo, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVolverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bVolverActionPerformed
+
+    private void fechaIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaIActionPerformed
+
+    private void fechaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton bVolver;
+    private javax.swing.JPanel Estadisticas;
+    private javax.swing.JLabel FF;
+    private javax.swing.JLabel FI;
+    private javax.swing.JButton bGenerar;
+    public javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
+    private javax.swing.JPanel cabeceraCuerpo;
     private javax.swing.JPanel cuerpo;
-    private javax.swing.JPanel cuerpoFecha;
+    private javax.swing.JTextField fechaF;
+    private javax.swing.JTextField fechaI;
+    private javax.swing.JLabel imagenEstadisticas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JLabel logo;
-    private javax.swing.JPanel panel_volver;
-    private javax.swing.JPanel reloj;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelCENTRO;
+    private javax.swing.JPanel panelDER;
+    private javax.swing.JPanel panelIZQ;
     // End of variables declaration//GEN-END:variables
 
 }
