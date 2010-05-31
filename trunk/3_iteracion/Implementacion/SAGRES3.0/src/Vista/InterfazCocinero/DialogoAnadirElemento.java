@@ -190,7 +190,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -202,9 +202,16 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tProductoSeccion.setGridColor(new java.awt.Color(211, 223, 253));
@@ -716,7 +723,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 HashSet<Producto> listaProductos = this.icocinero.obtieneProductosSeccion(sec);
                 Iterator<Producto> itpro = listaProductos.iterator();
                 disponibles = new ArrayList<Producto>(listaProductos);
-                DefaultTableModel modelo = new DefaultTableModel();
+                DefaultTableModel modelo = new DefaultTableModel(){
+                     //Hace que las celdas sean no editables
+                    public boolean isCellEditable(int x, int y) {
+                        return false;
+                    }
+                };
                 modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
                 modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
                 modelo.addColumn(this.tProductosDisponibles.getColumnName(2));
@@ -742,7 +754,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 texto += "\n Está compuesto por los ingredientes: ";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad: " + producto.getCantidad();
+                    texto += "\n-Nombre: " + producto.getNombre() + ", Cantidad: " + (Float) this.tProductosAsociados.getModel().getValueAt(i, 2);
                 }
 
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
@@ -852,7 +864,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
             else
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
-            DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo = new DefaultTableModel(){
+                //Hace que las celdas sean no editables
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
             modelo.addColumn(this.tProductoSeccion.getColumnName(2));
