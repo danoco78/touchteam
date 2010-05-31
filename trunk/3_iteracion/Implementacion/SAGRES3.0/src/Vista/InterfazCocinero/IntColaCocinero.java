@@ -15,18 +15,18 @@ public class IntColaCocinero extends javax.swing.JPanel {
     PanelImagen panelImagen;
     public PanelMesaPedido pmpizq;
     public PreparandosePanel pmpder;
-    public InterfazCocinero interfaz;
+    public InterfazCocinero icocinero;
     ArrayList<Pedido> listaPedidos;
     
     /** Creates new form IntGestionCarta */
     public IntColaCocinero(InterfazCocinero i) {
-        this.interfaz = i;
+        this.icocinero = i;
         initComponents();
         this.setDoubleBuffered(true);
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmpizq = new PanelMesaPedido(i);
+        pmpizq = new PanelMesaPedido(this);
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         
@@ -36,7 +36,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         this.listaPedidos = new ArrayList();
         try {
-            listaPedidos = this.interfaz.icocinero.getPedidosCocinaPreparandose();
+            listaPedidos = this.icocinero.icocinero.getPedidosCocinaPreparandose();
         } catch (Exception ex) {
             
         }

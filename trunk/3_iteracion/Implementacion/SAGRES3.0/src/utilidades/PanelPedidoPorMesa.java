@@ -15,6 +15,7 @@ import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
+import Vista.InterfazCocinero.IntColaCocinero;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazCocinero.PreparandosePanel;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
 
 /**
  *
@@ -32,20 +32,14 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     Pedido ped;
     public PreparandosePanel prepPanel = null;
-    JPanel papa = null;
-    PanelEspacioVertical pe = null;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, JPanel papa,
-            PanelEspacioVertical pe) {
+    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, IntColaCocinero papa) {
 
-        this.pe = pe;
-        this.papa = papa;
         this.prepPanel = padre;
         initComponents();
         this.ped = ped;
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
-
         this.autoCompletar();
     }
 
@@ -61,8 +55,8 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         for(int i=0; i<lista.size(); ++i){
                 if(lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
                     BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
-                    b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.interfaz
-                            ,ped,b,this,papa,pe));
+                    b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.icocinero
+                            ,ped,b,this, prepPanel));
                     pPedidos.add(b);
                     this.pPedidos.add(new PanelEspacioVertical());
                 }
@@ -149,92 +143,86 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     private javax.swing.JLabel tPedido;
     // End of variables declaration//GEN-END:variables
 
-    private class ManejaEventos implements ActionListener{
+    private class ManejaEventos implements ActionListener {
 
         BotonElementoPedidoComentario boton;
         InterfazCocinero c;
-        Pedido p;
+        Pedido p; // Pedido que guarda
         PanelPedidoPorMesa este;
-        JPanel padre;
-        PanelEspacioVertical pe;
+        PreparandosePanel padre;
 
-        public ManejaEventos(InterfazCocinero ic, Pedido ped,BotonElementoPedidoComentario b, PanelPedidoPorMesa este,
-                JPanel padre, PanelEspacioVertical pe){
+        public ManejaEventos(InterfazCocinero ic, Pedido ped, BotonElementoPedidoComentario b, PanelPedidoPorMesa este,
+                PreparandosePanel padre) {
             c = ic;
             p = ped;
             boton = b;
             this.este = este;
             this.padre = padre;
-            this.pe = pe;
         }
 
         public void actionPerformed(ActionEvent e) {
 
-            
             int codElem = boton.getAsociado().getCodElementoPedido(); //Obtenemos el codigo del Elemento
-            int num = getNumElemento(p,codElem);
+            //int num = getNumElemento(p, codElem);
 
-            if(hayMasPreparandose(p,codElem)){ //Hay mas preparandose
+            if (hayMasPreparandose(p, codElem)) { //Hay mas preparandose
                 try {
-                     c.icocinero.seleccionaPlato(p, (ElementoColaCocina)p.obtieneElementos().get(num));
+                    c.icocinero.seleccionaPlato(p, (ElementoColaCocina) boton.getAsociado());
+                    padre.autoCompletar(c.icocinero.getPedidosCocinaPreparandose());
                 } catch (Exception ex) {
-                      Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                pPedidos.remove(boton);  //Borramos el boton de la interfaz
+                /*pPedidos.remove(boton);  //Borramos el boton de la interfaz
                 c.panelColaCocinero.pmpder.decPreparandose();
                 pPedidos.repaint();
-                pPedidos.revalidate();
-            }
-            else{ //Es el ultimo
-                     if(cerrarPedido(p,c)){
-                         pPedidos.remove(boton);
-                         c.panelColaCocinero.pmpder.decPreparandose();
-                         padre.remove(este);
-                         padre.remove(pe);
-                         padre.repaint();
-                         padre.revalidate();
-                        try {
-                            c.icocinero.seleccionaPlato(p, (ElementoColaCocina)p.obtieneElementos().get(num));
-                        } catch (Exception ex) {
-                            Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                pPedidos.revalidate();*/
+            } else { //Es el ultimo
+                if (cerrarPedido(p, c)) {
+                    /*pPedidos.remove(boton);
+                    c.panelColaCocinero.pmpder.decPreparandose();
+                    padre.remove(este);
+                    padre.repaint();
+                    padre.revalidate();*/
+                    try {
+                        c.icocinero.seleccionaPlato(p, (ElementoColaCocina) boton.getAsociado());
+                        padre.autoCompletar(c.icocinero.getPedidosCocinaPreparandose());
+                    } catch (Exception ex) {
+                        Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
             }
 
-    }
-
-     public boolean cerrarPedido(Pedido p, InterfazCocinero c){
-       
-        String texto = new String();
-        ArrayList<ElementoPedido> elems = p.obtieneElementos();
-        for (int i=0;i<elems.size();i++){
-            if (elems.get(i) instanceof ElementoColaCocina)
-                texto += elems.get(i).getElemento().getNombre()+"\n";
         }
-        DialogoConfirmacion confirmar = new DialogoConfirmacion(c,"Cerrar pedido de cocina", "¿Está seguro de que desea cerrar los platos de este pedido?",texto);
-        confirmar.setLocationRelativeTo(c);
-        confirmar.setVisible(true);
-        if(confirmar.isAceptado())
-           return true;
-        else
-           return false;
-     }
 
-    private boolean hayMasPreparandose(Pedido p,int codElem){
-        for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getCodElementoPedido() != codElem
-                    && p.obtieneElementos().get(i).getEstado() == ElementoColaCocina.PREPARANDOSE)
+        public boolean cerrarPedido(Pedido p, InterfazCocinero c) {
+
+            String texto = new String();
+            ArrayList<ElementoPedido> elems = p.obtieneElementos();
+            for (int i = 0; i < elems.size(); i++) {
+                if (elems.get(i) instanceof ElementoColaCocina) {
+                    texto += elems.get(i).getElemento().getNombre() + "\n";
+                }
+            }
+            DialogoConfirmacion confirmar = new DialogoConfirmacion(c, "Cerrar pedido de cocina", "¿Está seguro de que desea cerrar los platos de este pedido?", texto);
+            confirmar.setLocationRelativeTo(c);
+            confirmar.setVisible(true);
+            if (confirmar.isAceptado()) {
                 return true;
+            } else {
+                return false;
             }
-         return false;
-    }
-
-    int getNumElemento(Pedido p, int codElem){
-        for(int i=0;i<p.obtieneElementos().size();i++){
-            if(p.obtieneElementos().get(i).getCodElementoPedido() == codElem)
-                return i;
         }
-        return -1;
+
+        private boolean hayMasPreparandose(Pedido p, int codElem) {
+            ArrayList<ElementoPedido> elementos = p.obtieneElementos();
+            for (int i = 0; i < elementos.size(); i++) {
+                if (elementos.get(i).getCodElementoPedido() != codElem // No comprobar el elemento que se esta cambiando de estado
+                        && elementos.get(i) instanceof ElementoColaCocina
+                        && elementos.get(i).getEstado() != ElementoColaCocina.PREPARADO) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
-}
 }
