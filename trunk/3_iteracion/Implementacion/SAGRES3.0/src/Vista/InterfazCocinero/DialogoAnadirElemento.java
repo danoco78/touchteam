@@ -849,7 +849,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             eliminar.addActionListener(bSeccion);
             obj[0] = "Quitar";
             obj[1] = productoSeleccionado.getNombre();
-            obj[2] = 0.0;
+            obj[2] = new Float(0.0);
             ((DefaultTableModel) this.tProductosAsociados.getModel()).addRow(obj);
         }
     }//GEN-LAST:event_seleccionaProducto
