@@ -1,0 +1,19 @@
+* {
+}
+
+a {
+text-decoration: none;
+display: block;
+width: 135px;
+margin-top: 4px;
+margin-bottom: 4px;
+font-weight: bolder;
+background-color: #6699ff;
+border: solid 2px #000066;
+color: #FFFFFF;
+text-align: center;
+}
+
+a:hover {
+background-color: #ff9900;
+}
