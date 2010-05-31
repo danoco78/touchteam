@@ -20,6 +20,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -50,6 +52,10 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private ArrayList seleccionados;
     private ImageIcon imagen;
     private Elemento elemento;
+    private ArrayList<Seccion> listaSecciones;
+    // Si tipo es 0, se muestra el campo de porciones
+    // Si tipo es 1, no se muestra el campo de porciones
+    private int tipoSeccion;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoModificarElemento(java.awt.Frame parent,/* ICarta GestorCarta, IPreparaCarta Carta, IProducto GestorProducto*/ ICocinero iCocinero) {
@@ -60,12 +66,13 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         this.gestorProducto = GestorProducto;*/
         this.icocinero = iCocinero;
         this.estado = 1;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Collections.sort(listaSecciones);
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
         this.bAnterior.setEnabled(false);
-        //this.bSiguiente.setEnabled(false);
+        this.bSiguiente.setEnabled(false);
         this.dSelector.setFileFilter(new FileNameExtensionFilter("IMAGEN", "jpg", "jpeg", "png", "gif"));
     }
 
@@ -104,13 +111,15 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         € = new javax.swing.JLabel();
         lTiempo = new javax.swing.JLabel();
         minutos = new javax.swing.JLabel();
+        tPrecio = new javax.swing.JFormattedTextField(new Float(0));
+        tTiempo = new javax.swing.JFormattedTextField(new Integer(0));
+        pAtributos = new javax.swing.JPanel();
         pAtributoPlato = new javax.swing.JPanel();
         lDivision = new javax.swing.JLabel();
         lPorciones = new javax.swing.JLabel();
         lAyudaDivisiones = new javax.swing.JLabel();
         tPorciones = new javax.swing.JFormattedTextField(new Integer(0));
-        tPrecio = new javax.swing.JFormattedTextField(new Float(0));
-        tTiempo = new javax.swing.JFormattedTextField(new Integer(0));
+        pVacio = new javax.swing.JPanel();
         pPaso3 = new javax.swing.JPanel();
         pProductosDisponibles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -155,7 +164,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pPaso1.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
@@ -185,7 +194,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -370,62 +379,6 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(minutos, gridBagConstraints);
 
-        pAtributoPlato.setBackground(new java.awt.Color(255, 255, 255));
-        pAtributoPlato.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Atributos del plato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
-        pAtributoPlato.setForeground(new java.awt.Color(80, 98, 143));
-        pAtributoPlato.setOpaque(false);
-        pAtributoPlato.setLayout(new java.awt.GridBagLayout());
-
-        lDivision.setFont(new java.awt.Font("Arial", 0, 14));
-        lDivision.setForeground(new java.awt.Color(80, 98, 143));
-        lDivision.setText("El elemento se puede dividir en");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        pAtributoPlato.add(lDivision, gridBagConstraints);
-
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
-        lPorciones.setForeground(new java.awt.Color(80, 98, 143));
-        lPorciones.setText("porciones/raciones");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        pAtributoPlato.add(lPorciones, gridBagConstraints);
-
-        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14));
-        lAyudaDivisiones.setForeground(new java.awt.Color(80, 98, 143));
-        lAyudaDivisiones.setText("* indique 0 o vacio para hacerlo indivisible");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        pAtributoPlato.add(lAyudaDivisiones, gridBagConstraints);
-
-        tPorciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
-        tPorciones.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tPorciones.setMinimumSize(new java.awt.Dimension(60, 20));
-        tPorciones.setPreferredSize(new java.awt.Dimension(150, 20));
-        tPorciones.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                validarFormulario(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        pAtributoPlato.add(tPorciones, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 47;
-        gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
-        pPaso2.add(pAtributoPlato, gridBagConstraints);
-
         tPrecio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tPrecio.setMinimumSize(new java.awt.Dimension(150, 20));
@@ -455,6 +408,72 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(tTiempo, gridBagConstraints);
+
+        pAtributos.setBackground(new java.awt.Color(255, 255, 255));
+        pAtributos.setForeground(new java.awt.Color(80, 98, 143));
+        pAtributos.setOpaque(false);
+        pAtributos.setLayout(new java.awt.CardLayout());
+
+        pAtributoPlato.setBackground(new java.awt.Color(255, 255, 255));
+        pAtributoPlato.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Atributos del plato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pAtributoPlato.setForeground(new java.awt.Color(80, 98, 143));
+        pAtributoPlato.setOpaque(false);
+        pAtributoPlato.setLayout(new java.awt.GridBagLayout());
+
+        lDivision.setFont(new java.awt.Font("Arial", 0, 14));
+        lDivision.setForeground(new java.awt.Color(80, 98, 143));
+        lDivision.setText("El elemento se puede dividir en");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        pAtributoPlato.add(lDivision, gridBagConstraints);
+
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
+        lPorciones.setForeground(new java.awt.Color(80, 98, 143));
+        lPorciones.setText("porciones/raciones");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        pAtributoPlato.add(lPorciones, gridBagConstraints);
+
+        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lAyudaDivisiones.setForeground(new java.awt.Color(80, 98, 143));
+        lAyudaDivisiones.setText("* indique 0 o vacio para hacerlo indivisible");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        pAtributoPlato.add(lAyudaDivisiones, gridBagConstraints);
+
+        tPorciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tPorciones.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        tPorciones.setMinimumSize(new java.awt.Dimension(60, 20));
+        tPorciones.setPreferredSize(new java.awt.Dimension(150, 20));
+        tPorciones.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
+        pAtributoPlato.add(tPorciones, gridBagConstraints);
+
+        pAtributos.add(pAtributoPlato, "Atributos");
+
+        pVacio.setBackground(new java.awt.Color(255, 255, 255));
+        pAtributos.add(pVacio, "Vacio");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 47;
+        gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
+        pPaso2.add(pAtributos, gridBagConstraints);
 
         cuerpo.add(pPaso2, "Paso2");
 
@@ -585,9 +604,9 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridBagLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
-        lTitulo.setText("Modificar elemento a carta");
+        lTitulo.setText("Modificar elemento de carta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -645,10 +664,11 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bSiguiente.setFont(new java.awt.Font("Arial", 0, 14));
+        bSiguiente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bSiguiente.setForeground(new java.awt.Color(80, 98, 143));
         bSiguiente.setText("Siguiente");
         bSiguiente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bSiguiente.setEnabled(false);
         bSiguiente.setMinimumSize(new java.awt.Dimension(100, 50));
         bSiguiente.setPreferredSize(new java.awt.Dimension(125, 75));
         bSiguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -664,7 +684,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 14));
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -702,9 +722,16 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.lSubtitulo.setText(SUBTITULOPASO2);
                 this.lPaso.setText(PASO2);
                 this.bAnterior.setEnabled(true);
-                this.estado++;
+                // Evitamos la pantalla de asociar productos, que no se debe encontrar habilitada para la edición de elementos.
+                this.estado+=2;
+                //this.estado++;
                 cl.next(this.cuerpo);
                 this.validarFormulario(null);
+                CardLayout cAtrib = (CardLayout)pAtributos.getLayout();
+                if (this.tipoSeccion == 0) 
+                    cAtrib.show(pAtributos, "Vacio");
+                else
+                    cAtrib.show(pAtributos, "Atributos");
                 break;
             case 2:
                 //validar Datos
@@ -716,23 +743,33 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 break;
             case 3:
                 String subtitulo = this.lSubtitulo.getText();
-                String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
-                String texto = "Nombre: " + this.tNombre.getText()
-                        + "\nDescripción: " + this.tDescripcion.getText()
-                        + "\nPrecio: " + ((Float) this.tPrecio.getValue())
-                        + "\nPorciones: " + ((Integer) this.tPorciones.getValue())
-                        + "\nPorciones: " + ((Integer) this.tTiempo.getValue());
-                texto += "\n Esta compuesto por los ingredientes: ";
+                String pregunta = "¿Confirma que desea modificar el siguiente Elemento?";
+                /*String texto = "Nombre: " + this.tNombre.getText() +"\n"
+                        + "Descripción: " + this.tDescripcion.getText() + "\n"
+                        + "Precio: " + ((Float) this.tPrecio.getValue()) + " €" + "\n"
+                        + "Porciones: " + ((Integer) this.tPorciones.getValue()) + "\n"
+                        + "Tiempo de elaboración: " + ((Integer) this.tTiempo.getValue()) + "\n"
+                        + "Esta compuesto por los ingredientes: " + "\n";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n\t Nombre: " + producto.getNombre() + ", Cantidad" + producto.getCantidad();
+                    texto += "\n - Nombre: " + producto.getNombre() + ", Cantidad: " + producto.getCantidad();
+                }*/
+                //System.out.println(texto);
+                String texto = "<font face=\"Arial\">Nombre: <strong>" + this.tNombre.getText() +"</strong></font><br />"
+                        + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
+                        + "<font face=\"Arial\">Precio: <strong>" + ((Float) this.tPrecio.getValue()) + " €" + "</strong><br />"
+                        + "<font face=\"Arial\">Porciones: <strong>" + ((Integer) this.tPorciones.getValue()) + "</strong><br />"
+                        + "<font face=\"Arial\">Tiempo de elaboración: <strong>" + ((Integer) this.tTiempo.getValue()) + "</strong><br />"
+                        + "<font face=\"Arial\">Esta compuesto por los ingredientes: " + "<br /><br />";
+                for (int i = 0; i < seleccionados.size(); i++) {
+                    Producto producto = (Producto) seleccionados.get(i);
+                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + producto.getCantidad()+ "</strong> gr.<br />";
                 }
-
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
-                    ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+                    //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
                     Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion.getClass() == SeccionComida.class) {
                         try {
@@ -774,7 +811,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.lSubtitulo.setText(SUBTITULOPASO2);
                 this.lPaso.setText(PASO2);
                 this.bSiguiente.setText("Siguiente");
-                this.estado--;
+                this.estado -= 2;
+                //this.estado--;
                 this.validarFormulario(null);
                 cl.previous(this.cuerpo);
                 break;
@@ -828,8 +866,8 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         int select = this.tProductoSeccion.getSelectedRow();
         if (select != -1) {
             this.bSiguiente.setEnabled(true);
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
-            Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
+            //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            Seccion seccion = this.listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> listaElementos;
             if (seccion instanceof SeccionBebida)
                 listaElementos = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
@@ -844,7 +882,11 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             this.imagen = elemento.getFoto();
             ArrayList<Producto> listaProductos = new ArrayList<Producto>(this.icocinero.obtieneIngredientes());
             disponibles = listaProductos;
-            DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
             modelo.addColumn(this.tProductosDisponibles.getColumnName(0));
             modelo.addColumn(this.tProductosDisponibles.getColumnName(1));
             modelo.addColumn(this.tProductosDisponibles.getColumnName(2));
@@ -882,14 +924,22 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             Seccion seccion =  listaSecciones.get(this.bSeccion.getSelectedIndex());
             ArrayList<Elemento> lista;
-            if (seccion instanceof SeccionBebida)
+            if (seccion instanceof SeccionBebida) {
+                this.tipoSeccion = 0;
                 lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
-            else
+            }
+            else {
+                this.tipoSeccion = 1;
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
-            DefaultTableModel modelo = new DefaultTableModel();
+            }
+            DefaultTableModel modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
             modelo.addColumn(this.tProductoSeccion.getColumnName(2));
@@ -900,7 +950,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                 this.tProductoSeccion.setValueAt(lista.get(i).getDescripcion(), i, 1);
                 this.tProductoSeccion.setValueAt(lista.get(i).getPrecio(), i, 2);
             }
-            this.bSiguiente.setEnabled(true);
+            //this.bSiguiente.setEnabled(true);
         }
     }//GEN-LAST:event_seleccionarSeccion
 
@@ -918,6 +968,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
             ((DefaultTableModel) this.tProductosDisponibles.getModel()).addRow(obj);
         }
     }//GEN-LAST:event_quitarAsociados
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TImgen;
     private javax.swing.JButton bAnterior;
@@ -947,10 +998,12 @@ public class DialogoModificarElemento extends java.awt.Dialog {
     private javax.swing.JLabel minutos;
     private javax.swing.JPanel pAtributoPlato;
     private javax.swing.JPanel pAtributoPlato2;
+    private javax.swing.JPanel pAtributos;
     private javax.swing.JPanel pPaso1;
     private javax.swing.JPanel pPaso2;
     private javax.swing.JPanel pPaso3;
     private javax.swing.JPanel pProductosDisponibles;
+    private javax.swing.JPanel pVacio;
     private javax.swing.JPanel pie;
     private javax.swing.JScrollPane scrollTabla;
     private javax.swing.JTextArea tDescripcion;

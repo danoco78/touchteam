@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +26,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
     //private ICarta gestorCarta;
     //private IPreparaCarta carta;
     private ICocinero icocinero;
+    private ArrayList<Seccion> listaSecciones;
 
     /** Creates new form DialogoAnadirElemento */
     public DialogoEliminarElemento(java.awt.Frame parent, /*ICarta GestorCarta, IPreparaCarta Carta*/ ICocinero iCocinero) {
@@ -33,7 +35,8 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         //this.gestorCarta = GestorCarta;
         //this.carta = Carta;
         this.icocinero = iCocinero;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        Collections.sort(listaSecciones);
         for (int i = 0; i < listaSecciones.size(); i++) {
             this.bSeccion.addItem(listaSecciones.get(i).getNombre());
         }
@@ -266,7 +269,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         ArrayList<Elemento> listaElementos;
-        ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+        //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
         Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
         if (seccion instanceof SeccionBebida)
             listaElementos = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
@@ -277,10 +280,10 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
                 this.tProductoSeccion.getSelectedRow() );
         String subtitulo = this.lSubtitulo.getText();
         String pregunta = "¿Confirma que desea eliminar el siguiente Elemento?";
-        String texto = "Nombre: " + aEliminar.getNombre()
-                + "\nDescripción: " + aEliminar.getDescripcion()
-                + "\nPrecio: " + aEliminar.getPrecio()
-                + "\nPorciones: " + aEliminar.getDivisionesMaximas();
+        String texto = "<font face=\"Arial\">Nombre: <strong>" + aEliminar.getNombre() +"</strong><br />"
+                + "<font face=\"Arial\">Descripción: <strong>" + aEliminar.getDescripcion()+"</strong> <br />"
+                + "<font face=\"Arial\">Precio: <strong>" + aEliminar.getPrecio() + "</strong> €<br />"
+                + "<font face=\"Arial\">Porciones: <strong>" + aEliminar.getDivisionesMaximas()+"</strong><br />";
         DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
@@ -297,14 +300,18 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
     private void seleccionarSeccion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarSeccion
         if (this.bSeccion.getSelectedIndex() != -1) {
-            ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+            //ArrayList<Seccion> listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
             ArrayList<Elemento> lista;
             Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
             if (seccion instanceof SeccionBebida)
                 lista = new ArrayList<Elemento>(((SeccionBebida)seccion).getListaElementoBebida());
             else
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
-            DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
             modelo.addColumn(this.tProductoSeccion.getColumnName(0));
             modelo.addColumn(this.tProductoSeccion.getColumnName(1));
             modelo.addColumn(this.tProductoSeccion.getColumnName(2));

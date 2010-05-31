@@ -35,8 +35,10 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         initComponents();
         this.lSubtitulo.setText(Subtitulo);
         this.lConfirma.setText(Pregunta);
+        this.tConfirma.setContentType("text/html");
+        this.tConfirma.setText(Datos);
 
-        // Filtro
+       /* // Filtro
         int cols;
         Rectangle rect = centro.getBounds();
         cols = (int) (rect.getWidth() / (this.tConfirma.getFont().getSize()*0.7));
@@ -53,7 +55,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
             }
             this.tConfirma.setText(dats);
         }else
-            this.tConfirma.setText(Datos);
+            this.tConfirma.setText(Datos);*/
     }
 
 
@@ -84,8 +86,8 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         cuerpo = new javax.swing.JPanel();
         centro = new javax.swing.JPanel();
         lConfirma = new javax.swing.JLabel();
-        scrollConfirma = new javax.swing.JScrollPane();
-        tConfirma = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tConfirma = new javax.swing.JEditorPane();
         pIzq = new javax.swing.JPanel();
         pDer = new javax.swing.JPanel();
         pArr = new javax.swing.JPanel();
@@ -187,20 +189,14 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         centro.setOpaque(false);
         centro.setLayout(new java.awt.BorderLayout());
 
-        lConfirma.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        lConfirma.setFont(new java.awt.Font("Arial", 0, 16));
         lConfirma.setForeground(new java.awt.Color(80, 98, 143));
         lConfirma.setText("Mensaje");
         centro.add(lConfirma, java.awt.BorderLayout.NORTH);
 
-        scrollConfirma.setPreferredSize(new java.awt.Dimension(450, 400));
+        jScrollPane1.setViewportView(tConfirma);
 
-        tConfirma.setColumns(20);
-        tConfirma.setEditable(false);
-        tConfirma.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        tConfirma.setRows(5);
-        scrollConfirma.setViewportView(tConfirma);
-
-        centro.add(scrollConfirma, java.awt.BorderLayout.CENTER);
+        centro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(centro, java.awt.BorderLayout.CENTER);
 
@@ -246,6 +242,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel centro;
     private javax.swing.JPanel cuerpo;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lConfirma;
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
@@ -254,8 +251,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
     private javax.swing.JPanel pDer;
     private javax.swing.JPanel pIzq;
     private javax.swing.JPanel pie;
-    private javax.swing.JScrollPane scrollConfirma;
-    private javax.swing.JTextArea tConfirma;
+    private javax.swing.JEditorPane tConfirma;
     // End of variables declaration//GEN-END:variables
     
 }
