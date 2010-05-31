@@ -408,7 +408,7 @@ public class DialogoNotificarIncidenciaBebida extends java.awt.Dialog {
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea notificar la siguiente incidencia con la bebia?";
                 String texto = "Bebida afectada: "+this.lNombre.getText()+
-                               "\nCantidad afectada: "+(Float)this.tCantidadAfectada.getValue()+
+                               "\nCantidad afectada: "+(Float)this.tCantidadAfectada.getValue()+" L."+
                                "\nDescripción de la incidencia: "+this.tDescripcion.getText();
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
