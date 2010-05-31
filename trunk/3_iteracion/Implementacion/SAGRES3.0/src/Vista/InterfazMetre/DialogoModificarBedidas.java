@@ -364,6 +364,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         tCantidadPorEnvase.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tCantidadPorEnvase.setMinimumSize(new java.awt.Dimension(60, 10));
         tCantidadPorEnvase.setPreferredSize(new java.awt.Dimension(150, 10));
+        tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -589,12 +594,15 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     }//GEN-LAST:event_ValidarFormulario
 
     private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
-            if ((this.tNombre.getText().length() != 0)
-                    && (Float)this.tCantidadPorEnvase.getValue() != 0
-                    && (Float)this.tMaximo.getValue() != 0
-                    && (Float)this.tMinimo.getValue() != 0
-                    && (Float)this.tMaximo.getValue() > (Float)this.tMinimo.getValue())
+        if( this.tNombre.getText().length() != 0 &&
+          ((Float)this.tMaximo.getValue()) > 0 &&
+          ((Float)this.tMinimo.getValue()) > 0 &&
+          ((Float)this.tMaximo.getValue()) > ((Float)this.tMinimo.getValue()) &&
+          ((Float)this.tDisponible.getValue()) >= 0 &&
+          ((Float)this.tDisponible.getValue()) <= ((Float)this.tMaximo.getValue()))
+        
                 this.bSiguiente.setEnabled(true);
+        else this.bSiguiente.setEnabled(false);
     }//GEN-LAST:event_validarFormulario
 
 

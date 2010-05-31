@@ -368,11 +368,13 @@ public class DialogoAnadirBebida extends java.awt.Dialog {
 
     private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
         try {
-            if (this.tNombre.getText().length() != 0
-                    && (Float)this.tCantidadPorEnvase.getValue() != 0
-                    && (Float)this.tMaximo.getValue() != 0
-                    && (Float)this.tMinimo.getValue() != 0
-                    && (Float)this.tMaximo.getValue() > (Float)this.tMinimo.getValue()) {
+        if( this.tNombre.getText().length() != 0 &&
+          ((Float)this.tMaximo.getValue()) > 0 &&
+          ((Float)this.tMinimo.getValue()) > 0 &&
+          ((Float)this.tMaximo.getValue()) >= ((Float)this.tMinimo.getValue()) &&
+          ((Float)this.tDisponible.getValue()) >= 0 &&
+          ((Float)this.tDisponible.getValue()) <= ((Float)this.tMaximo.getValue()))
+        {
                 this.bAceptar.setEnabled(true);
             } else {
                 this.bAceptar.setEnabled(false);
