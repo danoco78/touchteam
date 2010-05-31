@@ -763,7 +763,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                         + "<font face=\"Arial\">Esta compuesto por los ingredientes: " + "<br /><br />";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + producto.getCantidad()+ "</strong> gr.<br />";
+                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + producto.getCantidad()+ "</strong> gr./l<br />";
                 }
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
