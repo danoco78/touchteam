@@ -14,7 +14,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -110,9 +109,6 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         lPorciones2 = new javax.swing.JLabel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
-        lCantidadPorEnvase = new javax.swing.JLabel();
-        lmilitros = new javax.swing.JLabel();
-        tCantidadPorEnvase = new javax.swing.JFormattedTextField(new Float(0));
         cabecera = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
@@ -340,44 +336,6 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         pPaso2.add(lMuestraImagen, gridBagConstraints);
 
-        lCantidadPorEnvase.setFont(new java.awt.Font("Arial", 0, 14));
-        lCantidadPorEnvase.setForeground(new java.awt.Color(80, 98, 143));
-        lCantidadPorEnvase.setText("Cantidad por envase");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
-        pPaso2.add(lCantidadPorEnvase, gridBagConstraints);
-
-        lmilitros.setFont(new java.awt.Font("Arial", 0, 14));
-        lmilitros.setForeground(new java.awt.Color(80, 98, 143));
-        lmilitros.setText("mililitros");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
-        pPaso2.add(lmilitros, gridBagConstraints);
-
-        tCantidadPorEnvase.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
-        tCantidadPorEnvase.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tCantidadPorEnvase.setMinimumSize(new java.awt.Dimension(60, 10));
-        tCantidadPorEnvase.setPreferredSize(new java.awt.Dimension(150, 10));
-        tCantidadPorEnvase.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                validarFormulario(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 12;
-        gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
-        pPaso2.add(tCantidadPorEnvase, gridBagConstraints);
-
         cuerpo.add(pPaso2, "card3");
 
         add(cuerpo, java.awt.BorderLayout.CENTER);
@@ -529,10 +487,9 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea modificar los siguientes datos de la bebida?";
                 String texto = "Nombre: "+this.tNombre.getText()+
-                               "\nCantidad Por Envase: "+((Float)this.tCantidadPorEnvase.getValue())+
-                               "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+
-                               "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+
-                               "\nCantidad Mínima: "+((Float)this.tMinimo.getValue());
+                               "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+" L."+
+                               "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+" L."+
+                               "\nCantidad Mínima: "+((Float)this.tMinimo.getValue())+" L.";
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
@@ -616,7 +573,6 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private javax.swing.JPanel cuerpo;
     private javax.swing.JFileChooser dSelector;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lCantidadPorEnvase;
     private javax.swing.JLabel lImagen;
     private javax.swing.JLabel lMaximo;
     private javax.swing.JLabel lMaximo2;
@@ -629,13 +585,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private javax.swing.JLabel lPorciones2;
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
-    private javax.swing.JLabel lmilitros;
     private javax.swing.JPanel pAtributoCantidad;
     private javax.swing.JPanel pPaso1;
     private javax.swing.JPanel pPaso2;
     private javax.swing.JPanel pbebidasDisponibles;
     private javax.swing.JPanel pie;
-    private javax.swing.JFormattedTextField tCantidadPorEnvase;
     private javax.swing.JFormattedTextField tDisponible;
     private javax.swing.JFormattedTextField tMaximo;
     private javax.swing.JFormattedTextField tMinimo;

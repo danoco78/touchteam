@@ -333,7 +333,7 @@ public class DialogoEliminarBebida extends java.awt.Dialog {
         String subtitulo = this.lSubtitulo.getText();
         String pregunta = "¿Confirma que desea eliminar la siguiente bebida?";
         String texto = "Nombre: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,0)+
-                "\nCantidad: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,1);
+                "\nCantidad: "+this.tBebidas.getValueAt(this.bebidaSeleccionada,1)+" L.";
         DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
