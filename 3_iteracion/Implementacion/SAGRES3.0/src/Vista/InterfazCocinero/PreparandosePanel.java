@@ -11,9 +11,12 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utilidades.PanelEspacioVertical;
 import utilidades.PanelPedidoPorMesa;
 
@@ -23,44 +26,40 @@ import utilidades.PanelPedidoPorMesa;
  */
 public class PreparandosePanel extends javax.swing.JPanel {
 
-    Pedido pedActual = null;
-    java.awt.Dimension oldTama;
-    public IntColaCocinero colaCocineroPadre = null;
-    int npreparandose = 0;
+    private int npreparandose = 0;
+    public ICocinero icocinero;
+    public InterfazCocinero ventana;
     
     /** Creates new form PanelMesaPedido */
-    public PreparandosePanel(IntColaCocinero padre) {
+    public PreparandosePanel(ICocinero icocinero, InterfazCocinero ventana) {
         initComponents();
-        oldTama = this.getSize();
-        this.colaCocineroPadre = padre;
+        this.icocinero = icocinero;
+        this.ventana = ventana;
     }
 
     /**
-     * Recibe una lista de pedidos, obtiene los platos o bebidas necesarios
+     * Recibe una lista de pedidos con elementos preparandose, obtiene los platos necesarios
      * y los muestra en un panel. Sirve tambien para actualizar el panel.
      * @param listaPedidos Lista de pedidos a recibir
      */
-    public void autoCompletar(ArrayList<Pedido> listaPedidos){
+    private void autoCompletar(ArrayList<Pedido> listaPedidos){
 
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
-
-        int totalPlatos = cuentaPlatos(listaPedidos);
         //Actualizamos la etiqueta de platos preparándose
-        this.setMensaje(totalPlatos);
-
-
         for(int i=0; i<listaPedidos.size(); ++i){
-            totalPlatos += listaPedidos.get(i).obtieneElementos().size();
+            //totalPlatos += listaPedidos.get(i).obtieneElementos().size();
             if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
                 //PanelEspacioVertical pe = ;
-
-               this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this,
-                       this.colaCocineroPadre));
-                this.pPanelesPedido.add(new PanelEspacioVertical());
+               this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this));
+               this.pPanelesPedido.add(new PanelEspacioVertical());
             }
         }
+
+        int totalPlatos = cuentaPlatos(listaPedidos);
+        this.setMensaje(totalPlatos);
+        
         this.revalidate();
         this.repaint();
     }
@@ -178,7 +177,8 @@ public class PreparandosePanel extends javax.swing.JPanel {
         int Total = 0;
         for (int i=0;i<listaPedidos.size();i++){
             for(int j=0;j<listaPedidos.get(i).obtieneElementos().size();j++){
-                if(listaPedidos.get(i).obtieneElementos().get(j).getEstado() == ElementoColaCocina.PREPARANDOSE)
+                if(listaPedidos.get(i).obtieneElementos().get(j) instanceof ElementoColaCocina &&
+                        listaPedidos.get(i).obtieneElementos().get(j).getEstado() == ElementoColaCocina.PREPARANDOSE)
                     Total++;
             }
         }
@@ -193,5 +193,18 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
        npreparandose--;
        setMensaje(npreparandose);
+    }
+
+    public void actualizar() {
+        try {
+            // TODO Actualizar PreparandosePanel
+            // Obtener los pedidos con elementos preparandose
+            ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
+            // Si es necesario, actualizar
+            // TODO Comparar si ha cambiado alguno de estado
+            this.autoCompletar(pedidosCocinaPreparandose);
+        } catch (Exception ex) {
+            Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

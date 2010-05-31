@@ -7,7 +7,6 @@ import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import utilidades.HebraColaPedidos;
 
 /**
  *
@@ -25,7 +24,6 @@ public class InterfazCocinero extends javax.swing.JFrame {
     private platoMasVendido panelPlatoMasvendido;
     private platoMenosVendido panelPlatoMenosvendido;
     private platosNoServidos panelPlatosNoServidos;
-    public HebraColaPedidos hebra = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";
@@ -43,13 +41,12 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelPrincipal = new IntPrincipalCocinero();
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
-        this.panelColaCocinero = new IntColaCocinero(this);
+        this.panelColaCocinero = new IntColaCocinero(icocinero, this);
         this.panelEstadisticas = new menuEstadisticas();
         this.panelBalance = new balanceEconomico();
         this.panelPlatoMasvendido = new platoMasVendido();
         this.panelPlatoMenosvendido = new platoMenosVendido();
         this.panelPlatosNoServidos = new platosNoServidos();
-        this.hebra = new HebraColaPedidos(this);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
