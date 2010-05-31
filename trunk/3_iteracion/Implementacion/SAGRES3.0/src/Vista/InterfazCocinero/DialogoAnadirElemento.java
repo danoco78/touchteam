@@ -190,7 +190,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -376,19 +376,19 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pPaso2.add(minutos, gridBagConstraints);
 
         pAtributoPlato.setBackground(new java.awt.Color(255, 255, 255));
-        pAtributoPlato.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Atributos del plato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pAtributoPlato.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Atributos del elemento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
         pAtributoPlato.setForeground(new java.awt.Color(80, 98, 143));
         pAtributoPlato.setOpaque(false);
         pAtributoPlato.setLayout(new java.awt.GridBagLayout());
 
-        lDivision.setFont(new java.awt.Font("Arial", 0, 14));
+        lDivision.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lDivision.setForeground(new java.awt.Color(80, 98, 143));
         lDivision.setText("El elemento se puede dividir en");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         pAtributoPlato.add(lDivision, gridBagConstraints);
 
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lPorciones.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones.setText("porciones/raciones");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -397,7 +397,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         pAtributoPlato.add(lPorciones, gridBagConstraints);
 
-        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14));
+        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lAyudaDivisiones.setForeground(new java.awt.Color(80, 98, 143));
         lAyudaDivisiones.setText("* indique 0 o vacio para hacerlo indivisible");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -430,6 +430,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.ipady = 47;
         gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
         pPaso2.add(pAtributoPlato, gridBagConstraints);
+        pAtributoPlato.getAccessibleContext().setAccessibleName("Atributos del elemento");
 
         tPrecio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -710,6 +711,15 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.estado++;
                 cl.next(this.cuerpo);
                 this.validarFormulario(null);
+                if (this.bSeccion.getSelectedIndex() == 4 || this.bSeccion.getSelectedIndex() == 5){
+                    this.tTiempo.setVisible(false);
+                    this.lTiempo.setVisible(false);
+                    this.minutos.setVisible(false);
+                }else{
+                    this.tTiempo.setVisible(true);
+                    this.lTiempo.setVisible(true);
+                    this.minutos.setVisible(true);
+                }
                 break;
             case 2:
                 //validar Datos
@@ -717,7 +727,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.lPaso.setText(PASO3);
                 this.bSiguiente.setText("Finalizar");
                 this.estado++;
-                Iterator<Seccion> it = this.icocinero.obtieneSecciones().iterator();
+                Iterator<Seccion> it = this.listaSecciones.iterator();
                 for(int i = 0; i< this.bSeccion.getSelectedIndex(); i++ ) it.next();
                 Seccion sec = it.next();
                 HashSet<Producto> listaProductos = this.icocinero.obtieneProductosSeccion(sec);
@@ -768,7 +778,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                     imagen = null;
                 }
                 if (confirmar.isAceptado()) {
-                    listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
+                    //listaSecciones = new ArrayList<Seccion>(this.icocinero.obtieneSecciones());
                     Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion instanceof SeccionComida) {
                         HashMap<Ingrediente, Float> listaIngredientes = new HashMap<Ingrediente, Float>();
@@ -791,7 +801,6 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                     dispose();
                 }
                 break;
-
         }
 
     }//GEN-LAST:event_siguiente
@@ -805,6 +814,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 this.bAnterior.setEnabled(false);
                 this.estado--;
                 cl.previous(this.cuerpo);
+                this.bSiguiente.setEnabled(true);
                 break;
             case 3:
                 this.lSubtitulo.setText(SUBTITULOPASO2);
