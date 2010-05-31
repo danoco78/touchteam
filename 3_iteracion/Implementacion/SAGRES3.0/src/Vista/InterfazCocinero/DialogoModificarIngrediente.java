@@ -62,8 +62,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
@@ -203,6 +202,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         pPaso2.setForeground(new java.awt.Color(80, 98, 143));
         pPaso2.setMinimumSize(new java.awt.Dimension(500, 550));
         pPaso2.setPreferredSize(new java.awt.Dimension(500, 550));
+        pPaso2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pPaso2.setLayout(new java.awt.GridBagLayout());
 
         lNombre.setFont(new java.awt.Font("Arial", 0, 14));
@@ -216,6 +220,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         tNombre.setFont(new java.awt.Font("Arial", 0, 14));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
+        tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -240,6 +249,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         tMaximo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMaximo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMaximo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMaximo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMaximo);
 
         lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
@@ -256,6 +270,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         tMinimo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tMinimo.setMinimumSize(new java.awt.Dimension(60, 10));
         tMinimo.setPreferredSize(new java.awt.Dimension(150, 10));
+        tMinimo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tMinimo);
 
         lPorciones2.setFont(new java.awt.Font("Arial", 0, 14));
@@ -272,6 +291,11 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         tDisponible.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tDisponible.setMinimumSize(new java.awt.Dimension(60, 10));
         tDisponible.setPreferredSize(new java.awt.Dimension(150, 10));
+        tDisponible.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                validarFormulario(evt);
+            }
+        });
         pAtributoCantidad.add(tDisponible);
 
         lPorciones3.setFont(new java.awt.Font("Arial", 0, 14));
@@ -452,8 +476,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 int select = this.tTablaIngredientesDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                 while (noencontrado) {
-                    Map.Entry entrada = (Map.Entry)iterador.next();
-                    aModificar = (Ingrediente)entrada.getKey();
+                    aModificar = (Ingrediente)iterador.next();
                     if(i == select){
                         noencontrado = false;
                     }
@@ -477,9 +500,9 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea Modificar el siguiente ingrediente?";
                 String texto = "Nombre: " + this.tNombre.getText()
-                        + "\nCantidad Disponible: " + ((Float) this.tDisponible.getValue())
-                        + "\nCantidad Máxima: " + ((Float) this.tMaximo.getValue())
-                        + "\nCantidad Mínima: " + ((Float) this.tMinimo.getValue());
+                        + "\nCantidad Disponible: " + ((Float) this.tDisponible.getValue())+" gr."
+                        + "\nCantidad Máxima: " + ((Float) this.tMaximo.getValue())+" gr."
+                        + "\nCantidad Mínima: " + ((Float) this.tMinimo.getValue())+" gr.";
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
@@ -539,6 +562,18 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
             this.bSiguiente.setEnabled(false);
         }
     }//GEN-LAST:event_seleccionarIngrediente
+
+    private void validarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_validarFormulario
+        if( this.tNombre.getText().length() != 0 &&
+          ((Float)this.tMaximo.getValue()) > 0 &&
+          ((Float)this.tMinimo.getValue()) > 0 &&
+          ((Float)this.tMaximo.getValue()) > ((Float)this.tMinimo.getValue()) &&
+          ((Float)this.tDisponible.getValue()) >= 0 &&
+          ((Float)this.tDisponible.getValue()) <= ((Float)this.tMaximo.getValue()))
+
+                this.bSiguiente.setEnabled(true);
+        else this.bSiguiente.setEnabled(false);
+    }//GEN-LAST:event_validarFormulario
 
 
 

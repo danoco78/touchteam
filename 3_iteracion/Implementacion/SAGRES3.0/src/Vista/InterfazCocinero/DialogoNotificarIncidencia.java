@@ -57,8 +57,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
@@ -419,7 +418,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 String pregunta = "¿Confirma que desea Notificar la incidencia?";
                 String texto = "Nombre: " + this.lNombre.getText()
                         + "\nDescripción: " + this.tDescripcion.getText()
-                        + "\nCantidad Afectada: " + (Float) this.tCantidadAfectada.getValue();
+                        + "\nCantidad Afectada: " + (Float) this.tCantidadAfectada.getValue()+" gr.";
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
@@ -429,8 +428,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 int select = this.tTablaIngredientesDisponibles.getSelectedRow();
                 boolean noencontrado = true;
                     while (noencontrado) {
-                        Map.Entry entrada = (Map.Entry)iterador.next();
-                        accidentado = (Ingrediente)entrada.getKey();
+                        accidentado = (Ingrediente)iterador.next();
                         if(i == select){
                             noencontrado = false;
                         }

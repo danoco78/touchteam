@@ -2,7 +2,7 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import ControladorPrincipal.IMetre;
+import GestionCarta.Elemento;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoConfirmacion;
@@ -13,7 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,6 +36,11 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         initComponents();
         //this.gestorProductos = GestorProductos;
         //this.almacenProductos = AlmacenProductos;
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(0));
+        tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(1));
+        tableModel.setRowCount(0);
+        this.tTablaDeshabilitados.setModel(tableModel);
         this.cocina = iCocinero;
         listaIngredientes = this.cocina.obtieneIngredientes();
         this.bAceptar.setEnabled(false);
@@ -49,8 +53,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         Producto p;
         int i = 0;
 	while (iterador.hasNext()) {
-            Map.Entry entrada = (Map.Entry)iterador.next();
-            p = (Producto)entrada.getKey();
+            p = (Producto)iterador.next();
             this.tTablaIngredientes.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientes.setValueAt(p.getCantidad(), i, 1);
             ++i;
@@ -192,7 +195,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        tTablaIngredientes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaIngredientes.setFont(new java.awt.Font("Arial", 0, 14));
         tTablaIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         tTablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -308,27 +311,16 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         String subtitulo = this.lSubtitulo.getText();
-        String pregunta = "¿Confirma que desea Elimnar el siguiente ingrediente?";
+        String pregunta = "¿Confirma que desea Eliminar el siguiente ingrediente?";
         int select = this.tTablaIngredientes.getSelectedRow();
         String texto = "Nombre: "+(String)this.tTablaIngredientes.getValueAt(select, 0)+
-                "\nCantidad Disponible: "+((Float)this.tTablaIngredientes.getValueAt(select, 1));
+                "\nCantidad Disponible: "+((Float)this.tTablaIngredientes.getValueAt(select, 1))+" gr.";
         DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
         if(confirmar.isAceptado()){
             try {
-                Iterator iterador = listaIngredientes.iterator();
-                int i = 0;
-                boolean noeliminado = true;
-                while (noeliminado) {
-                    Map.Entry entrada = (Map.Entry)iterador.next();
-                    aEliminar = (Ingrediente)entrada.getKey();
-                    if(i == select){
-                        this.cocina.eliminaProducto(aEliminar);
-                        noeliminado = false;
-                    }
-                    else ++i;
-                }
+                this.cocina.eliminaProducto(aEliminar);
             } catch (Exception ex) {
             }
             setVisible(false);
@@ -337,6 +329,30 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
     }//GEN-LAST:event_Aceptar
 
     private void seleccionarIngrediente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarIngrediente
+        int select = this.tTablaIngredientes.getSelectedRow();
+        Iterator iterador = listaIngredientes.iterator();
+        int i = 0;
+        boolean noeliminado = true;
+        this.tTablaDeshabilitados.removeAll();
+        while (noeliminado) {
+            aEliminar = (Ingrediente)iterador.next();
+            if(i == select) noeliminado = false;
+            else ++i;
+        }
+        HashSet<Elemento> listaElementos = this.cocina.obtieneElementosConProducto(aEliminar);
+        Iterator iterador2 = listaElementos.iterator();
+        Elemento e;
+        int j=0;
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(0));
+        tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(1));
+        tableModel.setRowCount(listaElementos.size());
+        this.tTablaDeshabilitados.setModel(tableModel);
+        while (iterador2.hasNext()){
+            e = (Elemento)iterador2.next();
+            this.tTablaDeshabilitados.getModel().setValueAt(e.getNombre(), j, 0);
+            ++j;
+        }
         if(this.tTablaIngredientes.getSelectedRow() != -1){
             this.bAceptar.setEnabled(true);
         }else{

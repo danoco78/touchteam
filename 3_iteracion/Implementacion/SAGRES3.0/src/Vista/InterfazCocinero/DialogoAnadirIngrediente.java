@@ -77,7 +77,6 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
 
         dSelector.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -119,7 +118,7 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
         cabecera.add(lSubtitulo, gridBagConstraints);
 
-        add(cabecera, java.awt.BorderLayout.NORTH);
+        getContentPane().add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
@@ -163,7 +162,7 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 9, 9, 80);
         pie.add(bCancelar, gridBagConstraints);
 
-        add(pie, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(pie, java.awt.BorderLayout.SOUTH);
 
         cuerpo.setBackground(new java.awt.Color(255, 255, 255));
         cuerpo.setForeground(new java.awt.Color(80, 98, 143));
@@ -305,7 +304,7 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         cuerpo.add(lMuestraImagen, gridBagConstraints);
 
-        add(cuerpo, java.awt.BorderLayout.CENTER);
+        getContentPane().add(cuerpo, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -334,10 +333,10 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         String subtitulo = this.lSubtitulo.getText();
         String pregunta = "¿Confirma que desea añadir el siguiente ingrediente?";
-        String texto = "Nombre: "+this.tNombre.getText()+
-                "\nCantidad Disponible: "+((Float)this.tDisponible.getValue())+
-                "\nCantidad Máxima: "+((Float)this.tMaximo.getValue())+
-                "\nCantidad Mínima: "+((Float)this.tMinimo.getValue());
+        String texto = "Nombre: "+this.tNombre.getText()+"\n"+
+                "Cantidad Disponible: "+((Float)this.tDisponible.getValue())+" gr.\n"+
+                "Cantidad Máxima: "+((Float)this.tMaximo.getValue())+" gr.\n"+
+                "Cantidad Mínima: "+((Float)this.tMinimo.getValue())+" gr.\n";
         DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
         confirmar.setLocationRelativeTo(this);
         confirmar.setVisible(true);
@@ -350,9 +349,13 @@ public class DialogoAnadirIngrediente extends javax.swing.JDialog {
     }//GEN-LAST:event_Aceptar
 
     private void ValidarFormulario(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ValidarFormulario
-        if( this.tNombre.getText().length() != 0 && ((Float)this.tMaximo.getValue()) > 0 &&
-                ((Float)this.tMinimo.getValue()) > 0 &&
-                ((Float)this.tMaximo.getValue()) > ((Float)this.tMinimo.getValue())){
+        if( this.tNombre.getText().length() != 0 &&
+          ((Float)this.tMaximo.getValue()) > 0 &&
+          ((Float)this.tMinimo.getValue()) > 0 &&
+          ((Float)this.tMaximo.getValue()) >= ((Float)this.tMinimo.getValue()) &&
+          ((Float)this.tDisponible.getValue()) >= 0 &&
+          ((Float)this.tDisponible.getValue()) <= ((Float)this.tMaximo.getValue()))
+        {
             this.bAceptar.setEnabled(true);
         }else{
             this.bAceptar.setEnabled(false);
