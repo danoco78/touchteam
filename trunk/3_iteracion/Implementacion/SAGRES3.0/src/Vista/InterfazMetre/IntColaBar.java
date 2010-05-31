@@ -11,6 +11,7 @@
 
 package Vista.InterfazMetre;
 
+import ControladorPrincipal.IMetre;
 import utilidades.PanelRelojFecha;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -28,22 +29,24 @@ public class IntColaBar extends javax.swing.JPanel {
     public PanelMesaPedido pmp = null;
     public PanelColaFacturas colaIzq = null;
     public PanelColaFacturas colaDer = null;
-    public InterfazMetre imetre;
+    public IMetre imetre;
+    public InterfazMetre ventana;
     
     /** Creates new form IntColaBar */
-    public IntColaBar(InterfazMetre i) {
+    public IntColaBar(IMetre imetre, InterfazMetre ventana) {
         initComponents();
-
-        this.imetre = i;
-        pmp = new PanelMesaPedido(this);
-        colaIzq = new PanelColaFacturas(i,PanelColaFacturas.PARAIMPRIMIR);
-        colaDer = new PanelColaFacturas(i,PanelColaFacturas.PARAFACTURAR);
+        this.imetre = imetre;
+        this.ventana = ventana;
+        pmp = new PanelMesaPedido(imetre, ventana);
+        //colaIzq = new PanelColaFacturas(imetre,PanelColaFacturas.PARAIMPRIMIR);
+        //colaDer = new PanelColaFacturas(imetre,PanelColaFacturas.PARAFACTURAR);
         
         pDer.add(new PanelRelojFecha(), new java.awt.GridBagConstraints());
         pIzq2.add(pmp,java.awt.BorderLayout.CENTER);
         
         centroIzq.add(colaIzq, java.awt.BorderLayout.CENTER);
         centroDer.add(colaDer, java.awt.BorderLayout.CENTER);
+        
     }
 
     @Override

@@ -20,9 +20,15 @@ Cola de cocina y bar "En cola"
 - Se ha agrandado el tamaño del texto
 - Se ha aprovechado mejor el espacio de los botones
 - Se ha aplicado un filtro de manejo de espacio para los comentarios.
+- Se ha rediseñado desde cero, ambas interfaces de cola siguen una jerarquía de objetos y cuentan con una única función de actualización.
+- Se ha solucionado el problema de la persistencia de pedidos ya realizados.
+#seleccionaPlato es posible que no cambie el estado del plato. Hay que comprobarlo.
 
 HebraPendientes (Hebra que obtiene los elementos pendientes en bar y cocina)
 - Se ha eliminado esta clase, agregando su funcionalidad a HebraColaPedidos, simplificando el código y mejorando el rendimiento.
+
+HebraColaPedidos
+- Se ha eliminado esta clase, por falta de modularidad, demasiada dependencia entre clases e inconsistencia en las actualizaciones que realiza, ha sido sustituida por las siguientes dos hebras especializadas "HebraCocina", "HebraBar".
 
 Interfaz de bar
 (Cola)
@@ -40,6 +46,10 @@ Diálogo de confirmación
 Gestor de base de datos
 - Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
 - Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
+
+Gestor Principal (SAGRES)
+- Se ha eliminado el contenido de la función getSiguientePedidoCocinaEnCola, ahora llama a getSiguientePedidoCocina hacia la base de datos, tal como se especifica en el diseño.
+- Se ha eliminado de la interfaz de cocinero (ICocinero) la función getSiguientePedidoCocina, inexistente en el diseño.
 
 Gestion de Stock
 AñadirElemento

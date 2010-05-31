@@ -17,6 +17,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private PanelMesaPedido pmpizq;
     private PreparandosePanel pmpder;
     private ICocinero icocinero;
+    private HebraCocina hCocina;
     public InterfazCocinero ventana;
     ArrayList<Pedido> listaPedidos;
     
@@ -29,7 +30,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelHora.setPreferredSize(panelHora.getComponent(0).getPreferredSize());
 
-        pmpizq = new PanelMesaPedido(this);
+        pmpizq = new PanelMesaPedido(i, ventana);
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         
@@ -37,19 +38,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
-
-        /*this.listaPedidos = new ArrayList();
-        try {
-            listaPedidos = this.icocinero.getPedidosCocinaPreparandose();
-        } catch (Exception ex) {
-            
-        }
-        if(!listaPedidos.isEmpty()){
-            this.pmpder.autoCompletar(listaPedidos);
-            this.pmpder.repaint();
-            this.pmpder.revalidate();
-        }*/
-
+        hCocina = new HebraCocina(pmpizq, pmpder);
     }
 
     @Override

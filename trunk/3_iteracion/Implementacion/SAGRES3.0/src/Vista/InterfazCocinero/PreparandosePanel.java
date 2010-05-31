@@ -51,7 +51,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
         for(int i=0; i<listaPedidos.size(); ++i){
             //totalPlatos += listaPedidos.get(i).obtieneElementos().size();
             if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
-                //PanelEspacioVertical pe = ;
                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this));
                this.pPanelesPedido.add(new PanelEspacioVertical());
             }
@@ -197,7 +196,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
     public void actualizar() {
         try {
-            // TODO Actualizar PreparandosePanel
             // Obtener los pedidos con elementos preparandose
             ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
             // Si es necesario, actualizar
