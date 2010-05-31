@@ -20,13 +20,22 @@ public class InterfazCocinero extends javax.swing.JFrame {
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
     public IntColaCocinero panelColaCocinero;
-
+    private menuEstadisticas panelEstadisticas;
+    private balanceEconomico panelBalance;
+    private platoMasVendido panelPlatoMasvendido;
+    private platoMenosVendido panelPlatoMenosvendido;
+    private platosNoServidos panelPlatosNoServidos;
     public HebraColaPedidos hebra = null;
 
     protected static final String PRINCIPAL = "Principal";
     protected static final String CARTA = "Carta";
     protected static final String INGREDIENTE = "Ingrediente";
     protected static final String COLA = "Cola";
+    protected static final String ESTADISTICAS = "Estadisticas";
+    protected static final String PLATOMASVENDIDO = "platoMasVendido";
+    protected static final String PLATOMENOSVENDIDO = "platoMenosVendido";
+    protected static final String PLATOSNOSERVIDOS = "platosNoServidos";
+    protected static final String BALANCE = "balance";
 
     public InterfazCocinero( ICocinero iCocinero ) {
         initComponents();
@@ -35,16 +44,26 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero(this);
+        this.panelEstadisticas = new menuEstadisticas();
+        this.panelBalance = new balanceEconomico();
+        this.panelPlatoMasvendido = new platoMasVendido();
+        this.panelPlatoMenosvendido = new platoMenosVendido();
+        this.panelPlatosNoServidos = new platosNoServidos();
         this.hebra = new HebraColaPedidos(this);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );
         this.getContentPane().add( this.panelIngrediente, InterfazCocinero.INGREDIENTE );
+        this.getContentPane().add( this.panelEstadisticas, InterfazCocinero.ESTADISTICAS );
+        this.getContentPane().add( this.panelBalance, InterfazCocinero.BALANCE );
+        this.getContentPane().add( this.panelPlatoMasvendido, InterfazCocinero.PLATOMASVENDIDO );
+        this.getContentPane().add( this.panelPlatoMenosvendido, InterfazCocinero.PLATOMENOSVENDIDO );
+        this.getContentPane().add( this.panelPlatosNoServidos, InterfazCocinero.PLATOSNOSERVIDOS );
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
         this.panelPrincipal.bGestionCarta.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARCARTA));
         this.panelPrincipal.bGestionIngredientes.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARINGREDIENTES));
-        this.panelPrincipal.bEstaditicas.addActionListener(new ManejaEventos(this, ManejaEventos.IMPRIMIRLISTAPRODUCTOS));
+        this.panelPrincipal.bEstaditicas.addActionListener(new ManejaEventos(this, ManejaEventos.MENUESTADISTICAS));
         this.panelPrincipal.bNotificcarPedido.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARRECEPCION));
         this.panelCarta.bAnadirElemento.addActionListener(new ManejaEventos(this, ManejaEventos.ANADIRELEMENTO));
         this.panelCarta.bEleminarElemento.addActionListener(new ManejaEventos(this, ManejaEventos.ELIMINARELEMENTO));
@@ -56,7 +75,15 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelCarta.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelIngrediente.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
         this.panelColaCocinero.bGestionProductos.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARPRODUCTOS));
-
+        this.panelEstadisticas.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVER));
+        this.panelEstadisticas.bBalance.addActionListener(new ManejaEventos(this, ManejaEventos.BALANCE));
+        this.panelEstadisticas.bPlatosMasVendidos.addActionListener(new ManejaEventos(this, ManejaEventos.PLATOMASVENDIDO));
+        this.panelEstadisticas.bPlatosMenosVendidos.addActionListener(new ManejaEventos(this, ManejaEventos.PLATOMENOSVENDIDO));
+        this.panelEstadisticas.bPlatosNoServidos.addActionListener(new ManejaEventos(this, ManejaEventos.PLATOSNOSERVIDOS));
+        this.panelBalance.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVERESTADISTICAS));
+        this.panelPlatoMasvendido.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVERESTADISTICAS));
+        this.panelPlatoMenosvendido.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVERESTADISTICAS));
+        this.panelPlatosNoServidos.bVolver.addActionListener(new ManejaEventos(this, ManejaEventos.VOLVERESTADISTICAS));
     }
 
 
@@ -90,6 +117,12 @@ public class InterfazCocinero extends javax.swing.JFrame {
 
         //Eventos para la segunda iteracion
         protected static final int GESTIONARPRODUCTOS = 13;
+        protected static final int MENUESTADISTICAS = 14;
+        protected static final int VOLVERESTADISTICAS = 15;
+        protected static final int PLATOMASVENDIDO = 16;
+        protected static final int PLATOMENOSVENDIDO = 17;
+        protected static final int PLATOSNOSERVIDOS = 18;
+        protected static final int BALANCE = 19;
 
         public ManejaEventos(JFrame Padre, int TipoEvento){
             this.padre = Padre;
@@ -142,6 +175,25 @@ public class InterfazCocinero extends javax.swing.JFrame {
                     break;
                 case ManejaEventos.GESTIONARPRODUCTOS:
                     layout.show(padre.getContentPane(), InterfazCocinero.PRINCIPAL);
+                    break;
+                case ManejaEventos.MENUESTADISTICAS:
+                    layout.show(padre.getContentPane(), InterfazCocinero.ESTADISTICAS);
+                    break;
+
+                case ManejaEventos.VOLVERESTADISTICAS:
+                    layout.show(padre.getContentPane(), InterfazCocinero.ESTADISTICAS);
+                    break;
+                case ManejaEventos.PLATOMASVENDIDO:
+                    layout.show(padre.getContentPane(), InterfazCocinero.PLATOMASVENDIDO);
+                    break;
+                case ManejaEventos.PLATOMENOSVENDIDO:
+                    layout.show(padre.getContentPane(), InterfazCocinero.PLATOMENOSVENDIDO);
+                    break;
+                case ManejaEventos.PLATOSNOSERVIDOS:
+                    layout.show(padre.getContentPane(), InterfazCocinero.PLATOSNOSERVIDOS);
+                    break;
+                case ManejaEventos.BALANCE:
+                    layout.show(padre.getContentPane(), InterfazCocinero.BALANCE);
                     break;
             }
             if (dialogo != null) {
