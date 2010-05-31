@@ -14,7 +14,7 @@ import Vista.InterfazMetre.InterfazMetre;
  * @author Samuel Guirado Navarro
  */
 public class HebraColaPedidos implements Runnable {
-    Thread t;
+    /*Thread t;
     InterfazMetre mpadre;
     InterfazCocinero cpadre;
     boolean end;
@@ -25,21 +25,21 @@ public class HebraColaPedidos implements Runnable {
     public static final int COCINA = 0;
     public static final int BAR = 1;
 
-    public HebraColaPedidos(InterfazMetre iMetre) {
+    */public HebraColaPedidos(InterfazMetre iMetre) {/*
         t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Bar");
         mpadre = iMetre;
         end = false;
         filtro = BAR;
         t.start();
-    }
+    */}
 
-    public HebraColaPedidos(InterfazCocinero iCocinero) {
+    public HebraColaPedidos(InterfazCocinero iCocinero) {/*
         t = new Thread(this, "Hebra Actualizadora de la Cola de Pedidos de Cocina");
         cpadre = iCocinero;
         end = false;
         filtro = COCINA;
-        t.start();
-    }
+        t.start();*/
+    }/*
 
     public void run() {
         while (!end) {
@@ -107,5 +107,9 @@ public class HebraColaPedidos implements Runnable {
     void actualizaPlatosPendientes() {
         int numPlatos = cpadre.icocinero.getNumPlatosEnCola();
         cpadre.panelColaCocinero.pmpizq.setPendientes(numPlatos);
+    }*/
+
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

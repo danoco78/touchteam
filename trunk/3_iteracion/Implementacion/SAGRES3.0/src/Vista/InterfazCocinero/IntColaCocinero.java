@@ -1,6 +1,7 @@
 
 package Vista.InterfazCocinero;
 
+import ControladorPrincipal.ICocinero;
 import java.awt.*;
 import java.util.ArrayList;
 import utilidades.*;
@@ -13,14 +14,16 @@ import GestionPedidos.*;
 public class IntColaCocinero extends javax.swing.JPanel {
 
     PanelImagen panelImagen;
-    public PanelMesaPedido pmpizq;
-    public PreparandosePanel pmpder;
-    public InterfazCocinero icocinero;
+    private PanelMesaPedido pmpizq;
+    private PreparandosePanel pmpder;
+    private ICocinero icocinero;
+    public InterfazCocinero ventana;
     ArrayList<Pedido> listaPedidos;
     
     /** Creates new form IntGestionCarta */
-    public IntColaCocinero(InterfazCocinero i) {
+    public IntColaCocinero(ICocinero i, InterfazCocinero ventana) {
         this.icocinero = i;
+        this.ventana = ventana;
         initComponents();
         this.setDoubleBuffered(true);
         this.panelHora.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
@@ -30,13 +33,14 @@ public class IntColaCocinero extends javax.swing.JPanel {
         pmpizq.setPreferredSize(pmpizq.getComponent(0).getPreferredSize());
         panelIzquierda.add(pmpizq, java.awt.BorderLayout.CENTER);
         
-        pmpder = new PreparandosePanel(this);
+        pmpder = new PreparandosePanel(i, ventana);
         pmpder.setPreferredSize(pmpder.getComponent(0).getPreferredSize());
         panelDerecha.add(pmpder, java.awt.BorderLayout.CENTER);
 
-        this.listaPedidos = new ArrayList();
+
+        /*this.listaPedidos = new ArrayList();
         try {
-            listaPedidos = this.icocinero.icocinero.getPedidosCocinaPreparandose();
+            listaPedidos = this.icocinero.getPedidosCocinaPreparandose();
         } catch (Exception ex) {
             
         }
@@ -44,7 +48,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
             this.pmpder.autoCompletar(listaPedidos);
             this.pmpder.repaint();
             this.pmpder.revalidate();
-        }
+        }*/
 
     }
 
@@ -144,9 +148,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private javax.swing.JPanel principalSur;
     // End of variables declaration//GEN-END:variables
 
-   
-
-    public void actualizarVista(Pedido p, ElementoColaCocina ele){
+    /*public void actualizarVista(Pedido p, ElementoColaCocina ele){
 
         int codPed = p.getCodPedido(),pos = -1;
         boolean encontrado = false;
@@ -167,5 +169,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
         this.pmpder.repaint();
         this.pmpder.revalidate();
 
-    }
+    }*/
+
+    
 }

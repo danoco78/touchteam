@@ -15,7 +15,6 @@ import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
-import Vista.InterfazCocinero.IntColaCocinero;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazCocinero.PreparandosePanel;
 import java.awt.event.ActionEvent;
@@ -31,36 +30,37 @@ import java.util.logging.Logger;
 public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     Pedido ped;
-    public PreparandosePanel prepPanel = null;
+    public PreparandosePanel prepPanel;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, IntColaCocinero papa) {
-
+    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre) {
         this.prepPanel = padre;
-        initComponents();
         this.ped = ped;
+        initComponents();
+        
         this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
         this.autoCompletar();
     }
 
-    public void autoCompletar(){
-        // TODO Autocompletar con el pedido que guarda la clase
+    public void autoCompletar() {
         this.pPedidos.removeAll();
-        
-        //ElementoPedido ele = new ElementoPedido(1, 1, "La carne poco hecha por favor.");
-        //ele.asocia(new Elemento(2, "Hamburguesa con queso", "Deliciosa carne de vacuno a la parrilla con queso fresco",
-        //        true, null, 5, 5, 10));
-
         ArrayList<ElementoPedido> lista = ped.obtieneElementos();
-        for(int i=0; i<lista.size(); ++i){
-                if(lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE){
-                    BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i),this);
-                    b.addActionListener(new ManejaEventos(this.prepPanel.colaCocineroPadre.icocinero
-                            ,ped,b,this, prepPanel));
-                    pPedidos.add(b);
-                    this.pPedidos.add(new PanelEspacioVertical());
-                }
+        for (int i = 0; i < lista.size(); ++i) {
+            if (lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE) {
+                BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i), this);
+                b.addActionListener(new ManejaEventos(this, b));
+                pPedidos.add(b);
+                this.pPedidos.add(new PanelEspacioVertical());
+            }
         }
+    }
+
+    /**
+     * Obtiene el pedido que trata el panel
+     * @return El pedido que se muestra en el panel
+     */
+    public Pedido getPedido(){
+        return ped;
     }
 
     /** This method is called from within the constructor to
@@ -144,20 +144,12 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private class ManejaEventos implements ActionListener {
+        private final PanelPedidoPorMesa padre;
+        private final BotonElementoPedidoComentario boton;
 
-        BotonElementoPedidoComentario boton;
-        InterfazCocinero c;
-        Pedido p; // Pedido que guarda
-        PanelPedidoPorMesa este;
-        PreparandosePanel padre;
-
-        public ManejaEventos(InterfazCocinero ic, Pedido ped, BotonElementoPedidoComentario b, PanelPedidoPorMesa este,
-                PreparandosePanel padre) {
-            c = ic;
-            p = ped;
-            boton = b;
-            this.este = este;
+        public ManejaEventos(PanelPedidoPorMesa padre, BotonElementoPedidoComentario boton) {
             this.padre = padre;
+            this.boton = boton;
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -165,27 +157,19 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
             int codElem = boton.getAsociado().getCodElementoPedido(); //Obtenemos el codigo del Elemento
             //int num = getNumElemento(p, codElem);
 
-            if (hayMasPreparandose(p, codElem)) { //Hay mas preparandose
-                try {
-                    c.icocinero.seleccionaPlato(p, (ElementoColaCocina) boton.getAsociado());
-                    padre.autoCompletar(c.icocinero.getPedidosCocinaPreparandose());
-                } catch (Exception ex) {
-                    Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                /*pPedidos.remove(boton);  //Borramos el boton de la interfaz
-                c.panelColaCocinero.pmpder.decPreparandose();
-                pPedidos.repaint();
-                pPedidos.revalidate();*/
+            if (hayMasPreparandose(padre.getPedido(), codElem)) { //Hay mas preparandose
+
             } else { //Es el ultimo
-                if (cerrarPedido(p, c)) {
+                if (cerrarPedido(padre.getPedido(), padre.prepPanel.ventana)) {
                     /*pPedidos.remove(boton);
                     c.panelColaCocinero.pmpder.decPreparandose();
                     padre.remove(este);
                     padre.repaint();
                     padre.revalidate();*/
                     try {
-                        c.icocinero.seleccionaPlato(p, (ElementoColaCocina) boton.getAsociado());
-                        padre.autoCompletar(c.icocinero.getPedidosCocinaPreparandose());
+                        padre.prepPanel.icocinero.seleccionaPlato(padre.getPedido(),
+                                (ElementoColaCocina) boton.getAsociado());
+                        padre.prepPanel.actualizar();
                     } catch (Exception ex) {
                         Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                     }

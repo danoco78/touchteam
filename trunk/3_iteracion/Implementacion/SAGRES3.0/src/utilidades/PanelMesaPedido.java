@@ -56,9 +56,23 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         cpadre = i;
     }
 
-    public void actualizar(Pedido ped){
-        pedActual = ped;
+    /**
+     * Limpia el panel y pone el pedido que corresponde, si es necesario
+     */
+    public void actualizar(){
+        if(filtro == COCINA){
 
+        }else if(filtro == BAR){
+            
+        }
+    }
+
+    /**
+     * Cambia el pedido que se muestra en el panel
+     * @param ped pedido que se muestra
+     */
+    private void cambiarPedido(Pedido ped){
+        pedActual = ped;
         panelInfoPedido.removeAll();
         //panelInfoPedido.repaint();
         if(ped == null){
@@ -380,10 +394,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
+            // TODO Se ha pulsado en un elemento, arreglar la funcion
             borrar = false;
             switch(filtro){
                 case PanelMesaPedido.BAR:
-                    // TODO Modificar seleccion de elemento
                     if (numPendientes == 1){
                         String texto = new String();
                         ArrayList<ElementoPedido> elems = pedActual.obtieneElementos();
@@ -405,7 +419,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                             ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                             mpadre.imetre.imetre.seleccionaBebida(pedActual, eleB);
                             //num = mpadre.imetre.getNumBebidasEnCola();
-                            mpadre.imetre.hebra.actualizaBebidasPendientes();
+                            //mpadre.imetre.hebra.actualizaBebidasPendientes();
                             numPendientes--;
                         }
                     } catch (Exception ex) {
@@ -418,7 +432,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
                         cpadre.icocinero.icocinero.seleccionaPlato(pedActual, eleC);
                         //num = cpadre.icocinero.getNumPlatosEnCola();
-                        cpadre.icocinero.hebra.actualizaPlatosPendientes();
+                        //cpadre.icocinero.hebra.actualizaPlatosPendientes();
                         borrar = true;
                         cpadre.icocinero.panelColaCocinero.actualizarVista(pedActual,eleC);
                         numPendientes--;
@@ -435,10 +449,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 //panelInfoPedido.revalidate();
                 //if (numPendientes == 0){
                 //    infoMesaPedido.setText("");
-                    if (filtro == PanelMesaPedido.BAR)
-                        mpadre.imetre.hebra.actualizaColaBar();
-                    else
-                        cpadre.icocinero.hebra.actualizaColaCocina();
+                    if (filtro == PanelMesaPedido.BAR){}
+                        //mpadre.imetre.hebra.actualizaColaBar();
+                    else{}
+                        //cpadre.icocinero.hebra.actualizaColaCocina();
                 //}
                 //setPendientes(num);
 
