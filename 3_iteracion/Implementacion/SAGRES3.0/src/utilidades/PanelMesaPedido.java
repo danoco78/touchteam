@@ -17,8 +17,8 @@ import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
-import Vista.InterfazCocinero.InterfazCocinero;
-import Vista.InterfazMetre.InterfazMetre;
+import Vista.InterfazCocinero.IntColaCocinero;
+import Vista.InterfazMetre.IntColaBar;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,82 +36,93 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     Pedido pedActual = null;
     int filtro;
     int numPendientes;
-    InterfazMetre mpadre;
-    InterfazCocinero cpadre;
+    IntColaBar mpadre;
+    IntColaCocinero cpadre;
     
     public static final int COCINA = 0;
     public static final int BAR = 1;
 
     
     /** Creates new form PanelMesaPedido */
-    public PanelMesaPedido(InterfazMetre i) {
+    public PanelMesaPedido(IntColaBar i) {
         initComponents();
         filtro = BAR;
         mpadre = i;
     }
 
-    public PanelMesaPedido(InterfazCocinero i) {
+    public PanelMesaPedido(IntColaCocinero i) {
         initComponents();
         filtro = COCINA;
         cpadre = i;
     }
 
-    public void addPedido(Pedido ped){
+    public void actualizar(Pedido ped){
         pedActual = ped;
 
         panelInfoPedido.removeAll();
-        panelInfoPedido.repaint();
-        
-        infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
+        //panelInfoPedido.repaint();
+        if(ped == null){
+            infoMesaPedido.setText("");
+        }else{
+            infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
 
-        ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
-        JButton boton;
-        PanelEspacioVertical pev;
-        Elemento ele;
+            ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
+            JButton boton;
+            Elemento ele;
 
-        numPendientes = 0;
-        for (int i = 0; i < lista.size(); ++i) {
-            if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
-                    || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
-                boton = new JButton();
-                pev = new PanelEspacioVertical();
-                ele = lista.get(i).getElemento();
+            numPendientes = 0;
+            for (int i = 0; i < lista.size(); ++i) {
+                if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
+                        || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
+                    boton = new JButton();
+                    ele = lista.get(i).getElemento();
 
-                boton.setBackground(new java.awt.Color(211, 223, 253));
-                boton.setFont(new java.awt.Font("Arial", 0, 18));
-                boton.setForeground(new java.awt.Color(80, 98, 143));
-                String Datos = lista.get(i).getComentario();
-                int cols;
-                Rectangle rect = panelInfoPedido.getBounds();
-                cols = (int)rect.getWidth()/(boton.getFont().getSize());
-                String dats = "";
-                int count=1;
-                //if(Datos.length() > cols){
-                for(int j=0; j<Datos.length(); ++j){
-                    dats = dats+String.valueOf(Datos.charAt(j));
-                    if(count > cols && (Datos.charAt(j)==' ' || Datos.charAt(j)=='\n')){
-                        dats = dats+"<br>";
-                        count = 0;
+                    boton.setBackground(new java.awt.Color(211, 223, 253));
+                    boton.setFont(new java.awt.Font("Arial", 0, 18));
+                    boton.setForeground(new java.awt.Color(80, 98, 143));
+                    String Datos = lista.get(i).getComentario();
+                    int cols;
+                    Rectangle rect = panelInfoPedido.getBounds();
+                    cols = (int)rect.getWidth()/(boton.getFont().getSize());
+                    String dats = "";
+                    int count=1;
+                    //if(Datos.length() > cols){
+                    for(int j=0; j<Datos.length(); ++j){
+                        dats = dats+String.valueOf(Datos.charAt(j));
+                        if(count > cols && (Datos.charAt(j)==' ' || Datos.charAt(j)=='\n')){
+                            dats = dats+"<br>";
+                            count = 0;
+                        }
+                        ++count;
                     }
-                    ++count;
-                }
-                boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br></body></html>");
-                boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                boton.setFocusPainted(false);
-                boton.setName(String.valueOf(i));
-                if (filtro == BAR)
-                    boton.addActionListener(new ManejaEventos(boton, pev));
-                else
-                    boton.addActionListener(new ManejaEventos(boton, pev));
+                    boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br></body></html>");
+                    boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                    boton.setFocusPainted(false);
+                    boton.setName(String.valueOf(i));
+                    if (filtro == BAR)
+                        boton.addActionListener(new ManejaEventos(boton));
+                    else
+                        boton.addActionListener(new ManejaEventos(boton));
 
-                panelInfoPedido.add(boton);
-                panelInfoPedido.add(pev);
-                numPendientes++;
+                    panelInfoPedido.add(boton);
+                    panelInfoPedido.add(new PanelEspacioVertical());
+                    numPendientes++;
+                }
             }
         }
 
         panelInfoPedido.repaint();
         panelInfoPedido.revalidate();
+    }
+
+    /**
+     * Elimina de la vista el pedido que se está mostrando
+     */
+    public void borrarPedido(){
+        panelInfoPedido.removeAll();
+        panelInfoPedido.repaint();
+        panelInfoPedido.revalidate();
+        pedActual = null;
     }
 
     /**
@@ -361,24 +372,18 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     private class ManejaEventos implements ActionListener{
 
         JButton boton;
-        PanelEspacioVertical panel;
         int num;
         boolean borrar;
 
-        public ManejaEventos(JButton b,PanelEspacioVertical pev){
+        public ManejaEventos(JButton b){
             boton = b;
-            panel = pev;
-        }
-
-        public ManejaEventos(Pedido ped, JButton b,PanelEspacioVertical pev){
-            boton = b;
-            panel = pev;
         }
 
         public void actionPerformed(ActionEvent e) {
             borrar = false;
             switch(filtro){
                 case PanelMesaPedido.BAR:
+                    // TODO Modificar seleccion de elemento
                     if (numPendientes == 1){
                         String texto = new String();
                         ArrayList<ElementoPedido> elems = pedActual.obtieneElementos();
@@ -386,7 +391,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                             if (elems.get(i) instanceof ElementoColaBar)
                                 texto += elems.get(i).getElemento().getNombre()+"\n";
                         }
-                        DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
+                        DialogoConfirmacion confirmar = new DialogoConfirmacion(mpadre.imetre,"Cerrar pedido de bebidas", "¿Está seguro de que desea cerrar las bebidas de este pedido?",texto);
                         confirmar.setLocationRelativeTo(mpadre);
                         confirmar.setVisible(true);
                         if(confirmar.isAceptado())
@@ -398,9 +403,9 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     try {
                         if (borrar){
                             ElementoColaBar eleB = (ElementoColaBar) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
-                            mpadre.imetre.seleccionaBebida(pedActual, eleB);
+                            mpadre.imetre.imetre.seleccionaBebida(pedActual, eleB);
                             //num = mpadre.imetre.getNumBebidasEnCola();
-                            mpadre.hebra.actualizaBebidasPendientes();
+                            mpadre.imetre.hebra.actualizaBebidasPendientes();
                             numPendientes--;
                         }
                     } catch (Exception ex) {
@@ -409,12 +414,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                     break;
                 case PanelMesaPedido.COCINA:
                     try {
+                        // TODO Modificar seleccion de elemento
                         ElementoColaCocina eleC = (ElementoColaCocina) pedActual.obtieneElementos().get(Integer.parseInt(boton.getName()));
-                        cpadre.icocinero.seleccionaPlato(pedActual, eleC);
+                        cpadre.icocinero.icocinero.seleccionaPlato(pedActual, eleC);
                         //num = cpadre.icocinero.getNumPlatosEnCola();
-                        cpadre.hebra.actualizaPlatosPendientes();
+                        cpadre.icocinero.hebra.actualizaPlatosPendientes();
                         borrar = true;
-                        cpadre.panelColaCocinero.actualizarVista(pedActual,eleC);
+                        cpadre.icocinero.panelColaCocinero.actualizarVista(pedActual,eleC);
                         numPendientes--;
 
                     } catch (Exception ex) {
@@ -424,18 +430,18 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             }
 
             if (borrar){
-                panelInfoPedido.remove(boton);
-                panelInfoPedido.remove(panel);
-                panelInfoPedido.repaint();
-                panelInfoPedido.revalidate();
-                if (numPendientes == 0){
-                    infoMesaPedido.setText("");
+                //panelInfoPedido.remove(boton);
+                //panelInfoPedido.repaint();
+                //panelInfoPedido.revalidate();
+                //if (numPendientes == 0){
+                //    infoMesaPedido.setText("");
                     if (filtro == PanelMesaPedido.BAR)
-                        mpadre.hebra.actualizaColaBar();
+                        mpadre.imetre.hebra.actualizaColaBar();
                     else
-                        cpadre.hebra.actualizaColaCocina();
-                }
+                        cpadre.icocinero.hebra.actualizaColaCocina();
+                //}
                 //setPendientes(num);
+
             }
         }
     }

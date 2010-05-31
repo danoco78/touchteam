@@ -90,4 +90,13 @@ public class ElementoPedido {
     public void asocia(Elemento ele){
         elemento = ele;
     }
+
+    /**
+     * Devuelve si un elemento pedido es igual a otro, si sus códigos son iguales
+     * @param p Pedido a comparar
+     * @return Verdadero si son iguales
+     */
+    public boolean equals(Pedido p){
+        return this.codElementoPedido == p.getCodPedido();
+    }
 }

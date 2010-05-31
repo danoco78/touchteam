@@ -10,7 +10,7 @@ import GestionPedidos.ElementoPedido;
 
 /**
  *
- * @author redder
+ * @author Sergio
  */
 public class BotonElementoPedidoComentario extends javax.swing.JButton {
     public PanelPedidoPorMesa pedidoPorMesa = null;
@@ -21,13 +21,12 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
         this.pedidoPorMesa = padre;
         Elemento el = ele.getElemento();
         setBackground(new java.awt.Color(211, 223, 253));
-        setFont(new java.awt.Font("Arial", 0, 10));
+        setFont(new java.awt.Font("Arial", 0, 16));
         setForeground(new java.awt.Color(80, 98, 143));
-        setText("<html>\n<body> \n"+ el.getNombre() +" \n</br>\n<br></br>\n<font color=\"#000000\">" +
-                ele.getComentario() +"</font>\n</body>\n</html>\n");
+        setText("<html><body>"+ el.getNombre() +"<br><font color=\"#000000\">" +
+                ele.getComentario() +"</font></body></html>");
         setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         this.setFocusPainted(false);
-
     }
     public ElementoPedido getAsociado(){
         return elem;

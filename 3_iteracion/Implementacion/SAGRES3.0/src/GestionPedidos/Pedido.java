@@ -6,6 +6,7 @@
 package GestionPedidos;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -78,7 +79,37 @@ public class Pedido {
         return this.elementos;
     }
 
+    /**
+     * Comprueba si un pedido es igual a otro, esto sucede cuando tanto el código
+     * como sus elementos (sus estados) son iguales.
+     * @param p Pedido a comparar
+     * @return Booleano que indica si son iguales
+     */
     public boolean equals(Pedido p){
-        return this.codPedido == p.getCodPedido();
+        boolean iguales = true;
+        iguales = this.codPedido == p.getCodPedido();
+        if(iguales){
+            ArrayList<ElementoPedido> elementosP = p.getElementos();
+            if(this.elementos.size() == elementosP.size()){
+                Iterator<ElementoPedido> itthis = elementos.iterator();
+                while(itthis.hasNext() && iguales){
+                    ElementoPedido next = itthis.next();
+                    int i=0;
+                    boolean encontrado = false;
+                    for(i=0; i<elementosP.size() && !encontrado; ++i){
+                        if(elementosP.get(i).equals(next)){
+                            encontrado = true;
+                        }
+                    }
+                    if(!encontrado) iguales = false;
+                    else if(elementosP.get(i).getEstado() != next.getEstado())
+                        iguales = false;
+                }
+            }else{
+                iguales = false;
+            }
+        }
+
+        return iguales;
     }
 }

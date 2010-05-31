@@ -69,8 +69,9 @@ public class HebraColaPedidos implements Runnable {
             } else {
                 actual = p;
                 if (actual != null) 
-                    mpadre.panelColaBar.pmp.addPedido(actual);
-                //else
+                    mpadre.panelColaBar.pmp.actualizar(actual);
+                else
+                    mpadre.panelColaBar.pmp.borrarPedido();
                     //Thread.sleep(5000); // 5 Segundos
             }
         } catch (Exception ex) {
@@ -85,8 +86,11 @@ public class HebraColaPedidos implements Runnable {
                 //Thread.sleep(5000); // 5 Segundos
             } else {
                 actual = p;
-                if(actual != null)
-                    cpadre.panelColaCocinero.pmpizq.addPedido(actual);
+                cpadre.panelColaCocinero.pmpizq.actualizar(actual);
+                //if(actual != null)
+                    //cpadre.panelColaCocinero.pmpizq.anadirPedido(actual);
+                //else
+                    //cpadre.panelColaCocinero.pmpizq.borrarPedido();
                 //else
                     //Thread.sleep(5000); // 5 Segundos
             }
