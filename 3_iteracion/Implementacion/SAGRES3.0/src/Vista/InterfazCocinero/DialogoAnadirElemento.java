@@ -755,19 +755,19 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             case 3:
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
-                String texto = "Nombre: " + this.tNombre.getText()
-                        + "\nDescripción: " + this.tDescripcion.getText()
-                        + "\nPrecio: " + ((Float) this.tPrecio.getValue())
-                        + "\nPorciones: " + ((Integer) this.tPorciones.getValue())
-                        + "\nTiempo de elaboración: " + ((Integer) this.tTiempo.getValue());
-                texto += "\n Está compuesto por los ingredientes: ";
+                String texto = "<font face=\"Arial\">Nombre:  <strong>" + this.tNombre.getText() + "</strong><br />"
+                        + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
+                        + "<font face=\"Arial\">Precio: <strong>" + ((Float) this.tPrecio.getValue()) + "</strong> €<br />"
+                        + "<font face=\"Arial\">Porciones: <strong>" + ((Integer) this.tPorciones.getValue()) + "</strong><br />"
+                        + "<font face=\"Arial\">Tiempo de elaboración: <strong>" + ((Integer) this.tTiempo.getValue()) + "</strong><br />";
+                texto += "<font face=\"Arial\">Está compuesto por los ingredientes: " + "<br /><br />";
                 for (int i = 0; i < seleccionados.size(); i++) {
                     Producto producto = (Producto) seleccionados.get(i);
-                    texto += "\n-Nombre: " + producto.getNombre() + ", Cantidad: " + (Float) this.tProductosAsociados.getModel().getValueAt(i, 2);
+                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + (Float) this.tProductosAsociados.getModel().getValueAt(i, 2) + "</strong>";
                     if (producto instanceof Ingrediente)
-                        texto += " gr";
+                        texto += " gr.<br />";
                     else
-                        texto += " l";
+                        texto += " l.<br />";
                 }
 
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
