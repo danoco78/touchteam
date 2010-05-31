@@ -194,6 +194,7 @@ public class DialogoConfirmacion extends java.awt.Dialog {
         lConfirma.setText("Mensaje");
         centro.add(lConfirma, java.awt.BorderLayout.NORTH);
 
+        tConfirma.setEditable(false);
         jScrollPane1.setViewportView(tConfirma);
 
         centro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
