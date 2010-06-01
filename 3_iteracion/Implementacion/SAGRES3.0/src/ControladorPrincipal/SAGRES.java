@@ -43,12 +43,13 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     IGestorEstadisticas iEstadisticas;
 
     public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido,
-            IGestorPedidos gpedidos){
+            IGestorPedidos gpedidos, IGestorEstadisticas iestadisticas){
         this.icarta = iCarta;
         this.iproducto = iProducto;
         this.iincidencia = iIncidencia;
         this.ipedidoproveedor = iPedido;
         this.ipedidos = gpedidos;
+        this.iEstadisticas = iestadisticas;
     }
 
 
