@@ -76,10 +76,10 @@ public class MainCocina {
             dCarga.Progreso(60);
             GestorIncidencia incidencia = new GestorIncidencia(baseDeDatos);
             dCarga.Progreso(70);
-            GestorProveedor pedido = new GestorProveedor(baseDeDatos, impresora);
+            GestorProveedor proveedor = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
             GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
-            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
+            SAGRES controlador = new SAGRES(carta, producto, incidencia, proveedor, gpedido);
             dCarga.Progreso(90);
             InterfazCocinero interfaz = new InterfazCocinero(controlador);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
