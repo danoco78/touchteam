@@ -42,7 +42,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Ángel Luis García, Carlos Salas, Daniel Guerrero y José David Dionisio
  */
-public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadisticasBD {
+public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
     Connection Conexion;
 
@@ -1667,8 +1667,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
             //recorrer todos los productos seleccionados
             while(listaProductos.next()){
-                
-
             }
 
             return elementosAfectados;
@@ -1677,14 +1675,54 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             return elementosAfectados;
         }
     }
+<<<<<<< .mine
+    public  DefaultCategoryDataset gananciasPorMes(Date i, Date f){
+        DefaultCategoryDataset ganancias;
+        ganancias = new DefaultCategoryDataset();
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+              return ganancias;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return ganancias;
+        }
+    
+=======
 
     public DefaultCategoryDataset elementosAfectadosFaltaProductos(java.util.Date i, java.util.Date f) {
         throw new UnsupportedOperationException("Not supported yet.");
+>>>>>>> .r1084
     }
+<<<<<<< .mine
+    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s){
+        DefaultCategoryDataset listaPlatos;
+        listaPlatos = new DefaultCategoryDataset();
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+              return listaPlatos;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return listaPlatos;
+        }
+=======
 
     public DefaultCategoryDataset gananciasPorMes(java.util.Date i, java.util.Date f) {
         throw new UnsupportedOperationException("Not supported yet.");
+>>>>>>> .r1084
     }
+<<<<<<< .mine
+    public  DefaultCategoryDataset obtieneListaPlatoMenosVendido(Date i, Date f, Seccion s){
+        DefaultCategoryDataset listaPlatos;
+        listaPlatos = new DefaultCategoryDataset();
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+              return listaPlatos;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return listaPlatos;
+        }
+    }
+=======
 
     public DefaultCategoryDataset obtieneListaPlatoMasPedido(java.util.Date i, java.util.Date f, Seccion s) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -1694,5 +1732,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+>>>>>>> .r1084
 }
 
