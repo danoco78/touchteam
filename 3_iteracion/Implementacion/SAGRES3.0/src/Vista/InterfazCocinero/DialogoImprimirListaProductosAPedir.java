@@ -45,6 +45,8 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
             obj[1] = aux.getValue();
             modelo.addRow(obj);
         }
+        if(modelo.getRowCount() == 0)
+            this.bAceptar.setEnabled(false);
     }
 
 
