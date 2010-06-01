@@ -1656,14 +1656,22 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             return elementosAfectados;
         }
     }
-    /*public  DefaultCategoryDataset gananciasPorMes(Date i, Date f){
-        return;
+
+    public DefaultCategoryDataset elementosAfectadosFaltaProductos(java.util.Date i, java.util.Date f) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s){
-        return;
+
+    public DefaultCategoryDataset gananciasPorMes(java.util.Date i, java.util.Date f) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    public  DefaultCategoryDataset obtieneListaPlatoMenosVendido(Date i, Date f, Seccion s){
-        return;
-    }*/
+
+    public DefaultCategoryDataset obtieneListaPlatoMasPedido(java.util.Date i, java.util.Date f, Seccion s) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public DefaultCategoryDataset obtieneListaPlatoMenosPedido(java.util.Date i, java.util.Date f, Seccion s) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
 

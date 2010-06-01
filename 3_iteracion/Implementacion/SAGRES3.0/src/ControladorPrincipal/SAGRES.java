@@ -43,13 +43,16 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     IGestorEstadisticas iEstadisticas;
 
     public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido,
-            IGestorPedidos gpedidos, IGestorEstadisticas iestadisticas){
+            IGestorPedidos gpedidos
+            // Si se cambia el constructor, hay que cambiar todos los sitios que lo llamen
+            // Pulsar sobre la funcion SAGRES, boton derecho, encontrar usos, ANTES de cambiarlo.
+            /*, IGestorEstadisticas iestadisticas*/){
         this.icarta = iCarta;
         this.iproducto = iProducto;
         this.iincidencia = iIncidencia;
         this.ipedidoproveedor = iPedido;
         this.ipedidos = gpedidos;
-        this.iEstadisticas = iestadisticas;
+        //this.iEstadisticas = iestadisticas;
     }
 
 
