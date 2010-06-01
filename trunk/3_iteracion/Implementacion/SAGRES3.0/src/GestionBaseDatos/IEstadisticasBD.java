@@ -4,16 +4,24 @@
  */
 
 package GestionBaseDatos;
+
 import GestionCarta.Seccion;
 import org.jfree.data.category.DefaultCategoryDataset;
 import java.util.Date;
+
 /**
  *
  * @author nabil
  */
 public interface IEstadisticasBD {
-     public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f);
-     public DefaultCategoryDataset gananciasPorMes(Date i, Date f);
-     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s);
-     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Date i, Date f, Seccion s);
+
+     public abstract DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f);
+
+     public abstract DefaultCategoryDataset obtieneListaPlatoMenosPedido(Date i, Date f, Seccion s);
+
+     public abstract DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s);
+
+     public abstract DefaultCategoryDataset gananciasPorMes(Date i, Date f);
+
 }
+

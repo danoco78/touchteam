@@ -7,6 +7,7 @@ import GestionPedidos.GestorPedidos;
 import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
+import estadisticas.GestorEstadisticas;
 import Vista.DialogoDeCarga;
 import Vista.InterfazCocinero.InterfazCocinero;
 import java.awt.Dimension;
@@ -79,7 +80,12 @@ public class MainCocina {
             GestorProveedor proveedor = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
             GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
+<<<<<<< .mine
+            GestorEstadisticas estadisticas = new GestorEstadisticas(baseDeDatos);
+            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido,estadisticas);
+=======
             SAGRES controlador = new SAGRES(carta, producto, incidencia, proveedor, gpedido);
+>>>>>>> .r1084
             dCarga.Progreso(90);
             InterfazCocinero interfaz = new InterfazCocinero(controlador);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
