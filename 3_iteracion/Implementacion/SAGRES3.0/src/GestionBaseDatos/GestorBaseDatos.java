@@ -733,7 +733,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                     + "(fecha_pedido,recibido)"
                     + " values ( ? , ?)");
             insercion.setBoolean(2, pedProdveedor.fueRecibido());
-            insercion.setDate(1, (Date) pedProdveedor.getFechaPedido());
+            java.sql.Date fechaSQL = new java.sql.Date(pedProdveedor.getFechaPedido().getTime());
+            insercion.setDate(1, fechaSQL);
 
             /*Preparamos la relacion con los productos pedidos*/
             Statement ultimo = (Statement) this.Conexion.createStatement();
