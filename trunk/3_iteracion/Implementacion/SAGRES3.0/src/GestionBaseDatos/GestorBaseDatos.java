@@ -42,7 +42,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Ángel Luis García, Carlos Salas, Daniel Guerrero y José David Dionisio
  */
-public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
+public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadisticasBD {
 
     Connection Conexion;
 
@@ -1638,10 +1638,25 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD {
 
     }
 
- /*   public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f){
-        return ;
+    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f){
+        DefaultCategoryDataset elementosAfectados = new DefaultCategoryDataset();
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+            ResultSet listaProductos = consulta.executeQuery("SELECT producto.producto_id, producto.cantidad, producto.foto, producto.maximo, producto.minimo, producto.nombre FROM producto, pedidoProveedor, tienePedido WHERE producto.producto_id = tienePedido.producto_producto_id AND tienePedido.pedidoProveedor_pedido_proveedor_id = pedidoProveedor.pedido_proveedor_id AND pedidoProveedor.fecha_pedido BETWEEN" +(new java.sql.Date(i.getTime()))+" AND "+ (new java.sql.Date(f.getTime())));
+
+            //recorrer todos los productos seleccionados
+            while(listaProductos.next()){
+                
+
+            }
+
+            return elementosAfectados;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return elementosAfectados;
+        }
     }
-    public  DefaultCategoryDataset gananciasPorMes(Date i, Date f){
+    /*public  DefaultCategoryDataset gananciasPorMes(Date i, Date f){
         return;
     }
     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s){
