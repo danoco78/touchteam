@@ -2,9 +2,7 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionStock.GestionIncidencias.IIncidencia;
 import GestionStock.GestionIncidencias.Incidencia;
-import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoConfirmacion;
@@ -14,10 +12,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import utilidades.ImageRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -45,7 +41,12 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         initComponents();
         this.cocina = iCocinero;
         listaIngredientes = this.cocina.obtieneIngredientes();
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel(){
+            //Hace que las celdas sean no editables
+            public boolean isCellEditable(int x, int y) {
+                return false;
+            }
+        };
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(2));
