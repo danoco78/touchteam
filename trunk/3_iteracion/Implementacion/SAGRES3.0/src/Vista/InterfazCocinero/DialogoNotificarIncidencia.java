@@ -416,9 +416,9 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
             case 2:
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea Notificar la incidencia?";
-                String texto = "Nombre: " + this.lNombre.getText()
-                        + "\nDescripción: " + this.tDescripcion.getText()
-                        + "\nCantidad Afectada: " + (Float) this.tCantidadAfectada.getValue()+" gr.";
+                String texto = "<font face=\"Arial\">Nombre: <strong>" + this.lNombre.getText() + "</strong><br />"
+                        + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
+                        + "<font face=\"Arial\">Cantidad Afectada: <strong>" + (Float) this.tCantidadAfectada.getValue() + "</strong> gr.";
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
                 confirmar.setVisible(true);
