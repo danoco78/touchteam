@@ -471,16 +471,22 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
         //5.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
         //6.- Devuelvo la lista de elementos.
 
-
         try {
-
             // 1.- Obtengo la lista con todos los productos, se obtiene aqui para despues ir introducciendo el producto
             // en el contenedor del elemento correspondiente, de esta forma los elementos comparten los mismos productos.
-            consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM producto");
+            // Primero obtengo las bebidas// luego los ingredientes
+            consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM producto, productoBebida WHERE producto.producto_id = productoBebida.producto_producto_id");
             rsProductos = consultaProductos.executeQuery();
             while (rsProductos.next()) {
-                Producto producto = new Producto(Imagen.blobToImageIcon(new SerialBlob(rsProductos.getBlob(6)).getBytes(1, (int) rsProductos.getBlob(6).length())), rsProductos.getString(2), rsProductos.getInt(5), rsProductos.getInt(4), rsProductos.getInt(3), rsProductos.getInt(1));
-                productos.add(producto);
+                Bebida bebida = new Bebida(rsProductos.getInt(1), rsProductos.getString(2), Imagen.blobToImageIcon(new SerialBlob(rsProductos.getBlob(6)).getBytes(1, (int) rsProductos.getBlob(6).length())), rsProductos.getFloat(5), rsProductos.getFloat(4), rsProductos.getFloat(3));
+                productos.add(bebida);
+            }
+            // luego los ingredientes
+            consultaProductos = this.Conexion.prepareStatement("SELECT producto.producto_id, producto.nombre, producto.cantidad, producto.maximo, producto.minimo, producto.foto FROM producto, productoIngrediente WHERE producto.producto_id = productoIngrediente.producto_producto_id");
+            rsProductos = consultaProductos.executeQuery();
+            while (rsProductos.next()) {
+                Ingrediente ingrediente = new Ingrediente(rsProductos.getInt(1), rsProductos.getString(2), rsProductos.getFloat(3), rsProductos.getFloat(4), rsProductos.getFloat(5), Imagen.blobToImageIcon(new SerialBlob(rsProductos.getBlob(6)).getBytes(1, (int) rsProductos.getBlob(6).length())) );
+                productos.add(ingrediente);
             }
 
             //2.- Obtengo todos los elementos no disponibles
@@ -495,12 +501,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 rsProductos = consultaProductos.executeQuery();
                 while (rsProductos.next()) {
                     //4.a.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
-                    Iterator iterador = productos.iterator();
+                    Iterator<Producto> iterador = productos.iterator();
                     while (iterador.hasNext()) {
-                        Bebida bebida = (Bebida) iterador.next();
+                        Producto bebida = (Producto) iterador.next();
                         if (bebida.getCodPro() == rsProductos.getInt(1)) {
                             //5.a.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
-                            listaProductosElemento.put(bebida, new Float(rsProductos.getFloat(2)));
+                            listaProductosElemento.put((Bebida) bebida, new Float(rsProductos.getFloat(2)));
                         }
                     }
                 }
@@ -524,12 +530,12 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 rsProductos = consultaProductos.executeQuery();
                 while (rsProductos.next()) {
                     //4.b.- Compruebo el codigo de los productos de los elementos con el código de los productos de la lista que acabo de crear
-                    Iterator iterador = productos.iterator();
+                    Iterator<Producto> iterador = productos.iterator();
                     while (iterador.hasNext()) {
-                        Ingrediente ingrediente = (Ingrediente) iterador.next();
+                        Producto ingrediente = (Producto) iterador.next();
                         if (ingrediente.getCodPro() == rsProductos.getInt(1)) {
                             //5.b.- Si el codigo coincide meto el producto y la cantidad en la lista de productos del elemento.
-                            listaProductosElemento.put(ingrediente, new Float(rsProductos.getFloat(2)));
+                            listaProductosElemento.put((Ingrediente)ingrediente, new Float(rsProductos.getFloat(2)));
                         }
                     }
                 }
