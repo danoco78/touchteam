@@ -22,10 +22,12 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
         setFont(new java.awt.Font("Arial", 0, 16));
         setForeground(new java.awt.Color(80, 98, 143));
         setText("<html><body>"+ el.getNombre() +"<br><font color=\"#000000\">" +
-                ele.getComentario() +"</font><br></body></html>");
+                ele.getComentario() +"</font><br>" + ele.getEstado()+
+                "</body></html>");
         setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         this.setFocusPainted(false);
     }
+    
     public ElementoPedido getAsociado(){
         return elem;
     }

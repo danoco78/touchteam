@@ -115,10 +115,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             for (int i = 0; i < lista.size(); ++i) {
                 if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
                         || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
-                    boton = new JButton();
-                    ele = lista.get(i).getElemento();
+                    boton = new BotonElementoPedidoComentario(lista.get(i));
+                    //ele = lista.get(i).getElemento();
 
-                    boton.setBackground(new java.awt.Color(211, 223, 253));
+                    /*boton.setBackground(new java.awt.Color(211, 223, 253));
                     boton.setFont(new java.awt.Font("Arial", 0, 18));
                     boton.setForeground(new java.awt.Color(80, 98, 143));
                     String Datos = lista.get(i).getComentario();
@@ -136,9 +136,10 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                         }
                         ++count;
                     }
-                    boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br></body></html>");
+                    boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br>" + lista.get(i).getEstado()+
+                            "</body></html>");
                     boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                    boton.setFocusPainted(false);
+                    boton.setFocusPainted(false);*/
                     boton.setName(String.valueOf(i));
                     //if (filtro == BAR)
                     boton.addActionListener(new ManejaEventos(boton));

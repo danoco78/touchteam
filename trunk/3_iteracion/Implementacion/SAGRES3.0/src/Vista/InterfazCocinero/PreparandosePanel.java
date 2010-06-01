@@ -35,6 +35,19 @@ public class PreparandosePanel extends javax.swing.JPanel {
         initComponents();
         this.icocinero = icocinero;
         this.ventana = ventana;
+        this.actualizar();
+    }
+
+    public void actualizar() {
+        try {
+            // Obtener los pedidos con elementos preparandose
+            ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
+            // Si es necesario, actualizar
+            // TODO Comparar si ha cambiado alguno de estado
+            this.autoCompletar(pedidosCocinaPreparandose);
+        } catch (Exception ex) {
+            Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -49,7 +62,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         //Actualizamos la etiqueta de platos preparándose
         for(int i=0; i<listaPedidos.size(); ++i){
-            //totalPlatos += listaPedidos.get(i).obtieneElementos().size();
             if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this));
                this.pPanelesPedido.add(new PanelEspacioVertical());
@@ -184,25 +196,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
         return Total;
     }
 
-    public void incPreparandose(){
+    /*public void incPreparandose(){
        npreparandose++;
        setMensaje(npreparandose);
     }
     public void decPreparandose(){
-
        npreparandose--;
        setMensaje(npreparandose);
-    }
+    }*/
 
-    public void actualizar() {
-        try {
-            // Obtener los pedidos con elementos preparandose
-            ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
-            // Si es necesario, actualizar
-            // TODO Comparar si ha cambiado alguno de estado
-            this.autoCompletar(pedidosCocinaPreparandose);
-        } catch (Exception ex) {
-            Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

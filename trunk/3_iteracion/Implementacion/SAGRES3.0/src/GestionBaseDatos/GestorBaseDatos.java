@@ -990,7 +990,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
         return numbebidas;
     }
 
-    // Actualiza el estado del pedido
+    /**
+     *  Actualiza el estado y los comentarios del pedido y sus elementos
+     *  @param p Pedido que es actualizado en la base de datos
+     */
     public void actualizaPedido(Pedido p) {
         try{
             java.sql.PreparedStatement actPedido = this.Conexion.prepareStatement("UPDATE pedido SET estado=? WHERE pedido_id='" + p.getCodPedido()+"'");
@@ -999,15 +1002,27 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             java.sql.PreparedStatement actElem = this.Conexion.prepareStatement("UPDATE elementoPedido SET estado=?,comentario=? WHERE elementoPedido_id=?");
             ArrayList<ElementoPedido> elementos = p.obtieneElementos();
             Iterator ite = elementos.iterator();
+            java.sql.PreparedStatement elemPedBD = this.Conexion.prepareStatement("SELECT estado, comentario FROM elementoPedido WHERE elementoPedido_id=?");
+            // TODO Reflejar estos cambios en el diagrama de colaboracion correspondiente
             while (ite.hasNext()){
-                ElementoPedido eped = ((ElementoPedido)ite.next());
+                // Unicamente debe actualizar los que tengan mayor estado
+                ElementoPedido eped = ((ElementoPedido)ite.next()); // Obtenemos el siguiete Elemento
+                int id = eped.getCodElementoPedido();
                 int est = eped.getEstado();
                 String comment = eped.getComentario();
-                int id = eped.getCodElementoPedido();
-                actElem.setInt(1, est);
-                actElem.setString(2, comment);
-                actElem.setInt(3, id);
-                actElem.executeUpdate();
+
+                // Obtenemos el mismo ElementoPedido de la base de datos y comprobamos quien tiene el mayor estado
+                elemPedBD.setInt(1, id);
+                ResultSet elemPedEstado = elemPedBD.executeQuery();
+                elemPedEstado.next();
+                if(elemPedEstado.getInt(1) < est || // Si el estado de la base de datos es menor OR
+                       (elemPedEstado.getInt(1) == est && // El estado es igual pero el comentario
+                        !elemPedEstado.getString(2).equals(comment) )){// es distinto, se actualiza
+                        actElem.setInt(1, est);
+                        actElem.setString(2, comment);
+                        actElem.setInt(3, id);
+                        actElem.executeUpdate();
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
