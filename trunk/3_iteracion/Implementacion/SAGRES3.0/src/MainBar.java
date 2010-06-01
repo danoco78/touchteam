@@ -7,7 +7,6 @@ import GestionPedidos.GestorPedidos;
 import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
-import estadisticas.GestorEstadisticas;
 import Vista.DialogoDeCarga;
 import Vista.InterfazMetre.InterfazMetre;
 import java.awt.Dimension;
@@ -80,8 +79,7 @@ public class MainBar {
             GestorProveedor pedido = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
             GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
-            GestorEstadisticas estadisticas = new GestorEstadisticas(baseDeDatos);
-            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido,estadisticas);
+            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
             InterfazMetre interfaz = new InterfazMetre(controlador);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
