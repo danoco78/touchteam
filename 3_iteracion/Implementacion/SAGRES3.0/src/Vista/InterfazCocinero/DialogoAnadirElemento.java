@@ -755,7 +755,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
             case 3:
                 String subtitulo = this.lSubtitulo.getText();
                 String pregunta = "¿Confirma que desea añadir el siguiente Elemento?";
-                String texto = "<font face=\"Arial\">Nombre:  <strong>" + this.tNombre.getText() + "</strong><br />"
+                String texto = "<font face=\"Arial\">Nombre: <strong>" + this.tNombre.getText() + "</strong><br />"
                         + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
                         + "<font face=\"Arial\">Precio: <strong>" + ((Float) this.tPrecio.getValue()) + "</strong> €<br />"
                         + "<font face=\"Arial\">Porciones: <strong>" + ((Integer) this.tPorciones.getValue()) + "</strong><br />"
