@@ -169,7 +169,8 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
             } else { //Es el ultimo
                 if (cerrarPedido(padre.getPedido(), padre.prepPanel.ventana)) {
                     try {
-                        padre.prepPanel.icocinero.seleccionaPlato(padre.getPedido(), (ElementoColaCocina) boton.getAsociado());
+                        padre.prepPanel.icocinero.seleccionaPlato(padre.getPedido(),
+                                (ElementoColaCocina) boton.getAsociado());
                         boton.getAsociado().setEstado(ElementoColaCocina.PREPARADO);
                     } catch (Exception ex) {
                         Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);

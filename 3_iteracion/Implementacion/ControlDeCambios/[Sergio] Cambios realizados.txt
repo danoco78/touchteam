@@ -22,7 +22,7 @@ Cola de cocina y bar "En cola"
 - Se ha aplicado un filtro de manejo de espacio para los comentarios.
 - Se ha rediseñado desde cero, ambas interfaces de cola siguen una jerarquía de objetos y cuentan con una única función de actualización.
 - Se ha solucionado el problema de la persistencia de pedidos ya realizados.
-#seleccionaPlato es posible que no cambie el estado del plato. Hay que comprobarlo.
+- Se ha solucionado el problema de que al actualizar todos los elementos de un pedido, puede ser que se deshaga el cambio de estado de un elemento que no le corresponde (Por ejemplo, actualizo los platos, las bebidas tambien se actualizan).
 
 HebraPendientes (Hebra que obtiene los elementos pendientes en bar y cocina)
 - Se ha eliminado esta clase, agregando su funcionalidad a HebraColaPedidos, simplificando el código y mejorando el rendimiento.
@@ -46,6 +46,7 @@ Diálogo de confirmación
 Gestor de base de datos
 - Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
 - Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
+- Se ha modificado el método "actualizaPedido", ahora SOLO actualiza los elementos que han cambiado, o que tienen un estado mayor al que tenian en la base de datos. Esto soluciona un grave problema de concurrencia en el sistema.
 
 Gestor Principal (SAGRES)
 - Se ha eliminado el contenido de la función getSiguientePedidoCocinaEnCola, ahora llama a getSiguientePedidoCocina hacia la base de datos, tal como se especifica en el diseño.

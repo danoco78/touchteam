@@ -128,7 +128,13 @@ public class GestorPedidos implements IGestorPedidos {
         HashMap<Producto,Float> prods;
 
         ArrayList<ElementoPedido> elementos = p.obtieneElementos();
-        existe = elementos.contains(ele); // Comprobar si funciona el equals
+        Iterator<ElementoPedido> it = elementos.iterator();
+        //existe = elementos.contains(ele); // Comprobar si funciona el equals
+        while(it.hasNext() && !existe){
+            if(it.next().getCodElementoPedido() == ele.getCodElementoPedido()){
+                existe = true;
+            }
+        }
 
         if(existe){
             estado = ele.getEstado();
