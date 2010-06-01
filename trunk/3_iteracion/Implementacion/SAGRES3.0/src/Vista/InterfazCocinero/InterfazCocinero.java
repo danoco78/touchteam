@@ -60,6 +60,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelPrincipal.bSalir.addActionListener(new ManejaEventos(this, ManejaEventos.SALIR));
         this.panelPrincipal.bGestionCarta.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARCARTA));
         this.panelPrincipal.bGestionIngredientes.addActionListener(new ManejaEventos(this, ManejaEventos.GESTIONARINGREDIENTES));
+        this.panelPrincipal.bImprimirProductosaPedir.addActionListener(new ManejaEventos(this, ManejaEventos.IMPRIMIRLISTAPRODUCTOS));
         this.panelPrincipal.bEstaditicas.addActionListener(new ManejaEventos(this, ManejaEventos.MENUESTADISTICAS));
         this.panelPrincipal.bNotificcarPedido.addActionListener(new ManejaEventos(this, ManejaEventos.NOTIFICARRECEPCION));
         this.panelCarta.bAnadirElemento.addActionListener(new ManejaEventos(this, ManejaEventos.ANADIRELEMENTO));
