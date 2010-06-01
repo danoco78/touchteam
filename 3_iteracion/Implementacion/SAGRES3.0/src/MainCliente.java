@@ -7,7 +7,6 @@ import GestionPedidos.GestorPedidos;
 import GestionStock.GestionIncidencias.GestorIncidencia;
 import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
-import estadisticas.GestorEstadisticas;
 import Vista.DialogoDeCarga;
 import Vista.InterfazCliente.InterfazCliente;
 import Vista.InterfazMetre.InterfazMetre;
@@ -81,8 +80,7 @@ public class MainCliente {
             GestorProveedor pedido = new GestorProveedor(baseDeDatos, impresora);
             dCarga.Progreso(80);
             GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
-            GestorEstadisticas estadisticas = new GestorEstadisticas(baseDeDatos);
-            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido,estadisticas);
+            SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
             InterfazCliente interfaz = new InterfazCliente(controlador);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
