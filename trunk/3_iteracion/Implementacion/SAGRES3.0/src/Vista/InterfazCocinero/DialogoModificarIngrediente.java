@@ -508,8 +508,7 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
                 confirmar.setVisible(true);
                 if (confirmar.isAceptado()) {
             try {
-                float cantidad = aModificar.getCantidad() - (Float) this.tDisponible.getValue();
-                aModificar.actualizarCantidad(cantidad);
+                aModificar.actualizarCantidad((Float)this.tDisponible.getValue());
                 aModificar.setNombre(this.tNombre.getText());
                 aModificar.setMaximo((Float) this.tMaximo.getValue());
                 aModificar.setMinimo((Float) this.tMinimo.getValue());

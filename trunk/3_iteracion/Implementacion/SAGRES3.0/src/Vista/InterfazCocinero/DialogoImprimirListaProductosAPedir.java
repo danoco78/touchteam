@@ -239,6 +239,8 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         try {
             this.icocinero.imprimeListaProductosaPedir();
+            setVisible(false);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
