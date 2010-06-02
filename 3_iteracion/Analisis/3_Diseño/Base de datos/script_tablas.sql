@@ -458,6 +458,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`factura` (
   `factura_id` INT NOT NULL ,
   `estado` INT NULL ,
   `fecha` DATETIME NULL ,
+  `totalFactura` FLOAT NULL ,
   PRIMARY KEY (`factura_id`) )
 ENGINE = InnoDB;
 
