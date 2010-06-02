@@ -1,7 +1,8 @@
 package GestionCarta;
 
+import java.sql.Timestamp;
 
-import java.util.Date;
+
 
 /**
  * Almacena, gestiona y controla la información referente a la carta del
@@ -9,9 +10,9 @@ import java.util.Date;
  * @author Carlos Salas Morales
  */
 public class Carta {
-    private Date fechaUltimaModificacion;
+    private Timestamp fechaUltimaModificacion;
 
-    public Carta (java.sql.Date fechaUltimaModificacion) {
+    public Carta (Timestamp fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
@@ -19,7 +20,7 @@ public class Carta {
      * Método que devuelve la última modificación de la carta.
      * @return Última modificación de la carta
      */
-    public Date ultimaModifacion() {
+    public Timestamp ultimaModifacion() {
         return this.fechaUltimaModificacion;
     }
 }

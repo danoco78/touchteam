@@ -67,3 +67,7 @@ AñadirElemento
 
 Comanda
 - Se ha eliminado la clase comanda (No estaba reflejada en los diagramas).
+
+
+[[TODOS]]
+- Se ha cambiado el tipo Date por java.sql.Timestamp, tal como se especifica en el diseño de la 3º iteración.

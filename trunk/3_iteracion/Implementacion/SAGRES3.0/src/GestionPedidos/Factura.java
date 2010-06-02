@@ -4,7 +4,7 @@
  */
 
 package GestionPedidos;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +14,14 @@ import java.util.ArrayList;
 public class Factura {
     private Integer codFactura;
     private Integer estado;
-    private Date fecha; //TODO Cambiar fecha por java.sql.Timestamp
+    private Timestamp fecha; //TODO Cambiar fecha por java.sql.Timestamp
     private ArrayList<Pedido> pedidosAsociados;
 
     protected static final int ENCOLA = 0;
     protected static final int IMPRIMIDO = 1;
     protected static final int PAGADO = 2;
 
-    public Factura(Integer codFactura, Integer estado, Date fecha){
+    public Factura(Integer codFactura, Integer estado, Timestamp fecha){
         this.codFactura = codFactura;
         this.estado = estado;
         this.fecha = fecha;
@@ -46,11 +46,11 @@ public class Factura {
         this.estado = estado;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

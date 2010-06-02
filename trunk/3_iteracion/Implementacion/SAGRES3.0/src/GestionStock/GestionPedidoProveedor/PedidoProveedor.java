@@ -3,7 +3,7 @@ package GestionStock.GestionPedidoProveedor;
 
 
 import GestionStock.GestionProductos.Producto;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 /**
@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class PedidoProveedor {
 
     private int codigo;
-    private Date fechaPedido;
+    private Timestamp fechaPedido;
     private boolean recibido;
     HashMap<Producto, Float> listaProductos;
 
@@ -20,7 +20,7 @@ public class PedidoProveedor {
     public PedidoProveedor(HashMap<Producto, Float> informacionPedido) {
         listaProductos = informacionPedido;
         recibido = false;
-        fechaPedido = java.util.Calendar.getInstance().getTime();
+        fechaPedido = new Timestamp(java.util.Calendar.getInstance().getTimeInMillis());
     }
 
     /**
@@ -28,7 +28,7 @@ public class PedidoProveedor {
      * @param recibido booleano que indica si el pedido ha sido recibido.
      * @param fechaHoy
      */
-    public PedidoProveedor(int codigo, HashMap<Producto, Float> informacionPedido, Date fechaHoy, boolean recibido) {
+    public PedidoProveedor(int codigo, HashMap<Producto, Float> informacionPedido, Timestamp fechaHoy, boolean recibido) {
         this.codigo = codigo;
         listaProductos = informacionPedido;
         this.recibido = recibido;
@@ -45,9 +45,9 @@ public class PedidoProveedor {
 
     /**
      * Obtiene el valor de la fecha que tiene el pedidoProveedor
-     * @return Date objeto tipo fecha que contiene la fecha del pedidoProveedor.
+     * @return Timestamp objeto tipo fecha que contiene la fecha del pedidoProveedor.
      */
-    public Date getFechaPedido() {
+    public Timestamp getFechaPedido() {
         return fechaPedido;
     }
 

@@ -5,15 +5,15 @@
 
 package GestionBaseDatos;
 import GestionCarta.Seccion;
+import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;
-import java.util.Date;
 /**
  *
  * @author nabil
  */
 public interface IEstadisticasBD {
-     public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f);
-     public DefaultCategoryDataset gananciasPorMes(Date i, Date f);
-     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s);
-     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Date i, Date f, Seccion s);
+     public DefaultCategoryDataset elementosAfectadosFaltaProductos(Timestamp i, Timestamp f);
+     public DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f);
+     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s);
+     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Timestamp i, Timestamp f, Seccion s);
 }

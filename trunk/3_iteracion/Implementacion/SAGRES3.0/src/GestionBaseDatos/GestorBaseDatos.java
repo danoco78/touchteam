@@ -18,7 +18,7 @@ import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import com.mysql.jdbc.Statement;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map.Entry;
@@ -564,7 +564,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             java.sql.Statement consulta = (Statement) this.Conexion.createStatement();
             ResultSet datosCarta = consulta.executeQuery("SELECT ultima_modificacion FROM carta");
             datosCarta.next();
-            Carta carta = new Carta((java.sql.Date) datosCarta.getDate(1));
+            Carta carta = new Carta((Timestamp) datosCarta.getTimestamp(1));
             // Obtenemos todas las secciones de la carta, primero de comida y luego de bebida
             consulta = (Statement) this.Conexion.createStatement();
             // Para cada seccion obtenida, creamos su objeto e insertamos en el HashSet
@@ -702,8 +702,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             /*Preparamos la consulta de inserccion de la incidencia*/
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("insert into incidencia" + "(descripcion,fecha,cantidad_afectada)" + " values ( ? , ?, ?)");
             inserccion.setString(1, in.getTipoIncidencia());
-            java.sql.Date fechaSQL = new java.sql.Date(in.getFecha().getTime());
-            inserccion.setDate(2, fechaSQL);
+            Timestamp fechaSQL = new Timestamp(in.getFecha().getTime());
+            inserccion.setTimestamp(2, fechaSQL);
             inserccion.setFloat(3, in.getCantidadAfectada());
 
             /*Preparamos la consulta de la incidencia y el producto afectado*/
@@ -733,8 +733,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                     + "(fecha_pedido,recibido)"
                     + " values ( ? , ?)");
             insercion.setBoolean(2, pedProdveedor.fueRecibido());
-            java.sql.Date fechaSQL = new java.sql.Date(pedProdveedor.getFechaPedido().getTime());
-            insercion.setDate(1, fechaSQL);
+            Timestamp fechaSQL = new Timestamp(pedProdveedor.getFechaPedido().getTime());
+            insercion.setTimestamp(1, fechaSQL);
 
             /*Preparamos la relacion con los productos pedidos*/
             Statement ultimo = (Statement) this.Conexion.createStatement();
@@ -822,7 +822,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                         tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
                 productosCantidad.put(producto, tablaproductos.getFloat(7));
             }
-            return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getDate(2), infoPedido.getBoolean(3));
+            return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), infoPedido.getBoolean(3));
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -900,7 +900,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
            while (tablaPedidos.next()){
 
                 // Obtengo los elementoPedido asociados al pedido
-                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
+                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getTimestamp(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
                 ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
                 ResultSet codigoElemento;
@@ -1040,10 +1040,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             Pedido ped = null;
             hayFactura = factura.next();
             if (hayFactura) {
-                fac = new Factura(factura.getInt(1), factura.getInt(2), factura.getDate(3));
+                fac = new Factura(factura.getInt(1), factura.getInt(2), factura.getTimestamp(3));
                 do {
                     // Obtengo los elementoPedido asociados al pedido
-                    ped = new Pedido(factura.getInt(5), factura.getInt(4), factura.getInt(6), factura.getDate(7));
+                    ped = new Pedido(factura.getInt(5), factura.getInt(4), factura.getInt(6), factura.getTimestamp(7));
                     Statement consulta2 = (Statement) this.Conexion.createStatement();
                     ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = " + factura.getInt(4) + " AND elementoPedido_elementoPedido_id = elementoPedido_id");
                     ResultSet codigoElemento;
@@ -1105,7 +1105,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             Statement consultaPedidos = (Statement) this.Conexion.createStatement();
             ResultSet resultado = consultaPedidos.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where estado = 0 AND mesa_id = " + codMesa);
             while (resultado.next()) {
-                Pedido pedido = new Pedido(resultado.getInt(1), resultado.getInt(2), resultado.getInt(3), resultado.getDate(4));
+                Pedido pedido = new Pedido(resultado.getInt(1), resultado.getInt(2), resultado.getInt(3), resultado.getTimestamp(4));
                 Statement consultaElemPed = (Statement) this.Conexion.createStatement();
                 ResultSet resElemPed = consultaElemPed.executeQuery(" select elementoPedido_id,estado,comentario from elementoPedido where elementoPedido_id IN " +
                         "(select elementoPedido_elementoPedido_id from tieneElemento where pedido_pedido_id = " + pedido.getCodPedido() + ")");
@@ -1202,8 +1202,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             insercionPedido.setInt(1, pedido.getCodPedido());
             insercionPedido.setInt(2, pedido.getCodMesa());
             insercionPedido.setInt(3, pedido.getEstado());
-            java.util.Date fecha = new java.util.Date();
-            insercionPedido.setDate(4, new Date(fecha.getTime()));
+            Timestamp fecha = new Timestamp(System.currentTimeMillis());
+            insercionPedido.setTimestamp(4, new Timestamp(fecha.getTime()));
             insercionPedido.executeUpdate();
 
             ArrayList<ElementoPedido> elementos = pedido.getElementos();
@@ -1260,7 +1260,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             if (tablaPedidos.next()){
                 HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
-                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
+                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getTimestamp(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
                 ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
                 ResultSet codigoElemento;
@@ -1328,7 +1328,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             if (tablaPedidos.next()){
                 HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
-                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getDate(4));
+                ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getTimestamp(4));
                 Statement consulta2 = (Statement) this.Conexion.createStatement();
                 ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
                 ResultSet codigoElemento;
@@ -1534,7 +1534,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             insercionFactura = this.Conexion.prepareStatement("INSERT INTO factura(factura_id,estado,fecha) VALUES (?,?,?)");
             insercionFactura.setInt(1, f.getCodFactura());
             insercionFactura.setInt(2, f.getEstado());
-            insercionFactura.setDate(3, new Date(f.getFecha().getTime()));
+            insercionFactura.setTimestamp(3, new Timestamp(f.getFecha().getTime()));
             insercionFactura.executeUpdate();
 
             //Actualizamos la tabla facturapedido
@@ -1560,7 +1560,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             Statement consultaPedidos = (Statement) this.Conexion.createStatement();
             ResultSet resultado = consultaPedidos.executeQuery(" SELECT pedido_id,mesa_id,estado,fecha FROM pedido WHERE mesa_id = " + codMesa + " AND estado < 2");
             while (resultado.next()) {
-                Pedido pedido = new Pedido(resultado.getInt(2), resultado.getInt(1), resultado.getInt(3), resultado.getDate(4));
+                Pedido pedido = new Pedido(resultado.getInt(2), resultado.getInt(1), resultado.getInt(3), resultado.getTimestamp(4));
                 Statement consultaElemPed = (Statement) this.Conexion.createStatement();
                 ResultSet resElemPed = consultaElemPed.executeQuery(" select elementoPedido_id,estado,comentario from elementoPedido where elementoPedido_id IN " +
                         "(select elementoPedido_elementoPedido_id from tieneElemento where pedido_pedido_id = " + pedido.getCodPedido() + ")");
@@ -1661,11 +1661,11 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     }
 
-    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f){
+    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Timestamp i, Timestamp f){
         DefaultCategoryDataset elementosAfectados = new DefaultCategoryDataset();
         try {
          java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet listaProductos = consulta.executeQuery("SELECT producto.producto_id, producto.cantidad, producto.foto, producto.maximo, producto.minimo, producto.nombre FROM producto, pedidoProveedor, tienePedido WHERE producto.producto_id = tienePedido.producto_producto_id AND tienePedido.pedidoProveedor_pedido_proveedor_id = pedidoProveedor.pedido_proveedor_id AND pedidoProveedor.fecha_pedido BETWEEN" +(new java.sql.Date(i.getTime()))+" AND "+ (new java.sql.Date(f.getTime())));
+            ResultSet listaProductos = consulta.executeQuery("SELECT producto.producto_id, producto.cantidad, producto.foto, producto.maximo, producto.minimo, producto.nombre FROM producto, pedidoProveedor, tienePedido WHERE producto.producto_id = tienePedido.producto_producto_id AND tienePedido.pedidoProveedor_pedido_proveedor_id = pedidoProveedor.pedido_proveedor_id AND pedidoProveedor.fecha_pedido BETWEEN" +(new Timestamp(i.getTime()))+" AND "+ (new Timestamp(f.getTime())));
 
             //recorrer todos los productos seleccionados
             while(listaProductos.next()){
@@ -1680,19 +1680,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
         }
     }
 
-    public DefaultCategoryDataset elementosAfectadosFaltaProductos(java.util.Date i, java.util.Date f) {
+    public DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public DefaultCategoryDataset gananciasPorMes(java.util.Date i, java.util.Date f) {
+    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public DefaultCategoryDataset obtieneListaPlatoMasPedido(java.util.Date i, java.util.Date f, Seccion s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public DefaultCategoryDataset obtieneListaPlatoMenosPedido(java.util.Date i, java.util.Date f, Seccion s) {
+    public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Timestamp i, Timestamp f, Seccion s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
