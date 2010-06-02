@@ -4,21 +4,19 @@ include_once 'IPedidos.php';
 include_once 'GestionBaseDatos.php';
 
 /**
- * Description of GestionPedidos
- *
+ * Se ocupa de la gestion de los pedidos
  * @author Adrián Víctor Pérez Lopera
  */
 class GestionPedidos implements IPedidos {
+
     function getPedidosModificablesMesa($codmesa) {
         $bd = new GestionBaseDatos();
-        $pedidosmodificables = $bd->getPedidosModificablesMesa($codmesa);
-        return $pedidosmodificables;
+        return $bd->getPedidosModificablesMesa($codmesa);
     }
 
     function getElementosPedido($codpedido) {
         $bd = new GestionBaseDatos();
-        $elementos = $bd->getElementosPedido($codpedido);
-        return $elementos;
+        return $bd->getElementosPedido($codpedido);
     }
 
     function nuevoPedido($codmesa, $elementospedido) {
@@ -27,8 +25,8 @@ class GestionPedidos implements IPedidos {
         $elementos = array();
         for($i=0; $i<count($elementospedido); $i++) {
             $codElem = $bd->getCodigoElementoPedido() + $i;
-            $elem = $elementospedido[$i][0]; // Elemento de la carta
-            $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem); // Elemento del pedido
+            $elem = $elementospedido[$i][0];
+            $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem);
             array_push($elementos, $elempedido);
         }
         $pedido = new Pedido($codmesa, $codPedido, 0, time(), $elementos);
@@ -41,12 +39,14 @@ class GestionPedidos implements IPedidos {
         $elementos = array();
         for($i=0; $i<count($elementospedido); $i++) {
             $codElem = $bd->getCodigoElementoPedido() + $i;
-            $elem = $elementospedido[$i][0]; // Elemento de la carta
-            $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem); // Elemento del pedido
+            $elem = $elementospedido[$i][0];
+            $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem);
             array_push($elementos, $elempedido);
         }
         $pedido = new Pedido($codmesa, $codpedido, 0, time(), $elementos);
         $bd->insertaPedido($pedido);
     }
+
 }
+
 ?>

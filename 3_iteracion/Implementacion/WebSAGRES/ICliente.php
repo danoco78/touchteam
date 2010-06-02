@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Description of ICliente
- *
+ * Define la funcionalidad del sistema accesible desde el cliente
  * @author Adrián Víctor Pérez Lopera
  */
 interface ICliente {

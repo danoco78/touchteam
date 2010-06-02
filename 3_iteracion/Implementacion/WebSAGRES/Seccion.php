@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of seccion
- *
+ * Clase que gestiona las secciones de la carta
  * @author Adrián Víctor Pérez Lopera
  */
 class Seccion {
+
     private $codSeccion, $nombre, $elementos = array();
 
     public function __construct($id, $nombre) {
@@ -28,5 +28,6 @@ class Seccion {
     public function asociaElemento($elem) {
         array_push($this->elementos, $elem);
     }
+
 }
 ?>

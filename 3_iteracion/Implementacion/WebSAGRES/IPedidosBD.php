@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Description of IPedidosBD
- *
+ * Define la interactividad permitida con los datos de pedidos
  * @author Adrián Víctor Pérez Lopera
  */
 interface IPedidosBD {

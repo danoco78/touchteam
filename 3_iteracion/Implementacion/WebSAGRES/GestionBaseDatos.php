@@ -8,11 +8,11 @@ include_once 'ElementoPedido.php';
 include_once 'Pedido.php';
 
 /**
- * Description of GestionBaseDatos
- *
+ * Se ocupa de la gestion de la carta
  * @author Adrián Víctor Pérez Lopera
  */
 class GestionBaseDatos implements ICartaBD, IPedidosBD {
+
     private $bd;
 
     public function  __construct() {
@@ -47,7 +47,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $result2 = $this->bd->query($sql2);
             $numfilas2 = $result2->num_rows;
 
-            if($numfilas2 > 0) {
+            if($numfilas2 > 0) { // Es una seccion de Platos
                 for($j=0; $j < $numfilas2 ; $j++) {
                     $row2 = $result2->fetch_assoc();
                     $elemento = new ElementoPlato(
@@ -64,7 +64,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
                     $seccion->asociaElemento($elemento);
                 }
             }
-            else {
+            else { // Es una seccion de Bebidas
                 $sql3 = "SELECT *
                          FROM incluyeBebida ip, elementoBebida ep, elemento e
                          WHERE ip.elementoBebida_elemento_elemento_id = ep.elemento_elemento_id AND
@@ -112,9 +112,8 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $pedido = new Pedido($row["mesa_id"],$row["pedido_id"],$row["estado"],$row["fecha"],$elementos);
             array_push($pedidos, $pedido);
         }
-        
-        return $pedidos;
 
+        return $pedidos;
     }
 
     public function getElementosPedido($codpedido) {
@@ -203,10 +202,11 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
         $elementos = $pedido->getElementos();
 
         /* Imprimir Datos */
-//        echo "- Pedido: ".$codPedido."<br>";
-//        echo "- Mesa: ".$mesa."<br>";
-//        echo "- Estado: ".$estado."<br>";
-//        echo "- Fecha: ".$fecha."<br><br>";
+        echo "- Pedido: ".$codPedido."<br>";
+        echo "- Mesa: ".$mesa."<br>";
+        echo "- Estado: ".$estado."<br>";
+        echo "- Fecha: ".$fecha."<br>";
+        echo "- Numero de elementos: ".count($elementos)."<br><br>";
 
         /* Insercion de los datos del pedido */
         $sql1 = "INSERT INTO pedido VALUES($codPedido,$mesa,$estado,$fecha)";
@@ -222,10 +222,10 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $codElemCarta = $elemCarta->getId();
 
             /* Imprimir Datos */
-//            echo "--- Elemento Pedido: ".$codElem."<br>";
-//            echo "--- Comentario: ".$comentario."<br>";
-//            echo "--- Estado: ".$estadoElem."<br>";
-//            echo "--- Elemento Carta: ".$codElemCarta."<br><br>";
+            echo "--- Elemento Pedido: ".$codElem."<br>";
+            echo "--- Comentario: ".$comentario."<br>";
+            echo "--- Estado: ".$estadoElem."<br>";
+            echo "--- Elemento Carta: ".$codElemCarta."<br><br>";
 
             /* Insercion de los datos del elemento del pedido */
             $sql2 = "INSERT INTO elementoPedido VALUES($codElem,$estadoElem,\"$comentario\")";
@@ -313,6 +313,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
         }
         return $codElem;
     }
+
 }
 
 ?>
