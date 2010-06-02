@@ -1,5 +1,25 @@
 <html>
-    <head><link href="style.css" type="text/css" rel="stylesheet"></head>
+    <head><link href="style.css" type="text/css" rel="stylesheet">
+	<script LANGUAGE="JavaScript">
+	function incrementar(id){
+		var elemento = document.getElementById(id);
+		var cantidad = elemento.getAttribute("value");
+		cantidad = parseInt(cantidad);
+		cantidad = cantidad + 1;
+		elemento.setAttribute("value",cantidad);
+	}
+	function decrementar(id){
+		var elemento = document.getElementById(id);
+		var cantidad = elemento.getAttribute("value");
+		cantidad = parseInt(cantidad);
+		if(cantidad > 0 )
+			cantidad = cantidad - 1;
+		else
+			cantidad = 0;
+		elemento.setAttribute("value",cantidad);
+	}
+	</script>
+	</head>
     <body>
         <div id="cabecera" ></div>
         <div id="central" >
@@ -42,9 +62,9 @@
                             echo "<h4 class=\"descripcion\">".$elementos[$j]->getDescripcion()."</h4>";
                             echo "<p class=\"precio\">Precio: ".$elementos[$j]->getPrecio()." euros<p>";
                             echo "</div><div>";
-                            echo "<img class=\"botones\" src=\"add.jpg\"/>";
-                            echo "<input class=\"cantidad\" id=\"codelem\" type=\"text\" name=\"".$elementos[$j]->getId()."\" value=\"0\"/>";
-                            echo "<img class=\"botones\" src=\"delete.jpg\"/>";
+                            echo '<img class="botones" id=add'.$elementos[$j]->getId().' src="add.jpg"  onClick="incrementar('.$elementos[$j]->getId().')"  />';
+                            echo '<input class="cantidad" id="'.$elementos[$j]->getId().'" type="text" name="'.$elementos[$j]->getId().'" value="0"/>';
+                            echo '<img class="botones" id=del'.$elementos[$j]->getId().'  src="delete.jpg"  onClick="decrementar('.$elementos[$j]->getId().')"     />';
                             echo "</div></div>";
                         }
                     }
