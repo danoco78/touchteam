@@ -48,13 +48,13 @@ public class PanelElementoPedido extends javax.swing.JPanel {
         setBackground(new java.awt.Color(210, 210, 255));
         setLayout(new java.awt.BorderLayout());
 
-        LabelNombreElemento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        LabelNombreElemento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         LabelNombreElemento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelNombreElemento.setText("jLabel1");
         LabelNombreElemento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(LabelNombreElemento, java.awt.BorderLayout.CENTER);
 
-        BotonQuitarElemento.setFont(new java.awt.Font("Arial", 1, 40)); // NOI18N
+        BotonQuitarElemento.setFont(new java.awt.Font("Arial", 1, 40));
         BotonQuitarElemento.setText("X");
         BotonQuitarElemento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

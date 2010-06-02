@@ -2,6 +2,7 @@ Interfaz de cliente
 - Se ha asemejado más a los bocetos.
 - Se ha simplificado los paneles de pedidos realizados.
 - Se ha añadido un degradado de colores a modo de libro
+- Se han ajustado los colores de la interfaz a unos que clarifican más la distribución de paneles.
 - Se ha añadido un manejador de eventos de introducción de texto al campo de comentarios. Cuando se pulsa ENTER automáticamente se añade el pedido. Se controla que el tamaño máximo del mensaje sea 45 carácteres de forma amigable al cliente.
 - Se ha hecho que al seleccionar un elemento de la carta, automáticamente se marque el campo de escritura de comentarios.
 - Se han quitado los mensajes de salida durante la ejecución.
@@ -30,23 +31,31 @@ HebraPendientes (Hebra que obtiene los elementos pendientes en bar y cocina)
 HebraColaPedidos
 - Se ha eliminado esta clase, por falta de modularidad, demasiada dependencia entre clases e inconsistencia en las actualizaciones que realiza, ha sido sustituida por las siguientes dos hebras especializadas "HebraCocina", "HebraBar".
 
+HebraFacturacion
+- Se ha eliminado esta clase, su funcionalidad está contemplada en la clase HebraBar.
+
 Interfaz de bar
 (Cola)
-# Hacer que detecte que se ha eliminado un pedido.
+- Se ha hecho que detecte que se ha eliminado un pedido.
+- Se ha pulido el aspecto de la interfaz, se han utilizado gestores de distribución más ligeros.
+- Se han ajustado los colores de la interfaz a unos que clarifican más la distribución de paneles.
+#Si se cobra una factura y los elementos no se han servido todos aun, se borran de las colas, esto es un error grave.
 
 Interfaz de cocina
 (Cola)
-# No permitir que suelte un diálogo de confirmación para cerrar un pedido si aún tiene elementos "En cola".
+- Ya no suelta un diálogo de confirmación para cerrar un pedido si aún tiene elementos "En cola".
+- Se han ajustado los colores de la interfaz a unos que clarifican más la distribución de paneles.
 
 
 Diálogo de confirmación
 - Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
-- Se ha añadido un filtro sobre el texto para que nunca salga de pantalla, añadiendo nuevas lineas cuando esto vaya a ocurrir.
+- Se ha formateado el texto de salida a un tamaño óptimo de pantalla y una fuente más legible.
 
 Gestor de base de datos
 - Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
 - Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
 - Se ha modificado el método "actualizaPedido", ahora SOLO actualiza los elementos que han cambiado, o que tienen un estado mayor al que tenian en la base de datos. Esto soluciona un grave problema de concurrencia en el sistema.
+- Se ha modificado el método "imprimirFactura" y el de pagar factura, ya no lanzan excepciones si no encuentran factura alguna.
 
 Gestor Principal (SAGRES)
 - Se ha eliminado el contenido de la función getSiguientePedidoCocinaEnCola, ahora llama a getSiguientePedidoCocina hacia la base de datos, tal como se especifica en el diseño.

@@ -34,7 +34,6 @@ public class GestorPedidos implements IGestorPedidos {
         this.iImpresion = iImpresion;
     }
 
-    //TODO implementar todos los diagramas de colaboracion
     public void confirmaPagoFactura(Integer codMesa){
         Factura f = this.iPedidosBD.getFactura(codMesa);
         ArrayList<Pedido> pedidos = f.getPedidos();
@@ -64,9 +63,11 @@ public class GestorPedidos implements IGestorPedidos {
 
     public void imprimeFactura(Integer codMesa){
         Factura f = this.getFactura(codMesa);
-        f.modificaEstado(Factura.IMPRIMIDO);
-        this.iPedidosBD.actualizaFactura(f);
-        this.iImpresion.imprimeFactura(f);
+        if(f != null){
+            f.modificaEstado(Factura.IMPRIMIDO);
+            this.iPedidosBD.actualizaFactura(f);
+            this.iImpresion.imprimeFactura(f);
+        }
     }
 
     public ArrayList<Pedido> iniciaModificaPedido(Integer codMesa){

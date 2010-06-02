@@ -47,15 +47,17 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
 
         ScrollPanelPedido = new javax.swing.JScrollPane();
         PanelPedido = new javax.swing.JPanel();
-        pBotonVerFactura = new javax.swing.JPanel();
-        pMargenSup = new javax.swing.JPanel();
+        pMargenBoton = new javax.swing.JPanel();
+        pMargenSuperiorBoton = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
 
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(200, 200));
         setLayout(new java.awt.BorderLayout());
 
+        ScrollPanelPedido.setBorder(null);
         ScrollPanelPedido.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        ScrollPanelPedido.setOpaque(false);
 
         PanelPedido.setBackground(new java.awt.Color(255, 255, 255));
         PanelPedido.setOpaque(false);
@@ -64,14 +66,13 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
 
         add(ScrollPanelPedido, java.awt.BorderLayout.CENTER);
 
-        pBotonVerFactura.setOpaque(false);
-        pBotonVerFactura.setLayout(new java.awt.BorderLayout());
+        pMargenBoton.setOpaque(false);
+        pMargenBoton.setLayout(new java.awt.BorderLayout());
 
-        pMargenSup.setOpaque(false);
-        pMargenSup.setLayout(new java.awt.BorderLayout());
-        pBotonVerFactura.add(pMargenSup, java.awt.BorderLayout.NORTH);
+        pMargenSuperiorBoton.setOpaque(false);
+        pMargenBoton.add(pMargenSuperiorBoton, java.awt.BorderLayout.NORTH);
 
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Ver Factura");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -81,9 +82,9 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 verFactura(evt);
             }
         });
-        pBotonVerFactura.add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
+        pMargenBoton.add(BotonVerFactura, java.awt.BorderLayout.CENTER);
 
-        add(pBotonVerFactura, java.awt.BorderLayout.SOUTH);
+        add(pMargenBoton, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void verFactura(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verFactura
@@ -95,8 +96,8 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     private javax.swing.JButton BotonVerFactura;
     private javax.swing.JPanel PanelPedido;
     private javax.swing.JScrollPane ScrollPanelPedido;
-    private javax.swing.JPanel pBotonVerFactura;
-    private javax.swing.JPanel pMargenSup;
+    private javax.swing.JPanel pMargenBoton;
+    private javax.swing.JPanel pMargenSuperiorBoton;
     // End of variables declaration//GEN-END:variables
 
     public void anadirPedido(ArrayList<Elemento> listaElementos, int codPedido, int estado) {

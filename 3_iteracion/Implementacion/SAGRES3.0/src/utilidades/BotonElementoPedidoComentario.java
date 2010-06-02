@@ -19,11 +19,10 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
         this.elem = ele;
         Elemento el = ele.getElemento();
         setBackground(new java.awt.Color(211, 223, 253));
-        setFont(new java.awt.Font("Arial", 0, 16));
+        setFont(new java.awt.Font("Arial", 0, 18));
         setForeground(new java.awt.Color(80, 98, 143));
         setText("<html><body>"+ el.getNombre() +"<br><font color=\"#000000\">" +
-                ele.getComentario() +"</font><br>" + ele.getEstado()+
-                "</body></html>");
+                ele.getComentario() +"</font><br></body></html>");
         setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         this.setFocusPainted(false);
     }

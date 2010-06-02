@@ -42,10 +42,10 @@ public class PanelRelojFecha extends javax.swing.JPanel {
         tFecha = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229), new java.awt.Color(150, 172, 229)));
-        setMaximumSize(new java.awt.Dimension(200, 80));
-        setMinimumSize(new java.awt.Dimension(200, 80));
-        setPreferredSize(new java.awt.Dimension(200, 80));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        setMaximumSize(new java.awt.Dimension(300, 80));
+        setMinimumSize(new java.awt.Dimension(300, 80));
+        setPreferredSize(new java.awt.Dimension(300, 80));
         setLayout(new java.awt.BorderLayout());
 
         pCentro.setOpaque(false);
@@ -63,7 +63,7 @@ public class PanelRelojFecha extends javax.swing.JPanel {
         pSur.setOpaque(false);
         pSur.setLayout(new java.awt.BorderLayout());
 
-        tFecha.setFont(new java.awt.Font("Arial", 1, 12));
+        tFecha.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         tFecha.setForeground(new java.awt.Color(80, 98, 143));
         tFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tFecha.setText("Martes 14, Agosto 2010");
