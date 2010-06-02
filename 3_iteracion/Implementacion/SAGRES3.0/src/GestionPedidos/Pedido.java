@@ -4,7 +4,7 @@
  */
 
 package GestionPedidos;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class Pedido {
     private Integer codMesa;
     private Integer codPedido;
-    private Date fecha;
+    private Timestamp fecha;
     private ArrayList<ElementoPedido> elementos;
     private Integer estado;
     /**
@@ -35,7 +35,7 @@ public class Pedido {
         elementos = new ArrayList<ElementoPedido>();
     }
     
-    public Pedido(Integer codMesa, Integer codPedido, Integer estado, Date fecha){
+    public Pedido(Integer codMesa, Integer codPedido, Integer estado, Timestamp fecha){
         this();
         this.codMesa = codMesa;
         this.codPedido = codPedido;
@@ -58,9 +58,9 @@ public class Pedido {
 
     /*
      * @brief Obtiene la fecha y la hora del pedido
-     * @return un objeto de tipo Date indicando ambos
+     * @return un objeto de tipo Timestamp indicando ambos
      */
-    public Date getFecha(){
+    public Timestamp getFecha(){
         return fecha;
     }
 

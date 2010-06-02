@@ -12,8 +12,8 @@ import GestionBaseDatos.IPedidosBD;
 import GestionCarta.ElementoPlato;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
+import java.sql.Timestamp;
 import java.util.Iterator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import utilidades.Pair;
@@ -83,7 +83,8 @@ public class GestorPedidos implements IGestorPedidos {
 
     public boolean nuevoPedido(Integer codMesa, ArrayList<Pair<Elemento,String> > elementosPedido){
         int codPedido = this.iPedidosBD.getCodigoPedido();
-        Pedido pedido = new Pedido(codMesa, codPedido, 0, new java.util.Date());
+        // Coge el momento de su creacion
+        Pedido pedido = new Pedido(codMesa, codPedido, 0, new Timestamp(System.currentTimeMillis()));
 
         Iterator it = elementosPedido.iterator();
         int codEP = this.iPedidosBD.getCodigoElementoPedido();
@@ -236,8 +237,8 @@ public class GestorPedidos implements IGestorPedidos {
         //Eliminamos la anterior factura asociada a la mesa
         this.iPedidosBD.eliminaFactura(codMesa);
 
-        //Creamos una nueva factura
-        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Date()); // TODO new Timestamp
+        //Creamos una nueva factura, con el momento de su creacion
+        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Timestamp(System.currentTimeMillis()));
 
         //Asociamos los pedidos correspondientes
         ArrayList<Pedido> listaPedidos = this.iPedidosBD.obtienePedidosMesa(codMesa);

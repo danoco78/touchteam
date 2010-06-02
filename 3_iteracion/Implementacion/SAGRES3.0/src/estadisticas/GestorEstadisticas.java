@@ -6,7 +6,7 @@
 package estadisticas;
 
 import GestionCarta.Seccion;
-import java.util.Date;
+import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -15,19 +15,19 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class GestorEstadisticas implements IGestorEstadisticas{
 
-    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Date i, Date f) {
+    public DefaultCategoryDataset elementosAfectadosFaltaProductos(Timestamp i, Timestamp f) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public DefaultCategoryDataset gananciasPorMes(Date i, Date f) {
+    public DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Date i, Date f, Seccion s) {
+    public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Date i, Date f, Seccion s) {
+    public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Timestamp i, Timestamp f, Seccion s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

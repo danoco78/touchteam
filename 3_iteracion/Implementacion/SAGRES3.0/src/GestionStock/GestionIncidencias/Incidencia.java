@@ -2,7 +2,7 @@ package GestionStock.GestionIncidencias;
 
 
 import GestionStock.GestionProductos.Producto;
-import java.util.Date;
+import java.sql.Timestamp;
 import utilidades.Pair;
 
 
@@ -15,7 +15,7 @@ public class Incidencia {
     private float cantidadAfectada;
     private int codigo;
     private String tipoIncidencia;
-    private Date fecha;
+    private Timestamp fecha;
     public Producto producto;
 
 
@@ -32,7 +32,7 @@ public class Incidencia {
         this.cantidadAfectada=cantidad;
         this.producto = producto;
         this.tipoIncidencia = tipoIncidencia;
-        this.fecha = java.util.Calendar.getInstance().getTime();
+        this.fecha = new Timestamp(java.util.Calendar.getInstance().getTimeInMillis());
     }
 
      /**
@@ -42,7 +42,7 @@ public class Incidencia {
      * @param descripcion Descripción del motivo por el cual fueron desechados.
      * @param fecha Fecha de incidencia.
      */
-    protected Incidencia(Integer codigo, Producto producto, Float cantidad, String tipoIncidencia, Date fecha) {
+    protected Incidencia(Integer codigo, Producto producto, Float cantidad, String tipoIncidencia, Timestamp fecha) {
         this.codigo=codigo;
         this.cantidadAfectada=cantidad;
         this.producto = producto;
@@ -62,11 +62,11 @@ public class Incidencia {
         this.cantidadAfectada = cantidadAfectada;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

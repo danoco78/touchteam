@@ -11,7 +11,6 @@ import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;*/
@@ -92,7 +91,7 @@ public class GestorIncidencia implements IIncidencia {
                 }
             }
             Incidencia incidencia = new Incidencia((Integer) tabla.getValueAt(i, 0), producto,
-                    (Float) tabla.getValueAt(i, 3), (String) tabla.getValueAt(i, 1), (Date) tabla.getValueAt(i, 2));
+                    (Float) tabla.getValueAt(i, 3), (String) tabla.getValueAt(i, 1), (Timestamp) tabla.getValueAt(i, 2));
             almacenIncidencias.add(incidencia);
         }
         return almacenIncidencias;

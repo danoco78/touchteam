@@ -42,7 +42,7 @@ public class GestorCarta implements ICarta {
         // Construimos el objeto Carta
 
         /*tabla = this.almacen.realizaConsulta("SELECT ultima_modificacion FROM carta");
-        this.carta = new Carta((java.sql.Date)tabla.getValueAt(0,0));
+        this.carta = new Carta((Timestamp)tabla.getValueAt(0,0));
         
         // Construimos la lista de Secciones de Bebida
         tabla = this.almacen.realizaConsulta("SELECT seccion.seccion_id, seccion.nombre FROM seccion, seccionbebida WHERE seccion.seccion_id = seccionbebida.seccion_seccion_id");
