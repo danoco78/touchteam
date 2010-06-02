@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of Elemento
- *
+ * Clase que gestiona los elementos de la carta
  * @author Adrián Víctor Pérez Lopera
  */
 class Elemento {
+
     private $codElemento,$nombre,$descripcion,$disponible,$foto,$divi,$divi_max,$precio;
 
     public function  __construct($codElemento,$nombre,$descripcion,$disponible,$foto,$divi,$divi_max,$precio) {
@@ -30,14 +30,28 @@ class Elemento {
     public function getDescripcion() {
         return $this->descripcion;
     }
+
+    public function getDisponible() {
+        return $this->disponible;
+    }
+
+    public function getFoto() {
+        return $this->foto;
+    }
+
+    public function getPrecio() {
+        return $this->precio;
+    }
+
+
 }
 
 /**
- * Description of ElementoPlato
- *
+ * Clase que gestiona los platos de la carta
  * @author Adrián Víctor Pérez Lopera
  */
 class ElementoPlato extends Elemento {
+
     private $tiempo_elaboracion;
 
     public function  __construct($codElemento,$nombre,$descripcion,$disponible,$foto,$divi,$divi_max,$precio,$tiempo) {
@@ -48,11 +62,11 @@ class ElementoPlato extends Elemento {
     public function getTiempo() {
         return $this->tiempo_elaboracion;
     }
+
 }
 
 /**
- * Description of ElementoBebida
- *
+ * Clase que gestiona las bebidas de la carta
  * @author Adrián Víctor Pérez Lopera
  */
 class ElementoBebida extends Elemento {

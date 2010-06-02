@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Description of ICartaBD
- *
+ * Define la interactividad permitida con los datos de carta
  * @author Adrián Víctor Pérez Lopera
  */
 interface ICartaBD {

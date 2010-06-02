@@ -5,39 +5,38 @@ include_once 'GestionCarta.php';
 include_once 'GestionPedidos.php';
 
 /**
- * Description of SAGRES
- *
+ * Actua como fachada del sistema
  * @author Adrián Víctor Pérez Lopera
  */
 class ControladorPrincipal implements ICliente {
-    
+
+    private $carta, $pedidos;
+
+    public function __construct() {
+        $this->carta = new GestionCarta();
+        $this->pedidos = new GestionPedidos();
+    }
+
     function getSecciones() {
-        $carta = new GestionCarta();
-        $secciones = $carta->getSecciones();
-        return $secciones;
+        return $this->carta->getSecciones();
     }
 
     function getPedidosModificablesMesa($codmesa) {
-        $pedidos = new GestionPedidos();
-        $pedidosmodificables = $pedidos->getPedidosModificablesMesa($codmesa);
-        return $pedidosmodificables;
+        return $this->pedidos->getPedidosModificablesMesa($codmesa);
     }
 
     function getElementosPedido($codpedido) {
-        $pedidos = new GestionPedidos();
-        $elementos = $pedidos->getElementosPedido($codpedido);
-        return $elementos;
+        return $this->pedidos->getElementosPedido($codpedido);
     }
 
     function nuevoPedido($codmesa, $elementospedido) {
-        $pedidos = new GestionPedidos();
-        $pedidos->nuevoPedido($codmesa, $elementospedido);
+        $this->pedidos->nuevoPedido($codmesa, $elementospedido);
     }
 
     function modificaPedido($codpedido, $codmesa, $elementospedido) {
-        $pedidos = new GestionPedidos();
-        $pedidos->modificaPedido($codpedido, $codmesa, $elementospedido);
+        $this->pedidos->modificaPedido($codpedido, $codmesa, $elementospedido);
     }
+
 }
 
 ?>

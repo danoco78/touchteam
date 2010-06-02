@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Description of IPedidos
- *
- * @author Administrador
+ * Define la funcionalidad ofrecida por el Subsistema de Gestion de Pedidos al Controlador Principal
+ * @author Adrián Víctor Pérez Lopera
  */
 interface IPedidos {
     function getPedidosModificablesMesa($codmesa);
