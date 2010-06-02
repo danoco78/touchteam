@@ -118,7 +118,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
-        pendientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        pendientes.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pInf.add(pendientes, java.awt.BorderLayout.CENTER);

@@ -22,7 +22,6 @@ import Vista.DialogoConfirmacion;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazMetre.IntColaBar;
 import Vista.InterfazMetre.InterfazMetre;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -76,7 +75,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 // TODO Comprobar si ha cambiado el pedido
                 this.cambiarPedido(siguientePedidoCocinaEnCola);
             } catch (Exception ex) {
-                //System.err.println("No se ha encontrado pedido");
                 this.centro.setVisible(false);
             }
         }else if(filtro == BAR){
@@ -87,7 +85,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 // TODO Comprobar si ha cambiado el pedido
                 this.cambiarPedido(siguientePedidoBar);
             } catch (Exception ex) {
-                //System.err.println("No se ha encontrado pedido");
                 this.centro.setVisible(false);
             }
         }
@@ -109,42 +106,14 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
 
             ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
-            JButton boton;
-            Elemento ele;
+            BotonElementoPedidoComentario boton;
 
             for (int i = 0; i < lista.size(); ++i) {
                 if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
                         || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
                     boton = new BotonElementoPedidoComentario(lista.get(i));
-                    //ele = lista.get(i).getElemento();
-
-                    /*boton.setBackground(new java.awt.Color(211, 223, 253));
-                    boton.setFont(new java.awt.Font("Arial", 0, 18));
-                    boton.setForeground(new java.awt.Color(80, 98, 143));
-                    String Datos = lista.get(i).getComentario();
-                    int cols;
-                    Rectangle rect = panelInfoPedido.getBounds();
-                    cols = (int)rect.getWidth()/(boton.getFont().getSize());
-                    String dats = "";
-                    int count=1;
-                    //if(Datos.length() > cols){
-                    for(int j=0; j<Datos.length(); ++j){
-                        dats = dats+String.valueOf(Datos.charAt(j));
-                        if(count > cols && (Datos.charAt(j)==' ' || Datos.charAt(j)=='\n')){
-                            dats = dats+"<br>";
-                            count = 0;
-                        }
-                        ++count;
-                    }
-                    boton.setText("<html><body>" + ele.getNombre() + " <br><font color=\"#000000\">" + dats + "</font><br>" + lista.get(i).getEstado()+
-                            "</body></html>");
-                    boton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                    boton.setFocusPainted(false);*/
                     boton.setName(String.valueOf(i));
-                    //if (filtro == BAR)
                     boton.addActionListener(new ManejaEventos(boton));
-                    //else
-                    //    boton.addActionListener(new ManejaEventos(boton));
 
                     panelInfoPedido.add(boton);
                     panelInfoPedido.add(new PanelEspacioVertical());
@@ -324,7 +293,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         centro2.setOpaque(false);
         centro2.setLayout(new java.awt.BorderLayout());
 
-        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        infoMesaPedido.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         infoMesaPedido.setForeground(new java.awt.Color(80, 98, 143));
         infoMesaPedido.setDoubleBuffered(true);
         infoMesaPedido.setPreferredSize(new java.awt.Dimension(96, 30));
@@ -383,7 +352,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pInf.setPreferredSize(new java.awt.Dimension(396, 50));
         pInf.setLayout(new java.awt.BorderLayout());
 
-        pendientes.setFont(new java.awt.Font("Arial", 0, 18));
+        pendientes.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         pendientes.setForeground(new java.awt.Color(80, 98, 143));
         pendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pendientes.setDoubleBuffered(true);

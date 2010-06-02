@@ -48,8 +48,8 @@ public class PanelColaFacturas extends javax.swing.JPanel {
             pev = new PanelEspacioVertical();
             boton.setBackground(new java.awt.Color(211, 223, 253));
             boton.setForeground(new java.awt.Color(80, 98, 143));
-            boton.setFont(new java.awt.Font("Arial", 0, 18));
-            boton.setText("<html>\n<body>\n<br></br>\n<br></br>\nMesa "+String.valueOf(mesas.get(i))+"\n<br></br>\n<br></br>\n<br></br>\n</body>\n</html>\n");
+            boton.setFont(new java.awt.Font("Arial", 0, 24));
+            boton.setText("<html><body><br>Mesa "+String.valueOf(mesas.get(i))+"<br><br></body></html>");
             boton.setFocusPainted(false);
             boton.addActionListener(new ManejaEventos(boton,pev));
             boton.setName(String.valueOf(mesas.get(i)));
@@ -80,10 +80,11 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         margenIzq = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229)));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         setLayout(new java.awt.BorderLayout());
 
         scrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setDoubleBuffered(true);
         scrollPane.setOpaque(false);
@@ -95,20 +96,20 @@ public class PanelColaFacturas extends javax.swing.JPanel {
         add(scrollPane, java.awt.BorderLayout.CENTER);
 
         margenSup.setOpaque(false);
-        margenSup.setPreferredSize(new java.awt.Dimension(10, 5));
-        add(margenSup, java.awt.BorderLayout.PAGE_START);
+        margenSup.setPreferredSize(new java.awt.Dimension(5, 5));
+        add(margenSup, java.awt.BorderLayout.NORTH);
 
         margenInf.setOpaque(false);
-        margenInf.setPreferredSize(new java.awt.Dimension(10, 5));
-        add(margenInf, java.awt.BorderLayout.PAGE_END);
+        margenInf.setPreferredSize(new java.awt.Dimension(5, 5));
+        add(margenInf, java.awt.BorderLayout.SOUTH);
 
         margenDer.setOpaque(false);
-        margenDer.setPreferredSize(new java.awt.Dimension(5, 10));
-        add(margenDer, java.awt.BorderLayout.LINE_END);
+        margenDer.setPreferredSize(new java.awt.Dimension(5, 5));
+        add(margenDer, java.awt.BorderLayout.EAST);
 
         margenIzq.setOpaque(false);
-        margenIzq.setPreferredSize(new java.awt.Dimension(5, 10));
-        add(margenIzq, java.awt.BorderLayout.LINE_START);
+        margenIzq.setPreferredSize(new java.awt.Dimension(5, 5));
+        add(margenIzq, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -141,6 +142,8 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                     borrar = true;
                     break;
                 case PanelColaFacturas.PARAFACTURAR:
+                    // TODO Hay que comprobar si los platos estan servidos o no
+                    // Se puede confirmar el pago sin que se hayan preparado
                     DialogoFacturacion confirmar = new DialogoFacturacion(controlador,Integer.parseInt(boton.getName()));
                     confirmar.setLocationRelativeTo(controlador);
                     confirmar.setVisible(true);

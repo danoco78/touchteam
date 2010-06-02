@@ -30,7 +30,6 @@ public interface IGestorPedidos {
 
     public ArrayList<ElementoPedido> obtieneElementos(Integer codPedido);
 
-    //TODO Preguntar por estas dos siguientes funciones
     public boolean seleccionaBebida(Pedido p, ElementoColaBar cola)throws Exception ;
 
     public int getNumPlatosEnCola();

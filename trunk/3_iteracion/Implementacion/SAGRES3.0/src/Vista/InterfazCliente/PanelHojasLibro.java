@@ -34,13 +34,13 @@ public class PanelHojasLibro extends javax.swing.JPanel {
         //Rectangle clip1 = g2.getClipBounds();
         Rectangle clip1 = this.getBounds();
         clip1.width = clip1.width/2;
-        g2.setPaint(new GradientPaint(this.getWidth()/4, 0.0f, new Color(255, 255, 255) ,getWidth()/2, 0.0f, new Color(210, 220, 255) ));
+        g2.setPaint(new GradientPaint(this.getWidth()/4, 0.0f, new Color(255, 255, 255) ,getWidth()/2, 0.0f, new Color(190, 195, 215) ));
         g2.fillRect(clip1.x, clip1.y, clip1.width, clip1.height);
 
         clip1 = this.getBounds();
         clip1.width = clip1.width/2;
         clip1.x = clip1.x + clip1.width;
-        g2.setPaint(new GradientPaint(this.getWidth()/2, 0.0f, new Color(210, 220, 255) ,getWidth()/2+this.getWidth()/4, 0.0f, new Color(255, 255, 255)));
+        g2.setPaint(new GradientPaint(this.getWidth()/2, 0.0f, new Color(190, 195, 215) ,getWidth()/2+this.getWidth()/4, 0.0f, new Color(255, 255, 255)));
         g2.fillRect(clip1.x, clip1.y, clip1.width, clip1.height);
 
         super.paint(g);

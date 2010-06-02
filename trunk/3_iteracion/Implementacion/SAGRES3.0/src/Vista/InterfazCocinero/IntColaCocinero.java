@@ -59,28 +59,59 @@ public class IntColaCocinero extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        principalIzquierda = new javax.swing.JPanel();
+        principalDerecha = new javax.swing.JPanel();
+        principalSur = new javax.swing.JPanel();
+        pCentro = new javax.swing.JPanel();
+        principalCentro = new javax.swing.JPanel();
+        panelIzquierda = new javax.swing.JPanel();
+        panelDerecha = new javax.swing.JPanel();
         principalNorte = new javax.swing.JPanel();
         bGestionProductos = new javax.swing.JButton();
         panelHora = new javax.swing.JPanel();
         panelCentroNorte = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        principalIzquierda = new javax.swing.JPanel();
-        principalDerecha = new javax.swing.JPanel();
-        principalSur = new javax.swing.JPanel();
-        principalCentro = new javax.swing.JPanel();
-        panelIzquierda = new javax.swing.JPanel();
-        panelDerecha = new javax.swing.JPanel();
+        principalMargenNorte = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
-        setLayout(new java.awt.BorderLayout(15, 15));
+        setLayout(new java.awt.BorderLayout());
+
+        principalIzquierda.setOpaque(false);
+        principalIzquierda.setPreferredSize(new java.awt.Dimension(15, 15));
+        add(principalIzquierda, java.awt.BorderLayout.EAST);
+
+        principalDerecha.setOpaque(false);
+        principalDerecha.setPreferredSize(new java.awt.Dimension(15, 15));
+        add(principalDerecha, java.awt.BorderLayout.WEST);
+
+        principalSur.setOpaque(false);
+        principalSur.setPreferredSize(new java.awt.Dimension(15, 15));
+        add(principalSur, java.awt.BorderLayout.SOUTH);
+
+        pCentro.setOpaque(false);
+        pCentro.setLayout(new java.awt.BorderLayout(0, 15));
+
+        principalCentro.setOpaque(false);
+        principalCentro.setLayout(new java.awt.GridLayout(1, 0, 15, 0));
+
+        panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
+        panelIzquierda.setLayout(new java.awt.BorderLayout());
+        principalCentro.add(panelIzquierda);
+
+        panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
+        panelDerecha.setLayout(new java.awt.BorderLayout());
+        principalCentro.add(panelDerecha);
+
+        pCentro.add(principalCentro, java.awt.BorderLayout.CENTER);
 
         principalNorte.setOpaque(false);
         principalNorte.setLayout(new java.awt.BorderLayout());
 
-        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        bGestionProductos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bGestionProductos.setForeground(new java.awt.Color(80, 98, 143));
-        bGestionProductos.setText("<html>\n<body>\nGesti&oacute;n de<br>Productos\n</body>\n</html>");
+        bGestionProductos.setText("<html> <body> Gesti&oacute;n de<br>Productos </body> </html>");
+        bGestionProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
         principalNorte.add(bGestionProductos, java.awt.BorderLayout.WEST);
 
         panelHora.setBackground(new java.awt.Color(255, 255, 255));
@@ -97,35 +128,19 @@ public class IntColaCocinero extends javax.swing.JPanel {
 
         principalNorte.add(panelCentroNorte, java.awt.BorderLayout.CENTER);
 
-        add(principalNorte, java.awt.BorderLayout.PAGE_START);
+        pCentro.add(principalNorte, java.awt.BorderLayout.NORTH);
 
-        principalIzquierda.setOpaque(false);
-        add(principalIzquierda, java.awt.BorderLayout.EAST);
+        add(pCentro, java.awt.BorderLayout.CENTER);
 
-        principalDerecha.setOpaque(false);
-        add(principalDerecha, java.awt.BorderLayout.WEST);
-
-        principalSur.setOpaque(false);
-        principalSur.setPreferredSize(new java.awt.Dimension(1, 1));
-        add(principalSur, java.awt.BorderLayout.SOUTH);
-
-        principalCentro.setOpaque(false);
-        principalCentro.setLayout(new java.awt.GridLayout(1, 0, 15, 0));
-
-        panelIzquierda.setBackground(new java.awt.Color(245, 245, 255));
-        panelIzquierda.setLayout(new java.awt.BorderLayout());
-        principalCentro.add(panelIzquierda);
-
-        panelDerecha.setBackground(new java.awt.Color(245, 245, 255));
-        panelDerecha.setLayout(new java.awt.BorderLayout());
-        principalCentro.add(panelDerecha);
-
-        add(principalCentro, java.awt.BorderLayout.CENTER);
+        principalMargenNorte.setOpaque(false);
+        principalMargenNorte.setPreferredSize(new java.awt.Dimension(15, 15));
+        add(principalMargenNorte, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton bGestionProductos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel pCentro;
     private javax.swing.JPanel panelCentroNorte;
     private javax.swing.JPanel panelDerecha;
     private javax.swing.JPanel panelHora;
@@ -133,6 +148,7 @@ public class IntColaCocinero extends javax.swing.JPanel {
     private javax.swing.JPanel principalCentro;
     private javax.swing.JPanel principalDerecha;
     private javax.swing.JPanel principalIzquierda;
+    private javax.swing.JPanel principalMargenNorte;
     private javax.swing.JPanel principalNorte;
     private javax.swing.JPanel principalSur;
     // End of variables declaration//GEN-END:variables

@@ -44,16 +44,14 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelElementosPedido = new javax.swing.JPanel();
         BotonVerFactura = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PanelElementosPedido = new javax.swing.JPanel();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout(0, 10));
 
-        PanelElementosPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
-        PanelElementosPedido.setLayout(new java.awt.GridLayout(10, 0, 0, 3));
-        add(PanelElementosPedido, java.awt.BorderLayout.CENTER);
-
-        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonVerFactura.setFont(new java.awt.Font("Arial", 1, 24));
         BotonVerFactura.setForeground(new java.awt.Color(80, 98, 143));
         BotonVerFactura.setText("Realizar Pedido");
         BotonVerFactura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -64,6 +62,15 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
             }
         });
         add(BotonVerFactura, java.awt.BorderLayout.SOUTH);
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setOpaque(false);
+
+        PanelElementosPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        PanelElementosPedido.setLayout(new java.awt.GridLayout(20, 0, 0, 5));
+        jScrollPane1.setViewportView(PanelElementosPedido);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void realizarPedido(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realizarPedido
@@ -74,6 +81,7 @@ public class PanelRealizarPedido extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonVerFactura;
     public javax.swing.JPanel PanelElementosPedido;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     public void anadirElementoPedido(Elemento elemento, String comentario) {

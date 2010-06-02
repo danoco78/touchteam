@@ -66,6 +66,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         TextoDescripcion = new javax.swing.JTextPane();
         PanelPrecio = new javax.swing.JPanel();
         LabelPrecio = new javax.swing.JLabel();
+        pMargenDerechoPrecio = new javax.swing.JPanel();
         PanelFoto = new javax.swing.JPanel();
         LabelFoto = new javax.swing.JLabel();
 
@@ -86,7 +87,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelDatos.setLayout(new java.awt.BorderLayout());
 
         LabelNombre.setBackground(new java.awt.Color(255, 255, 255));
-        LabelNombre.setFont(new java.awt.Font("Arial", 1, 16));
+        LabelNombre.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         LabelNombre.setText("jLabel1");
         PanelDatos.add(LabelNombre, java.awt.BorderLayout.NORTH);
 
@@ -96,6 +97,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         TextoDescripcion.setBorder(null);
         TextoDescripcion.setEditable(false);
+        TextoDescripcion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TextoDescripcion.setMaximumSize(new java.awt.Dimension(10, 10));
         TextoDescripcion.setMinimumSize(new java.awt.Dimension(10, 10));
         TextoDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,8 +115,13 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelPrecio.setOpaque(false);
         PanelPrecio.setLayout(new java.awt.BorderLayout());
 
+        LabelPrecio.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        LabelPrecio.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         LabelPrecio.setText("jLabel1");
-        PanelPrecio.add(LabelPrecio, java.awt.BorderLayout.EAST);
+        PanelPrecio.add(LabelPrecio, java.awt.BorderLayout.CENTER);
+
+        pMargenDerechoPrecio.setOpaque(false);
+        PanelPrecio.add(pMargenDerechoPrecio, java.awt.BorderLayout.EAST);
 
         PanelDatos.add(PanelPrecio, java.awt.BorderLayout.SOUTH);
 
@@ -159,6 +166,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private javax.swing.JPanel PanelPrecio;
     private javax.swing.JScrollPane ScrollDescripcion;
     private javax.swing.JTextPane TextoDescripcion;
+    private javax.swing.JPanel pMargenDerechoPrecio;
     // End of variables declaration//GEN-END:variables
 
     public Elemento getElemento(){

@@ -111,7 +111,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(30, 40, 90) ,getWidth() ,getHeight(), new Color(155, 155, 200) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         
         super.paint(g);
@@ -176,7 +176,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         ScrollComentarios.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollComentarios.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        TextoComentarios.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        TextoComentarios.setFont(new java.awt.Font("Tahoma", 0, 24));
         TextoComentarios.setEnabled(false);
         TextoComentarios.setPreferredSize(new java.awt.Dimension(106, 50));
         TextoComentarios.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -188,7 +188,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
 
-        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonAnadir.setForeground(new java.awt.Color(80, 98, 143));
         BotonAnadir.setText("Añadir");
         BotonAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -252,7 +252,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
         BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
@@ -265,7 +265,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonEntrantes);
 
         GrupoBotonesSecciones.add(BotonPescados);
-        BotonPescados.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
         BotonPescados.setText("Pescados");
         BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -277,7 +277,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonPescados);
 
         GrupoBotonesSecciones.add(BotonCarnes);
-        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
         BotonCarnes.setText("Carnes");
         BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -289,7 +289,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonCarnes);
 
         GrupoBotonesSecciones.add(BotonBebidas);
-        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
         BotonBebidas.setText("Bebidas");
         BotonBebidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -301,7 +301,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonBebidas);
 
         GrupoBotonesSecciones.add(BotonPostres);
-        BotonPostres.setFont(new java.awt.Font("Arial", 1, 16));
+        BotonPostres.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
         BotonPostres.setText("Postres");
         BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));

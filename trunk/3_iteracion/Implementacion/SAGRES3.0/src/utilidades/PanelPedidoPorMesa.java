@@ -85,7 +85,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         pTexto.setOpaque(false);
         pTexto.setLayout(new java.awt.BorderLayout());
 
-        tPedido.setFont(new java.awt.Font("Arial", 1, 11));
+        tPedido.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         tPedido.setForeground(new java.awt.Color(80, 98, 143));
         tPedido.setText("     Mesa 5, Pedido 2");
         tPedido.setPreferredSize(new java.awt.Dimension(92, 35));
