@@ -43,7 +43,6 @@ class Elemento {
         return $this->precio;
     }
 
-
 }
 
 /**
