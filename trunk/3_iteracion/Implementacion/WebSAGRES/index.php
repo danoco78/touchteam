@@ -35,9 +35,8 @@
                     for($j=0; $j<$numelems; $j++) {
                         if($elementos[$j]->getDisponible()==1) {
                             echo "<div class=\"plato\">";
-
-                            echo "<img class=\"fotoElemento\"\">"; // Mostrar imagen!!!
-
+                            $foto = $elementos[$j]->getFoto(); // Obtener Imagen
+                            echo "<img class=\"fotoElemento\" src=\"".$foto."\">";
                             echo "<div class=\"info\">";
                             echo "<h3 class=\"nombre\">".$elementos[$j]->getNombre()."</h3>";
                             echo "<h4 class=\"descripcion\">".$elementos[$j]->getDescripcion()."</h4>";

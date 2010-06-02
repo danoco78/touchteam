@@ -20,7 +20,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
     }
 
     private function conectaMySQL() {
-        $this->bd = new mysqli("localhost", "root", "elpeluesendesa", "touchteam");
+        $this->bd = new mysqli("localhost", "touch", "team", "touchteam");
         if(mysqli_connect_errno()) {
             echo "Error. No se pudo conectar a la base de datos.";
             exit;
@@ -50,12 +50,13 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             if($numfilas2 > 0) { // Es una seccion de Platos
                 for($j=0; $j < $numfilas2 ; $j++) {
                     $row2 = $result2->fetch_assoc();
+                    $foto = $this->getImagen($row2["foto"]); // Obtener foto
                     $elemento = new ElementoPlato(
                         $row2["elemento_id"],
                         $row2["nombre"],
                         $row2["descripcion"],
                         $row2["disponible"],
-                        $row2["foto"],
+                        $foto,
                         $row2["divi"],
                         $row2["divi_max"],
                         $row2["precio"],
@@ -76,12 +77,13 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
                 if($numfilas3 > 0) {
                     for($j=0; $j < $numfilas3 ; $j++) {
                         $row3 = $result3->fetch_assoc();
+                        $foto = $this->getImagen($row3["foto"]); // Obtener foto
                         $elemento = new ElementoBebida(
                             $row3["elemento_id"],
                             $row3["nombre"],
                             $row3["descripcion"],
                             $row3["disponible"],
-                            $row3["foto"],
+                            $foto,
                             $row3["divi"],
                             $row3["divi_max"],
                             $row3["precio"]
@@ -312,6 +314,14 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $codElem = $row["MAX(elementoPedido_id)"] + 1;
         }
         return $codElem;
+    }
+
+    private function getImagen($imagen) {
+	$foto = basename(tempnam(getcwd(),'tmp'));
+	$foto = "tmp/".$foto.".jpg";
+	$ft = fopen($foto,"w");
+	fwrite($ft, $imagen);
+	return $foto;
     }
 
 }
