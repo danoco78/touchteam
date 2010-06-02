@@ -1,43 +1,47 @@
 <html>
-    <head><link href="style.css" type="text/css" rel="stylesheet">
-	<script LANGUAGE="JavaScript">
-	function incrementar(id){
-		var elemento = document.getElementById(id);
-		var cantidad = elemento.getAttribute("value");
-		cantidad = parseInt(cantidad);
-		cantidad = cantidad + 1;
-		elemento.setAttribute("value",cantidad);
-	}
-	function decrementar(id){
-		var elemento = document.getElementById(id);
-		var cantidad = elemento.getAttribute("value");
-		cantidad = parseInt(cantidad);
-		if(cantidad > 0 )
-			cantidad = cantidad - 1;
-		else
-			cantidad = 0;
-		elemento.setAttribute("value",cantidad);
-	}
-	</script>
-	</head>
+    <head><link href="style.css" type="text/css" rel="stylesheet"></head>
+    <script LANGUAGE="JavaScript">
+    function incrementar(id){
+        var elemento = document.getElementById(id);
+        var cantidad = elemento.getAttribute("value");
+        cantidad = parseInt(cantidad);
+        cantidad = cantidad + 1;
+        elemento.setAttribute("value",cantidad);
+    }
+    function decrementar(id){
+        var elemento = document.getElementById(id);
+        var cantidad = elemento.getAttribute("value");
+        cantidad = parseInt(cantidad);
+        if(cantidad > 0 ) cantidad = cantidad - 1;
+        else cantidad = 0;
+        elemento.setAttribute("value",cantidad);
+    }
+    </script>
     <body>
-        <div id="cabecera" ></div>
+        <div id="cabecera" >
+            <img id="logo" src="LogoSagres.png">
+            <h1 id="titulo">HOTEL RESTAURANTE "DUERME MUCHO"</h1>
+        </div>
         <div id="central" >
             <div id="infocliente" >
-            <h1> Informaci&oacute;n </h1>
+            <h1> Sus Pedidos </h1>
             <div class="linea"></div>
             <?php
             include_once 'ControladorPrincipal.php';
             $sagres = new ControladorPrincipal();
             $pedidos = $sagres->getPedidosModificablesMesa($codmesa = 1);
             for($i=0; $i<count($pedidos); $i++) {
-            echo "- ".$pedidos[$i]->getId()." ".$pedidos[$i]->getMesa()." ".$pedidos[$i]->getFecha()."<br>";
-            $elementos = $pedidos[$i]->getElementos();
-            for($j=0; $j<count($elementos); $j++) {
-            echo "--- ".$elementos[$j]->getId()." ".$elementos[$j]->getComentario()." ".$elementos[$j]->getEstado()."<br>";
-            $elementocarta = $elementos[$j]->getElemento();
-            echo "------ ".$elementocarta->getNombre()." ".$elementocarta->getDescripcion()."<br>";
-            }
+                echo "<div class=\"elemento\">";
+                echo "<h4>Habitacion: ".$pedidos[$i]->getMesa()."</h4>";
+
+                $fecha = $pedidos[$i]->getFecha();
+
+                echo "<h4>Fecha: ".$fecha."</h4>";
+                echo "<form method=\"post\" action=\"modificaPedido.php\">";
+                echo "<input name=\"codpedido\" type=\"hidden\" value=\"".$pedidos[$i]->getId()."\">";
+                echo "<input class=\"boton\" type=\"submit\" value=\"Modificar Pedido\">";
+                echo "</form>";
+                echo "</div>";
             }
             ?>
             </div>
@@ -62,9 +66,9 @@
                             echo "<h4 class=\"descripcion\">".$elementos[$j]->getDescripcion()."</h4>";
                             echo "<p class=\"precio\">Precio: ".$elementos[$j]->getPrecio()." euros<p>";
                             echo "</div><div>";
-                            echo '<img class="botones" id=add'.$elementos[$j]->getId().' src="add.jpg"  onClick="incrementar('.$elementos[$j]->getId().')"  />';
-                            echo '<input class="cantidad" id="'.$elementos[$j]->getId().'" type="text" name="'.$elementos[$j]->getId().'" value="0"/>';
-                            echo '<img class="botones" id=del'.$elementos[$j]->getId().'  src="delete.jpg"  onClick="decrementar('.$elementos[$j]->getId().')"     />';
+                            echo '<img class="botones" id=add'.$elementos[$j]->getId().' src="add.jpg" onClick="incrementar('.$elementos[$j]->getId().')"/>';
+                            echo '<input readonly="readonly" class="cantidad" id="'.$elementos[$j]->getId().'" type="text" name="'.$elementos[$j]->getId().'" value="0"/>';
+                            echo '<img class="botones" id=del'.$elementos[$j]->getId().' src="delete.jpg" onClick="decrementar('.$elementos[$j]->getId().')"/>';
                             echo "</div></div>";
                         }
                     }

@@ -29,7 +29,7 @@ class GestionPedidos implements IPedidos {
             $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem);
             array_push($elementos, $elempedido);
         }
-        $pedido = new Pedido($codmesa, $codPedido, 0, time(), $elementos);
+        $pedido = new Pedido($codmesa, $codPedido, 0,time(), $elementos);
         $bd->insertaPedido($pedido);
     }
  

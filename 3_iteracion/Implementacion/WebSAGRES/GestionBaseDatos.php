@@ -20,7 +20,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
     }
 
     private function conectaMySQL() {
-        $this->bd = new mysqli("localhost", "touch", "team", "touchteam");
+        $this->bd = new mysqli("localhost", "touch", "team", "touchteam"); // Cambiar aqui usuario y contraseña
         if(mysqli_connect_errno()) {
             echo "Error. No se pudo conectar a la base de datos.";
             exit;
@@ -317,10 +317,12 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
     }
 
     private function getImagen($imagen) {
-	$foto = basename(tempnam(getcwd(),'tmp'));
+        $dir = getcwd()."/tmp";
+	$foto = basename(tempnam($dir,'img'));
 	$foto = "tmp/".$foto.".jpg";
 	$ft = fopen($foto,"w");
 	fwrite($ft, $imagen);
+        fclose($ft);
 	return $foto;
     }
 
