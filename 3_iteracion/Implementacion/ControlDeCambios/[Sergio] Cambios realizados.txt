@@ -39,7 +39,7 @@ Interfaz de bar
 - Se ha hecho que detecte que se ha eliminado un pedido.
 - Se ha pulido el aspecto de la interfaz, se han utilizado gestores de distribución más ligeros.
 - Se han ajustado los colores de la interfaz a unos que clarifican más la distribución de paneles.
-#Si se cobra una factura y los elementos no se han servido todos aun, se borran de las colas, esto es un error grave.
+- Ya no se permite facturar los pedidos de una mesa si alguno de los pedidos asociados a la factura aún se está sirviendo.
 
 Interfaz de cocina
 (Cola)
