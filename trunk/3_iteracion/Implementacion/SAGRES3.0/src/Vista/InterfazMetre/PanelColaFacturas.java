@@ -11,10 +11,17 @@
 
 package Vista.InterfazMetre;
 
+import GestionPedidos.ElementoColaBar;
+import GestionPedidos.ElementoColaCocina;
+import GestionPedidos.ElementoPedido;
+import GestionPedidos.Factura;
+import GestionPedidos.Pedido;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import utilidades.PanelEspacioVertical;
 
 
@@ -142,14 +149,42 @@ public class PanelColaFacturas extends javax.swing.JPanel {
                     borrar = true;
                     break;
                 case PanelColaFacturas.PARAFACTURAR:
-                    // TODO Hay que comprobar si los platos estan servidos o no
-                    // Se puede confirmar el pago sin que se hayan preparado
-                    DialogoFacturacion confirmar = new DialogoFacturacion(controlador,Integer.parseInt(boton.getName()));
-                    confirmar.setLocationRelativeTo(controlador);
-                    confirmar.setVisible(true);
-                    if(confirmar.isAceptado()){
-                        controlador.imetre.confirmaPagoFactura(Integer.parseInt(boton.getName()));
-                        borrar = true;
+                    // A continuacion comprobamos si se pueden facturar los pedidos, si
+                    // hay alguno que tenga un elemento "En cola" o "Preparandose" no
+                    // es facturable.
+                    int mesa = Integer.parseInt(boton.getName());
+                    Factura factura = controlador.imetre.getFactura(mesa);
+                    Iterator<Pedido> itPeds = factura.getPedidos().iterator();
+                    boolean pedidosFacturables = true;
+                    while(itPeds.hasNext() && pedidosFacturables){
+                        Iterator<ElementoPedido> itElems = itPeds.next().getElementos().iterator();
+                        while(itElems.hasNext() && pedidosFacturables){
+                            ElementoPedido next = itElems.next();
+                            if(next instanceof ElementoColaBar){
+                                if(next.getEstado() != ElementoColaBar.PREPARADO){
+                                    pedidosFacturables = false;
+                                }
+                            }else if(next instanceof ElementoColaCocina){
+                                if(next.getEstado() != ElementoColaCocina.PREPARADO){
+                                    pedidosFacturables = false;
+                                }
+                            }
+                        }
+                    }
+
+                    if(pedidosFacturables){
+                        DialogoFacturacion confirmar = new DialogoFacturacion(controlador, mesa);
+                        confirmar.setLocationRelativeTo(controlador);
+                        confirmar.setVisible(true);
+                        if(confirmar.isAceptado()){
+                            controlador.imetre.confirmaPagoFactura(Integer.parseInt(boton.getName()));
+                            borrar = true;
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(controlador,
+                              "El pedido aún está siendo servido.",
+                              "Aún no puede ser facturado.",
+                              JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
             }
