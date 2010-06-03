@@ -2,12 +2,7 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -29,7 +24,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
     }
 
 
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
@@ -37,14 +32,14 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,0.0f, new Color(255, 255, 255) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
-    }
+    }*/
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cabecera = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         pie = new javax.swing.JPanel();
@@ -70,42 +65,25 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Notificación");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 355;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Llegada de producotos pedido");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        cabecera.add(lSubtitulo);
 
         add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -124,7 +102,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 14));
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bCancelar.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -153,7 +131,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
         pProductosPedidos.setBackground(new java.awt.Color(255, 255, 255));
-        pProductosPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se confirma la llegada de los siguientes productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pProductosPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se confirma la llegada de los siguientes productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
         pProductosPedidos.setForeground(new java.awt.Color(80, 98, 143));
         pProductosPedidos.setMinimumSize(new java.awt.Dimension(450, 250));
         pProductosPedidos.setOpaque(false);
@@ -163,7 +141,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        tTablaProductosRecibidos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaProductosRecibidos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tTablaProductosRecibidos.setForeground(new java.awt.Color(80, 98, 143));
         tTablaProductosRecibidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -205,7 +183,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         cuerpo.add(pProductosPedidos, gridBagConstraints);
 
         pPlatosHabilitados.setBackground(new java.awt.Color(255, 255, 255));
-        pPlatosHabilitados.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se habilitarán los siguientes elementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pPlatosHabilitados.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se habilitarán los siguientes elementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
         pPlatosHabilitados.setForeground(new java.awt.Color(80, 98, 143));
         pPlatosHabilitados.setMinimumSize(new java.awt.Dimension(450, 250));
         pPlatosHabilitados.setOpaque(false);
@@ -214,7 +192,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        tPlatosHabilitados.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tPlatosHabilitados.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tPlatosHabilitados.setForeground(new java.awt.Color(80, 98, 143));
         tPlatosHabilitados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -273,8 +251,13 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
 
     private void Aceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar
         try {
-            this.gestorPedido.notificaRecepcionPedido(this.gestorPedido.obtienePedidoProveedor());
-                    this.setVisible(false);
+            PedidoProveedor pedidoProveedor = this.gestorPedido.obtienePedidoProveedor();
+            if(pedidoProveedor != null)
+                this.gestorPedido.notificaRecepcionPedido(pedidoProveedor);
+            else{
+                JOptionPane.showMessageDialog(this, "No hay ningun pedido por recibir");
+            }
+            this.dispose();
         dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "No hay ningun pedido por recibir");

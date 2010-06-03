@@ -11,6 +11,12 @@
 
 package Vista.InterfazCocinero;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 /**
  *
  * @author nabil
@@ -23,6 +29,15 @@ public class menuEstadisticas extends javax.swing.JPanel {
        
     }
 
+    @Override
+    public void paint(Graphics g) {
+        super.paintComponents(g);
+        Graphics2D g2 = (Graphics2D) g.create();
+        Rectangle clip = g2.getClipBounds();
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
+        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+        super.paint(g);
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -47,6 +62,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("menuEstadisticas"); // NOI18N
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         cabecera.setMinimumSize(new java.awt.Dimension(50, 50));
@@ -95,7 +111,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bBalance.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bBalance.setFont(new java.awt.Font("Arial", 1, 24));
         bBalance.setForeground(new java.awt.Color(80, 98, 143));
         bBalance.setText("Balance Económico");
         bBalance.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -108,7 +124,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bBalance, gridBagConstraints);
 
-        bPlatosNoServidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bPlatosNoServidos.setFont(new java.awt.Font("Arial", 1, 24));
         bPlatosNoServidos.setForeground(new java.awt.Color(80, 98, 143));
         bPlatosNoServidos.setText("<html>\n<body>\nPlatos No Servidos Por\n<br>\nFalta de Ingredientes\n</body>\n</html>");
         bPlatosNoServidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -124,7 +140,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bPlatosNoServidos, gridBagConstraints);
 
-        bPlatosMasVendidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bPlatosMasVendidos.setFont(new java.awt.Font("Arial", 1, 24));
         bPlatosMasVendidos.setForeground(new java.awt.Color(80, 98, 143));
         bPlatosMasVendidos.setText("Plato Mas Pedido");
         bPlatosMasVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -139,7 +155,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bPlatosMasVendidos, gridBagConstraints);
 
-        bPlatosMenosVendidos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        bPlatosMenosVendidos.setFont(new java.awt.Font("Arial", 1, 24));
         bPlatosMenosVendidos.setForeground(new java.awt.Color(80, 98, 143));
         bPlatosMenosVendidos.setText("Plato Menos Pedido");
         bPlatosMenosVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

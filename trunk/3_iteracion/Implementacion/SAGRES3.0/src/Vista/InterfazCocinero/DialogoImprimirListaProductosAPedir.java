@@ -88,42 +88,25 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Notificación");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 350;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Listar productos a pedir");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        cabecera.add(lSubtitulo);
 
         add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -142,7 +125,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 14));
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bCancelar.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -173,7 +156,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        tTablaProductos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTablaProductos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tTablaProductos.setForeground(new java.awt.Color(80, 98, 143));
         tTablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,7 +195,7 @@ public class DialogoImprimirListaProductosAPedir extends java.awt.Dialog {
         gridBagConstraints.ipady = 280;
         cuerpo.add(jScrollPane2, gridBagConstraints);
 
-        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 14));
+        lProductosAPedir.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lProductosAPedir.setForeground(new java.awt.Color(80, 98, 143));
         lProductosAPedir.setText("Se van a pedir los siguientes productos");
         lProductosAPedir.setPreferredSize(new java.awt.Dimension(175, 50));
