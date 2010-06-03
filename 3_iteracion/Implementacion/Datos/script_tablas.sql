@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS `touchteam`.`incidencia` ;
 CREATE  TABLE IF NOT EXISTS `touchteam`.`incidencia` (
   `incidencia_id` INT NOT NULL AUTO_INCREMENT ,
   `descripcion` VARCHAR(45) NULL ,
-  `fecha` DATE NULL ,
+  `fecha` DATETIME NULL ,
   `cantidad_afectada` INT NULL ,
   PRIMARY KEY (`incidencia_id`) )
 ENGINE = InnoDB;
@@ -457,7 +457,8 @@ DROP TABLE IF EXISTS `touchteam`.`factura` ;
 CREATE  TABLE IF NOT EXISTS `touchteam`.`factura` (
   `factura_id` INT NOT NULL ,
   `estado` INT NULL ,
-  `fecha` DATE NULL ,
+  `fecha` DATETIME NULL ,
+  `totalFactura` FLOAT NULL ,
   PRIMARY KEY (`factura_id`) )
 ENGINE = InnoDB;
 
@@ -471,7 +472,7 @@ CREATE  TABLE IF NOT EXISTS `touchteam`.`pedido` (
   `pedido_id` INT NOT NULL ,
   `mesa_id` INT NULL ,
   `estado` INT NULL ,
-  `fecha` DATE NULL ,
+  `fecha` DATETIME NULL ,
   PRIMARY KEY (`pedido_id`) )
 ENGINE = InnoDB;
 
@@ -500,43 +501,6 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_facturaPedido_pedido1` ON `touchteam`.`facturaPedido` (`pedido_pedido_id` ASC) ;
 
 CREATE INDEX `fk_facturaPedido_factura1` ON `touchteam`.`facturaPedido` (`factura_factura_id` ASC) ;
-
-
--- -----------------------------------------------------
--- Table `touchteam`.`comanda`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`comanda` ;
-
-CREATE  TABLE IF NOT EXISTS `touchteam`.`comanda` (
-  `comanda_id` INT NOT NULL ,
-  PRIMARY KEY (`comanda_id`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `touchteam`.`incluyePedido`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `touchteam`.`incluyePedido` ;
-
-CREATE  TABLE IF NOT EXISTS `touchteam`.`incluyePedido` (
-  `pedido_pedido_id` INT NOT NULL ,
-  `comanda_comanda_id` INT NOT NULL ,
-  PRIMARY KEY (`pedido_pedido_id`) ,
-  CONSTRAINT `fk_incluyePedido_comanda1`
-    FOREIGN KEY (`comanda_comanda_id` )
-    REFERENCES `touchteam`.`comanda` (`comanda_id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incluyePedido_pedido1`
-    FOREIGN KEY (`pedido_pedido_id` )
-    REFERENCES `touchteam`.`pedido` (`pedido_id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_incluyePedido_comanda1` ON `touchteam`.`incluyePedido` (`comanda_comanda_id` ASC) ;
-
-CREATE INDEX `fk_incluyePedido_pedido1` ON `touchteam`.`incluyePedido` (`pedido_pedido_id` ASC) ;
 
 
 -- -----------------------------------------------------
