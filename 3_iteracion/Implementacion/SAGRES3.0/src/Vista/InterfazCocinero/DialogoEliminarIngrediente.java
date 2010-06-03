@@ -39,7 +39,12 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         this.cocina = iCocinero;
         listaIngredientes = this.cocina.obtieneIngredientes();
         this.bAceptar.setEnabled(false);
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
         modelo.addColumn(this.tTablaIngredientes.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientes.getColumnName(1));
         modelo.setRowCount(listaIngredientes.size());
@@ -328,7 +333,12 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         Iterator iterador2 = listaElementos.iterator();
         Elemento e;
         int j=0;
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
         tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(0));
         tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(1));
         tableModel.setRowCount(listaElementos.size());

@@ -56,6 +56,9 @@ Gestor Principal (SAGRES)
 - Se ha eliminado el contenido de la función getSiguientePedidoCocinaEnCola, ahora llama a getSiguientePedidoCocina hacia la base de datos, tal como se especifica en el diseño.
 - Se ha eliminado de la interfaz de cocinero (ICocinero) la función getSiguientePedidoCocina, inexistente en el diseño.
 
+Interfaz Estadísticas
+- Se ha puesto un degradado de colores en el fondo.
+
 Gestion de Stock
 AñadirElemento
 - Se ha corregido la lista de elementos que muestra cuando se pide una sección.
@@ -67,18 +70,8 @@ Diálogo de confirmación
 - Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
 - Se ha formateado el texto de salida a un tamaño óptimo de pantalla y una fuente más legible.
 
-DialogoAnadirElemento
-- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
-
-DialogoAnadirIngrediente
-- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
-
-DialogoEliminarElemento
-- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
-
-DialogoEliminarIngrediente
-- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
 
 
 [[TODOS]]
 - Se ha cambiado el tipo Date por java.sql.Timestamp, tal como se especifica en el diseño de la 3º iteración.
+- [Para todos los dialogos] - Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.

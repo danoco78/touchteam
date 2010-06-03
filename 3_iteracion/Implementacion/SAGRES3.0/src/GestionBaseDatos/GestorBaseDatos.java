@@ -811,18 +811,21 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             ResultSet infoPedido = pedido.executeQuery("select pedido_proveedor_id, fecha_pedido, recibido "
                     + "from pedidoProveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoProveedor where recibido = false) mini "
                     + "where n.pedido_proveedor_id = mini.min_id;");
-            infoPedido.next();
-            ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienePedido.cantidad"
-                    + "from producto, tienePedido"
-                    + " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1)
-                    + "' and producto_producto_id = producto_id;");
-            HashMap<Producto, Float> productosCantidad = new HashMap<Producto, Float>();
-            while (tablaproductos.next()) {
-                Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)), tablaproductos.getString(2),
-                        tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
-                productosCantidad.put(producto, tablaproductos.getFloat(7));
-            }
-            return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), infoPedido.getBoolean(3));
+            if(infoPedido.next()){
+                ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienePedido.cantidad"
+                        + "from producto, tienePedido"
+                        + " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1)
+                        + "' and producto_producto_id = producto_id;");
+                HashMap<Producto, Float> productosCantidad = new HashMap<Producto, Float>();
+                while (tablaproductos.next()) {
+                    Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)), tablaproductos.getString(2),
+                            tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
+                    productosCantidad.put(producto, tablaproductos.getFloat(7));
+                }
+                return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), infoPedido.getBoolean(3));
+            }else
+                return null;
+
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
