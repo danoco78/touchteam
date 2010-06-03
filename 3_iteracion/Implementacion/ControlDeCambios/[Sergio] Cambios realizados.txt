@@ -15,7 +15,7 @@ Interfaz de cliente
 - Si al arrancar el terminal, encuentra que habia pedidos, pasa directamente a la vista general de cliente, sin pasar por el menú inicial.
 - Los pedidos cuyos elementos se han preparado completamente ya no se mostrarán en la vista.
 - Se ha corregido la modificación de pedidos, ya no hace uso de la función "modificarPedido" sino que elimina el pedido tal cual, como se especifica en el diseño 2º iteración.
-# Añadir listas de pedidos para comprobar si son iguales al actualizar la vista y no reconstruir la interfaz de usuario.
+- (Eliminado el parpadeo innecesario) Añadidas listas de pedidos para comprobar si son iguales al actualizar la vista y no reconstruir la interfaz de usuario.
 
 Cola de cocina y bar "En cola"
 - Se ha agrandado el tamaño del texto
