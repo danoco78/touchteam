@@ -43,15 +43,15 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         this.bAceptar.setEnabled(false);
     }
 
-    @Override
-    public void paint(Graphics g) {
+    //@Override
+    /*public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
         Rectangle clip = g2.getClipBounds();
         g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249), getWidth(), 0.0f, new Color(255, 255, 255)));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
-    }
+    }*/
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,7 +60,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         pie = new javax.swing.JPanel();
         bAceptar = new javax.swing.JButton();
         bCancelar1 = new javax.swing.JButton();
-        cabecera = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
@@ -80,7 +80,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -99,7 +99,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar1.setFont(new java.awt.Font("Arial", 0, 14));
+        bCancelar1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bCancelar1.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar1.setText("Cancelar");
         bCancelar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -125,35 +125,18 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Eliminar elemento de carta");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 255;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar elemento");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        cabecera.add(lSubtitulo);
 
         getContentPane().add(cabecera, java.awt.BorderLayout.NORTH);
 
@@ -162,7 +145,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        lSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        lSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSeccion.setForeground(new java.awt.Color(80, 98, 143));
         lSeccion.setText("Elija una sección");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -171,7 +154,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         cuerpo.add(lSeccion, gridBagConstraints);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
@@ -188,7 +171,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         cuerpo.add(bSeccion, gridBagConstraints);
 
-        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lTablaSeccion.setForeground(new java.awt.Color(80, 98, 143));
         lTablaSeccion.setText("Productos ya asociados a la sección");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -201,13 +184,13 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 14));
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Descripción", "Precio"
+                "Nombre", "Descripción", "Precio (€)"
             }
         ) {
             Class[] types = new Class [] {
