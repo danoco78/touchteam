@@ -110,7 +110,11 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     public int actualizar() {
         // Comprobamos si ha cambiado algun pedido
         ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.obtienePedidosMesa(codMesa);
-        if (pedidos != null &&
+        if(pedidos == null){
+            this.pedidosMostrandose = pedidos;
+            this.PanelPedido.removeAll();
+            this.panelGeneralCliente.volverAlInicio();
+        }else if (pedidos != null &&
                 (this.pedidosMostrandose == null ||
                 this.compararListaPedidos(this.pedidosMostrandose, pedidos))) {
             this.pedidosMostrandose = pedidos;
@@ -238,7 +242,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 return true;
 
         }
-        System.out.println("No se actualiza!!");
+        //System.out.println("No se actualiza!!");
         System.gc();
         return false;
     }

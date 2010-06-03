@@ -814,26 +814,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
      * @param codPedido Pedido a eliminar
      */
     public void eliminarPedido(int codPedido) {
-        //if(modificando){
-        //DialogoConfirmacion dialogo = new DialogoConfirmacion(interfazCliente,
-        //            "Eliminar Pedido",
-        //            "¿Está seguro de que desea eliminar su pedido?",
-        //            "Se borrará el pedido de su lista pedidos.\n" +
-        //            "Recuerde que siempre podrá realizar otros despues.");
 
-        //dialogo.setLocationRelativeTo(interfazCliente);
-        //dialogo.setVisible(true);
-
-        //if(dialogo.isAceptado()){
         this.icliente.eliminaPedido(codPedido);
         this.panelPedidoRealizado.actualizar();
         this.cambiarPanelEste();
-        //}
-        //}//else{
-        //        this.icliente.eliminaPedido(codPedido);
-        //        this.panelPedidoRealizado.actualizar();
-        //        this.cambiarPanelEste();
-        //}
+
     }
 
     public void verFactura() {
