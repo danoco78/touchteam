@@ -6,11 +6,6 @@ import GestionCarta.Elemento;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
 import Vista.DialogoConfirmacion;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
@@ -61,7 +56,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
     }
 
 
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
@@ -69,26 +64,30 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,0.0f, new Color(255, 255, 255) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
-    }
+    }*/
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cabecera = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         pie = new javax.swing.JPanel();
         bAceptar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
         cuerpo = new javax.swing.JPanel();
+        pCentro = new javax.swing.JPanel();
         pProductosDisponibles = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tTablaIngredientes = new javax.swing.JTable();
         pAtributoPlato2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tTablaDeshabilitados = new javax.swing.JTable();
+        pMargenIzq = new javax.swing.JPanel();
+        pMargenSup = new javax.swing.JPanel();
+        pMargenDer = new javax.swing.JPanel();
 
         setLocationRelativeTo(null);
         setMinimumSize(new java.awt.Dimension(200, 200));
@@ -102,42 +101,25 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Eliminar Ingrediente");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 307;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el ingrediente a eliminar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        cabecera.add(lSubtitulo);
 
         add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14));
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -156,7 +138,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 14));
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bCancelar.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -182,10 +164,13 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         cuerpo.setForeground(new java.awt.Color(80, 98, 143));
         cuerpo.setMinimumSize(new java.awt.Dimension(500, 550));
         cuerpo.setPreferredSize(new java.awt.Dimension(500, 550));
-        cuerpo.setLayout(new java.awt.GridBagLayout());
+        cuerpo.setLayout(new java.awt.BorderLayout());
+
+        pCentro.setOpaque(false);
+        pCentro.setLayout(new java.awt.GridLayout(0, 1, 0, 20));
 
         pProductosDisponibles.setBackground(new java.awt.Color(255, 255, 255));
-        pProductosDisponibles.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Ingredienete a eliminar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pProductosDisponibles.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Ingredienete a eliminar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
         pProductosDisponibles.setForeground(new java.awt.Color(80, 98, 143));
         pProductosDisponibles.setMinimumSize(new java.awt.Dimension(450, 250));
         pProductosDisponibles.setOpaque(false);
@@ -195,7 +180,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        tTablaIngredientes.setFont(new java.awt.Font("Arial", 0, 14));
+        tTablaIngredientes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tTablaIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         tTablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,17 +218,11 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
         pProductosDisponibles.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(20, 8, 8, 8);
-        cuerpo.add(pProductosDisponibles, gridBagConstraints);
+        pCentro.add(pProductosDisponibles);
         pProductosDisponibles.getAccessibleContext().setAccessibleName("Ingrediente a eliminar");
 
         pAtributoPlato2.setBackground(new java.awt.Color(255, 255, 255));
-        pAtributoPlato2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se deshabilitarán los siguientes elementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pAtributoPlato2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Se deshabilitarán los siguientes elementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
         pAtributoPlato2.setForeground(new java.awt.Color(80, 98, 143));
         pAtributoPlato2.setMinimumSize(new java.awt.Dimension(450, 250));
         pAtributoPlato2.setOpaque(false);
@@ -252,7 +231,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        tTablaDeshabilitados.setFont(new java.awt.Font("Arial", 0, 14));
+        tTablaDeshabilitados.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tTablaDeshabilitados.setForeground(new java.awt.Color(80, 98, 143));
         tTablaDeshabilitados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,6 +256,7 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
                 return canEdit [columnIndex];
             }
         });
+        tTablaDeshabilitados.setFocusable(false);
         tTablaDeshabilitados.setGridColor(new java.awt.Color(211, 223, 253));
         tTablaDeshabilitados.setMinimumSize(new java.awt.Dimension(450, 250));
         tTablaDeshabilitados.setPreferredSize(new java.awt.Dimension(450, 250));
@@ -286,13 +266,18 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(13, 8, 11, 8);
-        cuerpo.add(pAtributoPlato2, gridBagConstraints);
+        pCentro.add(pAtributoPlato2);
+
+        cuerpo.add(pCentro, java.awt.BorderLayout.CENTER);
+
+        pMargenIzq.setOpaque(false);
+        cuerpo.add(pMargenIzq, java.awt.BorderLayout.WEST);
+
+        pMargenSup.setOpaque(false);
+        cuerpo.add(pMargenSup, java.awt.BorderLayout.NORTH);
+
+        pMargenDer.setOpaque(false);
+        cuerpo.add(pMargenDer, java.awt.BorderLayout.EAST);
 
         add(cuerpo, java.awt.BorderLayout.CENTER);
 
@@ -372,6 +357,10 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JPanel pAtributoPlato2;
+    private javax.swing.JPanel pCentro;
+    private javax.swing.JPanel pMargenDer;
+    private javax.swing.JPanel pMargenIzq;
+    private javax.swing.JPanel pMargenSup;
     private javax.swing.JPanel pProductosDisponibles;
     private javax.swing.JPanel pie;
     private javax.swing.JTable tTablaDeshabilitados;

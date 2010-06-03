@@ -46,11 +46,6 @@ Interfaz de cocina
 - Ya no suelta un diálogo de confirmación para cerrar un pedido si aún tiene elementos "En cola".
 - Se han ajustado los colores de la interfaz a unos que clarifican más la distribución de paneles.
 
-
-Diálogo de confirmación
-- Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
-- Se ha formateado el texto de salida a un tamaño óptimo de pantalla y una fuente más legible.
-
 Gestor de base de datos
 - Se han modificado las consultas de obtener pedidos para las colas, ahora las ordena por fecha.
 - Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
@@ -67,6 +62,22 @@ AñadirElemento
 
 Comanda
 - Se ha eliminado la clase comanda (No estaba reflejada en los diagramas).
+
+Diálogo de confirmación
+- Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
+- Se ha formateado el texto de salida a un tamaño óptimo de pantalla y una fuente más legible.
+
+DialogoAnadirElemento
+- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
+
+DialogoAnadirIngrediente
+- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
+
+DialogoEliminarElemento
+- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
+
+DialogoEliminarIngrediente
+- Se han redistribuido sus elementos y se ha ajustado el tamaño del texto.
 
 
 [[TODOS]]
