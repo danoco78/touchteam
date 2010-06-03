@@ -11,8 +11,11 @@
 
 package Vista.InterfazCliente;
 
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 /**
  *
@@ -25,15 +28,16 @@ public class PanelInicial extends javax.swing.JPanel {
     public PanelInicial(InterfazCliente interfazCliente) {
         this.interfazCliente=interfazCliente;
         initComponents();
-        ImageIcon fotoInicio = new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"));
-        ImageIcon aux = new ImageIcon();
-        aux.setImage(new BufferedImage(java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-                java.awt.Toolkit.getDefaultToolkit().getScreenSize().height,
-                BufferedImage.TYPE_INT_RGB));
-        aux.getImage().getGraphics().drawImage(fotoInicio.getImage(), 0, 0, 
-                java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-                java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, null);
-        this.LabelImagenInicio.setIcon(aux);
+    }
+
+     @Override
+    public void paint(Graphics g) {
+        
+        Graphics2D g2 = (Graphics2D) g.create();
+        Rectangle clip = g2.getClipBounds();
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(30, 40, 90) ,getWidth() ,getHeight(), new Color(155, 155, 200) ));
+        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+        super.paint(g);
     }
     
     /** This method is called from within the constructor to
@@ -49,11 +53,15 @@ public class PanelInicial extends javax.swing.JPanel {
         LabelImagenInicio = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(1754, 1240));
         setLayout(new java.awt.BorderLayout());
 
+        PanelCentral.setOpaque(false);
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
+        LabelImagenInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelImagenInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCliente/imagenes/inicioCliente.png"))); // NOI18N
         LabelImagenInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 empezar(evt);
