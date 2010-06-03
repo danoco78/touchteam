@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 3.2.4
 -- http://www.phpmyadmin.net
 --
@@ -191,7 +191,7 @@ INSERT INTO asociaPlato (elementoColaCocina_elementoPedido_elementoPedido_id, el
 --
 
 INSERT INTO factura(factura_id, estado, fecha) VALUES
-(1, 0,'2010-05-11');
+(1, 0,'2010-05-11', 45.5);
 
 --
 -- Volcar la base de datos para la tabla 'facturapedido'
