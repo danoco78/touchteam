@@ -27,12 +27,14 @@ import utilidades.PanelEspacioVertical;
 public class PanelPedidoRealizado extends javax.swing.JPanel {
 
     PanelGeneralCliente panelGeneralCliente;
+    private ArrayList<Pedido> pedidosMostrandose;
     private int codMesa;
     /** Creates new form PanelPedidoRealizado */
     public PanelPedidoRealizado(PanelGeneralCliente panelGeneralCliente, int codMesa) {
         initComponents();
         this.panelGeneralCliente=panelGeneralCliente;
         this.codMesa=codMesa;
+        this.pedidosMostrandose = null;
         this.actualizar();
     }
 
@@ -106,60 +108,139 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
     }
 
     public int actualizar() {
-        this.PanelPedido.removeAll();
+        // Comprobamos si ha cambiado algun pedido
         ArrayList<Pedido> pedidos = this.panelGeneralCliente.icliente.obtienePedidosMesa(codMesa);
-        Iterator itPedidos = pedidos.iterator();
-        boolean todosPagados = true;
-        while(itPedidos.hasNext()){
-            Pedido pedido = (Pedido) itPedidos.next();
-            ArrayList<ElementoPedido> listaElementosPedido = pedido.obtieneElementos();
+        if (pedidos != null &&
+                (this.pedidosMostrandose == null ||
+                this.compararListaPedidos(this.pedidosMostrandose, pedidos))) {
+            this.pedidosMostrandose = pedidos;
 
-            ArrayList<Elemento> listaElementos = new ArrayList();
-            Iterator itElementos = listaElementosPedido.iterator();
-            while(itElementos.hasNext()){
-                ElementoPedido elementoPedido = (ElementoPedido) itElementos.next();
-                listaElementos.add(elementoPedido.getElemento());
-            }
+            // Si ha cambiado, repintamos
+            this.PanelPedido.removeAll();
 
-            if(pedido.getEstado() != Pedido.FACTURADO){
-                ArrayList<ElementoPedido> elementos = pedido.getElementos();
-                Iterator<ElementoPedido> it = elementos.iterator();
-                boolean mostrar = false;
-                // Iteramos sobre todos los elementos, si todos han sido preparados...
-                // ...no lo mostramos en la interfaz
-                while(it.hasNext() && !mostrar){
-                    ElementoPedido ep = it.next();
-                    if(ep instanceof ElementoColaBar){
-                        if(ep.getEstado() != ElementoColaBar.PREPARADO){
-                            mostrar = true;
-                        }
-                    }else if(ep instanceof ElementoColaCocina){
-                        if(ep.getEstado() != ElementoColaCocina.PREPARADO){
-                            mostrar = true;
+            Iterator itPedidos = pedidos.iterator();
+            boolean todosPagados = true;
+            while (itPedidos.hasNext()) {
+                Pedido pedido = (Pedido) itPedidos.next();
+                ArrayList<ElementoPedido> listaElementosPedido = pedido.obtieneElementos();
+
+                ArrayList<Elemento> listaElementos = new ArrayList();
+                Iterator itElementos = listaElementosPedido.iterator();
+                while (itElementos.hasNext()) {
+                    ElementoPedido elementoPedido = (ElementoPedido) itElementos.next();
+                    listaElementos.add(elementoPedido.getElemento());
+                }
+
+                if (pedido.getEstado() != Pedido.FACTURADO) {
+                    ArrayList<ElementoPedido> elementos = pedido.getElementos();
+                    Iterator<ElementoPedido> it = elementos.iterator();
+                    boolean mostrar = false;
+                    // Iteramos sobre todos los elementos, si todos han sido preparados...
+                    // ...no lo mostramos en la interfaz
+                    while (it.hasNext() && !mostrar) {
+                        ElementoPedido ep = it.next();
+                        if (ep instanceof ElementoColaBar) {
+                            if (ep.getEstado() != ElementoColaBar.PREPARADO) {
+                                mostrar = true;
+                            }
+                        } else if (ep instanceof ElementoColaCocina) {
+                            if (ep.getEstado() != ElementoColaCocina.PREPARADO) {
+                                mostrar = true;
+                            }
                         }
                     }
+                    if (mostrar) {
+                        this.anadirPedido(listaElementos, pedido.getCodPedido(), pedido.getEstado());
+                    }
+                    todosPagados = false;
                 }
-                if(mostrar)
-                    this.anadirPedido(listaElementos,pedido.getCodPedido(), pedido.getEstado());
-                todosPagados = false;
-            }
-            //this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
-        }
-
-        if(todosPagados == true){
-            this.panelGeneralCliente.volverAlInicio();
-        }else{
-            if(pedidos.size()==0){
-                this.BotonVerFactura.setEnabled(false);
-            }else{
-                this.BotonVerFactura.setEnabled(true);
+                //this.panelGeneralCliente.eliminarPedido(pedido.getCodPedido(), false);
             }
 
-            this.PanelPedido.repaint();
-            this.PanelPedido.revalidate();
+            if (todosPagados == true) {
+                this.panelGeneralCliente.volverAlInicio();
+            } else {
+                if (pedidos.size() == 0) {
+                    this.BotonVerFactura.setEnabled(false);
+                } else {
+                    this.BotonVerFactura.setEnabled(true);
+                }
+
+                this.PanelPedido.repaint();
+                this.PanelPedido.revalidate();
+            }
         }
         
         return pedidos.size();
+    }
+
+    /**
+     * Compara una lista de pedidos con la otra, devolviendo True si son distintas,
+     * se deben respetar los parametros con las condiciones que se indican, de lo
+     * contrario se puede devolver un resultado inesperado.
+     * @param peds1 Conjunto de pedidos que se estan mostrando en la interfaz
+     * @param peds2 Conjunto nuevo de pedidos a comparar
+     * @return True si son distintas
+     */
+    private boolean compararListaPedidos(ArrayList<Pedido> peds1, ArrayList<Pedido> peds2) {
+        if(peds1.size() != peds2.size()){
+            return true;
+        }
+        Iterator<Pedido> it1 = peds1.iterator();
+        while(it1.hasNext()){ // Recorremos los pedidos
+            Pedido next1 = it1.next();
+            Iterator<Pedido> it2 = peds2.iterator();
+
+            boolean encontrado = false;
+            Pedido next2 = null;
+            while(it2.hasNext() && !encontrado){
+                next2 = it2.next();
+                if(next2.getCodPedido() == next1.getCodPedido() &&
+                        next2.getCodMesa() == next1.getCodMesa()){
+                    encontrado = true;
+                }
+            }
+            if(!encontrado) return true;
+            if(next1.getEstado() != next2.getEstado()) return true;
+            // Comprobamos el estado de sus elementos, solo nos interesa si hay alguno
+            // distinto y todos los de next2 son estan en estado PREPARADO
+            ArrayList<ElementoPedido> elementos1 = next1.getElementos();
+            ArrayList<ElementoPedido> elementos2 = next2.getElementos();
+            if(elementos1.size() != elementos2.size()) return true;
+
+            int estadosDistintos = 0,
+                    estadosPreparados = 0;
+            Iterator<ElementoPedido> itE1 = elementos1.iterator();
+            while(itE1.hasNext()){
+                ElementoPedido nextE1 = itE1.next();
+                encontrado = false;
+                Iterator<ElementoPedido> itE2 = elementos2.iterator();
+                ElementoPedido nextE2 = null;
+                while(itE2.hasNext() && !encontrado){
+                    nextE2 = itE2.next();
+                    if(nextE2.getCodElementoPedido() == nextE1.getCodElementoPedido()){
+                        encontrado = true;
+                    }
+                }
+                if(!encontrado) return true;
+                // Sus estados son distintos
+                if(nextE1.getEstado() != nextE2.getEstado()){
+                    ++estadosDistintos;
+                    // Si el segundo elemento esta preparado
+                    if(nextE2 instanceof ElementoColaBar && nextE2.getEstado() == ElementoColaBar.PREPARADO)
+                        ++estadosPreparados;
+                    else if(nextE2 instanceof ElementoColaCocina && nextE2.getEstado() == ElementoColaCocina.PREPARADO)
+                        ++estadosPreparados;
+                }
+            }// Hemos terminado de recorrer todos los elementos del pedido next1 respecto a su homologo en 2
+            // Si habia con estados distintos y todos los nuevos están Preparado, hay que repintar.
+            if(estadosDistintos > 0 && estadosDistintos == estadosPreparados)
+                return true;
+
+        }
+        System.out.println("No se actualiza!!");
+        System.gc();
+        return false;
     }
 
 }
