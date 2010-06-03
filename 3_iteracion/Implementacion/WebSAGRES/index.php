@@ -50,7 +50,7 @@
                 <div class="linea"></div>
                 <?php
                 $secciones = $sagres->getSecciones();
-                echo "<form method=\"post\" action=\"nuevoPedido.php\">";
+                echo "<form method=\"post\" action=\"realizaPedido.php\">";
                 for($i=0; $i<count($secciones); $i++) {
                     echo "<h2>".$secciones[$i]->getNombre()."</h2>";
                     echo "<div class=\"seccion\">";

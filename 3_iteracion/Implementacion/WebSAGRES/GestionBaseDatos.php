@@ -20,11 +20,21 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
     }
 
     private function conectaMySQL() {
-        $this->bd = new mysqli("localhost", "touch", "team", "touchteam"); // Cambiar aqui usuario y contraseña
+        $this->bd = new mysqli("localhost", "root", "elpeluesendesa", "touchteam"); // Cambiar aqui usuario y contraseña
         if(mysqli_connect_errno()) {
             echo "Error. No se pudo conectar a la base de datos.";
             exit;
         }
+    }
+
+    private function getImagen($imagen) {
+        $dir = getcwd()."/tmp";
+	$foto = basename(tempnam($dir,'img'));
+	$foto = "tmp/".$foto.".jpg";
+	$ft = fopen($foto,"w");
+	fwrite($ft, $imagen);
+        fclose($ft);
+	return $foto;
     }
 
     public function getSecciones() {
@@ -204,11 +214,11 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
         $elementos = $pedido->getElementos();
 
         /* Imprimir Datos */
-        echo "- Pedido: ".$codPedido."<br>";
-        echo "- Mesa: ".$mesa."<br>";
-        echo "- Estado: ".$estado."<br>";
-        echo "- Fecha: ".$fecha."<br>";
-        echo "- Numero de elementos: ".count($elementos)."<br><br>";
+//        echo "- Pedido: ".$codPedido."<br>";
+//        echo "- Mesa: ".$mesa."<br>";
+//        echo "- Estado: ".$estado."<br>";
+//        echo "- Fecha: ".$fecha."<br>";
+//        echo "- Numero de elementos: ".count($elementos)."<br><br>";
 
         /* Insercion de los datos del pedido */
         $sql1 = "INSERT INTO pedido VALUES($codPedido,$mesa,$estado,$fecha)";
@@ -224,10 +234,10 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $codElemCarta = $elemCarta->getId();
 
             /* Imprimir Datos */
-            echo "--- Elemento Pedido: ".$codElem."<br>";
-            echo "--- Comentario: ".$comentario."<br>";
-            echo "--- Estado: ".$estadoElem."<br>";
-            echo "--- Elemento Carta: ".$codElemCarta."<br><br>";
+//            echo "--- Elemento Pedido: ".$codElem."<br>";
+//            echo "--- Comentario: ".$comentario."<br>";
+//            echo "--- Estado: ".$estadoElem."<br>";
+//            echo "--- Elemento Carta: ".$codElemCarta."<br><br>";
 
             /* Insercion de los datos del elemento del pedido */
             $sql2 = "INSERT INTO elementoPedido VALUES($codElem,$estadoElem,\"$comentario\")";
@@ -314,16 +324,6 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
             $codElem = $row["MAX(elementoPedido_id)"] + 1;
         }
         return $codElem;
-    }
-
-    private function getImagen($imagen) {
-        $dir = getcwd()."/tmp";
-	$foto = basename(tempnam($dir,'img'));
-	$foto = "tmp/".$foto.".jpg";
-	$ft = fopen($foto,"w");
-	fwrite($ft, $imagen);
-        fclose($ft);
-	return $foto;
     }
 
 }

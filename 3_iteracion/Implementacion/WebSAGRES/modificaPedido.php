@@ -77,7 +77,8 @@
                 }
                 // Se muestran los elementos con sus cantidades
                 $secciones = $sagres->getSecciones();
-                echo "<form method=\"post\" action=\"nuevoPedido.php\">";
+                echo "<form method=\"post\" action=\"realizaPedido.php\">";
+                echo '<input type="hidden" name="codpedido" value="'.$codpedido.'"/>';
                 for($i=0; $i<count($secciones); $i++) {
                     echo "<h2>".$secciones[$i]->getNombre()."</h2>";
                     echo "<div class=\"seccion\">";

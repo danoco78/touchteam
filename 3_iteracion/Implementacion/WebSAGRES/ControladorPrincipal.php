@@ -15,6 +15,19 @@ class ControladorPrincipal implements ICliente {
     public function __construct() {
         $this->carta = new GestionCarta();
         $this->pedidos = new GestionPedidos();
+        $this->borradoRecursivo("tmp"); // Se borran los archivos temporales inutiles
+    }
+    
+    private function borradoRecursivo($str) {
+        if(is_file($str)) {
+            return @unlink($str);
+        }
+        elseif(is_dir($str)) {
+            $scan = glob(rtrim($str,'/').'/*');
+            foreach($scan as $index=>$path) {
+                $this->borradoRecursivo($path);
+            }
+        }
     }
 
     function getSecciones() {
