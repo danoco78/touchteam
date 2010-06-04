@@ -214,9 +214,9 @@ public class platoMenosVendido extends javax.swing.JPanel {
 
         imagen.setBackground(new java.awt.Color(0, 0, 0));
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
         imagen.setMaximumSize(new java.awt.Dimension(800, 600));
-        imagen.setPreferredSize(new java.awt.Dimension(500, 400));
+        imagen.setPreferredSize(new java.awt.Dimension(600, 600));
         Estadisticas.add(imagen, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);

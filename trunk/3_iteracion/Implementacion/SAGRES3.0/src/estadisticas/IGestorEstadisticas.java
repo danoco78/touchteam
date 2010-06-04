@@ -7,6 +7,7 @@ package Estadisticas;
 import GestionCarta.Seccion;
 import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.ArrayList;
 
 
 /**
@@ -22,4 +23,5 @@ public interface IGestorEstadisticas {
     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s);
 
     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Timestamp i, Timestamp f, Seccion s);
+
 }

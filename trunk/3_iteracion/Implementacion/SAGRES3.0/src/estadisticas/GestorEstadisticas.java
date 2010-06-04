@@ -9,7 +9,7 @@ import GestionCarta.Seccion;
 import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;
 import GestionBaseDatos.IEstadisticasBD;
-
+import java.util.ArrayList;
 /**
  *
  * @author nabil
@@ -38,4 +38,5 @@ public class GestorEstadisticas implements IGestorEstadisticas{
         DefaultCategoryDataset listaPlatos = iEstadisticas.obtieneListaPlatoMenosPedido(i, f, s);
         return listaPlatos;
     }
+
 }

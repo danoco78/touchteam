@@ -51,4 +51,5 @@ public interface ICocinero {
     public abstract DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f);
     public abstract DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s);
     public abstract DefaultCategoryDataset obtieneListaPlatoMenosVendido(Timestamp i, Timestamp f, Seccion s);
+
 }

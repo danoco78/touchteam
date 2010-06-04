@@ -7,6 +7,7 @@ package GestionBaseDatos;
 import GestionCarta.Seccion;
 import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.ArrayList;
 /**
  *
  * @author nabil

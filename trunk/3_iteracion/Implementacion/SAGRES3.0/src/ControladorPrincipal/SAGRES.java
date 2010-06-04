@@ -246,4 +246,5 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     public DefaultCategoryDataset obtieneListaPlatoMenosVendido(Timestamp i, Timestamp f, Seccion s) {
        return this.iEstadisticas.obtieneListaPlatoMenosPedido(i, f, s);
     }
+
 }

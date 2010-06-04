@@ -169,7 +169,7 @@ public class balanceEconomico extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(50, 0, 46, 26);
         cabeceraCuerpo.add(fechaF, gridBagConstraints);
 
-        bGenerar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGenerar.setFont(new java.awt.Font("Arial", 1, 14));
         bGenerar.setForeground(new java.awt.Color(80, 98, 143));
         bGenerar.setText("Generar");
         bGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +187,10 @@ public class balanceEconomico extends javax.swing.JPanel {
 
         imagenEstadisticas.setLayout(new java.awt.BorderLayout());
 
+        imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
+        imagen.setMaximumSize(new java.awt.Dimension(800, 600));
+        imagen.setPreferredSize(new java.awt.Dimension(600, 600));
         imagenEstadisticas.add(imagen, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(imagenEstadisticas, java.awt.BorderLayout.CENTER);

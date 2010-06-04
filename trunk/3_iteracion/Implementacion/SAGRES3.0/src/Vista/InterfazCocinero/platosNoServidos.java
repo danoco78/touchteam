@@ -94,7 +94,7 @@ public class platosNoServidos extends javax.swing.JPanel {
 
         panelCENTRO.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36));
         jLabel1.setForeground(new java.awt.Color(80, 98, 143));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
@@ -168,7 +168,7 @@ public class platosNoServidos extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(62, 0, 64, 26);
         cabeceraCuerpo.add(fechaF, gridBagConstraints);
 
-        bGenerar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGenerar.setFont(new java.awt.Font("Arial", 1, 14));
         bGenerar.setForeground(new java.awt.Color(80, 98, 143));
         bGenerar.setText("Generar");
         bGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,9 +188,9 @@ public class platosNoServidos extends javax.swing.JPanel {
 
         imagen.setBackground(new java.awt.Color(0, 0, 0));
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
         imagen.setMaximumSize(new java.awt.Dimension(800, 600));
-        imagen.setPreferredSize(new java.awt.Dimension(500, 400));
+        imagen.setPreferredSize(new java.awt.Dimension(600, 600));
         Estadisticas.add(imagen, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);
