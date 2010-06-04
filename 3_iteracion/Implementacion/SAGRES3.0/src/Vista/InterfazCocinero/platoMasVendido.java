@@ -315,6 +315,8 @@ public class platoMasVendido extends javax.swing.JPanel {
         Seccion s;
         dataset = null;
         if(item.equals(" "))
+        {System.out.println("item null");}
+        if(item.equals(" "))
         {    dataset = cocina.obtieneListaPlatoMasPedido(i, f, null);
         }
         else
