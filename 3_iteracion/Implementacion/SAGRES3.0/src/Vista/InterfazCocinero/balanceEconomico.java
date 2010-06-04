@@ -78,6 +78,11 @@ public class balanceEconomico extends javax.swing.JPanel {
         fechaF = new javax.swing.JTextField();
         bGenerar = new javax.swing.JButton();
         imagenEstadisticas = new javax.swing.JPanel();
+        izq = new javax.swing.JPanel();
+        arriba = new javax.swing.JPanel();
+        der = new javax.swing.JPanel();
+        abajo = new javax.swing.JPanel();
+        central = new javax.swing.JPanel();
         imagen = new javax.swing.JLabel();
 
         setOpaque(false);
@@ -147,7 +152,7 @@ public class balanceEconomico extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(50, 19, 46, 14);
         cabeceraCuerpo.add(FI, gridBagConstraints);
 
-        fechaI.setFont(new java.awt.Font("Arial", 0, 14));
+        fechaI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fechaI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fechaIActionPerformed(evt);
@@ -209,11 +214,29 @@ public class balanceEconomico extends javax.swing.JPanel {
         imagenEstadisticas.setOpaque(false);
         imagenEstadisticas.setLayout(new java.awt.BorderLayout());
 
+        izq.setOpaque(false);
+        imagenEstadisticas.add(izq, java.awt.BorderLayout.LINE_START);
+
+        arriba.setOpaque(false);
+        imagenEstadisticas.add(arriba, java.awt.BorderLayout.PAGE_START);
+
+        der.setOpaque(false);
+        imagenEstadisticas.add(der, java.awt.BorderLayout.LINE_END);
+
+        abajo.setOpaque(false);
+        imagenEstadisticas.add(abajo, java.awt.BorderLayout.PAGE_END);
+
+        central.setBackground(new java.awt.Color(255, 255, 255));
+        central.setOpaque(false);
+
+        imagen.setBackground(new java.awt.Color(255, 255, 255));
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
         imagen.setMaximumSize(new java.awt.Dimension(800, 600));
-        imagen.setPreferredSize(new java.awt.Dimension(600, 600));
-        imagenEstadisticas.add(imagen, java.awt.BorderLayout.CENTER);
+        imagen.setOpaque(true);
+        imagen.setPreferredSize(new java.awt.Dimension(600, 700));
+        central.add(imagen);
+
+        imagenEstadisticas.add(central, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(imagenEstadisticas, java.awt.BorderLayout.CENTER);
 
@@ -270,15 +293,20 @@ public class balanceEconomico extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel FF;
     private javax.swing.JLabel FI;
+    private javax.swing.JPanel abajo;
+    private javax.swing.JPanel arriba;
     private javax.swing.JButton bGenerar;
     public javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel cabeceraCuerpo;
+    private javax.swing.JPanel central;
     private javax.swing.JPanel cuerpo;
+    private javax.swing.JPanel der;
     private javax.swing.JTextField fechaF;
     private javax.swing.JTextField fechaI;
     private javax.swing.JLabel imagen;
     private javax.swing.JPanel imagenEstadisticas;
+    private javax.swing.JPanel izq;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panelCENTRO;
     private javax.swing.JPanel panelDER;
