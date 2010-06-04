@@ -96,7 +96,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
 
         bAnadirIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bAnadirIngrediente.setForeground(new java.awt.Color(80, 98, 143));
-        bAnadirIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/AñadirIngrediente.png"))); // NOI18N
+        bAnadirIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/AnadirIngrediente.png"))); // NOI18N
         bAnadirIngrediente.setText("Añadir Ingrediente");
         bAnadirIngrediente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bAnadirIngrediente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -108,7 +108,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirIngrediente, gridBagConstraints);
 
-        bEleminarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEleminarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
         bEleminarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
         bEleminarIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Eliminar Ingrediente.png"))); // NOI18N
         bEleminarIngrediente.setText("Eliminar Ingrediente");
@@ -124,7 +124,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarIngrediente, gridBagConstraints);
 
-        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bModificarIngrediente.setFont(new java.awt.Font("Arial", 1, 14));
         bModificarIngrediente.setForeground(new java.awt.Color(80, 98, 143));
         bModificarIngrediente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Modificar Ingrediente.png"))); // NOI18N
         bModificarIngrediente.setText("Modificar Ingrediente");
@@ -140,7 +140,7 @@ public class IntGestionIngrediente extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bModificarIngrediente, gridBagConstraints);
 
-        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificarIncidente.setFont(new java.awt.Font("Arial", 1, 14));
         bNotificarIncidente.setForeground(new java.awt.Color(80, 98, 143));
         bNotificarIncidente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Incidencia ingrediente.png"))); // NOI18N
         bNotificarIncidente.setText("Notificar Incidente");
