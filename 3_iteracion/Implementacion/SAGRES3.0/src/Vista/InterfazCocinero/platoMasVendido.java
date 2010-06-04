@@ -22,15 +22,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import javax.swing.ImageIcon;
 import java.io.File;
+import GestionCarta.ICarta;
+import java.util.HashSet;
+import GestionCarta.Seccion;
 /**
  *
  * @author nabil
  */
 public class platoMasVendido extends javax.swing.JPanel {
     private ICocinero cocina;
+    private ICarta iCarta;
     private int cont;
     /** Creates new form platoMasVendido */
-    public platoMasVendido(ICocinero icocinero) {
+    public platoMasVendido(ICocinero icocinero, ICarta icarta) {
         this.cocina = icocinero;
         this.cont = 0;
         initComponents();
@@ -93,7 +97,7 @@ public class platoMasVendido extends javax.swing.JPanel {
 
         panelCENTRO.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36));
         jLabel1.setForeground(new java.awt.Color(80, 98, 143));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
@@ -187,9 +191,9 @@ public class platoMasVendido extends javax.swing.JPanel {
 
         imagen.setBackground(new java.awt.Color(0, 0, 0));
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
         imagen.setMaximumSize(new java.awt.Dimension(800, 600));
-        imagen.setPreferredSize(new java.awt.Dimension(500, 400));
+        imagen.setPreferredSize(new java.awt.Dimension(600, 600));
         Estadisticas.add(imagen, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);
@@ -211,11 +215,12 @@ public class platoMasVendido extends javax.swing.JPanel {
 
     private void bGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerarActionPerformed
         repaint();
+        HashSet <Seccion> secciones;
         String fecha;
         fecha = fechaI.getText();
         Timestamp i= Timestamp.valueOf(fecha+" 00:00:00");
         cont = cont +1;
-
+        secciones = iCarta.obtieneSecciones();
         fecha = fechaF.getText();
         System.out.println(fecha+"\n");
         Timestamp f= Timestamp.valueOf(fecha+" 00:00:00");

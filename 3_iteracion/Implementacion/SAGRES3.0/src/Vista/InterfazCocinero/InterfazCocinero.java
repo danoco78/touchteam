@@ -7,6 +7,7 @@ import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import GestionCarta.ICarta;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 public class InterfazCocinero extends javax.swing.JFrame {
 
     public ICocinero icocinero;
+    public ICarta icarta;
     private IntPrincipalCocinero panelPrincipal = null;
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
@@ -44,7 +46,7 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelColaCocinero = new IntColaCocinero(icocinero, this);
         this.panelEstadisticas = new menuEstadisticas();
         this.panelBalance = new balanceEconomico(icocinero);
-        this.panelPlatoMasvendido = new platoMasVendido(icocinero);
+        this.panelPlatoMasvendido = new platoMasVendido(icocinero,icarta);
         this.panelPlatoMenosvendido = new platoMenosVendido(icocinero);
         this.panelPlatosNoServidos = new platosNoServidos(icocinero);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
