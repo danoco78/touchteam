@@ -121,12 +121,13 @@ public class menuEstadisticas extends javax.swing.JPanel {
         bBalance.setPreferredSize(new java.awt.Dimension(300, 200));
         bBalance.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         cuerpo.add(bBalance, gridBagConstraints);
 
         bPlatosNoServidos.setFont(new java.awt.Font("Arial", 1, 24));
         bPlatosNoServidos.setForeground(new java.awt.Color(80, 98, 143));
-        bPlatosNoServidos.setText("<html>\n<body>\nPlatos No Servidos Por\n<br>\nFalta de Ingredientes\n</body>\n</html>");
+        bPlatosNoServidos.setText("<html>\n<body>\nEfecto de la\n<br>\nFalta de Ingredientes\n</body>\n</html>");
         bPlatosNoServidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bPlatosNoServidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bPlatosNoServidos.setMaximumSize(new java.awt.Dimension(300, 200));
@@ -134,10 +135,8 @@ public class menuEstadisticas extends javax.swing.JPanel {
         bPlatosNoServidos.setPreferredSize(new java.awt.Dimension(300, 200));
         bPlatosNoServidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         cuerpo.add(bPlatosNoServidos, gridBagConstraints);
 
         bPlatosMasVendidos.setFont(new java.awt.Font("Arial", 1, 24));
@@ -150,7 +149,7 @@ public class menuEstadisticas extends javax.swing.JPanel {
         bPlatosMasVendidos.setPreferredSize(new java.awt.Dimension(300, 200));
         bPlatosMasVendidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bPlatosMasVendidos, gridBagConstraints);
@@ -165,8 +164,8 @@ public class menuEstadisticas extends javax.swing.JPanel {
         bPlatosMenosVendidos.setPreferredSize(new java.awt.Dimension(300, 200));
         bPlatosMenosVendidos.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bPlatosMenosVendidos, gridBagConstraints);
 

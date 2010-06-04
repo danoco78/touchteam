@@ -11,14 +11,28 @@
 
 package Vista.InterfazCocinero;
 import utilidades.*;
+import ControladorPrincipal.ICocinero;
+import java.sql.Timestamp;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.io.IOException;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import javax.swing.ImageIcon;
+import java.io.File;
 /**
  *
  * @author nabil
  */
 public class platoMenosVendido extends javax.swing.JPanel {
-
+    private ICocinero cocina;
+    private int cont;
     /** Creates new form platoMenosVendido */
-    public platoMenosVendido() {
+    public platoMenosVendido(ICocinero icocinero) {
+        this.cocina = icocinero;
+        this.cont = 0;
         initComponents();
         this.panelDER.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelDER.setPreferredSize(panelDER.getComponent(0).getPreferredSize());
@@ -50,7 +64,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
         fechaF = new javax.swing.JTextField();
         bGenerar = new javax.swing.JButton();
         Estadisticas = new javax.swing.JPanel();
-        imagenEstadisticas = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,7 +120,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
 
         panelCENTRO.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36));
         jLabel1.setForeground(new java.awt.Color(80, 98, 143));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/LogoSagres.png"))); // NOI18N
@@ -134,7 +148,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 4;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.insets = new java.awt.Insets(50, 19, 0, 14);
+        gridBagConstraints.insets = new java.awt.Insets(50, 19, 46, 14);
         cabeceraCuerpo.add(FI, gridBagConstraints);
 
         fechaI.setFont(new java.awt.Font("Arial", 0, 14));
@@ -149,7 +163,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 111;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 35);
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 46, 35);
         cabeceraCuerpo.add(fechaI, gridBagConstraints);
 
         FF.setFont(new java.awt.Font("Arial", 1, 18));
@@ -162,7 +176,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(50, 41, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(50, 41, 46, 15);
         cabeceraCuerpo.add(FF, gridBagConstraints);
 
         fechaF.setFont(new java.awt.Font("Arial", 0, 14));
@@ -177,28 +191,33 @@ public class platoMenosVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 105;
         gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 26);
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 46, 26);
         cabeceraCuerpo.add(fechaF, gridBagConstraints);
 
-        bGenerar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bGenerar.setFont(new java.awt.Font("Arial", 1, 14));
         bGenerar.setForeground(new java.awt.Color(80, 98, 143));
         bGenerar.setText("Generar");
+        bGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bGenerarActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 34;
-        gridBagConstraints.insets = new java.awt.Insets(50, 24, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(50, 24, 46, 5);
         cabeceraCuerpo.add(bGenerar, gridBagConstraints);
 
         cuerpo.add(cabeceraCuerpo, java.awt.BorderLayout.PAGE_START);
 
-        Estadisticas.setLayout(new java.awt.GridBagLayout());
+        Estadisticas.setLayout(new java.awt.BorderLayout());
 
-        imagenEstadisticas.setBackground(new java.awt.Color(0, 0, 0));
-        imagenEstadisticas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagenEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
-        imagenEstadisticas.setMaximumSize(new java.awt.Dimension(800, 600));
-        imagenEstadisticas.setPreferredSize(new java.awt.Dimension(500, 400));
-        Estadisticas.add(imagenEstadisticas, new java.awt.GridBagConstraints());
+        imagen.setBackground(new java.awt.Color(0, 0, 0));
+        imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/LogoSagres.png"))); // NOI18N
+        imagen.setMaximumSize(new java.awt.Dimension(800, 600));
+        imagen.setPreferredSize(new java.awt.Dimension(500, 400));
+        Estadisticas.add(imagen, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);
 
@@ -217,6 +236,36 @@ public class platoMenosVendido extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaFActionPerformed
 
+    private void bGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerarActionPerformed
+        repaint();
+        String fecha;
+        fecha = fechaI.getText();
+        Timestamp i= Timestamp.valueOf(fecha+" 00:00:00");
+        cont = cont +1;
+
+        fecha = fechaF.getText();
+        System.out.println(fecha+"\n");
+        Timestamp f= Timestamp.valueOf(fecha+" 00:00:00");
+
+        DefaultCategoryDataset dataset = cocina.obtieneListaPlatoMenosVendido(i, f, null);
+
+        JFreeChart chart = ChartFactory.createBarChart("platos menos pedidos", "","plato", dataset, PlotOrientation.VERTICAL, true,
+   true, false);
+        try {
+        ChartPanel panel = new ChartPanel(chart);
+        String tmpDir = System.getProperty("java.io.tmpdir");
+        ChartUtilities.saveChartAsJPEG(new File(tmpDir + "platosMenosPedido"+cont+".jpeg"), chart, 500, 300);
+        ImageIcon foto = new ImageIcon(tmpDir + "platosMenosPedido"+cont+".jpeg");
+
+        imagen.setIcon(foto);
+
+        imagen.validate();
+
+        } catch (IOException e) {
+            System.err.println("Error creando grafico.");
+        }
+    }//GEN-LAST:event_bGenerarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Estadisticas;
@@ -229,7 +278,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
     private javax.swing.JPanel cuerpo;
     private javax.swing.JTextField fechaF;
     private javax.swing.JTextField fechaI;
-    private javax.swing.JLabel imagenEstadisticas;
+    private javax.swing.JLabel imagen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

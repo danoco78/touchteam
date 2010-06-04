@@ -21,7 +21,7 @@ import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
-import estadisticas.IGestorEstadisticas;
+import Estadisticas.IGestorEstadisticas;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,16 +43,13 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     IGestorEstadisticas iEstadisticas;
 
     public SAGRES(ICarta iCarta, IProducto iProducto, IIncidencia iIncidencia, IPedidoProveedor iPedido,
-            IGestorPedidos gpedidos
-            // Si se cambia el constructor, hay que cambiar todos los sitios que lo llamen
-            // Pulsar sobre la funcion SAGRES, boton derecho, encontrar usos, ANTES de cambiarlo.
-            /*, IGestorEstadisticas iestadisticas*/){
+            IGestorPedidos gpedidos, IGestorEstadisticas iestadisticas){
         this.icarta = iCarta;
         this.iproducto = iProducto;
         this.iincidencia = iIncidencia;
         this.ipedidoproveedor = iPedido;
         this.ipedidos = gpedidos;
-        //this.iEstadisticas = iestadisticas;
+        this.iEstadisticas = iestadisticas;
     }
 
 

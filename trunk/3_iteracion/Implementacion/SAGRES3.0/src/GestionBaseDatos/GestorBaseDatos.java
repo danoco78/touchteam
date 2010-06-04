@@ -17,6 +17,7 @@ import GestionStock.GestionPedidoProveedor.PedidoProveedor;
 import GestionStock.GestionProductos.Bebida;
 import GestionStock.GestionProductos.Ingrediente;
 import GestionStock.GestionProductos.Producto;
+import utilidades.ConvertirFecha;
 import com.mysql.jdbc.Statement;
 import java.sql.Timestamp;
 import java.sql.ResultSet;
@@ -1043,7 +1044,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             Pedido ped = null;
             hayFactura = factura.next();
             if (hayFactura) {
-                fac = new Factura(factura.getInt(1), factura.getInt(2), factura.getTimestamp(3));
+                fac = new Factura(factura.getInt(1), factura.getInt(2), factura.getTimestamp(3),0);
                 do {
                     // Obtengo los elementoPedido asociados al pedido
                     ped = new Pedido(factura.getInt(5), factura.getInt(4), factura.getInt(6), factura.getTimestamp(7));
@@ -1091,7 +1092,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             // Asocio el elementoColaCocina al pedido
                             ped.asocia(eleCC);
                         }
-
                     }
                     fac.asocia(ped);
                 } while (factura.next());
@@ -1666,14 +1666,29 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     public DefaultCategoryDataset elementosAfectadosFaltaProductos(Timestamp i, Timestamp f){
         DefaultCategoryDataset elementosAfectados = new DefaultCategoryDataset();
+        Producto producto;
+        HashSet<Elemento> listaElementos;
+        int numeroElementos;
+        Timestamp fecha = Timestamp.valueOf("0000-00-00 00:00:00");
+        String fechaI;
+        String fechaF;
+        ConvertirFecha unafecha = new ConvertirFecha();
         try {
          java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet listaProductos = consulta.executeQuery("SELECT producto.producto_id, producto.cantidad, producto.foto, producto.maximo, producto.minimo, producto.nombre FROM producto, pedidoProveedor, tienePedido WHERE producto.producto_id = tienePedido.producto_producto_id AND tienePedido.pedidoProveedor_pedido_proveedor_id = pedidoProveedor.pedido_proveedor_id AND pedidoProveedor.fecha_pedido BETWEEN" +(new Timestamp(i.getTime()))+" AND "+ (new Timestamp(f.getTime())));
-
+         fechaI = unafecha.obtieneAnioMesDia(i);
+         fechaF = unafecha.obtieneAnioMesDia(f);
+         ResultSet listaProductos = consulta.executeQuery("SELECT producto.producto_id, producto.cantidad,"+
+                                                             " producto.foto, producto.maximo, producto.minimo,"+
+                                                             " producto.nombre FROM producto, pedidoProveedor, tienePedido"+
+                                                             " WHERE producto.producto_id = tienePedido.producto_producto_id"+
+                                                             " AND tienePedido.pedidoProveedor_pedido_proveedor_id = pedidoProveedor.pedido_proveedor_id"+
+                                                             " AND pedidoProveedor.fecha_pedido BETWEEN" +fechaI+" AND "+fechaF);
             //recorrer todos los productos seleccionados
             while(listaProductos.next()){
-                
-
+                producto = new Producto( Imagen.blobToImageIcon(listaProductos.getBytes(3)), listaProductos.getString(6), listaProductos.getFloat(5), listaProductos.getFloat(4), listaProductos.getFloat(2), listaProductos.getInt(1));
+                listaElementos = obtieneElementosConProducto(producto);
+                numeroElementos = listaElementos.size();
+                elementosAfectados.setValue(numeroElementos,producto.getNombre(),producto.getNombre());
             }
 
             return elementosAfectados;
@@ -1684,16 +1699,160 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
     }
 
     public DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DefaultCategoryDataset ganancias = new DefaultCategoryDataset();
+        Timestamp fecha = Timestamp.valueOf("0000-00-00 00:00:00");
+        String fechaI;
+        String fechaF;
+        float totalFactura = 0;
+        String mesAnio = "";
+        ConvertirFecha unafecha = new ConvertirFecha();
+        try {
+            java.sql.Statement consulta = this.Conexion.createStatement();
+            fechaI = unafecha.obtieneAnioMesDia(i);
+            fechaF = unafecha.obtieneAnioMesDia(f);
+            
+            ResultSet tablaFacturas = consulta.executeQuery("SELECT factura_id, estado, fecha, totalFactura FROM factura WHERE fecha BETWEEN"+fechaI+" AND "+fechaF);
+            Factura factura;
+
+           
+           // int fila = 0, col = 0;
+            String mesAnt ="-1";
+            String mesAct = " ";
+            while(tablaFacturas.next())
+            {   
+                factura = new Factura(tablaFacturas.getInt(1), tablaFacturas.getInt(2), tablaFacturas.getTimestamp(3), tablaFacturas.getFloat(4));
+                mesAct=unafecha.mes(factura.getFecha());
+                
+                if(mesAnt.equals("-1")){
+                    totalFactura += factura.getTotalFactura();
+                    mesAnt=mesAct;
+                    mesAnio = unafecha.mesAnio(factura.getFecha());
+                }
+                else{
+                    if(mesAnt.equals(mesAct)){
+                        totalFactura += factura.getTotalFactura();
+                        mesAnio = unafecha.mesAnio(factura.getFecha());
+                }
+                    else{
+                        ganancias.setValue(totalFactura, mesAnio, mesAnio);
+                        totalFactura = factura.getTotalFactura();
+                        mesAnio = unafecha.mesAnio(factura.getFecha());
+                        mesAnt = mesAct;
+                    }
+                }
+                ganancias.setValue(totalFactura, mesAnio, mesAnio);
+            }
+              
+            return ganancias;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return ganancias;
+        }
     }
 
     public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DefaultCategoryDataset listaPlatos = new DefaultCategoryDataset();
+        Timestamp fecha = Timestamp.valueOf("0000-00-00 00:00:00");
+        String fechaI;
+        String fechaF;
+        ConvertirFecha unafecha = new ConvertirFecha();
+        ResultSet listaElementos;
+        
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+         fechaI = unafecha.obtieneAnioMesDia(i);
+         fechaF = unafecha.obtieneAnioMesDia(f);
+         if(s==null && i == null && f == null){
+                  listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                              " WHERE pedido.pedido_id =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id"+
+                                                              " = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id AND asociaPlato.elementoPlato_elemento_elemento_id"+
+                                                              " = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                              " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) DESC LIMIT 0,10");
+         }
+         else if(i==null && f==null){
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE pedido.pedido_id =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id"+
+                                                             " = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id AND asociaPlato.elementoPlato_elemento_elemento_id"+
+                                                             " = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                             " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) DESC LIMIT 0,10");
+
+         }
+         else if(s == null){
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+"AND pedido.pedido_id = tieneElemento.pedido_pedido_id"+
+                                                             " AND  tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                             " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                             " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) DESC LIMIT 0,10");
+         }
+         else{
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+"AND pedido.pedido_id"+
+                                                             " =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                             " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                             " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) DESC LIMIT 0,10");
+         }
+            //recorrer todos los elementos seleccionados
+            while(listaElementos.next()){
+                   listaPlatos.setValue((double)listaElementos.getInt(2),listaElementos.getString(1),listaElementos.getString(1));
+            }
+
+            return listaPlatos;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return listaPlatos;
+        }
     }
 
     public DefaultCategoryDataset obtieneListaPlatoMenosPedido(Timestamp i, Timestamp f, Seccion s) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DefaultCategoryDataset listaPlatos = new DefaultCategoryDataset();
+         Timestamp fecha = Timestamp.valueOf("0000-00-00 00:00:00");
+        String fechaI;
+        String fechaF;
+        ConvertirFecha unafecha = new ConvertirFecha();
+        ResultSet listaElementos;
+
+        try {
+         java.sql.Statement consulta = this.Conexion.createStatement();
+         fechaI = unafecha.obtieneAnioMesDia(i);
+         fechaF = unafecha.obtieneAnioMesDia(f);
+         
+         if(s == null && i == null && f == null){
+                  listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                           " WHERE pedido.pedido_id =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                           " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                           " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
+         }
+         else if(i == null && f == null){
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE  incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.pedido_id  = tieneElemento.pedido_pedido_id"+
+                                                             " AND  tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                             " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id "+
+                                                             "GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
+
+         }
+         else if(s == null){
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+"AND pedido.pedido_id = tieneElemento.pedido_pedido_id"+
+                                                             " AND  tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                             " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                             " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
+         }
+         else{
+                    listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
+                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+
+                                                             " AND pedido.pedido_id =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
+                                                             " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
+                                                             " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
+         }
+            //recorrer todos los elemetos seleccionados
+            while(listaElementos.next()){
+                   listaPlatos.setValue((double)listaElementos.getInt(2),listaElementos.getString(1),listaElementos.getString(1));
+            }
+            return listaPlatos;
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            return listaPlatos;
+        }
     }
-
 }
-
