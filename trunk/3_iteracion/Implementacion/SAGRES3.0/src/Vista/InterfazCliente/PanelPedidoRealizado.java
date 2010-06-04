@@ -246,7 +246,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
         }
         //System.out.println("No se actualiza!!");
         System.gc();
-        return false;
+        return true;// TODO false;
     }
 
 }
