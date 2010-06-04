@@ -31,7 +31,6 @@ class GestionPedidos implements IPedidos {
         }
         $fecha = new DateTime();
         $fecha = '"'.$fecha->format("Y-d-m H:i:s").'"';//."T".$fecha->format("H:i:s");
-        echo $fecha;
         //echo date("Y-m-d H:m:s");
         $pedido = new Pedido($codmesa, $codPedido, 0, $fecha  , $elementos);
         $bd->insertaPedido($pedido);
@@ -47,7 +46,9 @@ class GestionPedidos implements IPedidos {
             $elempedido = new elementoPedido($codElem, $elementospedido[$i][1], 0, $elem);
             array_push($elementos, $elempedido);
         }
-        $pedido = new Pedido($codmesa, $codpedido, 0, DateTime(), $elementos);
+        $fecha = new DateTime();
+        $fecha = '"'.$fecha->format("Y-d-m H:i:s").'"';//."T".$fecha->format("H:i:s");
+        $pedido = new Pedido($codmesa, $codpedido, 0, $fecha, $elementos);
         $bd->insertaPedido($pedido);
     }
 
