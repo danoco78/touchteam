@@ -82,6 +82,11 @@ public class platoMasVendido extends javax.swing.JPanel {
         fechaF = new javax.swing.JTextField();
         bGenerar = new javax.swing.JButton();
         Estadisticas = new javax.swing.JPanel();
+        izq = new javax.swing.JPanel();
+        arriba = new javax.swing.JPanel();
+        der = new javax.swing.JPanel();
+        abajo = new javax.swing.JPanel();
+        central = new javax.swing.JPanel();
         imagen = new javax.swing.JLabel();
 
         setOpaque(false);
@@ -213,12 +218,28 @@ public class platoMasVendido extends javax.swing.JPanel {
         Estadisticas.setOpaque(false);
         Estadisticas.setLayout(new java.awt.BorderLayout());
 
-        imagen.setBackground(new java.awt.Color(0, 0, 0));
+        izq.setOpaque(false);
+        Estadisticas.add(izq, java.awt.BorderLayout.LINE_START);
+
+        arriba.setOpaque(false);
+        Estadisticas.add(arriba, java.awt.BorderLayout.PAGE_START);
+
+        der.setOpaque(false);
+        Estadisticas.add(der, java.awt.BorderLayout.LINE_END);
+
+        abajo.setOpaque(false);
+        Estadisticas.add(abajo, java.awt.BorderLayout.PAGE_END);
+
+        central.setOpaque(false);
+
+        imagen.setBackground(new java.awt.Color(255, 255, 255));
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/no_disponible.jpg"))); // NOI18N
         imagen.setMaximumSize(new java.awt.Dimension(800, 600));
+        imagen.setOpaque(true);
         imagen.setPreferredSize(new java.awt.Dimension(600, 600));
-        Estadisticas.add(imagen, java.awt.BorderLayout.CENTER);
+        central.add(imagen);
+
+        Estadisticas.add(central, java.awt.BorderLayout.CENTER);
 
         cuerpo.add(Estadisticas, java.awt.BorderLayout.CENTER);
 
@@ -273,14 +294,19 @@ public class platoMasVendido extends javax.swing.JPanel {
     private javax.swing.JPanel Estadisticas;
     private javax.swing.JLabel FF;
     private javax.swing.JLabel FI;
+    private javax.swing.JPanel abajo;
+    private javax.swing.JPanel arriba;
     private javax.swing.JButton bGenerar;
     public javax.swing.JButton bVolver;
     private javax.swing.JPanel cabecera;
     private javax.swing.JPanel cabeceraCuerpo;
+    private javax.swing.JPanel central;
     private javax.swing.JPanel cuerpo;
+    private javax.swing.JPanel der;
     private javax.swing.JTextField fechaF;
     private javax.swing.JTextField fechaI;
     private javax.swing.JLabel imagen;
+    private javax.swing.JPanel izq;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panelCENTRO;
     private javax.swing.JPanel panelDER;
