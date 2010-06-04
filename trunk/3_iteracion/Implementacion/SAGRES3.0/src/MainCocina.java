@@ -83,7 +83,7 @@ public class MainCocina {
             GestorEstadisticas estadisticas = new GestorEstadisticas(baseDeDatos);
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido,estadisticas);
             dCarga.Progreso(90);
-            InterfazCocinero interfaz = new InterfazCocinero(controlador);
+            InterfazCocinero interfaz = new InterfazCocinero(controlador,carta);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
             interfaz.setExtendedState(InterfazCocinero.MAXIMIZED_BOTH);
             interfaz.setMinimumSize(new Dimension(800,600));
