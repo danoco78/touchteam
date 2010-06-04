@@ -71,7 +71,8 @@ Diálogo de confirmación
 - Se ha ajustado el tamaño a un tamaño normal de pantalla, para que no sobresalga.
 - Se ha formateado el texto de salida a un tamaño óptimo de pantalla y una fuente más legible.
 
-
+Base de datos
+- Se han modificado los scripts de creación de tablas e introducción de datos, para esta nueva iteración.
 
 [[TODOS]]
 - Se ha cambiado el tipo Date por java.sql.Timestamp, tal como se especifica en el diseño de la 3º iteración.

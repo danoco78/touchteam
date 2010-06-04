@@ -188,11 +188,15 @@ public class SAGRES implements IMetre, ICocinero, ICliente {
     }
 
     public boolean seleccionaPlato(Pedido p, ElementoColaCocina ele) throws Exception{
-        return this.ipedidos.seleccionaPlato(p, ele);
+        boolean exito = this.ipedidos.seleccionaPlato(p, ele);
+        this.icarta.modificaElemento(ele.getElemento());
+        return exito;
     }
 
     public boolean seleccionaBebida(Pedido pe, ElementoColaBar e) throws Exception{
-        return this.ipedidos.seleccionaBebida(pe, e);
+        boolean exito = this.ipedidos.seleccionaBebida(pe, e);
+        this.icarta.modificaElemento(e.getElemento());
+        return exito;
     }
 
     public HashSet<Elemento> obtieneElementosDeSeccion(Seccion seccion) {
