@@ -80,7 +80,8 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 if((pedActual == null && siguientePedidoCocinaEnCola != null) ||
                         (siguientePedidoCocinaEnCola == null && pedActual != null) ||
                         (pedActual != null && siguientePedidoCocinaEnCola != null &&
-                        !pedActual.equals(siguientePedidoCocinaEnCola)) ){
+                        true // TODO !pedActual.equals(siguientePedidoCocinaEnCola)
+                        ) ){
                     this.cambiarPedido(siguientePedidoCocinaEnCola);
                 }else{
                     System.gc();

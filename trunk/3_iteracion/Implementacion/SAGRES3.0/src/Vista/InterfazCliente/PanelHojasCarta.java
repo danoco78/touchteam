@@ -40,7 +40,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
         if(it.hasNext()){
             e = (Elemento) it.next();
-            PanelElementoArribaI.add(new PanelElementoCarta(e,PGC, seccion));
+            PanelElementoArribaI.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
             if(e.getDisponible())
                 PanelElementoArribaI.getComponent(0).setEnabled(true);
             else
@@ -48,7 +48,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
             if(it.hasNext()){
                 e = (Elemento) it.next();
-                PanelElementoCentroI = (JPanel) new PanelElementoCarta(e,PGC, seccion);
+                PanelElementoCentroI.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
                 if(e.getDisponible())
                     PanelElementoCentroI.getComponent(0).setEnabled(true);
                 else
@@ -56,7 +56,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
                 if(it.hasNext()){
                     e = (Elemento) it.next();
-                    PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC, seccion));
+                    PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
                     if(e.getDisponible())
                         PanelElementoAbajoI.getComponent(0).setEnabled(true);
                     else
@@ -64,7 +64,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
                     if(it.hasNext()){
                         e = (Elemento) it.next();
-                        PanelElementoArribaD.add(new PanelElementoCarta(e,PGC, seccion));
+                        PanelElementoArribaD.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
                         if(e.getDisponible())
                             PanelElementoArribaD.getComponent(0).setEnabled(true);
                         else
@@ -72,7 +72,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
                         if(it.hasNext()){
                             e = (Elemento) it.next();
-                            PanelElementoCentroD.add(new PanelElementoCarta(e,PGC, seccion));
+                            PanelElementoCentroD.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
                             if(e.getDisponible())
                                 PanelElementoCentroD.getComponent(0).setEnabled(true);
                             else
@@ -80,7 +80,7 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
                             if(it.hasNext()){
                                 e = (Elemento) it.next();
-                                PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC, seccion));
+                                PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC, seccion), java.awt.BorderLayout.CENTER);
                                 if(e.getDisponible())
                                     PanelElementoAbajoD.getComponent(0).setEnabled(true);
                                 else
