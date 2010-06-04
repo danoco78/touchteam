@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import java.io.File;
 import GestionCarta.ICarta;
 import java.util.HashSet;
+import java.util.Iterator;
 import GestionCarta.Seccion;
 /**
  *
@@ -45,9 +46,22 @@ public class platoMasVendido extends javax.swing.JPanel {
         this.cont = 0;
         this.iCarta = icarta;
         initComponents();
+        HashSet <Seccion> secciones;
+        secciones = this.iCarta.obtieneSecciones();
+        Iterator it = secciones.iterator();
+        Seccion s;
+        listaSeccion.setEditable(true);
+        listaSeccion.addItem(" ");
+        while(it.hasNext())
+        {   s = (Seccion) it.next();
+            listaSeccion.setEditable(true);
+            listaSeccion.addItem(s.getNombre());
+        }
+        secciones = this.iCarta.obtieneSecciones();
         this.panelDER.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelDER.setPreferredSize(panelDER.getComponent(0).getPreferredSize());
     }
+  
 
     @Override
     public void paint(Graphics g) {
@@ -81,6 +95,8 @@ public class platoMasVendido extends javax.swing.JPanel {
         FF = new javax.swing.JLabel();
         fechaF = new javax.swing.JTextField();
         bGenerar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        listaSeccion = new javax.swing.JComboBox();
         Estadisticas = new javax.swing.JPanel();
         izq = new javax.swing.JPanel();
         arriba = new javax.swing.JPanel();
@@ -153,7 +169,7 @@ public class platoMasVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 4;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.insets = new java.awt.Insets(50, 19, 47, 14);
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 47, 14);
         cabeceraCuerpo.add(FI, gridBagConstraints);
 
         fechaI.setFont(new java.awt.Font("Arial", 0, 14));
@@ -171,7 +187,7 @@ public class platoMasVendido extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(50, 0, 47, 35);
         cabeceraCuerpo.add(fechaI, gridBagConstraints);
 
-        FF.setFont(new java.awt.Font("Arial", 1, 18));
+        FF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         FF.setForeground(new java.awt.Color(80, 98, 143));
         FF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         FF.setText("Fecha fin:");
@@ -181,7 +197,7 @@ public class platoMasVendido extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(50, 41, 47, 15);
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 47, 15);
         cabeceraCuerpo.add(FF, gridBagConstraints);
 
         fechaF.setFont(new java.awt.Font("Arial", 0, 14));
@@ -208,10 +224,34 @@ public class platoMasVendido extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 34;
         gridBagConstraints.insets = new java.awt.Insets(50, 24, 47, 5);
         cabeceraCuerpo.add(bGenerar, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(80, 98, 143));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Sección:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 36;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 46, 0);
+        cabeceraCuerpo.add(jLabel3, gridBagConstraints);
+
+        listaSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        listaSeccion.setMaximumRowCount(100);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 73;
+        gridBagConstraints.insets = new java.awt.Insets(50, 24, 46, 0);
+        cabeceraCuerpo.add(listaSeccion, gridBagConstraints);
 
         cuerpo.add(cabeceraCuerpo, java.awt.BorderLayout.PAGE_START);
 
@@ -260,28 +300,43 @@ public class platoMasVendido extends javax.swing.JPanel {
 
     private void bGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGenerarActionPerformed
         repaint();
-        HashSet <Seccion> secciones;
         String fecha;
+        String item;
         fecha = fechaI.getText();
         Timestamp i= Timestamp.valueOf(fecha+" 00:00:00");
         cont = cont +1;
-        secciones = this.iCarta.obtieneSecciones();
         fecha = fechaF.getText();
-        System.out.println(fecha+"\n");
+        DefaultCategoryDataset dataset;
         Timestamp f= Timestamp.valueOf(fecha+" 00:00:00");
+        item =(String) this.listaSeccion.getSelectedItem();
+        HashSet <Seccion> secciones;
+        secciones = this.iCarta.obtieneSecciones();
 
-        DefaultCategoryDataset dataset = cocina.obtieneListaPlatoMasPedido(i, f, null);
+        Seccion s;
+        dataset = null;
+        if(item.equals(" "))
+        {    dataset = cocina.obtieneListaPlatoMasPedido(i, f, null);
+        }
+        else
+        {   Iterator it = secciones.iterator();
+            boolean seguir = true;
+            while( seguir && it.hasNext())
+            { s = (Seccion) it.next();
+              if(s.getNombre().equals(item))
+              { seguir = false;
+                dataset = cocina.obtieneListaPlatoMasPedido(i, f, s);
+              }
+            }
 
-        JFreeChart chart = ChartFactory.createBarChart("platos mas pedidos", "","plato", dataset, PlotOrientation.VERTICAL, true,
+        }
+        JFreeChart chart = ChartFactory.createBarChart("platos mas pedidos", "plato","", dataset, PlotOrientation.VERTICAL, true,
    true, false);
         try {
         ChartPanel panel = new ChartPanel(chart);
         String tmpDir = System.getProperty("java.io.tmpdir");
         ChartUtilities.saveChartAsJPEG(new File(tmpDir + "platosMasPedido"+cont+".jpeg"), chart, 500, 300);
         ImageIcon foto = new ImageIcon(tmpDir + "platosMasPedido"+cont+".jpeg");
-        
         imagen.setIcon(foto);
-        
         imagen.validate();
 
         } catch (IOException e) {
@@ -308,6 +363,8 @@ public class platoMasVendido extends javax.swing.JPanel {
     private javax.swing.JLabel imagen;
     private javax.swing.JPanel izq;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox listaSeccion;
     private javax.swing.JPanel panelCENTRO;
     private javax.swing.JPanel panelDER;
     private javax.swing.JPanel panelIZQ;

@@ -1864,7 +1864,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
          }
          else{
                     listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
-                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+"AND pedido.pedido_id"+
+                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = "+s.getCodigoSeccion()+" AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+"AND pedido.pedido_id"+
                                                              " =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
                                                              " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
                                                              " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) DESC LIMIT 0,10");
@@ -1902,7 +1902,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
          }
          else if(i == null && f == null){
                     listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
-                                                             " WHERE  incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.pedido_id  = tieneElemento.pedido_pedido_id"+
+                                                             " WHERE  incluyePlato.seccionComida_seccion_seccion_id = "+s.getCodigoSeccion()+" AND pedido.pedido_id  = tieneElemento.pedido_pedido_id"+
                                                              " AND  tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
                                                              " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id "+
                                                              "GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
@@ -1917,7 +1917,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
          }
          else{
                     listaElementos   = consulta.executeQuery("SELECT elemento.nombre, COUNT(*) FROM pedido, tieneElemento,  asociaPlato, elemento, incluyePlato"+
-                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = seccionId AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+
+                                                             " WHERE incluyePlato.seccionComida_seccion_seccion_id = "+s.getCodigoSeccion()+" AND pedido.fecha BETWEEN"+fechaI+"AND "+fechaF+
                                                              " AND pedido.pedido_id =  tieneElemento.pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = asociaPlato.elementoColaCocina_elementoPedido_elementoPedido_id"+
                                                              " AND asociaPlato.elementoPlato_elemento_elemento_id = elemento.elemento_id  AND elemento.elemento_id = incluyePlato.elementoPlato_elemento_elemento_id"+
                                                              " GROUP BY  (elemento.nombre) ORDER BY COUNT(*) ASC LIMIT 0,10");
