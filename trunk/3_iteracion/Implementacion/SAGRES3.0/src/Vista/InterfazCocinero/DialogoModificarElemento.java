@@ -729,7 +729,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                     Seccion seccion = listaSecciones.get(this.bSeccion.getSelectedIndex());
                     if (seccion.getClass() == SeccionComida.class) {
                         try {
-                             ElementoPlato plato = new ElementoPlato(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(),
+                             ElementoPlato plato = new ElementoPlato(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(), false,
                                     this.imagen, (Integer) this.tTiempo.getValue(), (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
                             this.icocinero.modificaElemento(plato);
                         } catch (Exception ex) {
@@ -737,7 +737,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                         }
                     } else {
                         try {
-                            ElementoBebida bebida = new ElementoBebida(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(),
+                            ElementoBebida bebida = new ElementoBebida(elemento.getCodigoElemento(), null, this.tNombre.getText(), this.tDescripcion.getText(), false,
                                     this.imagen, (Float) this.tPrecio.getValue(), (Integer) this.tPorciones.getValue());
                             this.icocinero.modificaElemento(bebida);
                         } catch (Exception ex) {

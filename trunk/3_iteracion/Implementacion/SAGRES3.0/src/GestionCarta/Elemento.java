@@ -23,14 +23,14 @@ public class Elemento {
     private String nombre;
     private float precio;
 
-    public Elemento(int codigo, String descripcion, int divisionesMaximas, ImageIcon foto, String nombre, float precio) {
+    public Elemento(int codigo, String descripcion, boolean disponible, int divisionesMaximas, ImageIcon foto, String nombre, float precio) {
         this.codigoElemento = codigo;
         this.descripcion = descripcion;
         this.divisionesMaximas = divisionesMaximas;
         this.foto = foto;
         this.nombre = nombre;
         this.precio = precio;
-        this.disponible = false; //Hasta que no se comprueben los productos no esta disponible
+        this.disponible = disponible; //Hasta que no se comprueben los productos no esta disponible
         this.divisiones = 1;
     }
 

@@ -51,6 +51,7 @@ Gestor de base de datos
 - Se ha modificado la consulta de "obtienePedidosMesa", ahora solo obtiene los pedidos NO FACTURADOS.
 - Se ha modificado el método "actualizaPedido", ahora SOLO actualiza los elementos que han cambiado, o que tienen un estado mayor al que tenian en la base de datos. Esto soluciona un grave problema de concurrencia en el sistema.
 - Se ha modificado el método "imprimirFactura" y el de pagar factura, ya no lanzan excepciones si no encuentran factura alguna.
+- Se han modificado todos los métodos que obtienen Elemento, ahora comprueban si hay disponibilidad en la base de datos.
 
 Gestor Principal (SAGRES)
 - Se ha eliminado el contenido de la función getSiguientePedidoCocinaEnCola, ahora llama a getSiguientePedidoCocina hacia la base de datos, tal como se especifica en el diseño.
