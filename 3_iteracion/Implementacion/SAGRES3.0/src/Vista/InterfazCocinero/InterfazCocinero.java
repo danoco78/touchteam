@@ -16,7 +16,7 @@ import GestionCarta.ICarta;
 public class InterfazCocinero extends javax.swing.JFrame {
 
     public ICocinero icocinero;
-    public ICarta icarta;
+    public ICarta iCarta;
     private IntPrincipalCocinero panelPrincipal = null;
     private IntGestionCarta panelCarta = null;
     private IntGestionIngrediente panelIngrediente = null;
@@ -37,16 +37,17 @@ public class InterfazCocinero extends javax.swing.JFrame {
     protected static final String PLATOSNOSERVIDOS = "platosNoServidos";
     protected static final String BALANCE = "balance";
 
-    public InterfazCocinero( ICocinero iCocinero ) {
+    public InterfazCocinero( ICocinero iCocinero ,ICarta icarta) {
         initComponents();
         this.icocinero = iCocinero;
+        this.iCarta = icarta;
         this.panelPrincipal = new IntPrincipalCocinero();
         this.panelCarta = new IntGestionCarta();
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero(icocinero, this);
         this.panelEstadisticas = new menuEstadisticas();
         this.panelBalance = new balanceEconomico(icocinero);
-        this.panelPlatoMasvendido = new platoMasVendido(icocinero,icarta);
+        this.panelPlatoMasvendido = new platoMasVendido(icocinero,iCarta);
         this.panelPlatoMenosvendido = new platoMenosVendido(icocinero);
         this.panelPlatosNoServidos = new platosNoServidos(icocinero);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);

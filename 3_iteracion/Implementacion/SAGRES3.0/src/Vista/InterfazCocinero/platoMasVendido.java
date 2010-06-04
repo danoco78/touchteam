@@ -10,6 +10,11 @@
  */
 
 package Vista.InterfazCocinero;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import utilidades.*;
 import ControladorPrincipal.ICocinero;
 import java.sql.Timestamp;
@@ -34,14 +39,25 @@ public class platoMasVendido extends javax.swing.JPanel {
     private ICarta iCarta;
     private int cont;
     /** Creates new form platoMasVendido */
+
     public platoMasVendido(ICocinero icocinero, ICarta icarta) {
         this.cocina = icocinero;
         this.cont = 0;
+        this.iCarta = icarta;
         initComponents();
         this.panelDER.add(new PanelRelojFecha(), java.awt.BorderLayout.CENTER);
         this.panelDER.setPreferredSize(panelDER.getComponent(0).getPreferredSize());
     }
 
+    @Override
+    public void paint(Graphics g) {
+        super.paintComponents(g);
+        Graphics2D g2 = (Graphics2D) g.create();
+        Rectangle clip = g2.getClipBounds();
+        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,getHeight(), new Color(255, 255, 255) ));
+        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+        super.paint(g);
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -68,10 +84,13 @@ public class platoMasVendido extends javax.swing.JPanel {
         Estadisticas = new javax.swing.JPanel();
         imagen = new javax.swing.JLabel();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
+        cabecera.setOpaque(false);
         cabecera.setLayout(new java.awt.BorderLayout());
 
+        panelIZQ.setOpaque(false);
         panelIZQ.setLayout(new java.awt.GridBagLayout());
 
         bVolver.setFont(new java.awt.Font("Arial", 1, 18));
@@ -92,9 +111,11 @@ public class platoMasVendido extends javax.swing.JPanel {
 
         cabecera.add(panelIZQ, java.awt.BorderLayout.LINE_START);
 
+        panelDER.setOpaque(false);
         panelDER.setLayout(new java.awt.BorderLayout());
         cabecera.add(panelDER, java.awt.BorderLayout.LINE_END);
 
+        panelCENTRO.setOpaque(false);
         panelCENTRO.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36));
@@ -111,8 +132,10 @@ public class platoMasVendido extends javax.swing.JPanel {
 
         add(cabecera, java.awt.BorderLayout.PAGE_START);
 
+        cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.BorderLayout());
 
+        cabeceraCuerpo.setOpaque(false);
         cabeceraCuerpo.setLayout(new java.awt.GridBagLayout());
 
         FI.setFont(new java.awt.Font("Arial", 1, 18));
@@ -187,6 +210,7 @@ public class platoMasVendido extends javax.swing.JPanel {
 
         cuerpo.add(cabeceraCuerpo, java.awt.BorderLayout.PAGE_START);
 
+        Estadisticas.setOpaque(false);
         Estadisticas.setLayout(new java.awt.BorderLayout());
 
         imagen.setBackground(new java.awt.Color(0, 0, 0));
@@ -220,7 +244,7 @@ public class platoMasVendido extends javax.swing.JPanel {
         fecha = fechaI.getText();
         Timestamp i= Timestamp.valueOf(fecha+" 00:00:00");
         cont = cont +1;
-        secciones = iCarta.obtieneSecciones();
+        secciones = this.iCarta.obtieneSecciones();
         fecha = fechaF.getText();
         System.out.println(fecha+"\n");
         Timestamp f= Timestamp.valueOf(fecha+" 00:00:00");
