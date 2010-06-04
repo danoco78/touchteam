@@ -195,6 +195,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     public void nuevoElementoBebida(ElementoBebida elemento, Seccion seccion) {
         ImageIcon defaultPhoto;
+        boolean tieneSuficiente = true;
         try {
             // Insertamos el elemento
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento(nombre,descripcion,disponible,divi,divi_max,precio)"
@@ -236,12 +237,24 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 inserccion.setInt(2, bebida.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
+
+                // Si hay menos cantidad de algun producto que el minimo posible
+                if(bebida.getCantidad() < bebida.getMinimo()){
+                    tieneSuficiente = false;
+                }
             }
             // Insertamos el elemento en su sección
             inserccion = this.Conexion.prepareStatement("INSERT INTO incluyeBebida(seccionBebida_seccion_seccion_id,elementoBebida_elemento_elemento_id) VALUES (?, ?)");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
+
+            // Si hay suficiente de todos los productos
+            if(tieneSuficiente){
+                java.sql.PreparedStatement actualizacionDisponibilidad =
+                        this.Conexion.prepareStatement("UPDATE elemento SET disponible=1 WHERE elemento_id=" + id_elemento);
+                actualizacionDisponibilidad.executeUpdate();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -249,6 +262,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     public void nuevoElementoPlato(ElementoPlato elemento, Seccion seccion) {
         ImageIcon defaultPhoto;
+        boolean tieneSuficiente = true;
         try {
             // Insertamos el elemento
             java.sql.PreparedStatement inserccion = this.Conexion.prepareStatement("INSERT INTO elemento (nombre,descripcion,disponible,divi,divi_max,precio)"
@@ -292,12 +306,24 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 inserccion.setInt(2, ingrediente.getCodPro());
                 inserccion.setFloat(3, cantidad.floatValue());
                 inserccion.executeUpdate();
+
+                // Si hay menos cantidad de algun producto que el minimo posible
+                if(ingrediente.getCantidad() < ingrediente.getMinimo()){
+                    tieneSuficiente = false;
+                }
             }
             // Insertamos el elemento en su sección
             inserccion = this.Conexion.prepareStatement("INSERT INTO incluyePlato (seccionComida_seccion_seccion_id, elementoPlato_elemento_elemento_id) VALUES (?,?)");
             inserccion.setInt(1, seccion.getCodigoSeccion());
             inserccion.setInt(2, id_elemento);
             inserccion.executeUpdate();
+
+            // Si hay suficiente de todos los productos
+            if(tieneSuficiente){
+                java.sql.PreparedStatement actualizacionDisponibilidad =
+                        this.Conexion.prepareStatement("UPDATE elemento SET disponible=1 WHERE elemento_id=" + id_elemento);
+                actualizacionDisponibilidad.executeUpdate();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
         }

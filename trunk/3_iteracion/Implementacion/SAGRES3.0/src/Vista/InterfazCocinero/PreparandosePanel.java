@@ -17,8 +17,6 @@ import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utilidades.PanelEspacioVertical;
 import utilidades.PanelPedidoPorMesa;
 
@@ -50,11 +48,13 @@ public class PreparandosePanel extends javax.swing.JPanel {
             if(hayQueAutoCompletar(pedidosMostrandose, pedidosCocinaPreparandose)){
                 this.autoCompletar(pedidosCocinaPreparandose);
             }else{
-                System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+                System.gc();
+                //System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
             }
         } catch (Exception ex) {
-            System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+            //System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
             //Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error en preparandose panel, al obtener pedidos cocina preparandose: "+ex.getMessage());
         }
     }
 
