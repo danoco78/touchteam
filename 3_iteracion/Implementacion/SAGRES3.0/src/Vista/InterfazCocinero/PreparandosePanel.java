@@ -65,7 +65,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
      */
     private void autoCompletar(ArrayList<Pedido> listaPedidos){
 
-        this.pedidosMostrandose = listaPedidos;
+        this.pedidosMostrandose = new ArrayList<Pedido>(listaPedidos);
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
@@ -242,26 +242,27 @@ public class PreparandosePanel extends javax.swing.JPanel {
             }
             if(!encontrado) return true;
             if(next1.getEstado() != next2.getEstado()) return true;
+
             // Comprobamos el estado de sus elementos
             ArrayList<ElementoPedido> elementos1 = next1.getElementos();
             ArrayList<ElementoPedido> elementos2 = next2.getElementos();
             if(elementos1.size() != elementos2.size()) return true;
 
             Iterator<ElementoPedido> itE1 = elementos1.iterator();
-            while(itE1.hasNext()){
+            while(itE1.hasNext()){ // Por cada elemento...
                 ElementoPedido nextE1 = itE1.next();
                 encontrado = false;
                 Iterator<ElementoPedido> itE2 = elementos2.iterator();
                 // Buscamos el elemento que se corresponde con nextE1
                 ElementoPedido nextE2 = null;
-                while(itE2.hasNext() && !encontrado){
+                while(itE2.hasNext() && !encontrado){ // Lo buscamos en la otra lista
                     nextE2 = itE2.next();
                     if(nextE2.getCodElementoPedido() == nextE1.getCodElementoPedido()){
                         encontrado = true;
                     }
                 }
                 if(!encontrado) return true;
-                // Sus estados son distintos
+                // Si sus estados son distintos
                 if(nextE1.getEstado() != nextE2.getEstado()){
                     return true;
                 }
@@ -269,7 +270,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         }
         //System.out.println("No se actualiza!!");
         System.gc();
-        return false;
+        return true; // TODO Devolver false;
     }
 
 }

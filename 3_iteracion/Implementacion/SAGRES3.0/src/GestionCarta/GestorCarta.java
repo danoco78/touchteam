@@ -103,9 +103,9 @@ public class GestorCarta implements ICarta {
     public void actualizaDisponibilidadElementos() {
         HashSet<Elemento> listaElementosHabilitables = new HashSet<Elemento>();
         //1.- Obtenemos la lista de los elementos invalidados
-        HashSet<Elemento> listaElementos = this.iCartaBD.obtieneElementosInvalidados();
+        HashSet<Elemento> lElementos = this.iCartaBD.obtieneElementosInvalidados();
         //2.-  Recorremos la lista
-        Iterator iterador = listaElementos.iterator();
+        Iterator iterador = lElementos.iterator();
         while(iterador.hasNext()){
             //2.1.- Para cada elemento comprobamos si tiene productos suficientes.
             Elemento elemento = (Elemento)iterador.next();
@@ -126,7 +126,7 @@ public class GestorCarta implements ICarta {
     }
 
     public HashSet<Elemento> compruebaElementosInvalidados(HashMap<Producto, Float> listaProductosCantidades) {
-        HashSet<Elemento> listaElementos = new HashSet<Elemento>();
+        HashSet<Elemento> lElementos = new HashSet<Elemento>();
         HashSet<Elemento> listaElementosInv;
         HashSet<Producto> listaProductos = new HashSet<Producto>();
                
@@ -164,10 +164,10 @@ public class GestorCarta implements ICarta {
             Producto productoLPC = (Producto)entrada.getKey();
             Iterator iteradorProductos = listaProductos.iterator();
             while (iteradorProductos.hasNext()){
-                Producto producto = (Producto)iteradorProductos.next();
-                if ( producto.equals(productoLPC)){
+                Producto prod = (Producto)iteradorProductos.next();
+                if ( prod.equals(productoLPC)){
                     float cantidad = ((Float)entrada.getValue()).floatValue();
-                    producto.actualizarCantidad(producto.getCantidad() + cantidad);
+                    prod.actualizarCantidad(prod.getCantidad() + cantidad);
                 }
             }
         }
@@ -178,17 +178,17 @@ public class GestorCarta implements ICarta {
             Elemento elemento = (Elemento)iteradorElementos.next();
             if (elemento instanceof ElementoBebida){
                 if (((ElementoBebida)elemento).tieneProductosSuficientes()){
-                    listaElementos.add(elemento);
+                    lElementos.add(elemento);
                 }
             }
             else if (elemento instanceof ElementoPlato){
                 if (((ElementoPlato)elemento).tieneProductosSuficientes() ){
-                    listaElementos.add(elemento);
+                    lElementos.add(elemento);
                 }
             }
         }
 
-        return listaElementos;
+        return lElementos;
     }
 
     public void deshabilitaElementos(HashSet<Elemento> listaElementos) {

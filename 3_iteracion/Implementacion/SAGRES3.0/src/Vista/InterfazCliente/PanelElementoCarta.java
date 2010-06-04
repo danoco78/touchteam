@@ -169,6 +169,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
                 elemento = next;
                 PGC.marcarElemento(this);
                 PGC.marcarCampoDeTexto();
+                this.setEnabled(true);
             }else{
                 if(this.elemento.getDisponible()){
                     javax.swing.JOptionPane.showMessageDialog(this,
@@ -205,7 +206,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
     @Override
     public void setEnabled(boolean enabled){
-        //super.setEnabled(enabled);
+        super.setEnabled(enabled);
         if(enabled){
             this.setBackground(new Color(255,255,255));
         }else{
