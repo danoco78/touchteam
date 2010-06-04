@@ -255,7 +255,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                     + "VALUES (?,?,?,?,?,?)");
             inserccion.setString(1, elemento.getNombre());
             inserccion.setString(2, elemento.getDescripcion());
-            inserccion.setInt(3, 0);
+            inserccion.setInt(3, 0);// No disponible
             inserccion.setInt(4, elemento.getDivisiones());
             inserccion.setInt(5, elemento.getDivisionesMaximas());
             inserccion.setFloat(6, elemento.getPrecio());

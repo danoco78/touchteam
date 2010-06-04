@@ -12,7 +12,6 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
@@ -29,7 +28,6 @@ import utilidades.PanelPedidoPorMesa;
  */
 public class PreparandosePanel extends javax.swing.JPanel {
 
-    private int npreparandose = 0;
     private ArrayList<Pedido> pedidosMostrandose;
     public ICocinero icocinero;
     public InterfazCocinero ventana;
@@ -51,10 +49,12 @@ public class PreparandosePanel extends javax.swing.JPanel {
             // Si es necesario, actualizar
             if(hayQueAutoCompletar(pedidosMostrandose, pedidosCocinaPreparandose)){
                 this.autoCompletar(pedidosCocinaPreparandose);
-            }else
-                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+            }else{
+                System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+            }
         } catch (Exception ex) {
-            Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+            //Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -65,6 +65,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
      */
     private void autoCompletar(ArrayList<Pedido> listaPedidos){
 
+        this.pedidosMostrandose = listaPedidos;
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
@@ -85,7 +86,6 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
 
     public void setMensaje(int n){
-        this.npreparandose = n;
         switch(n){
             case 0:
                 pendientes.setText("No hay ningún plato preparándose");
@@ -214,6 +214,15 @@ public class PreparandosePanel extends javax.swing.JPanel {
      */
     private boolean hayQueAutoCompletar(ArrayList<Pedido> peds1, ArrayList<Pedido> peds2) {
 
+        if((peds1 == null && peds2 != null) ||
+                (peds1 != null && peds2 == null)){
+            return true;
+        }
+        
+        if(peds1 == null && peds2 == null){
+            return false;
+        }
+        
         if(peds1.size() != peds2.size()){
             return true;
         }

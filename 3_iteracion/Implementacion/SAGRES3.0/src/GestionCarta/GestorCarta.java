@@ -9,10 +9,8 @@ import GestionStock.GestionProductos.Producto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import utilidades.Imagen;
 import java.util.Iterator;
 import java.util.Map;
-import javax.swing.ImageIcon;
 import javax.swing.table.TableModel;
 
 
