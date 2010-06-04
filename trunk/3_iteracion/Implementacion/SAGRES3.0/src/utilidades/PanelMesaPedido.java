@@ -13,7 +13,6 @@ package utilidades;
 
 import ControladorPrincipal.ICocinero;
 import ControladorPrincipal.IMetre;
-import GestionCarta.Elemento;
 import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
@@ -35,7 +34,7 @@ import javax.swing.JButton;
  */
 public class PanelMesaPedido extends javax.swing.JPanel {
 
-    Pedido pedActual = null;
+    Pedido pedActual;
     int filtro;
     int numElementosPendientes;
     IntColaBar mpadre;
@@ -54,6 +53,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         filtro = BAR;
         this.imetre = imetre;
         this.ventanaMetre = ventana;
+        pedActual = null;
     }
 
     public PanelMesaPedido(ICocinero icocinero, InterfazCocinero ventana) {
@@ -61,6 +61,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         filtro = COCINA;
         this.icocinero = icocinero;
         this.ventanaCocinero = ventana;
+        pedActual = null;
     }
 
     /**
@@ -70,22 +71,35 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         if(filtro == COCINA){
             try {
                 Pedido siguientePedidoCocinaEnCola = icocinero.getSiguientePedidoCocinaEnCola();
+                this.setPendientes(icocinero.getNumPlatosEnCola());
                 this.centro.setVisible(true);
 
-                // TODO Comprobar si ha cambiado el pedido
-                this.cambiarPedido(siguientePedidoCocinaEnCola);
+                // Comprobar si ha cambiado el pedido
+                if(pedActual == null || (siguientePedidoCocinaEnCola == null && pedActual != null) || !pedActual.equals(siguientePedidoCocinaEnCola) ){
+                    this.cambiarPedido(siguientePedidoCocinaEnCola);
+                }else{
+                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+                }
             } catch (Exception ex) {
                 this.centro.setVisible(false);
+                this.setPendientes(0);
             }
         }else if(filtro == BAR){
             try {
                 Pedido siguientePedidoBar = this.imetre.getSiguientePedidoBar();
+                this.setPendientes(imetre.getNumBebidasEnCola());
                 this.centro.setVisible(true);
 
-                // TODO Comprobar si ha cambiado el pedido
-                this.cambiarPedido(siguientePedidoBar);
+                // Comprobar si ha cambiado el pedido
+                if(pedActual == null ||
+                        (siguientePedidoBar == null && pedActual != null) ||
+                        !pedActual.equals(siguientePedidoBar) ){
+                    this.cambiarPedido(siguientePedidoBar);
+                }else
+                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
             } catch (Exception ex) {
                 this.centro.setVisible(false);
+                this.setPendientes(0);
             }
         }
     }
@@ -98,7 +112,6 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         pedActual = ped;
         panelInfoPedido.removeAll();
         //panelInfoPedido.repaint();
-        numElementosPendientes = 0;
         if(ped == null){
             infoMesaPedido.setText("");
             this.centro.setVisible(false);
@@ -117,11 +130,9 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
                     panelInfoPedido.add(boton);
                     panelInfoPedido.add(new PanelEspacioVertical());
-                    numElementosPendientes++;
                 }
             }
         }
-        this.setPendientes(numElementosPendientes);
         panelInfoPedido.repaint();
         panelInfoPedido.revalidate();
     }
