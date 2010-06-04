@@ -107,10 +107,12 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bGestionCarta.setPreferredSize(new java.awt.Dimension(300, 200));
         bGestionCarta.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionCarta, gridBagConstraints);
 
-        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 14));
+        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bNotificcarPedido.setForeground(new java.awt.Color(80, 98, 143));
         bNotificcarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/NotificarLlegada.png"))); // NOI18N
         bNotificcarPedido.setText("Notificar recepción de pedido");
@@ -121,8 +123,8 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bNotificcarPedido.setPreferredSize(new java.awt.Dimension(300, 200));
         bNotificcarPedido.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
@@ -139,13 +141,13 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bGestionIngredientes.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionIngredientes, gridBagConstraints);
 
         bEstaditicas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bEstaditicas.setForeground(new java.awt.Color(80, 98, 143));
-        bEstaditicas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Libreta.png"))); // NOI18N
+        bEstaditicas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Estadisticas.png"))); // NOI18N
         bEstaditicas.setText("Estadisticas");
         bEstaditicas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bEstaditicas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -153,7 +155,10 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bEstaditicas.setMinimumSize(new java.awt.Dimension(300, 200));
         bEstaditicas.setPreferredSize(new java.awt.Dimension(300, 200));
         bEstaditicas.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        cuerpo.add(bEstaditicas, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        cuerpo.add(bEstaditicas, gridBagConstraints);
 
         bImprimirProductosaPedir.setFont(new java.awt.Font("Arial", 1, 14));
         bImprimirProductosaPedir.setForeground(new java.awt.Color(80, 98, 143));
@@ -166,7 +171,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         bImprimirProductosaPedir.setPreferredSize(new java.awt.Dimension(300, 200));
         bImprimirProductosaPedir.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bImprimirProductosaPedir, gridBagConstraints);
