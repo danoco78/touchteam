@@ -3,16 +3,15 @@
  * and open the template in the editor.
  */
 
-package GestionBaseDatos;
-import GestionCarta.Seccion;
-import java.sql.Timestamp;
+package Estadisticas;
 import org.jfree.data.category.DefaultCategoryDataset;
-
+import java.sql.Timestamp;
+import GestionCarta.Seccion;
 /**
  *
  * @author nabil
  */
-public interface IEstadisticasBD {
+public interface IGestorEstadisticas {
      public DefaultCategoryDataset elementosAfectadosFaltaProductos(Timestamp i, Timestamp f);
      public DefaultCategoryDataset gananciasPorMes(Timestamp i, Timestamp f);
      public DefaultCategoryDataset obtieneListaPlatoMasPedido(Timestamp i, Timestamp f, Seccion s);
