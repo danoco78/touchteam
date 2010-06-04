@@ -348,7 +348,7 @@ public class platoMenosVendido extends javax.swing.JPanel {
             { s = (Seccion) it.next();
               if(s.getNombre().equals(item))
               { seguir = false;
-                dataset = cocina.obtieneListaPlatoMasPedido(i, f, s);
+                dataset = cocina.obtieneListaPlatoMenosPedido(i, f, s);
               }
             }
 
