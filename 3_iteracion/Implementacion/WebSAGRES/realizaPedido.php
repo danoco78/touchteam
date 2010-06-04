@@ -49,7 +49,7 @@ if(!isset($_POST["confirmado"])) {
 else {
     include_once 'ControladorPrincipal.php';
     $sagres = new ControladorPrincipal();
-    $codmesa = 1; // Quiero hacer un pedido para la mesa 1
+    $codmesa = ip2long($_SERVER['REMOTE_ADDR']); // Quiero hacer un pedido para la mesa 1
     $secciones = $sagres->getSecciones();
     $elementos = array(); // Array que pasaremos como parametro
     for($i=0,$n=0; $i<count($secciones); $i++) { // Recorrido de las secciones
