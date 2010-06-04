@@ -146,8 +146,16 @@ public class PanelElementoCarta extends javax.swing.JPanel {
             PGC.pedidoRealizado=false;
         }
         if(!this.seleccionado){
-            PGC.marcarElemento(this);
-            PGC.marcarCampoDeTexto();
+            if(this.elemento.getDisponible()){
+                PGC.marcarElemento(this);
+                PGC.marcarCampoDeTexto();
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(this,
+                              "¡Lo siento! Este elemento ya no puede ser seleccionado porque se acaba de agotar.",
+                              "Elemento no disponible",
+                              javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+            }
         }else{
             PGC.desmarcarElemento();
             this.desmarcar();

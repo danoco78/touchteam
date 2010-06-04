@@ -70,11 +70,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
     private HebraPedidosModificables hebra = new HebraPedidosModificables(this);
 
     /** Creates new form PanelGeneralCliente */
-    public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente) throws Exception {
+    public PanelGeneralCliente(InterfazCliente interfazCliente, ICliente icliente, Integer codMesa) throws Exception {
         initComponents();
         this.interfazCliente=interfazCliente;
         this.icliente=icliente;
-        this.codMesa = 1;
+        this.codMesa = codMesa;
         this.setDoubleBuffered(true);
         cargarCarta();
         
@@ -188,7 +188,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         PanelComentarios.add(ScrollComentarios, java.awt.BorderLayout.CENTER);
 
-        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonAnadir.setFont(new java.awt.Font("Arial", 1, 24));
         BotonAnadir.setForeground(new java.awt.Color(80, 98, 143));
         BotonAnadir.setText("Añadir");
         BotonAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -252,7 +252,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.setLayout(new java.awt.GridLayout(0, 5));
 
         GrupoBotonesSecciones.add(BotonEntrantes);
-        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonEntrantes.setFont(new java.awt.Font("Arial", 1, 24));
         BotonEntrantes.setForeground(new java.awt.Color(80, 98, 143));
         BotonEntrantes.setSelected(true);
         BotonEntrantes.setText("Entrantes");
@@ -265,7 +265,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonEntrantes);
 
         GrupoBotonesSecciones.add(BotonPescados);
-        BotonPescados.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonPescados.setFont(new java.awt.Font("Arial", 1, 24));
         BotonPescados.setForeground(new java.awt.Color(80, 98, 143));
         BotonPescados.setText("Pescados");
         BotonPescados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -277,7 +277,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonPescados);
 
         GrupoBotonesSecciones.add(BotonCarnes);
-        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonCarnes.setFont(new java.awt.Font("Arial", 1, 24));
         BotonCarnes.setForeground(new java.awt.Color(80, 98, 143));
         BotonCarnes.setText("Carnes");
         BotonCarnes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -289,7 +289,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonCarnes);
 
         GrupoBotonesSecciones.add(BotonBebidas);
-        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonBebidas.setFont(new java.awt.Font("Arial", 1, 24));
         BotonBebidas.setForeground(new java.awt.Color(80, 98, 143));
         BotonBebidas.setText("Bebidas");
         BotonBebidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -301,7 +301,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         PanelBotones.add(BotonBebidas);
 
         GrupoBotonesSecciones.add(BotonPostres);
-        BotonPostres.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        BotonPostres.setFont(new java.awt.Font("Arial", 1, 24));
         BotonPostres.setForeground(new java.awt.Color(80, 98, 143));
         BotonPostres.setText("Postres");
         BotonPostres.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 1, true));
@@ -344,35 +344,35 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 ((CardLayout) hojasSeccionEntrantes.getLayout()).next(hojasSeccionEntrantes);
                 ++i_entrantes;
                 this.PanelPaginaAnterior.setVisible(true);
-                if(i_entrantes<((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap())
+                if(i_entrantes>=((CardLayout) hojasSeccionEntrantes.getLayout()).getVgap())
                     this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 1: //Pescados
                 ((CardLayout) hojasSeccionPescados.getLayout()).next(hojasSeccionPescados);
                 ++i_pescados;
                 this.PanelPaginaAnterior.setVisible(true);
-                if(i_pescados<((CardLayout) hojasSeccionPescados.getLayout()).getHgap())
+                if(i_pescados>=((CardLayout) hojasSeccionPescados.getLayout()).getVgap())
                     this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 2: //Carnes
                 ((CardLayout) hojasSeccionCarnes.getLayout()).next(hojasSeccionCarnes);
                 ++i_carnes;
                 this.PanelPaginaAnterior.setVisible(true);
-                if(i_carnes<((CardLayout) hojasSeccionCarnes.getLayout()).getHgap())
+                if(i_carnes>=((CardLayout) hojasSeccionCarnes.getLayout()).getVgap())
                     this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 3: //Bebidas
                 ((CardLayout) hojasSeccionBebidas.getLayout()).next(hojasSeccionBebidas);
                 ++i_bebidas;
                 this.PanelPaginaAnterior.setVisible(true);
-                if(i_bebidas<((CardLayout) hojasSeccionBebidas.getLayout()).getHgap())
+                if(i_bebidas>=((CardLayout) hojasSeccionBebidas.getLayout()).getVgap())
                     this.PanelPaginaSiguiente.setVisible(false);
                 break;
             case 4: //Postres
                 ((CardLayout) hojasSeccionPostres.getLayout()).next(hojasSeccionPostres);
                 ++i_postres;
                 this.PanelPaginaAnterior.setVisible(true);
-                if(i_postres<((CardLayout) hojasSeccionPostres.getLayout()).getHgap())
+                if(i_postres>=((CardLayout) hojasSeccionPostres.getLayout()).getVgap())
                     this.PanelPaginaSiguiente.setVisible(false);
                 break;
 
@@ -387,7 +387,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Entrantes");
             ((CardLayout) hojasSeccionEntrantes.getLayout()).first(hojasSeccionEntrantes);
             this.PanelPaginaAnterior.setVisible(false);
-            if(((CardLayout) hojasSeccionEntrantes.getLayout()).getHgap()>1)
+            if(((CardLayout) hojasSeccionEntrantes.getLayout()).getVgap()>=1)
                 this.PanelPaginaSiguiente.setVisible(true);
             else
                 this.PanelPaginaSiguiente.setVisible(false);
@@ -404,7 +404,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Pescados");
             ((CardLayout) hojasSeccionPescados.getLayout()).first(hojasSeccionPescados);
             this.PanelPaginaAnterior.setVisible(false);
-            if(((CardLayout) hojasSeccionPescados.getLayout()).getHgap()>1)
+            if(((CardLayout) hojasSeccionPescados.getLayout()).getVgap()>=1)
                 this.PanelPaginaSiguiente.setVisible(true);
             else
                 this.PanelPaginaSiguiente.setVisible(false);
@@ -421,7 +421,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Carnes");
             ((CardLayout) hojasSeccionCarnes.getLayout()).first(hojasSeccionCarnes);
             this.PanelPaginaAnterior.setVisible(false);
-            if(((CardLayout) hojasSeccionCarnes.getLayout()).getHgap()>1)
+            if(((CardLayout) hojasSeccionCarnes.getLayout()).getVgap()>=1)
                 this.PanelPaginaSiguiente.setVisible(true);
             else
                 this.PanelPaginaSiguiente.setVisible(false);
@@ -438,7 +438,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Bebidas");
             ((CardLayout) hojasSeccionBebidas.getLayout()).first(hojasSeccionBebidas);
             this.PanelPaginaAnterior.setVisible(false);
-            if(((CardLayout) hojasSeccionBebidas.getLayout()).getHgap()>1)
+            if(((CardLayout) hojasSeccionBebidas.getLayout()).getVgap()>=1)
                 this.PanelPaginaSiguiente.setVisible(true);
             else
                 this.PanelPaginaSiguiente.setVisible(false);
@@ -455,7 +455,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             ((CardLayout) PanelHojas.getLayout()).show(PanelHojas, "Postres");
             ((CardLayout) hojasSeccionPostres.getLayout()).first(hojasSeccionPostres);
             this.PanelPaginaAnterior.setVisible(false);
-            if(((CardLayout) hojasSeccionPostres.getLayout()).getHgap()>1)
+            if(((CardLayout) hojasSeccionPostres.getLayout()).getVgap()>=1)
                 this.PanelPaginaSiguiente.setVisible(true);
             else
                 this.PanelPaginaSiguiente.setVisible(false);
@@ -506,7 +506,6 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 if(i_postres<=0)
                     this.PanelPaginaAnterior.setVisible(false);
                 break;
-
         }
 
         this.repaint();
@@ -609,22 +608,21 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
             Iterator itElementos = listaElementos.iterator();
 
+            
             while(itElementos.hasNext()){
-                int j=0;
                 HashSet<Elemento> seisElementos = new HashSet();
                 for(int i=0; i<6 && itElementos.hasNext(); ++i){
                     seisElementos.add((Elemento) itElementos.next());
                 }
-                ++j;
 
                 if(s.getNombre().equals("Entrantes")){
-                    hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                    hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Pescados")){
-                    hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                    hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Carnes")){
-                    hojasSeccionCarnes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                    hojasSeccionCarnes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Postres")){
-                    hojasSeccionPostres.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+                    hojasSeccionPostres.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
                 }
             }
         }
@@ -632,15 +630,15 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         //Añadimos las bebidas
         Iterator itBebidas = listaBebidas.iterator();
 
+        int j=0;
         while(itBebidas.hasNext()){
-            int j=0;
+            
             HashSet<Elemento> seisElementos = new HashSet();
             for(int i=0; i<6 && itBebidas.hasNext(); ++i){
                 seisElementos.add((Elemento) itBebidas.next());
             }
-            ++j;
-
-            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j));
+            
+            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j++));
         }
 
         

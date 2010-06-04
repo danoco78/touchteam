@@ -9,7 +9,6 @@ import GestionStock.GestionPedidoProveedor.GestorProveedor;
 import GestionStock.GestionProductos.GestorProducto;
 import Vista.DialogoDeCarga;
 import Vista.InterfazCliente.InterfazCliente;
-import Vista.InterfazMetre.InterfazMetre;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -28,6 +27,7 @@ public class MainCliente {
 
     public static void main(String args[]) throws IOException {
 
+        Integer codMesa = 1;
         DialogoDeCarga dCarga = new DialogoDeCarga();
         dCarga.setLocationRelativeTo(null);
         dCarga.setVisible(true);
@@ -66,6 +66,22 @@ public class MainCliente {
                 dCarga.setVisible(false);
                 dCarga.dispose();
             }
+            try{
+                codMesa = Integer.parseInt((String)properties.getProperty("mesa"));
+                if(codMesa == null){
+                    // TODO Escribir el nuevo codigo en el fichero
+                    codMesa = 1;
+                    //FileWriter config = new FileWriter(fichero);
+                    //properties.list(config);
+                    //config.close();
+                }
+            }catch (Exception ex){
+                // TODO Escribir un nuevo codigo en el fichero
+                codMesa = 1;
+                //FileWriter config = new FileWriter(fichero);
+                //config.write("mesa = "+codMesa);
+                //config.close();
+            }
         }
             dCarga.Progreso(20);
             GestorProducto producto = new GestorProducto(baseDeDatos);
@@ -82,9 +98,9 @@ public class MainCliente {
             GestorPedidos gpedido = new GestorPedidos(baseDeDatos,producto,impresora);
             SAGRES controlador = new SAGRES(carta, producto, incidencia, pedido,gpedido);
             dCarga.Progreso(90);
-            InterfazCliente interfaz = new InterfazCliente(controlador);
+            InterfazCliente interfaz = new InterfazCliente(controlador, codMesa);
             interfaz.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-            interfaz.setExtendedState(InterfazMetre.MAXIMIZED_BOTH);
+            interfaz.setExtendedState(InterfazCliente.MAXIMIZED_BOTH);
             interfaz.setMinimumSize(new Dimension(800,600));
             dCarga.Progreso(100);
             dCarga.setVisible(false);

@@ -38,26 +38,50 @@ public class PanelHojasCarta extends javax.swing.JPanel {
         if(it.hasNext()){
             e = (Elemento) it.next();
             PanelElementoArribaI.add(new PanelElementoCarta(e,PGC));
+//            if(e.getDisponible())
+//                PanelElementoArribaI.setVisible(true);
+//            else
+//                PanelElementoArribaI.setVisible(false);
 
             if(it.hasNext()){
                 e = (Elemento) it.next();
                 PanelElementoCentroI.add(new PanelElementoCarta(e,PGC));
+//                if(e.getDisponible())
+//                    PanelElementoCentroI.setVisible(true);
+//                else
+//                    PanelElementoCentroI.setVisible(false);
 
                 if(it.hasNext()){
                     e = (Elemento) it.next();
                     PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC));
+//                    if(e.getDisponible())
+//                        PanelElementoAbajoI.setVisible(true);
+//                    else
+//                        PanelElementoAbajoI.setVisible(false);
 
                     if(it.hasNext()){
                         e = (Elemento) it.next();
                         PanelElementoArribaD.add(new PanelElementoCarta(e,PGC));
+//                        if(e.getDisponible())
+//                            PanelElementoArribaD.setVisible(true);
+//                        else
+//                            PanelElementoArribaD.setVisible(false);
 
                         if(it.hasNext()){
                             e = (Elemento) it.next();
                             PanelElementoCentroD.add(new PanelElementoCarta(e,PGC));
+//                            if(e.getDisponible())
+//                                PanelElementoCentroD.setVisible(true);
+//                            else
+//                                PanelElementoCentroD.setVisible(false);
 
                             if(it.hasNext()){
                                 e = (Elemento) it.next();
                                 PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC));
+//                                if(e.getDisponible())
+//                                    PanelElementoAbajoD.setVisible(true);
+//                                else
+//                                    PanelElementoAbajoD.setVisible(false);
                             }
                         }
                     }

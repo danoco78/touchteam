@@ -186,12 +186,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pNorte1.setOpaque(false);
         pNorte1.setLayout(new java.awt.BorderLayout(10, 0));
 
-        lSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lSeccion.setFont(new java.awt.Font("Arial", 0, 18));
         lSeccion.setForeground(new java.awt.Color(80, 98, 143));
         lSeccion.setText("Elija una sección");
         pNorte1.add(lSeccion, java.awt.BorderLayout.WEST);
 
-        bSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        bSeccion.setFont(new java.awt.Font("Arial", 0, 18));
         bSeccion.setForeground(new java.awt.Color(80, 98, 143));
         bSeccion.setMaximumRowCount(10);
         bSeccion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 2, true));
@@ -210,7 +210,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         scrollTabla.setOpaque(false);
 
-        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tProductoSeccion.setFont(new java.awt.Font("Arial", 0, 18));
         tProductoSeccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -244,7 +244,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         pSur1.add(scrollTabla, java.awt.BorderLayout.CENTER);
 
-        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lTablaSeccion.setFont(new java.awt.Font("Arial", 0, 14));
         lTablaSeccion.setForeground(new java.awt.Color(80, 98, 143));
         lTablaSeccion.setText("Elementos ya asociados a la sección");
         pSur1.add(lTablaSeccion, java.awt.BorderLayout.NORTH);
@@ -280,27 +280,27 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pCentroIzq.setOpaque(false);
         pCentroIzq.setLayout(new java.awt.GridLayout(0, 1));
 
-        lNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lNombre.setFont(new java.awt.Font("Arial", 0, 18));
         lNombre.setForeground(new java.awt.Color(80, 98, 143));
         lNombre.setText("Nombre");
         pCentroIzq.add(lNombre);
 
-        lDescripción.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lDescripción.setFont(new java.awt.Font("Arial", 0, 18));
         lDescripción.setForeground(new java.awt.Color(80, 98, 143));
         lDescripción.setText("Descripción");
         pCentroIzq.add(lDescripción);
 
-        lImagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lImagen.setFont(new java.awt.Font("Arial", 0, 18));
         lImagen.setForeground(new java.awt.Color(80, 98, 143));
         lImagen.setText("Imagen");
         pCentroIzq.add(lImagen);
 
-        lPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lPrecio.setFont(new java.awt.Font("Arial", 0, 18));
         lPrecio.setForeground(new java.awt.Color(80, 98, 143));
         lPrecio.setText("Precio de venta");
         pCentroIzq.add(lPrecio);
 
-        lTiempo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lTiempo.setFont(new java.awt.Font("Arial", 0, 18));
         lTiempo.setForeground(new java.awt.Color(80, 98, 143));
         lTiempo.setText("<html><body>Tiempo Medio<br>de elaboraci&oacute;n</body></html>");
         pCentroIzq.add(lTiempo);
@@ -310,7 +310,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pCentroDer.setOpaque(false);
         pCentroDer.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 24));
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tNombre.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -326,7 +326,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pCentroDer.add(tNombre);
 
         tDescripcion.setColumns(20);
-        tDescripcion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tDescripcion.setFont(new java.awt.Font("Arial", 0, 18));
         tDescripcion.setForeground(new java.awt.Color(80, 98, 143));
         tDescripcion.setRows(2);
         tDescripcion.setAutoscrolls(false);
@@ -348,7 +348,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pImagen.setOpaque(false);
         pImagen.setLayout(new java.awt.BorderLayout(10, 0));
 
-        TImgen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TImgen.setFont(new java.awt.Font("Arial", 0, 18));
         TImgen.setForeground(new java.awt.Color(80, 98, 143));
         TImgen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         TImgen.setEnabled(false);
@@ -359,7 +359,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         });
         pImagen.add(TImgen, java.awt.BorderLayout.CENTER);
 
-        bImagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        bImagen.setFont(new java.awt.Font("Arial", 0, 18));
         bImagen.setForeground(new java.awt.Color(80, 98, 143));
         bImagen.setText("Examinar");
         bImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -377,7 +377,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         tPrecio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tPrecio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tPrecio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tPrecio.setFont(new java.awt.Font("Tahoma", 0, 18));
         tPrecio.setMinimumSize(new java.awt.Dimension(150, 20));
         tPrecio.setPreferredSize(new java.awt.Dimension(150, 20));
         tPrecio.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -392,7 +392,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         });
         pPrecio.add(tPrecio, java.awt.BorderLayout.CENTER);
 
-        €.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        €.setFont(new java.awt.Font("Arial", 0, 18));
         €.setForeground(new java.awt.Color(80, 98, 143));
         €.setText("€");
         pPrecio.add(€, java.awt.BorderLayout.EAST);
@@ -404,7 +404,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         tTiempo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tTiempo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tTiempo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tTiempo.setFont(new java.awt.Font("Tahoma", 0, 18));
         tTiempo.setMinimumSize(new java.awt.Dimension(150, 20));
         tTiempo.setPreferredSize(new java.awt.Dimension(150, 20));
         tTiempo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -419,7 +419,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         });
         pTiempo.add(tTiempo, java.awt.BorderLayout.CENTER);
 
-        minutos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        minutos.setFont(new java.awt.Font("Arial", 0, 18));
         minutos.setForeground(new java.awt.Color(80, 98, 143));
         minutos.setText("minutos");
         pTiempo.add(minutos, java.awt.BorderLayout.EAST);
@@ -437,7 +437,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pAtributoPlato.setOpaque(false);
         pAtributoPlato.setLayout(new java.awt.BorderLayout(0, 5));
 
-        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lAyudaDivisiones.setFont(new java.awt.Font("Arial", 0, 18));
         lAyudaDivisiones.setForeground(new java.awt.Color(80, 98, 143));
         lAyudaDivisiones.setText("(indique 0 o vacio para hacerlo indivisible)");
         pAtributoPlato.add(lAyudaDivisiones, java.awt.BorderLayout.SOUTH);
@@ -445,14 +445,14 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pSur3.setOpaque(false);
         pSur3.setLayout(new java.awt.GridLayout(0, 3, 5, 0));
 
-        lDivision.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lDivision.setFont(new java.awt.Font("Arial", 0, 18));
         lDivision.setForeground(new java.awt.Color(80, 98, 143));
         lDivision.setText("<html><body>El elemento se<br> puede dividir en</body></html>");
         pSur3.add(lDivision);
 
         tPorciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tPorciones.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        tPorciones.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tPorciones.setFont(new java.awt.Font("Tahoma", 0, 18));
         tPorciones.setMinimumSize(new java.awt.Dimension(60, 20));
         tPorciones.setPreferredSize(new java.awt.Dimension(150, 20));
         tPorciones.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -467,7 +467,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         });
         pSur3.add(tPorciones);
 
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 18));
         lPorciones.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones.setText("porciones/raciones");
         pSur3.add(lPorciones);
@@ -503,7 +503,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
-        tProductosDisponibles.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tProductosDisponibles.setFont(new java.awt.Font("Tahoma", 0, 18));
         tProductosDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -552,7 +552,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        tProductosAsociados.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tProductosAsociados.setFont(new java.awt.Font("Tahoma", 0, 18));
         tProductosAsociados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -590,7 +590,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
 
         pAtributoPlato2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        pCentro3.add(pAtributoPlato2, java.awt.BorderLayout.PAGE_START);
+        pCentro3.add(pAtributoPlato2, java.awt.BorderLayout.SOUTH);
 
         pPaso3.add(pCentro3, java.awt.BorderLayout.CENTER);
 
@@ -616,12 +616,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pIzq.setOpaque(false);
         pIzq.setLayout(new java.awt.BorderLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Añadir nuevo elemento a carta");
         pIzq.add(lTitulo, java.awt.BorderLayout.CENTER);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Sección a la que pertenece");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -632,12 +632,12 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pDer.setOpaque(false);
         pDer.setLayout(new java.awt.BorderLayout());
 
-        lPaso.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lPaso.setFont(new java.awt.Font("Arial", 0, 18));
         lPaso.setForeground(new java.awt.Color(80, 98, 143));
         lPaso.setText("Paso 1/3");
         pDer.add(lPaso, java.awt.BorderLayout.NORTH);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 18));
         bCancelar.setForeground(new java.awt.Color(150, 172, 229));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -658,7 +658,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bSiguiente.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bSiguiente.setFont(new java.awt.Font("Arial", 0, 24));
         bSiguiente.setForeground(new java.awt.Color(80, 98, 143));
         bSiguiente.setText("Siguiente");
         bSiguiente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -677,7 +677,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 24));
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

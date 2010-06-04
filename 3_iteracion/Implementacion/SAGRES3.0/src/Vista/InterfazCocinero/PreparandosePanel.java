@@ -12,9 +12,12 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
+import GestionPedidos.ElementoColaBar;
 import GestionPedidos.ElementoColaCocina;
+import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utilidades.PanelEspacioVertical;
@@ -27,14 +30,17 @@ import utilidades.PanelPedidoPorMesa;
 public class PreparandosePanel extends javax.swing.JPanel {
 
     private int npreparandose = 0;
+    private ArrayList<Pedido> pedidosMostrandose;
     public ICocinero icocinero;
     public InterfazCocinero ventana;
+
     
     /** Creates new form PanelMesaPedido */
     public PreparandosePanel(ICocinero icocinero, InterfazCocinero ventana) {
         initComponents();
         this.icocinero = icocinero;
         this.ventana = ventana;
+        pedidosMostrandose = null;
         this.actualizar();
     }
 
@@ -43,8 +49,10 @@ public class PreparandosePanel extends javax.swing.JPanel {
             // Obtener los pedidos con elementos preparandose
             ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
             // Si es necesario, actualizar
-            // TODO Comparar si ha cambiado alguno de estado
-            this.autoCompletar(pedidosCocinaPreparandose);
+            if(hayQueAutoCompletar(pedidosMostrandose, pedidosCocinaPreparandose)){
+                this.autoCompletar(pedidosCocinaPreparandose);
+            }else
+                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
         } catch (Exception ex) {
             Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -196,13 +204,63 @@ public class PreparandosePanel extends javax.swing.JPanel {
         return Total;
     }
 
-    /*public void incPreparandose(){
-       npreparandose++;
-       setMensaje(npreparandose);
+    /**
+     * Compara una lista de pedidos con la otra, devolviendo True si son distintas,
+     * se deben respetar los parametros con las condiciones que se indican, de lo
+     * contrario se puede devolver un resultado inesperado.
+     * @param peds1 Conjunto de pedidos que se estan mostrando en la interfaz
+     * @param peds2 Conjunto nuevo de pedidos a comparar
+     * @return True si son distintas
+     */
+    private boolean hayQueAutoCompletar(ArrayList<Pedido> peds1, ArrayList<Pedido> peds2) {
+
+        if(peds1.size() != peds2.size()){
+            return true;
+        }
+        Iterator<Pedido> it1 = peds1.iterator();
+        while(it1.hasNext()){ // Recorremos los pedidos
+            Pedido next1 = it1.next();
+            Iterator<Pedido> it2 = peds2.iterator();
+
+            boolean encontrado = false;
+            Pedido next2 = null;
+            while(it2.hasNext() && !encontrado){
+                next2 = it2.next();
+                if(next2.getCodPedido() == next1.getCodPedido() &&
+                        next2.getCodMesa() == next1.getCodMesa()){
+                    encontrado = true;
+                }
+            }
+            if(!encontrado) return true;
+            if(next1.getEstado() != next2.getEstado()) return true;
+            // Comprobamos el estado de sus elementos
+            ArrayList<ElementoPedido> elementos1 = next1.getElementos();
+            ArrayList<ElementoPedido> elementos2 = next2.getElementos();
+            if(elementos1.size() != elementos2.size()) return true;
+
+            Iterator<ElementoPedido> itE1 = elementos1.iterator();
+            while(itE1.hasNext()){
+                ElementoPedido nextE1 = itE1.next();
+                encontrado = false;
+                Iterator<ElementoPedido> itE2 = elementos2.iterator();
+                // Buscamos el elemento que se corresponde con nextE1
+                ElementoPedido nextE2 = null;
+                while(itE2.hasNext() && !encontrado){
+                    nextE2 = itE2.next();
+                    if(nextE2.getCodElementoPedido() == nextE1.getCodElementoPedido()){
+                        encontrado = true;
+                    }
+                }
+                if(!encontrado) return true;
+                // Sus estados son distintos
+                if(nextE1.getEstado() != nextE2.getEstado()){
+                    return true;
+                }
+            }// Hemos terminado de recorrer todos los elementos del pedido next1 respecto a su homologo en 2
+        }
+        //System.out.println("No se actualiza!!");
+        System.gc();
+        return false;
     }
-    public void decPreparandose(){
-       npreparandose--;
-       setMensaje(npreparandose);
-    }*/
 
 }

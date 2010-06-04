@@ -26,30 +26,21 @@ public class InterfazCliente extends javax.swing.JFrame {
     private PanelInicial panelInicial;
 
     /** Creates new form InterfazCliente */
-    public InterfazCliente(ICliente icliente) {
+    public InterfazCliente(ICliente icliente, Integer codMesa) {
         try {
             initComponents();
             this.iCliente = icliente;
-            this.panelGeneralCliente = new PanelGeneralCliente(this,icliente);
+            this.panelGeneralCliente = new PanelGeneralCliente(this,icliente, codMesa);
             this.panelInicial = new PanelInicial(this);
             this.PanelPrincipal.add("PanelGeneralCliente", this.panelGeneralCliente);
             this.PanelPrincipal.add("PanelInicial", this.panelInicial);
-            // TODO Debe obtener antes el codigo del fichero
-            if(this.iCliente.obtienePedidosMesa(1).isEmpty()){// <--- Cambiar el codigo
+            if(this.iCliente.obtienePedidosMesa(codMesa).isEmpty()){// <--- Cambiar el codigo
                 ((CardLayout) this.PanelPrincipal.getLayout()).show(this.PanelPrincipal,"PanelInicial");
             }else{
                 this.empezar();
             }
-
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             
-            // Intento de poner a pantalla completa
-            //GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //GraphicsDevice dScreen = ge.getDefaultScreenDevice();
-            //if(dScreen.isFullScreenSupported()){
-                //this.setUndecorated(false);
-                //dScreen.setFullScreenWindow(this);
-            //}
         } catch (Exception ex) {
             System.err.println("Error:" +ex.getMessage());
         }
