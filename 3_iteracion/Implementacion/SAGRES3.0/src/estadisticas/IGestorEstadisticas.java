@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package estadisticas;
+package Estadisticas;
 import GestionCarta.Seccion;
 import java.sql.Timestamp;
 import org.jfree.data.category.DefaultCategoryDataset;

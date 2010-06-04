@@ -33,17 +33,29 @@ public class GestorPedidos implements IGestorPedidos {
         this.iProducto = iProducto;
         this.iImpresion = iImpresion;
     }
-
+    //modificada por nabil
     public void confirmaPagoFactura(Integer codMesa){
         Factura f = this.iPedidosBD.getFactura(codMesa);
         ArrayList<Pedido> pedidos = f.getPedidos();
+        float totalFactura = 0;
+        ArrayList <ElementoPedido> elementosPedido;
+        ElementoPedido ele;
+        Elemento e;
         Pedido p;
         for (int i=0;i<pedidos.size();i++){
             p = pedidos.get(i);
+            elementosPedido = p.getElementos();
+            Iterator it = elementosPedido.iterator();
+            while(it.hasNext())
+            {   ele = (ElementoPedido) it;
+                e = ele.getElemento();
+                totalFactura += (float)e.getPrecio();
+            }
             p.setEstado(Pedido.FACTURADO);
             this.iPedidosBD.actualizaPedido(p);
         }
         f.modificaEstado(Factura.PAGADO);
+        f.setTotalFactura(totalFactura);
         this.iPedidosBD.actualizaFactura(f);
     }
 
@@ -238,7 +250,7 @@ public class GestorPedidos implements IGestorPedidos {
         this.iPedidosBD.eliminaFactura(codMesa);
 
         //Creamos una nueva factura, con el momento de su creacion
-        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Timestamp(System.currentTimeMillis()));
+        Factura f = new Factura(this.iPedidosBD.getCodigoFactura(), 0, new Timestamp(System.currentTimeMillis()),0);
 
         //Asociamos los pedidos correspondientes
         ArrayList<Pedido> listaPedidos = this.iPedidosBD.obtienePedidosMesa(codMesa);

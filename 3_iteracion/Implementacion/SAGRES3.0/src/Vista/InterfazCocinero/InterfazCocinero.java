@@ -43,10 +43,10 @@ public class InterfazCocinero extends javax.swing.JFrame {
         this.panelIngrediente = new IntGestionIngrediente();
         this.panelColaCocinero = new IntColaCocinero(icocinero, this);
         this.panelEstadisticas = new menuEstadisticas();
-        this.panelBalance = new balanceEconomico();
-        this.panelPlatoMasvendido = new platoMasVendido();
-        this.panelPlatoMenosvendido = new platoMenosVendido();
-        this.panelPlatosNoServidos = new platosNoServidos();
+        this.panelBalance = new balanceEconomico(icocinero);
+        this.panelPlatoMasvendido = new platoMasVendido(icocinero);
+        this.panelPlatoMenosvendido = new platoMenosVendido(icocinero);
+        this.panelPlatosNoServidos = new platosNoServidos(icocinero);
         this.getContentPane().add( this.panelColaCocinero, InterfazCocinero.COLA);
         this.getContentPane().add( this.panelPrincipal, InterfazCocinero.PRINCIPAL );
         this.getContentPane().add( this.panelCarta, InterfazCocinero.CARTA );

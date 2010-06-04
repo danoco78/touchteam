@@ -15,23 +15,25 @@ public class Factura {
     private Integer codFactura;
     private Integer estado;
     private Timestamp fecha; //TODO Cambiar fecha por java.sql.Timestamp
+    private float totalFactura;
     private ArrayList<Pedido> pedidosAsociados;
 
     protected static final int ENCOLA = 0;
     protected static final int IMPRIMIDO = 1;
     protected static final int PAGADO = 2;
 
-    public Factura(Integer codFactura, Integer estado, Timestamp fecha){
+    public Factura(Integer codFactura, Integer estado, Timestamp fecha, float totalFactura){
         this.codFactura = codFactura;
         this.estado = estado;
         this.fecha = fecha;
+        this.totalFactura = totalFactura;
         this.pedidosAsociados = new ArrayList();
     }
     public Integer getCodFactura() {
         return codFactura;
     }
     public Factura crear(){
-        Factura nueva = new Factura(0,0,fecha);
+        Factura nueva = new Factura(0,0,fecha,0);
         return nueva;
     }
     public void setCodFactura(Integer codFactura) {
@@ -61,5 +63,10 @@ public class Factura {
     public void asocia(Pedido p){
         this.pedidosAsociados.add(p);
     }
-    
+    public float getTotalFactura(){
+        return this.totalFactura;
+    }
+    public void setTotalFactura(float totalFactura){
+        this.totalFactura = totalFactura;
+    }
 }
