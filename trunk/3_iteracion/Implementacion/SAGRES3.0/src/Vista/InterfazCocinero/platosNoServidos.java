@@ -137,7 +137,7 @@ public class platosNoServidos extends javax.swing.JPanel {
         cabeceraCuerpo.setOpaque(false);
         cabeceraCuerpo.setLayout(new java.awt.GridBagLayout());
 
-        FI.setFont(new java.awt.Font("Arial", 1, 18));
+        FI.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         FI.setForeground(new java.awt.Color(80, 98, 143));
         FI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         FI.setText("Fecha inicio:");
@@ -145,12 +145,11 @@ public class platosNoServidos extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.insets = new java.awt.Insets(62, 19, 64, 14);
+        gridBagConstraints.ipadx = 16;
+        gridBagConstraints.insets = new java.awt.Insets(39, 0, 56, 21);
         cabeceraCuerpo.add(FI, gridBagConstraints);
 
-        fechaI.setFont(new java.awt.Font("Arial", 0, 14));
+        fechaI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fechaI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fechaIActionPerformed(evt);
@@ -160,9 +159,9 @@ public class platosNoServidos extends javax.swing.JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 111;
+        gridBagConstraints.ipadx = 123;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.insets = new java.awt.Insets(62, 0, 64, 35);
+        gridBagConstraints.insets = new java.awt.Insets(39, 2, 56, 34);
         cabeceraCuerpo.add(fechaI, gridBagConstraints);
 
         FF.setFont(new java.awt.Font("Arial", 1, 18));
@@ -173,12 +172,12 @@ public class platosNoServidos extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 25;
+        gridBagConstraints.ipadx = 40;
         gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(62, 41, 64, 15);
+        gridBagConstraints.insets = new java.awt.Insets(40, 5, 56, 20);
         cabeceraCuerpo.add(FF, gridBagConstraints);
 
-        fechaF.setFont(new java.awt.Font("Arial", 0, 14));
+        fechaF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fechaF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fechaFActionPerformed(evt);
@@ -188,12 +187,12 @@ public class platosNoServidos extends javax.swing.JPanel {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 121;
         gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(62, 0, 64, 26);
+        gridBagConstraints.insets = new java.awt.Insets(39, 2, 56, 26);
         cabeceraCuerpo.add(fechaF, gridBagConstraints);
 
-        bGenerar.setFont(new java.awt.Font("Arial", 1, 14));
+        bGenerar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bGenerar.setForeground(new java.awt.Color(80, 98, 143));
         bGenerar.setText("Generar");
         bGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -202,9 +201,11 @@ public class platosNoServidos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 34;
-        gridBagConstraints.insets = new java.awt.Insets(62, 24, 64, 5);
+        gridBagConstraints.insets = new java.awt.Insets(39, 24, 58, 5);
         cabeceraCuerpo.add(bGenerar, gridBagConstraints);
 
         cuerpo.add(cabeceraCuerpo, java.awt.BorderLayout.PAGE_START);
