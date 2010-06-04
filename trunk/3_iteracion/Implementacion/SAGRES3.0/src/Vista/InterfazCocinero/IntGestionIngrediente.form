@@ -151,7 +151,7 @@
               <Color blue="8f" green="62" red="50" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Vista/InterfazCocinero/imagenes/A&#xf1;adirIngrediente.png"/>
+              <Image iconType="3" name="/Vista/InterfazCocinero/imagenes/AnadirIngrediente.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir Ingrediente"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
