@@ -12,6 +12,7 @@
 package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
+import GestionCarta.Seccion;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -19,6 +20,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
+import java.util.Iterator;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -30,12 +33,14 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     private PanelGeneralCliente PGC;
     private Elemento elemento;
     private boolean seleccionado;
+    private final Seccion seccion;
     
     /** Creates new form PanelElementoCarta */
-    public PanelElementoCarta(Elemento elemento, PanelGeneralCliente PGC) {
+    public PanelElementoCarta(Elemento elemento, PanelGeneralCliente PGC, Seccion seccion) {
         this.elemento=elemento;
         this.PGC=PGC;
         this.seleccionado=false;
+        this.seccion = seccion;
         
         initComponents();
 
@@ -146,15 +151,32 @@ public class PanelElementoCarta extends javax.swing.JPanel {
             PGC.pedidoRealizado=false;
         }
         if(!this.seleccionado){
-            if(this.elemento.getDisponible()){
+            HashSet<Elemento> elementosDeSeccion = this.PGC.icliente.obtieneElementosDeSeccion(seccion);
+            // Buscar este elemento y comprobar su disponibilidad
+            Iterator<Elemento> iterator = elementosDeSeccion.iterator();
+            boolean encontrado = false;
+            boolean disponible = false;
+            Elemento next = null;
+            while(iterator.hasNext() && !encontrado){
+                 next = iterator.next();
+                if(next.getCodigoElemento() == elemento.getCodigoElemento()){
+                    encontrado = true;
+                    disponible = next.getDisponible();
+                }
+            }
+
+            if(disponible){
+                elemento = next;
                 PGC.marcarElemento(this);
                 PGC.marcarCampoDeTexto();
             }else{
-                javax.swing.JOptionPane.showMessageDialog(this,
-                              "¡Lo siento! Este elemento ya no puede ser seleccionado porque se acaba de agotar.",
-                              "Elemento no disponible",
-                              javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
+                if(this.elemento.getDisponible()){
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                                  "¡Lo siento! Este elemento ya no puede ser seleccionado porque se acaba de agotar.",
+                                  "Elemento no disponible",
+                                  javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                this.setEnabled(false);
             }
         }else{
             PGC.desmarcarElemento();
@@ -179,6 +201,16 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
     public Elemento getElemento(){
         return this.elemento;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled){
+        //super.setEnabled(enabled);
+        if(enabled){
+            this.setBackground(new Color(255,255,255));
+        }else{
+            this.setBackground(new Color(140, 140, 170));
+        }
     }
 
     public void marcar(){

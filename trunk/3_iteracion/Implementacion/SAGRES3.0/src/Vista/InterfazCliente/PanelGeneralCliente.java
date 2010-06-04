@@ -579,6 +579,8 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         HashSet<Elemento> listaBebidas = new HashSet();
 
+        Seccion sBebidas = null;
+
         while(itSecciones.hasNext()){
             Seccion s = (Seccion) itSecciones.next();
             HashSet<Elemento> listaElementos = this.icliente.obtieneElementosDeSeccion(s);
@@ -594,6 +596,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 hojasSeccionCarnes.setOpaque(false);
             }else if(s.getNombre().equals("Refrescos") || s.getNombre().equals("Vinos")){
                 //Juntamos las bebidas
+                sBebidas = s;
                 if(listaBebidas.size()==0){
                     listaBebidas.addAll(listaElementos);
                 }else{
@@ -616,13 +619,13 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 }
 
                 if(s.getNombre().equals("Entrantes")){
-                    hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
+                    hojasSeccionEntrantes.add(new PanelHojasCarta(seisElementos,this, s),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Pescados")){
-                    hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
+                    hojasSeccionPescados.add(new PanelHojasCarta(seisElementos,this, s),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Carnes")){
-                    hojasSeccionCarnes.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
+                    hojasSeccionCarnes.add(new PanelHojasCarta(seisElementos,this, s),"Hoja"+Integer.toString(-1));
                 }else if(s.getNombre().equals("Postres")){
-                    hojasSeccionPostres.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(-1));
+                    hojasSeccionPostres.add(new PanelHojasCarta(seisElementos,this, s),"Hoja"+Integer.toString(-1));
                 }
             }
         }
@@ -638,7 +641,7 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
                 seisElementos.add((Elemento) itBebidas.next());
             }
             
-            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this),"Hoja"+Integer.toString(j++));
+            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this, sBebidas),"Hoja"+Integer.toString(j++));
         }
 
         

@@ -13,8 +13,10 @@ package Vista.InterfazCliente;
 
 import ControladorPrincipal.ICliente;
 import GestionCarta.Elemento;
+import GestionCarta.Seccion;
 import java.util.HashSet;
 import java.util.Iterator;
+import javax.swing.JPanel;
 
 /**
  *
@@ -24,9 +26,10 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
     private ICliente icliente;
     private PanelGeneralCliente PGC;
+    private final Seccion seccion;
 
     /** Creates new form PanelHojasCarta */
-    public PanelHojasCarta(HashSet<Elemento> listaElementos, PanelGeneralCliente PGC) throws Exception {
+    public PanelHojasCarta(HashSet<Elemento> listaElementos, PanelGeneralCliente PGC, Seccion seccion) throws Exception {
         initComponents();
 
         this.PGC=PGC;
@@ -37,57 +40,58 @@ public class PanelHojasCarta extends javax.swing.JPanel {
 
         if(it.hasNext()){
             e = (Elemento) it.next();
-            PanelElementoArribaI.add(new PanelElementoCarta(e,PGC));
-//            if(e.getDisponible())
-//                PanelElementoArribaI.setVisible(true);
-//            else
-//                PanelElementoArribaI.setVisible(false);
+            PanelElementoArribaI.add(new PanelElementoCarta(e,PGC, seccion));
+            if(e.getDisponible())
+                PanelElementoArribaI.getComponent(0).setEnabled(true);
+            else
+                PanelElementoArribaI.getComponent(0).setEnabled(false);
 
             if(it.hasNext()){
                 e = (Elemento) it.next();
-                PanelElementoCentroI.add(new PanelElementoCarta(e,PGC));
-//                if(e.getDisponible())
-//                    PanelElementoCentroI.setVisible(true);
-//                else
-//                    PanelElementoCentroI.setVisible(false);
+                PanelElementoCentroI = (JPanel) new PanelElementoCarta(e,PGC, seccion);
+                if(e.getDisponible())
+                    PanelElementoCentroI.getComponent(0).setEnabled(true);
+                else
+                    PanelElementoCentroI.getComponent(0).setEnabled(false);
 
                 if(it.hasNext()){
                     e = (Elemento) it.next();
-                    PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC));
-//                    if(e.getDisponible())
-//                        PanelElementoAbajoI.setVisible(true);
-//                    else
-//                        PanelElementoAbajoI.setVisible(false);
+                    PanelElementoAbajoI.add(new PanelElementoCarta(e,PGC, seccion));
+                    if(e.getDisponible())
+                        PanelElementoAbajoI.getComponent(0).setEnabled(true);
+                    else
+                        PanelElementoAbajoI.getComponent(0).setEnabled(false);
 
                     if(it.hasNext()){
                         e = (Elemento) it.next();
-                        PanelElementoArribaD.add(new PanelElementoCarta(e,PGC));
-//                        if(e.getDisponible())
-//                            PanelElementoArribaD.setVisible(true);
-//                        else
-//                            PanelElementoArribaD.setVisible(false);
+                        PanelElementoArribaD.add(new PanelElementoCarta(e,PGC, seccion));
+                        if(e.getDisponible())
+                            PanelElementoArribaD.getComponent(0).setEnabled(true);
+                        else
+                            PanelElementoArribaD.getComponent(0).setEnabled(false);
 
                         if(it.hasNext()){
                             e = (Elemento) it.next();
-                            PanelElementoCentroD.add(new PanelElementoCarta(e,PGC));
-//                            if(e.getDisponible())
-//                                PanelElementoCentroD.setVisible(true);
-//                            else
-//                                PanelElementoCentroD.setVisible(false);
+                            PanelElementoCentroD.add(new PanelElementoCarta(e,PGC, seccion));
+                            if(e.getDisponible())
+                                PanelElementoCentroD.getComponent(0).setEnabled(true);
+                            else
+                                PanelElementoCentroD.getComponent(0).setEnabled(false);
 
                             if(it.hasNext()){
                                 e = (Elemento) it.next();
-                                PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC));
-//                                if(e.getDisponible())
-//                                    PanelElementoAbajoD.setVisible(true);
-//                                else
-//                                    PanelElementoAbajoD.setVisible(false);
+                                PanelElementoAbajoD.add(new PanelElementoCarta(e,PGC, seccion));
+                                if(e.getDisponible())
+                                    PanelElementoAbajoD.getComponent(0).setEnabled(true);
+                                else
+                                    PanelElementoAbajoD.getComponent(0).setEnabled(false);
                             }
                         }
                     }
                 }
             }
         }
+        this.seccion = seccion;
         
     }
 

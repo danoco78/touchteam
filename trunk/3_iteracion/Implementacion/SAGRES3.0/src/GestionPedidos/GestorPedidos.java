@@ -162,11 +162,18 @@ public class GestorPedidos implements IGestorPedidos {
                 Producto prod;
                 Float cantidad;
                 Map.Entry entrada;
+                boolean disponible = true;
                 while (ite.hasNext()) { //Restamos las cantidades de todos los productos
                     entrada = (Map.Entry)ite.next();
                     prod = (Producto) entrada.getKey();
                     cantidad = (Float)entrada.getValue();
                     this.iProducto.restarCantidadProducto(prod,cantidad);
+                    if(prod.getCantidad() < prod.getMinimo()){
+                        disponible = false;
+                    }
+                }
+                if(!disponible){
+                    ele.getElemento().setDisponible(disponible);
                 }
             }
             else if(estado == ElementoColaCocina.PREPARANDOSE){
@@ -204,11 +211,18 @@ public class GestorPedidos implements IGestorPedidos {
                 Producto prod;
                 Float cantidad;
                 Map.Entry entrada;
+                boolean disponible = true;
                 while (ite.hasNext()) { //Restamos las cantidades de todos los productos
                     entrada = (Map.Entry)ite.next();
                     prod = (Producto) entrada.getKey();
                     cantidad = (Float)entrada.getValue();
                     this.iProducto.restarCantidadProducto(prod,cantidad);
+                    if(prod.getCantidad() < prod.getMinimo()){
+                        disponible = false;
+                    }
+                }
+                if(!disponible){
+                    ele.getElemento().setDisponible(disponible);
                 }
             }
             else{

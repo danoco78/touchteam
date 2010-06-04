@@ -173,6 +173,8 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 this.PanelPedido.repaint();
                 this.PanelPedido.revalidate();
             }
+        } else{
+            System.gc();
         }
         
         return pedidos.size();
