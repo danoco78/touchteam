@@ -96,7 +96,11 @@ public class ElementoPedido {
      * @param p Pedido a comparar
      * @return Verdadero si son iguales
      */
-    public boolean equals(Pedido p){
-        return this.codElementoPedido == p.getCodPedido();
+    public boolean equals(ElementoPedido p){
+        boolean iguales = this.codElementoPedido == p.getCodElementoPedido();
+        //if(iguales){
+        //    iguales = this.estado == p.getEstado();
+        //}
+        return iguales;
     }
 }

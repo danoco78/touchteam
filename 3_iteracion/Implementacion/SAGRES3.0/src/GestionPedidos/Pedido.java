@@ -91,18 +91,21 @@ public class Pedido {
         if(iguales){
             ArrayList<ElementoPedido> elementosP = p.getElementos();
             if(this.elementos.size() == elementosP.size()){
-                Iterator<ElementoPedido> itthis = elementos.iterator();
-                while(itthis.hasNext() && iguales){
-                    ElementoPedido next = itthis.next();
-                    int i=0;
+                Iterator<ElementoPedido> it = elementos.iterator();
+                Iterator<ElementoPedido> itthat;
+                while(it.hasNext() && iguales){
+                    ElementoPedido next = it.next();
                     boolean encontrado = false;
-                    for(i=0; i<elementosP.size() && !encontrado; ++i){
-                        if(elementosP.get(i).equals(next)){
+                    itthat = p.getElementos().iterator();
+                    ElementoPedido elePed2 = null;
+                    while(itthat.hasNext() && !encontrado){
+                        elePed2 = itthat.next();
+                        if(elePed2.equals(next)){
                             encontrado = true;
                         }
                     }
                     if(!encontrado) iguales = false;
-                    else if(elementosP.get(i).getEstado() != next.getEstado())
+                    else if(elePed2.getEstado() != next.getEstado())
                         iguales = false;
                 }
             }else{

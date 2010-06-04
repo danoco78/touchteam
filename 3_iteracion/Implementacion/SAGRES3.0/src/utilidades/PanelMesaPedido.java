@@ -75,10 +75,15 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 this.centro.setVisible(true);
 
                 // Comprobar si ha cambiado el pedido
-                if(pedActual == null || (siguientePedidoCocinaEnCola == null && pedActual != null) || !pedActual.equals(siguientePedidoCocinaEnCola) ){
+                // O bien uno es nulo y otro no
+                // o ninguno es nulo y sin distintos
+                if((pedActual == null && siguientePedidoCocinaEnCola != null) ||
+                        (siguientePedidoCocinaEnCola == null && pedActual != null) ||
+                        (pedActual != null && siguientePedidoCocinaEnCola != null &&
+                        !pedActual.equals(siguientePedidoCocinaEnCola)) ){
                     this.cambiarPedido(siguientePedidoCocinaEnCola);
                 }else{
-                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+                    System.gc();
                 }
             } catch (Exception ex) {
                 this.centro.setVisible(false);
@@ -91,12 +96,16 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 this.centro.setVisible(true);
 
                 // Comprobar si ha cambiado el pedido
-                if(pedActual == null ||
+                // Comprobar si ha cambiado el pedido
+                // O bien uno es nulo y otro no
+                // o ninguno es nulo y sin distintos
+                if((pedActual == null && siguientePedidoBar != null) ||
                         (siguientePedidoBar == null && pedActual != null) ||
-                        !pedActual.equals(siguientePedidoBar) ){
+                        (pedActual != null && siguientePedidoBar != null &&
+                        !pedActual.equals(siguientePedidoBar)) ){
                     this.cambiarPedido(siguientePedidoBar);
                 }else
-                    System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
+                    System.gc();
             } catch (Exception ex) {
                 this.centro.setVisible(false);
                 this.setPendientes(0);
