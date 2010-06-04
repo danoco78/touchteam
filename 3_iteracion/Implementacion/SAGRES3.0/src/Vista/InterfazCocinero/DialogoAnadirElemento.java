@@ -797,7 +797,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                             listaIngredientes.put( (Ingrediente) this.seleccionados.get(i), (Float) this.tProductosAsociados.getModel().getValueAt(i, 2));
                         }
                         ElementoPlato plato = new ElementoPlato(0, listaIngredientes, this.tNombre.getText(), this.tDescripcion.getText()
-                                , imagen,(Integer) this.tTiempo.getValue(),(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
+                                , false, imagen,(Integer) this.tTiempo.getValue(),(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
                         this.icocinero.nuevoElemento(plato, seccion);
                     } else {
                         HashMap<Bebida, Float> listaBebidas = new HashMap<Bebida, Float>();
@@ -805,7 +805,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                             listaBebidas.put( (Bebida) this.seleccionados.get(i), (Float) this.tProductosAsociados.getModel().getValueAt(i, 2));
                         }
                         ElementoBebida bebida = new ElementoBebida(0, listaBebidas, this.tNombre.getText(), this.tDescripcion.getText()
-                                , imagen,(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
+                                , false, imagen,(Float) this.tPrecio.getValue(),(Integer)this.tPorciones.getValue());
                         this.icocinero.nuevoElemento(bebida, seccion);
                     }
                     setVisible(false);

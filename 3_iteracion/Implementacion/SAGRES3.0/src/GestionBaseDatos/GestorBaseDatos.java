@@ -343,13 +343,19 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                         + "tieneBebida.productoBebida_producto_producto_id"
                         + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                 ResultSet datosBebidas = consulta2.executeQuery();
+
+                boolean disponible = true;
                 while (datosBebidas.next()) {
                     Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
                     Float cantidad = new Float(datosBebidas.getFloat(7));
                     listaBebida.put(bebida, cantidad);
+                    // Si la cantidad es menor que el minimo
+                    if( datosBebidas.getFloat(5) < datosBebidas.getFloat(3)){
+                        disponible = false;
+                    }
                 }
                 // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                 listaElementos.add(elemento);
             }
 
@@ -362,13 +368,19 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                         + "tieneIngrediente.productoIngrediente_producto_producto_id"
                         + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                 ResultSet datosIngredientes = consulta2.executeQuery();
+                
+                boolean disponible = true;
                 while (datosIngredientes.next()) {
                     Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
                     Float cantidad = new Float(datosIngredientes.getFloat(7));
                     listaIngredientes.put(ingrediente, cantidad);
+                    // Si la cantidad es menor que el minimo
+                    if(datosIngredientes.getFloat(5) < datosIngredientes.getFloat(3)){
+                        disponible = false;
+                    }
                 }
                 // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                 listaElementos.add(elemento);
             }
         } catch (SQLException ex) {
@@ -393,13 +405,19 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneBebida.productoBebida_producto_producto_id"
                             + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
+                    boolean disponible = true;
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
                         Float cantidad = new Float(datosBebidas.getFloat(7));
                         listaBebida.put(bebida, cantidad);
+
+                        // Si la cantidad es menor que el minimo
+                        if( datosBebidas.getFloat(5) < datosBebidas.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -415,13 +433,19 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneIngrediente.productoIngrediente_producto_producto_id"
                             + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
+                    boolean disponible = true;
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
                         Float cantidad = new Float(datosIngredientes.getFloat(7));
                         listaIngredientes.put(ingrediente, cantidad);
+
+                        // Si la cantidad es menor que el minimo
+                        if(datosIngredientes.getFloat(5) < datosIngredientes.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -447,13 +471,19 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneBebida.productoBebida_producto_producto_id"
                             + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
+                    boolean disponible = true;
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
                         Float cantidad = new Float(datosBebidas.getFloat(7));
                         listaBebida.put(bebida, cantidad);
+
+                        // Si la cantidad es menor que el minimo
+                        if( datosBebidas.getFloat(5) < datosBebidas.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementos.add(elemento);
                 }
             } else {
@@ -467,13 +497,20 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneIngrediente.productoIngrediente_producto_producto_id"
                             + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
+
+                    boolean disponible = true;
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
                         Float cantidad = new Float(datosIngredientes.getFloat(7));
                         listaIngredientes.put(ingrediente, cantidad);
+                        
+                        // Si la cantidad es menor que el minimo
+                        if(datosIngredientes.getFloat(5) < datosIngredientes.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementos.add(elemento);
                 }
             }
@@ -538,7 +575,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                     }
                 }
 
-                elementoBebida = new ElementoBebida(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1, (int) rsElementos.getBlob(5).length())), rsElementos.getFloat(8), rsElementos.getInt(7));
+                elementoBebida = new ElementoBebida(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), false, Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1, (int) rsElementos.getBlob(5).length())), rsElementos.getFloat(8), rsElementos.getInt(7));
                 elementoBebida.setDisponible(false);
                 elementoBebida.setDivisiones(rsElementos.getInt(6));
             }
@@ -566,7 +603,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                         }
                     }
                 }
-                elementoPlato = new ElementoPlato(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1, (int) rsElementos.getBlob(5).length())), rsElementos.getInt(9), rsElementos.getFloat(8), rsElementos.getInt(7));
+                elementoPlato = new ElementoPlato(rsElementos.getInt(1), listaProductosElemento, rsElementos.getString(2), rsElementos.getString(3), false, Imagen.blobToImageIcon(new SerialBlob(rsElementos.getBlob(5)).getBytes(1, (int) rsElementos.getBlob(5).length())), rsElementos.getInt(9), rsElementos.getFloat(8), rsElementos.getInt(7));
                 elementoPlato.setDisponible(false);
                 elementoPlato.setDivisiones(rsElementos.getInt(6));
             }
@@ -608,13 +645,20 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneBebida.productoBebida_producto_producto_id"
                             + " = producto.producto_id AND tieneBebida.elementoBebida_elemento_elemento_id =" + datosElementosBebida.getInt(1));
                     ResultSet datosBebidas = consulta2.executeQuery();
+
+                    boolean disponible = true;
                     while (datosBebidas.next()) {
                         Bebida bebida = new Bebida(datosBebidas.getInt(6), datosBebidas.getString(2), Imagen.blobToImageIcon(new SerialBlob(datosBebidas.getBlob(1)).getBytes(1, (int) datosBebidas.getBlob(1).length())), datosBebidas.getFloat(3), datosBebidas.getFloat(4), datosBebidas.getFloat(5));
                         Float cantidad = new Float(datosBebidas.getFloat(7));
                         listaBebida.put(bebida, cantidad);
+
+                        // Si la cantidad es menor que el minimo
+                        if( datosBebidas.getFloat(5) < datosBebidas.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
+                    ElementoBebida elemento = new ElementoBebida(datosElementosBebida.getInt(1), listaBebida, datosElementosBebida.getString(2), datosElementosBebida.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosBebida.getBlob(5)).getBytes(1, (int) datosElementosBebida.getBlob(5).length())), datosElementosBebida.getInt(8), datosElementosBebida.getInt(7));
                     listaElementosB.add(elemento);
                 }
                 SeccionBebida seccion = new SeccionBebida(datosSeccion.getInt(1), datosSeccion.getString(2), carta, listaElementosB);
@@ -636,13 +680,20 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             + "tieneIngrediente.productoIngrediente_producto_producto_id"
                             + " = producto.producto_id AND tieneIngrediente.elementoComida_elemento_elemento_id =" + datosElementosPlato.getInt(1));
                     ResultSet datosIngredientes = consulta2.executeQuery();
+
+                    boolean disponible = true;
                     while (datosIngredientes.next()) {
                         Ingrediente ingrediente = new Ingrediente(datosIngredientes.getInt(6), datosIngredientes.getString(2), datosIngredientes.getFloat(5), datosIngredientes.getFloat(3), datosIngredientes.getFloat(4), Imagen.blobToImageIcon(new SerialBlob(datosIngredientes.getBlob(1)).getBytes(1, (int) datosIngredientes.getBlob(1).length())));
                         Float cantidad = new Float(datosIngredientes.getFloat(7));
                         listaIngredientes.put(ingrediente, cantidad);
+
+                        // Si la cantidad es menor que el minimo
+                        if(datosIngredientes.getFloat(5) < datosIngredientes.getFloat(3)){
+                            disponible = false;
+                        }
                     }
                     // Para obtener la imagen, primero sacamos el blob y con SerialBlob lo pasamos a byte[]
-                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
+                    ElementoPlato elemento = new ElementoPlato(datosElementosPlato.getInt(1), listaIngredientes, datosElementosPlato.getString(2), datosElementosPlato.getString(3), disponible, Imagen.blobToImageIcon(new SerialBlob(datosElementosPlato.getBlob(5)).getBytes(1, (int) datosElementosPlato.getBlob(5).length())), datosElementosPlato.getInt(9), datosElementosPlato.getInt(8), datosElementosPlato.getInt(7));
                     listaElementosP.add(elemento);
                 }
                 SeccionComida seccion = new SeccionComida(datosSeccion.getInt(1), datosSeccion.getString(2), carta, listaElementosP);
@@ -1159,7 +1210,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             Ingrediente ingrediente = new Ingrediente(resProds.getInt(1), resProds.getString(2), resProds.getFloat(3), resProds.getFloat(4), resProds.getFloat(5), Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int) resProds.getBlob(1).length())));
                             temp.put(ingrediente, new Float(0));
                         }
-                        ElementoPlato elemComida = new ElementoPlato(elem.getCodigoElemento(), temp, elem.getNombre(), elem.getDescripcion(), elem.getFoto(), 0, elem.getPrecio(), elem.getDivisionesMaximas());
+                        ElementoPlato elemComida = new ElementoPlato(elem.getCodigoElemento(), temp, elem.getNombre(), elem.getDescripcion(), false, elem.getFoto(), 0, elem.getPrecio(), elem.getDivisionesMaximas());
                         ElementoColaCocina elemColaCocina = new ElementoColaCocina(elemPed.getCodElementoPedido(), elemPed.getEstado(), elemPed.getComentario());
                         elemColaCocina.asocia(elemComida);
                         pedido.asocia(elemColaCocina);
@@ -1176,7 +1227,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             Bebida bebida = new Bebida(resProds.getInt(1), resProds.getString(2), Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int) resProds.getBlob(1).length())), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5));
                             temp.put(bebida, new Float(0));
                         }
-                        ElementoBebida elemBebida = new ElementoBebida(elem.getCodigoElemento(),temp,elem.getNombre(), elem.getDescripcion(), elem.getFoto(), elem.getPrecio(),elem.getDivisiones());
+                        ElementoBebida elemBebida = new ElementoBebida(elem.getCodigoElemento(),temp,elem.getNombre(), elem.getDescripcion(), false, elem.getFoto(), elem.getPrecio(),elem.getDivisiones());
 
                         ElementoColaBar elemColaBar = new ElementoColaBar(elemPed.getCodElementoPedido(), elemPed.getEstado(), elemPed.getComentario());
                         elemColaBar.asocia(elemBebida);
@@ -1614,7 +1665,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             Ingrediente ingrediente = new Ingrediente(resProds.getInt(1), resProds.getString(2), resProds.getFloat(3), resProds.getFloat(4), resProds.getFloat(5), Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int) resProds.getBlob(1).length())));
                             temp.put(ingrediente, new Float(0));
                         }
-                        ElementoPlato elemComida = new ElementoPlato(elem.getCodigoElemento(), temp, elem.getNombre(), elem.getDescripcion(), elem.getFoto(), 0, elem.getPrecio(), elem.getDivisionesMaximas());
+                        ElementoPlato elemComida = new ElementoPlato(elem.getCodigoElemento(), temp, elem.getNombre(), elem.getDescripcion(), false, elem.getFoto(), 0, elem.getPrecio(), elem.getDivisionesMaximas());
                         ElementoColaCocina elemColaCocina = new ElementoColaCocina(elemPed.getCodElementoPedido(), elemPed.getEstado(), elemPed.getComentario());
                         elemColaCocina.asocia(elemComida);
                         pedido.asocia(elemColaCocina);
@@ -1631,7 +1682,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             Bebida bebida = new Bebida(resProds.getInt(1), resProds.getString(2), Imagen.blobToImageIcon(new SerialBlob(resProds.getBlob(6)).getBytes(1, (int) resProds.getBlob(1).length())), resProds.getInt(3), resProds.getInt(4), resProds.getInt(5));
                             temp.put(bebida, new Float(0));
                         }
-                        ElementoBebida elemBebida = new ElementoBebida(elem.getCodigoElemento(),temp,elem.getNombre(), elem.getDescripcion(), elem.getFoto(), elem.getPrecio(),elem.getDivisiones());
+                        ElementoBebida elemBebida = new ElementoBebida(elem.getCodigoElemento(),temp,elem.getNombre(), elem.getDescripcion(), false, elem.getFoto(), elem.getPrecio(),elem.getDivisiones());
 
                         ElementoColaBar elemColaBar = new ElementoColaBar(elemPed.getCodElementoPedido(), elemPed.getEstado(), elemPed.getComentario());
                         elemColaBar.asocia(elemBebida);

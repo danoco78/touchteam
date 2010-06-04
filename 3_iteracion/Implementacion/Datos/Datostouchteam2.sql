@@ -18,8 +18,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 INSERT INTO pedido (pedido_id, mesa_id, estado, fecha) VALUES
-(1, 1, 0, '2010-05-11'),
-(2, 1, 0, '2010-05-11');
+(1, 1, 0, '2010-05-23T14:25:12'),
+(2, 1, 0, '2010-05-23T14:25:10');
 
 --
 -- Volcar la base de datos para la tabla 'elementopedido'

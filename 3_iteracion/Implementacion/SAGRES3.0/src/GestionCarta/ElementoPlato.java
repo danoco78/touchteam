@@ -16,8 +16,8 @@ public class ElementoPlato extends Elemento {
     HashMap<Ingrediente,Float> listaIngredientes;
     int tiempoElaboracion;
 
-    public ElementoPlato(int codigo, HashMap<Ingrediente, Float> listaIngredientes, String nombre, String descripcion, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
-        super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
+    public ElementoPlato(int codigo, HashMap<Ingrediente, Float> listaIngredientes, String nombre, String descripcion, boolean disponible, ImageIcon foto, int tiempoElaboracion, float precio, int divisionesMaximas) {
+        super(codigo, descripcion, disponible, divisionesMaximas, foto, nombre, precio);
         this.listaIngredientes = listaIngredientes;
         this.tiempoElaboracion = tiempoElaboracion;
     }

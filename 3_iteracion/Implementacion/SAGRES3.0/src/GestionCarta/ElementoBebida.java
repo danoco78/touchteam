@@ -15,8 +15,8 @@ import javax.swing.ImageIcon;
 public class ElementoBebida extends Elemento{
     public HashMap<Bebida, Float> listaBebidas;
 
-    public ElementoBebida(int codigo, HashMap<Bebida, Float> listaBebidas, String nombre, String descripcion, ImageIcon foto, float precio, int divisionesMaximas) {
-        super(codigo, descripcion, divisionesMaximas, foto, nombre, precio);
+    public ElementoBebida(int codigo, HashMap<Bebida, Float> listaBebidas, String nombre, String descripcion, boolean disponible, ImageIcon foto, float precio, int divisionesMaximas) {
+        super(codigo, descripcion, disponible, divisionesMaximas, foto, nombre, precio);
         this.listaBebidas = listaBebidas;
     }
 
