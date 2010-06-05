@@ -36,8 +36,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.ImageIcon;
-import utilidades.Imagen;
 import org.jfree.data.category.DefaultCategoryDataset;
+import utilidades.Imagen;
 
 /**
  *

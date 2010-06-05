@@ -150,10 +150,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarElemento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seleccionarElemento
-        if(PGC.pedidoRealizado){
-            PGC.cambiarPanelEste();
-            PGC.pedidoRealizado=false;
-        }
+        
         if(!this.seleccionado){
             HashSet<Elemento> elementosDeSeccion = this.PGC.icliente.obtieneElementosDeSeccion(seccion);
             // Buscar este elemento y comprobar su disponibilidad
@@ -161,9 +158,10 @@ public class PanelElementoCarta extends javax.swing.JPanel {
             boolean encontrado = false;
             boolean disponible = false;
             Elemento next = null;
+
             while(iterator.hasNext() && !encontrado){
                  next = iterator.next();
-                if(next.getCodigoElemento() == elemento.getCodigoElemento()){
+                if(next.getCodigoElemento() == this.elemento.getCodigoElemento()){
                     encontrado = true;
                     disponible = next.getDisponible();
                 }
@@ -174,14 +172,17 @@ public class PanelElementoCarta extends javax.swing.JPanel {
                 PGC.marcarElemento(this);
                 PGC.marcarCampoDeTexto();
                 this.setEnabled(true);
+                if(PGC.pedidoRealizado){
+                    PGC.cambiarPanelEste();
+                    PGC.pedidoRealizado=false;
+                }
             }else{
-                if(this.elemento.getDisponible()){
-                    javax.swing.JOptionPane.showMessageDialog(this,
+                javax.swing.JOptionPane.showMessageDialog(this,
                                   "¡Lo siento! Este elemento ya no puede ser seleccionado porque se acaba de agotar.",
                                   "Elemento no disponible",
                                   javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                }
                 this.setEnabled(false);
+                this.elemento.setDisponible(false);
             }
         }else{
             PGC.desmarcarElemento();
