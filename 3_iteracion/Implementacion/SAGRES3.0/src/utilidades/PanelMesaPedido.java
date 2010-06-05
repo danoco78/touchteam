@@ -414,8 +414,13 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 (pedMostrandose != null && ped == null))
             return true;
         if(pedMostrandose == null && ped == null) return false;
-        if(pedMostrandose.get(1) != ped.getCodPedido()) return true;
-        if(pedMostrandose.get(2) != ped.getEstado()) return true;
+        if((pedMostrandose.isEmpty() && ped != null)||
+                (!pedMostrandose.isEmpty() && ped == null))
+            return true;
+        if(pedMostrandose.isEmpty() && ped == null) return false;
+        
+        if(pedMostrandose.get(0) != ped.getCodPedido()) return true;
+        if(pedMostrandose.get(1) != ped.getEstado()) return true;
         ArrayList<ElementoPedido> elementos = ped.getElementos();
         // No se puede comparar los tamaños porque pedMostrandose solo guarda los que corresponde al filtro
         //if((pedMostrandose.size()-2)/2 != elementos.size()) return true;
