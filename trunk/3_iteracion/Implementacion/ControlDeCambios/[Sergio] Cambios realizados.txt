@@ -16,6 +16,7 @@ Interfaz de cliente
 - Los pedidos cuyos elementos se han preparado completamente ya no se mostrarán en la vista.
 - Se ha corregido la modificación de pedidos, ya no hace uso de la función "modificarPedido" sino que elimina el pedido tal cual, como se especifica en el diseño 2º iteración.
 - (Eliminado el parpadeo innecesario) Añadidas listas de pedidos para comprobar si son iguales al actualizar la vista y no reconstruir la interfaz de usuario.
+- Se controla si los elementos estan disponibles a la hora de seleccionarlos.
 
 Cola de cocina y bar "En cola"
 - Se ha agrandado el tamaño del texto
@@ -24,6 +25,7 @@ Cola de cocina y bar "En cola"
 - Se ha rediseñado desde cero, ambas interfaces de cola siguen una jerarquía de objetos y cuentan con una única función de actualización.
 - Se ha solucionado el problema de la persistencia de pedidos ya realizados.
 - Se ha solucionado el problema de que al actualizar todos los elementos de un pedido, puede ser que se deshaga el cambio de estado de un elemento que no le corresponde (Por ejemplo, actualizo los platos, las bebidas tambien se actualizan).
+- Se ha eliminado el parpadeo, las colas solo actualizan cuando es necesario.
 
 HebraPendientes (Hebra que obtiene los elementos pendientes en bar y cocina)
 - Se ha eliminado esta clase, agregando su funcionalidad a HebraColaPedidos, simplificando el código y mejorando el rendimiento.

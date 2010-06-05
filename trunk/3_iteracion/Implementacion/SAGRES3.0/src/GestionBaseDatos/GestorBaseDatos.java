@@ -1085,7 +1085,6 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             ArrayList<ElementoPedido> elementos = p.obtieneElementos();
             Iterator ite = elementos.iterator();
             java.sql.PreparedStatement elemPedBD = this.Conexion.prepareStatement("SELECT estado, comentario FROM elementoPedido WHERE elementoPedido_id=?");
-            // TODO Reflejar estos cambios en el diagrama de colaboracion correspondiente
             while (ite.hasNext()){
                 // Unicamente debe actualizar los que tengan mayor estado
                 ElementoPedido eped = ((ElementoPedido)ite.next()); // Obtenemos el siguiete Elemento

@@ -24,6 +24,8 @@ import Vista.InterfazMetre.InterfazMetre;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -35,6 +37,7 @@ import javax.swing.JButton;
 public class PanelMesaPedido extends javax.swing.JPanel {
 
     Pedido pedActual;
+    private Vector<Integer> pedMostrandose;
     int filtro;
     int numElementosPendientes;
     IntColaBar mpadre;
@@ -54,6 +57,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         this.imetre = imetre;
         this.ventanaMetre = ventana;
         pedActual = null;
+        pedMostrandose = null;
     }
 
     public PanelMesaPedido(ICocinero icocinero, InterfazCocinero ventana) {
@@ -62,6 +66,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
         this.icocinero = icocinero;
         this.ventanaCocinero = ventana;
         pedActual = null;
+        pedMostrandose = null;
     }
 
     /**
@@ -77,11 +82,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 // Comprobar si ha cambiado el pedido
                 // O bien uno es nulo y otro no
                 // o ninguno es nulo y sin distintos
-                if((pedActual == null && siguientePedidoCocinaEnCola != null) ||
-                        (siguientePedidoCocinaEnCola == null && pedActual != null) ||
-                        (pedActual != null && siguientePedidoCocinaEnCola != null &&
-                        true // TODO !pedActual.equals(siguientePedidoCocinaEnCola)
-                        ) ){
+                if(this.hayQueActualizar(pedMostrandose, siguientePedidoCocinaEnCola)  ){
                     this.cambiarPedido(siguientePedidoCocinaEnCola);
                 }else{
                     System.gc();
@@ -100,10 +101,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
                 // Comprobar si ha cambiado el pedido
                 // O bien uno es nulo y otro no
                 // o ninguno es nulo y sin distintos
-                if((pedActual == null && siguientePedidoBar != null) ||
-                        (siguientePedidoBar == null && pedActual != null) ||
-                        (pedActual != null && siguientePedidoBar != null &&
-                        !pedActual.equals(siguientePedidoBar)) ){
+                if(this.hayQueActualizar(pedMostrandose, siguientePedidoBar) ){
                     this.cambiarPedido(siguientePedidoBar);
                 }else
                     System.gc();
@@ -119,9 +117,12 @@ public class PanelMesaPedido extends javax.swing.JPanel {
      * @param ped pedido que se muestra
      */
     private void cambiarPedido(Pedido ped){
+        if(pedMostrandose != null) pedMostrandose.clear();
+        pedMostrandose = this.copiarPedido(ped);
         pedActual = ped;
         panelInfoPedido.removeAll();
         //panelInfoPedido.repaint();
+        this.numElementosPendientes = 0;
         if(ped == null){
             infoMesaPedido.setText("");
             this.centro.setVisible(false);
@@ -140,6 +141,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
 
                     panelInfoPedido.add(boton);
                     panelInfoPedido.add(new PanelEspacioVertical());
+                    ++this.numElementosPendientes;
                 }
             }
         }
@@ -401,6 +403,66 @@ public class PanelMesaPedido extends javax.swing.JPanel {
     private javax.swing.JScrollPane scroll;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Comprueba si es necesario actualizar
+     * @param pedMostrandose Vector de &gt;CodPedido, EstadoPedido, CodElem, EstadoElem...&lt;
+     * @param ped
+     * @return
+     */
+    private boolean hayQueActualizar(Vector<Integer> pedMostrandose, Pedido ped) {
+        if((pedMostrandose == null && ped != null) ||
+                (pedMostrandose != null && ped == null))
+            return true;
+        if(pedMostrandose == null && ped == null) return false;
+        if(pedMostrandose.get(1) != ped.getCodPedido()) return true;
+        if(pedMostrandose.get(2) != ped.getEstado()) return true;
+        ArrayList<ElementoPedido> elementos = ped.getElementos();
+        // No se puede comparar los tamaños porque pedMostrandose solo guarda los que corresponde al filtro
+        //if((pedMostrandose.size()-2)/2 != elementos.size()) return true;
+
+        // Buscamos la correspondencia entre elementos
+        Iterator<ElementoPedido> iterator = elementos.iterator();
+        while(iterator.hasNext()){
+            ElementoPedido elem = iterator.next();
+            if((filtro == BAR && elem instanceof ElementoColaBar) ||
+                (filtro == COCINA && elem instanceof ElementoColaCocina)){
+                boolean encontrado = false;
+                for(int i=2; i< pedMostrandose.size() && !encontrado; i+=2){
+                    if(pedMostrandose.get(i) == elem.getCodElementoPedido()){
+                        encontrado = true;
+                        if(pedMostrandose.get(i+1) != elem.getEstado()){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Copia un pedido y lo devuelve en forma de vector de codigos y estados.
+     * @param ped Pedido a copiar
+     * @return Nuevo pedido sin referencias a ped
+     */
+    private Vector<Integer> copiarPedido(Pedido ped){
+
+        Vector<Integer> copia = new Vector<Integer>(ped.getElementos().size()*2 +2);
+        copia.add(ped.getCodPedido());
+        copia.add(ped.getEstado());
+
+        Iterator<ElementoPedido> it = ped.getElementos().iterator();
+        while(it.hasNext()){
+            ElementoPedido next = it.next();
+            if((filtro == BAR && next instanceof ElementoColaBar)||
+                   (filtro == COCINA && next instanceof ElementoColaCocina) ){
+                copia.add(next.getCodElementoPedido());
+                copia.add(next.getEstado());
+            }
+        }
+        return copia;
+    }
+
     private class ManejaEventos implements ActionListener{
 
         JButton boton;
@@ -469,4 +531,5 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             }
         }
     }
+
 }
