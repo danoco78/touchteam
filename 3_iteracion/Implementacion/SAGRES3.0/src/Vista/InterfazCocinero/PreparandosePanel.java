@@ -17,6 +17,7 @@ import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Vector;
 import utilidades.PanelEspacioVertical;
 import utilidades.PanelPedidoPorMesa;
 
@@ -26,7 +27,7 @@ import utilidades.PanelPedidoPorMesa;
  */
 public class PreparandosePanel extends javax.swing.JPanel {
 
-    private ArrayList<Pedido> pedidosMostrandose;
+    private Vector<Vector<Integer> > pedidosMostrandose;
     public ICocinero icocinero;
     public InterfazCocinero ventana;
 
@@ -45,7 +46,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
             // Obtener los pedidos con elementos preparandose
             ArrayList<Pedido> pedidosCocinaPreparandose = this.icocinero.getPedidosCocinaPreparandose();
             // Si es necesario, actualizar
-            if(hayQueAutoCompletar(pedidosMostrandose, pedidosCocinaPreparandose)){
+            if(hayQueActualizar(pedidosMostrandose, pedidosCocinaPreparandose)){
                 this.autoCompletar(pedidosCocinaPreparandose);
             }else{
                 System.gc();
@@ -65,7 +66,8 @@ public class PreparandosePanel extends javax.swing.JPanel {
      */
     private void autoCompletar(ArrayList<Pedido> listaPedidos){
 
-        this.pedidosMostrandose = new ArrayList<Pedido>(listaPedidos);
+        if(this.pedidosMostrandose != null) pedidosMostrandose.clear();
+        this.pedidosMostrandose = this.copiarPedido(listaPedidos);
         this.pPanelesPedido.removeAll();
         this.pPanelesPedido.add(new PanelEspacioVertical());
 
@@ -82,6 +84,35 @@ public class PreparandosePanel extends javax.swing.JPanel {
         
         this.revalidate();
         this.repaint();
+    }
+
+    /**
+     * Copia un pedido y lo devuelve en forma de vector de codigos y estados.
+     * @param ped Pedido a copiar
+     * @return Nuevo pedido sin referencias a ped
+     */
+    private Vector<Vector<Integer> > copiarPedido(ArrayList<Pedido> peds){
+
+        Vector<Vector<Integer> > copiaPeds = new Vector(peds.size());
+        Iterator<Pedido> itPeds = peds.iterator();
+        
+        while(itPeds.hasNext()){
+            Pedido ped = itPeds.next();
+            Vector<Integer> copia = new Vector<Integer>(ped.getElementos().size()*2 +2);
+            copia.add(ped.getCodPedido());
+            copia.add(ped.getEstado());
+
+            Iterator<ElementoPedido> it = ped.getElementos().iterator();
+            while(it.hasNext()){
+                ElementoPedido next = it.next();
+                if(next instanceof ElementoColaCocina){
+                    copia.add(next.getCodElementoPedido());
+                    copia.add(next.getEstado());
+                }
+            }
+            copiaPeds.add(copia);
+        }
+        return copiaPeds;
     }
 
 
@@ -205,72 +236,41 @@ public class PreparandosePanel extends javax.swing.JPanel {
     }
 
     /**
-     * Compara una lista de pedidos con la otra, devolviendo True si son distintas,
-     * se deben respetar los parametros con las condiciones que se indican, de lo
-     * contrario se puede devolver un resultado inesperado.
-     * @param peds1 Conjunto de pedidos que se estan mostrando en la interfaz
-     * @param peds2 Conjunto nuevo de pedidos a comparar
-     * @return True si son distintas
+     * Comprueba si es necesario actualizar
+     * @param pedMostrandose Vector de &gt;CodPedido, EstadoPedido, CodElem, EstadoElem...&lt;
+     * @param ped
+     * @return
      */
-    private boolean hayQueAutoCompletar(ArrayList<Pedido> peds1, ArrayList<Pedido> peds2) {
-
-        if((peds1 == null && peds2 != null) ||
-                (peds1 != null && peds2 == null)){
+    private boolean hayQueActualizar(Vector<Vector<Integer> > pedMostrandose, ArrayList<Pedido> peds) {
+        /*if((pedMostrandose == null && ped != null) ||
+                (pedMostrandose != null && ped == null))
             return true;
-        }
-        
-        if(peds1 == null && peds2 == null){
-            return false;
-        }
-        
-        if(peds1.size() != peds2.size()){
-            return true;
-        }
-        Iterator<Pedido> it1 = peds1.iterator();
-        while(it1.hasNext()){ // Recorremos los pedidos
-            Pedido next1 = it1.next();
-            Iterator<Pedido> it2 = peds2.iterator();
+        if(pedMostrandose == null && ped == null) return false;
+        if(pedMostrandose.get(1) != ped.getCodPedido()) return true;
+        if(pedMostrandose.get(2) != ped.getEstado()) return true;
+        ArrayList<ElementoPedido> elementos = ped.getElementos();
+        // No se puede comparar los tamaños porque pedMostrandose solo guarda los que corresponde al filtro
+        //if((pedMostrandose.size()-2)/2 != elementos.size()) return true;
 
-            boolean encontrado = false;
-            Pedido next2 = null;
-            while(it2.hasNext() && !encontrado){
-                next2 = it2.next();
-                if(next2.getCodPedido() == next1.getCodPedido() &&
-                        next2.getCodMesa() == next1.getCodMesa()){
-                    encontrado = true;
-                }
-            }
-            if(!encontrado) return true;
-            if(next1.getEstado() != next2.getEstado()) return true;
-
-            // Comprobamos el estado de sus elementos
-            ArrayList<ElementoPedido> elementos1 = next1.getElementos();
-            ArrayList<ElementoPedido> elementos2 = next2.getElementos();
-            if(elementos1.size() != elementos2.size()) return true;
-
-            Iterator<ElementoPedido> itE1 = elementos1.iterator();
-            while(itE1.hasNext()){ // Por cada elemento...
-                ElementoPedido nextE1 = itE1.next();
-                encontrado = false;
-                Iterator<ElementoPedido> itE2 = elementos2.iterator();
-                // Buscamos el elemento que se corresponde con nextE1
-                ElementoPedido nextE2 = null;
-                while(itE2.hasNext() && !encontrado){ // Lo buscamos en la otra lista
-                    nextE2 = itE2.next();
-                    if(nextE2.getCodElementoPedido() == nextE1.getCodElementoPedido()){
+        // Buscamos la correspondencia entre elementos
+        Iterator<ElementoPedido> iterator = elementos.iterator();
+        while(iterator.hasNext()){
+            ElementoPedido elem = iterator.next();
+            if((filtro == BAR && elem instanceof ElementoColaBar) ||
+                (filtro == COCINA && elem instanceof ElementoColaCocina)){
+                boolean encontrado = false;
+                for(int i=2; i< pedMostrandose.size() && !encontrado; i+=2){
+                    if(pedMostrandose.get(i) == elem.getCodElementoPedido()){
                         encontrado = true;
+                        if(pedMostrandose.get(i+1) != elem.getEstado()){
+                            return true;
+                        }
                     }
                 }
-                if(!encontrado) return true;
-                // Si sus estados son distintos
-                if(nextE1.getEstado() != nextE2.getEstado()){
-                    return true;
-                }
-            }// Hemos terminado de recorrer todos los elementos del pedido next1 respecto a su homologo en 2
-        }
-        //System.out.println("No se actualiza!!");
-        System.gc();
-        return true; // TODO Devolver false;
+            }
+        }*/
+        // TODO Implementar este metodo
+        return true;
     }
 
 }
