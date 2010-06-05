@@ -213,8 +213,13 @@ public class PanelElementoCarta extends javax.swing.JPanel {
     public void setEnabled(boolean enabled){
         super.setEnabled(enabled);
         if(enabled){
-            this.setBackground(new Color(255,255,255));
-            this.TextoDescripcion.setBackground(new Color(255,255,255));
+            if(!this.seleccionado){
+                this.setBackground(new Color(255,255,255));
+                this.TextoDescripcion.setBackground(new Color(255,255,255));
+            }else{
+                this.setBackground(new Color(153,204,255));
+                this.TextoDescripcion.setBackground(new Color(153,204,255));
+            }
         }else{
             this.setBackground(new Color(250, 220, 220));
             this.TextoDescripcion.setBackground(new Color(250, 220, 220));
@@ -223,13 +228,13 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
     public void marcar(){
         this.seleccionado=true;
-        this.PanelDatos.setBackground(new Color(153,204,255));
+        this.setBackground(new Color(153,204,255));
         this.TextoDescripcion.setBackground(new Color(153,204,255));
     }
 
     public void desmarcar(){
         this.seleccionado=false;
-        this.PanelDatos.setBackground(new Color(255,255,255));
+        this.setBackground(new Color(255,255,255));
         this.TextoDescripcion.setBackground(new Color(255,255,255));
     }
 
