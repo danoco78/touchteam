@@ -16,7 +16,6 @@ import GestionCarta.Elemento;
 import GestionCarta.Seccion;
 import java.util.HashSet;
 import java.util.Iterator;
-import javax.swing.JPanel;
 
 /**
  *
