@@ -76,7 +76,6 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         LabelFoto = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setOpaque(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 seleccionarElemento(evt);
@@ -86,19 +85,23 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         PanelCentral.setBackground(new java.awt.Color(255, 255, 255));
         PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 172, 229), 3));
+        PanelCentral.setOpaque(false);
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
         PanelDatos.setBackground(new java.awt.Color(255, 255, 255));
+        PanelDatos.setOpaque(false);
         PanelDatos.setLayout(new java.awt.BorderLayout());
 
         LabelNombre.setBackground(new java.awt.Color(255, 255, 255));
-        LabelNombre.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        LabelNombre.setFont(new java.awt.Font("Arial", 1, 24));
         LabelNombre.setText("jLabel1");
         PanelDatos.add(LabelNombre, java.awt.BorderLayout.NORTH);
 
+        PanelDescripcion.setOpaque(false);
         PanelDescripcion.setLayout(new java.awt.BorderLayout());
 
         ScrollDescripcion.setBorder(null);
+        ScrollDescripcion.setOpaque(false);
 
         TextoDescripcion.setBorder(null);
         TextoDescripcion.setEditable(false);
@@ -120,7 +123,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         PanelPrecio.setOpaque(false);
         PanelPrecio.setLayout(new java.awt.BorderLayout());
 
-        LabelPrecio.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        LabelPrecio.setFont(new java.awt.Font("Tahoma", 0, 24));
         LabelPrecio.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         LabelPrecio.setText("jLabel1");
         PanelPrecio.add(LabelPrecio, java.awt.BorderLayout.CENTER);
@@ -132,6 +135,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
 
         PanelCentral.add(PanelDatos, java.awt.BorderLayout.CENTER);
 
+        PanelFoto.setOpaque(false);
         PanelFoto.setLayout(new java.awt.BorderLayout());
 
         LabelFoto.setIcon((ImageIcon) this.elemento.getFoto());
@@ -209,8 +213,10 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         super.setEnabled(enabled);
         if(enabled){
             this.setBackground(new Color(255,255,255));
+            this.TextoDescripcion.setBackground(new Color(255,255,255));
         }else{
-            this.setBackground(new Color(140, 140, 170));
+            this.setBackground(new Color(250, 220, 220));
+            this.TextoDescripcion.setBackground(new Color(250, 220, 220));
         }
     }
 
