@@ -241,36 +241,56 @@ public class PreparandosePanel extends javax.swing.JPanel {
      * @param ped
      * @return
      */
-    private boolean hayQueActualizar(Vector<Vector<Integer> > pedMostrandose, ArrayList<Pedido> peds) {
-        /*if((pedMostrandose == null && ped != null) ||
-                (pedMostrandose != null && ped == null))
+    private boolean hayQueActualizar(Vector<Vector<Integer> > pedsMostrandose, ArrayList<Pedido> peds) {
+        if((pedsMostrandose == null && peds != null) ||
+                    (pedsMostrandose != null && peds == null))
+                return true;
+        if(pedsMostrandose == null && peds == null) return false;
+        if((peds.isEmpty() && !pedsMostrandose.isEmpty()) ||
+                (!peds.isEmpty() && pedsMostrandose.isEmpty())){
             return true;
-        if(pedMostrandose == null && ped == null) return false;
-        if(pedMostrandose.get(1) != ped.getCodPedido()) return true;
-        if(pedMostrandose.get(2) != ped.getEstado()) return true;
-        ArrayList<ElementoPedido> elementos = ped.getElementos();
-        // No se puede comparar los tamaños porque pedMostrandose solo guarda los que corresponde al filtro
-        //if((pedMostrandose.size()-2)/2 != elementos.size()) return true;
+        }
+        if(peds.isEmpty() && pedsMostrandose.isEmpty()) return false;
 
-        // Buscamos la correspondencia entre elementos
-        Iterator<ElementoPedido> iterator = elementos.iterator();
-        while(iterator.hasNext()){
-            ElementoPedido elem = iterator.next();
-            if((filtro == BAR && elem instanceof ElementoColaBar) ||
-                (filtro == COCINA && elem instanceof ElementoColaCocina)){
-                boolean encontrado = false;
-                for(int i=2; i< pedMostrandose.size() && !encontrado; i+=2){
-                    if(pedMostrandose.get(i) == elem.getCodElementoPedido()){
-                        encontrado = true;
-                        if(pedMostrandose.get(i+1) != elem.getEstado()){
-                            return true;
+        if(pedsMostrandose.size() != peds.size()) return true;
+        Iterator<Vector<Integer> > itMostrandose = pedsMostrandose.iterator();
+        while(itMostrandose.hasNext()){
+            Vector<Integer> pedMostrandose = itMostrandose.next();
+            Iterator<Pedido> itPeds = peds.iterator();
+            Pedido ped = null;
+            // Buscamos el pedido dentro de nuestra lista de pedidos mostrandose
+            boolean encontrado = false;
+            while(itPeds.hasNext() && !encontrado){
+                ped = itPeds.next();
+                if(ped.getCodPedido() == pedMostrandose.get(0)){
+                    encontrado = true;
+                }
+            }
+            if(!encontrado) return true;
+            if(pedMostrandose.get(1) != ped.getEstado()) return true;
+            ArrayList<ElementoPedido> elementos = ped.getElementos();
+            // No se puede comparar los tamaños porque pedMostrandose solo guarda los que corresponde al filtro
+            //if((pedMostrandose.size()-2)/2 != elementos.size()) return true;
+
+            // Buscamos la correspondencia entre elementos
+            Iterator<ElementoPedido> iterator = elementos.iterator();
+            while(iterator.hasNext()){
+                ElementoPedido elem = iterator.next();
+                if(elem instanceof ElementoColaCocina){
+                    encontrado = false;
+                    for(int i=2; i< pedMostrandose.size() && !encontrado; i+=2){
+                        if(pedMostrandose.get(i) == elem.getCodElementoPedido()){
+                            encontrado = true;
+                            if(pedMostrandose.get(i+1) != elem.getEstado()){
+                                return true;
+                            }
                         }
                     }
                 }
             }
-        }*/
-        // TODO Implementar este metodo
-        return true;
+        }
+        
+        return false;
     }
 
 }

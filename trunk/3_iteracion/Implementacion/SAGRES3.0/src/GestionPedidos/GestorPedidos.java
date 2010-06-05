@@ -33,7 +33,8 @@ public class GestorPedidos implements IGestorPedidos {
         this.iProducto = iProducto;
         this.iImpresion = iImpresion;
     }
-    //modificada por nabil
+
+
     public void confirmaPagoFactura(Integer codMesa){
         Factura f = this.iPedidosBD.getFactura(codMesa);
         ArrayList<Pedido> pedidos = f.getPedidos();
@@ -45,9 +46,10 @@ public class GestorPedidos implements IGestorPedidos {
         for (int i=0;i<pedidos.size();i++){
             p = pedidos.get(i);
             elementosPedido = p.getElementos();
-            Iterator it = elementosPedido.iterator();
+            Iterator<ElementoPedido> it = elementosPedido.iterator();
             while(it.hasNext())
-            {   ele = (ElementoPedido) it;
+            {
+                ele = it.next();
                 e = ele.getElemento();
                 totalFactura += (float)e.getPrecio();
             }
