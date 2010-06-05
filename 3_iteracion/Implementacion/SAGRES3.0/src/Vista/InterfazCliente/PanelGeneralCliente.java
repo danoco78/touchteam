@@ -577,9 +577,11 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
 
         Iterator itSecciones = listaSecciones.iterator();
 
-        HashSet<Elemento> listaBebidas = new HashSet();
+        HashSet<Elemento> listaRefrescos = new HashSet();
+        HashSet<Elemento> listaVinos = new HashSet();
 
-        Seccion sBebidas = null;
+        Seccion sRefrescos = null;
+        Seccion sVinos = null;
 
         while(itSecciones.hasNext()){
             Seccion s = (Seccion) itSecciones.next();
@@ -594,14 +596,18 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
             }else if(s.getNombre().equals("Carnes")){
                 hojasSeccionCarnes.setLayout(new CardLayout(1,(listaElementos.size()+1)/6));
                 hojasSeccionCarnes.setOpaque(false);
-            }else if(s.getNombre().equals("Refrescos") || s.getNombre().equals("Vinos")){
-                //Juntamos las bebidas
-                sBebidas = s;
-                if(listaBebidas.size()==0){
-                    listaBebidas.addAll(listaElementos);
-                }else{
-                    listaBebidas.addAll(listaElementos);
-                    hojasSeccionBebidas.setLayout(new CardLayout(1,(listaBebidas.size()+1)/6));
+            }else if(s.getNombre().equals("Refrescos")){
+                sRefrescos = s;
+                listaRefrescos=listaElementos;
+                if(listaVinos.size()!=0){
+                    hojasSeccionBebidas.setLayout(new CardLayout(1,(listaRefrescos.size()+listaVinos.size()+1)/6));
+                    hojasSeccionBebidas.setOpaque(false);
+                }
+            }else if(s.getNombre().equals("Vinos")){
+                sVinos = s;
+                listaVinos=listaElementos;
+                if(listaRefrescos.size()!=0){
+                    hojasSeccionBebidas.setLayout(new CardLayout(1,(listaRefrescos.size()+listaVinos.size()+1)/6));
                     hojasSeccionBebidas.setOpaque(false);
                 }
             }else if(s.getNombre().equals("Postres")){
@@ -631,17 +637,31 @@ public class PanelGeneralCliente extends javax.swing.JPanel {
         }
 
         //Añadimos las bebidas
-        Iterator itBebidas = listaBebidas.iterator();
-
         int j=0;
-        while(itBebidas.hasNext()){
+        //Añadimos los refrescos
+        Iterator itRefrescos = listaRefrescos.iterator();
+
+        while(itRefrescos.hasNext()){
             
             HashSet<Elemento> seisElementos = new HashSet();
-            for(int i=0; i<6 && itBebidas.hasNext(); ++i){
-                seisElementos.add((Elemento) itBebidas.next());
+            for(int i=0; i<6 && itRefrescos.hasNext(); ++i){
+                seisElementos.add((Elemento) itRefrescos.next());
             }
             
-            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this, sBebidas),"Hoja"+Integer.toString(j++));
+            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this, sRefrescos),"Hoja"+Integer.toString(j++));
+        }
+
+        //Añadimos los vinos
+        Iterator itVinos = listaVinos.iterator();
+        
+        while(itVinos.hasNext()){
+
+            HashSet<Elemento> seisElementos = new HashSet();
+            for(int i=0; i<6 && itVinos.hasNext(); ++i){
+                seisElementos.add((Elemento) itVinos.next());
+            }
+
+            hojasSeccionBebidas.add(new PanelHojasCarta(seisElementos,this, sVinos),"Hoja"+Integer.toString(j++));
         }
 
         
