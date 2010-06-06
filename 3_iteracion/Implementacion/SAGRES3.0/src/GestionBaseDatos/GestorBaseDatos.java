@@ -891,7 +891,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                     + "where n.pedido_proveedor_id = mini.min_id;");
             if(infoPedido.next()){
                 ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienePedido.cantidad"
-                        + "from producto, tienePedido"
+                        + " from producto, tienePedido"
                         + " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1)
                         + "' and producto_producto_id = producto_id;");
                 HashMap<Producto, Float> productosCantidad = new HashMap<Producto, Float>();
@@ -900,7 +900,8 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                             tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
                     productosCantidad.put(producto, tablaproductos.getFloat(7));
                 }
-                return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), infoPedido.getBoolean(3));
+                Boolean recibido = infoPedido.getInt(3) != 0;
+                return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), recibido);
             }else
                 return null;
 
