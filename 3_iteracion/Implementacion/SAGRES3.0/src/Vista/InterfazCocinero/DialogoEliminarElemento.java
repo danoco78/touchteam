@@ -7,11 +7,6 @@ import GestionCarta.Seccion;
 import GestionCarta.SeccionBebida;
 import GestionCarta.SeccionComida;
 import Vista.DialogoConfirmacion;
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
@@ -291,6 +286,7 @@ public class DialogoEliminarElemento extends javax.swing.JDialog {
             else
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
             DefaultTableModel modelo = new DefaultTableModel() {
+                @Override
                 public boolean isCellEditable(int x, int y) {
                     return false;
                 }

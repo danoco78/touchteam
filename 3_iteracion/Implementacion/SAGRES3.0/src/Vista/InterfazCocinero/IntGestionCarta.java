@@ -68,7 +68,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bVolver.setFont(new java.awt.Font("Arial", 1, 14));
+        bVolver.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bVolver.setForeground(new java.awt.Color(80, 98, 143));
         bVolver.setText("Volver");
         bVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,7 +92,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bAnadirElemento.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bAnadirElemento.setForeground(new java.awt.Color(80, 98, 143));
         bAnadirElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/anadirElemento.png"))); // NOI18N
         bAnadirElemento.setText("Añadir elemento");
@@ -106,7 +106,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirElemento, gridBagConstraints);
 
-        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bEleminarElemento.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bEleminarElemento.setForeground(new java.awt.Color(80, 98, 143));
         bEleminarElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/EliminarElemento.png"))); // NOI18N
         bEleminarElemento.setText("Eliminar elemento");
@@ -123,7 +123,7 @@ public class IntGestionCarta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEleminarElemento, gridBagConstraints);
 
-        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 14));
+        bModificarElemento.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bModificarElemento.setForeground(new java.awt.Color(80, 98, 143));
         bModificarElemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/ModificarElemento.png"))); // NOI18N
         bModificarElemento.setText("Modificar elemento");

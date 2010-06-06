@@ -31,7 +31,13 @@ public class DialogoEliminarIngrediente extends java.awt.Dialog {
         initComponents();
         //this.gestorProductos = GestorProductos;
         //this.almacenProductos = AlmacenProductos;
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            //Hace que las celdas sean no editables
+            @Override
+            public boolean isCellEditable(int x, int y) {
+                return false;
+            }
+        };
         tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(0));
         tableModel.addColumn(this.tTablaDeshabilitados.getColumnName(1));
         tableModel.setRowCount(0);

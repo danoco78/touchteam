@@ -742,6 +742,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 disponibles = new ArrayList<Producto>(listaProductos);
                 DefaultTableModel modelo = new DefaultTableModel(){
                      //Hace que las celdas sean no editables
+            @Override
                     public boolean isCellEditable(int x, int y) {
                         return false;
                     }

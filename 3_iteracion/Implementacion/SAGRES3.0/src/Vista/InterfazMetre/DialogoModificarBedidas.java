@@ -48,7 +48,13 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         this.productos = productos;*/
         this.metre = iMetre;
         this.listaBebidas = this.metre.obtenerBebidas();
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            //Hace que las celdas sean no editables
+            @Override
+            public boolean isCellEditable(int x, int y) {
+                return false;
+            }
+        };
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(0));
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(1));
         tableModel.addColumn(this.tTablaBebidasDisponibles.getColumnName(2));
@@ -95,8 +101,10 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tTablaBebidasDisponibles = new javax.swing.JTable();
         pPaso2 = new javax.swing.JPanel();
+        pNombre = new javax.swing.JPanel();
         lNombre = new javax.swing.JLabel();
         tNombre = new javax.swing.JTextField();
+        pMargen = new javax.swing.JPanel();
         pAtributoCantidad = new javax.swing.JPanel();
         lMaximo = new javax.swing.JLabel();
         tMaximo = new javax.swing.JFormattedTextField(new Float(0));
@@ -107,11 +115,16 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         lMaximo2 = new javax.swing.JLabel();
         tDisponible = new javax.swing.JFormattedTextField(new Float(0));
         lPorciones2 = new javax.swing.JLabel();
+        pImagen = new javax.swing.JPanel();
         lImagen = new javax.swing.JLabel();
         lMuestraImagen = new javax.swing.JLabel();
-        cabecera = new javax.swing.JPanel();
+        pMargen1 = new javax.swing.JPanel();
+        pMargen2 = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
+        PanelIzq = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
+        PanelDer = new javax.swing.JPanel();
         lPaso = new javax.swing.JLabel();
         bCancelar = new javax.swing.JButton();
         pie = new javax.swing.JPanel();
@@ -139,7 +152,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         pPaso1.setLayout(new java.awt.GridBagLayout());
 
         pbebidasDisponibles.setBackground(new java.awt.Color(255, 255, 255));
-        pbebidasDisponibles.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Bebidas disponibles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
+        pbebidasDisponibles.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Bebidas disponibles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
         pbebidasDisponibles.setForeground(new java.awt.Color(80, 98, 143));
         pbebidasDisponibles.setMinimumSize(new java.awt.Dimension(450, 500));
         pbebidasDisponibles.setOpaque(false);
@@ -149,6 +162,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         jScrollPane2.setOpaque(false);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(200, 200));
 
+        tTablaBebidasDisponibles.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tTablaBebidasDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -200,17 +214,17 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         pPaso2.setForeground(new java.awt.Color(80, 98, 143));
         pPaso2.setMinimumSize(new java.awt.Dimension(500, 550));
         pPaso2.setPreferredSize(new java.awt.Dimension(500, 550));
-        pPaso2.setLayout(new java.awt.GridBagLayout());
+        pPaso2.setLayout(new java.awt.BorderLayout(0, 10));
 
-        lNombre.setFont(new java.awt.Font("Arial", 0, 14));
+        pNombre.setOpaque(false);
+        pNombre.setLayout(new java.awt.BorderLayout(10, 0));
+
+        lNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lNombre.setForeground(new java.awt.Color(80, 98, 143));
         lNombre.setText("Nombre");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
-        pPaso2.add(lNombre, gridBagConstraints);
+        pNombre.add(lNombre, java.awt.BorderLayout.WEST);
 
-        tNombre.setFont(new java.awt.Font("Arial", 0, 14));
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tNombre.setForeground(new java.awt.Color(80, 98, 143));
         tNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tNombre.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -218,14 +232,12 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 validarFormulario(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.insets = new java.awt.Insets(12, 11, 11, 11);
-        pPaso2.add(tNombre, gridBagConstraints);
+        pNombre.add(tNombre, java.awt.BorderLayout.CENTER);
+
+        pMargen.setOpaque(false);
+        pNombre.add(pMargen, java.awt.BorderLayout.NORTH);
+
+        pPaso2.add(pNombre, java.awt.BorderLayout.NORTH);
 
         pAtributoCantidad.setBackground(new java.awt.Color(255, 255, 255));
         pAtributoCantidad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Cantidades", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14), new java.awt.Color(150, 172, 229))); // NOI18N
@@ -233,7 +245,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         pAtributoCantidad.setOpaque(false);
         pAtributoCantidad.setLayout(new java.awt.GridLayout(3, 3, 5, 10));
 
-        lMaximo.setFont(new java.awt.Font("Arial", 0, 14));
+        lMaximo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lMaximo.setForeground(new java.awt.Color(80, 98, 143));
         lMaximo.setText("Máximo posible");
         pAtributoCantidad.add(lMaximo);
@@ -249,12 +261,12 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         });
         pAtributoCantidad.add(tMaximo);
 
-        lPorciones.setFont(new java.awt.Font("Arial", 0, 14));
+        lPorciones.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lPorciones.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones.setText("Unidades");
         pAtributoCantidad.add(lPorciones);
 
-        lMinimo.setFont(new java.awt.Font("Arial", 0, 14));
+        lMinimo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lMinimo.setForeground(new java.awt.Color(80, 98, 143));
         lMinimo.setText("Mínimo aceptable");
         pAtributoCantidad.add(lMinimo);
@@ -270,14 +282,14 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         });
         pAtributoCantidad.add(tMinimo);
 
-        lPorciones1.setFont(new java.awt.Font("Arial", 0, 14));
+        lPorciones1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lPorciones1.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones1.setText("Unidades");
         pAtributoCantidad.add(lPorciones1);
 
-        lMaximo2.setFont(new java.awt.Font("Arial", 0, 14));
+        lMaximo2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lMaximo2.setForeground(new java.awt.Color(80, 98, 143));
-        lMaximo2.setText("Disponible actualmente");
+        lMaximo2.setText("<html><body>Disponible<br> actualmente</body></html>");
         pAtributoCantidad.add(lMaximo2);
 
         tDisponible.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
@@ -291,33 +303,29 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         });
         pAtributoCantidad.add(tDisponible);
 
-        lPorciones2.setFont(new java.awt.Font("Arial", 0, 14));
+        lPorciones2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lPorciones2.setForeground(new java.awt.Color(80, 98, 143));
         lPorciones2.setText("Unidades");
         pAtributoCantidad.add(lPorciones2);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 47;
-        gridBagConstraints.insets = new java.awt.Insets(28, 11, 11, 11);
-        pPaso2.add(pAtributoCantidad, gridBagConstraints);
+        pPaso2.add(pAtributoCantidad, java.awt.BorderLayout.CENTER);
 
-        lImagen.setFont(new java.awt.Font("Arial", 0, 14));
+        pImagen.setOpaque(false);
+        pImagen.setLayout(new java.awt.GridBagLayout());
+
+        lImagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lImagen.setForeground(new java.awt.Color(80, 98, 143));
         lImagen.setText("Imagen");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        pPaso2.add(lImagen, gridBagConstraints);
+        pImagen.add(lImagen, gridBagConstraints);
 
-        lMuestraImagen.setFont(new java.awt.Font("Arial", 0, 14));
+        lMuestraImagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lMuestraImagen.setForeground(new java.awt.Color(80, 98, 143));
         lMuestraImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lMuestraImagen.setText("<html><center> <STRONG>Imagen no <br> disponible</STRONG> <br><i> (Click sobre la imagen <br> para insertar una)</i></center> </html>");
+        lMuestraImagen.setText("<html><center> <STRONG>Imagen no <br> disponible</STRONG> <br><i> (Pulse aqu&iacute; <br> para insertar una)</i></center> </html>");
         lMuestraImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         lMuestraImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lMuestraImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -334,7 +342,15 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
-        pPaso2.add(lMuestraImagen, gridBagConstraints);
+        pImagen.add(lMuestraImagen, gridBagConstraints);
+
+        pPaso2.add(pImagen, java.awt.BorderLayout.SOUTH);
+
+        pMargen1.setOpaque(false);
+        pPaso2.add(pMargen1, java.awt.BorderLayout.WEST);
+
+        pMargen2.setOpaque(false);
+        pPaso2.add(pMargen2, java.awt.BorderLayout.EAST);
 
         cuerpo.add(pPaso2, "card3");
 
@@ -344,46 +360,33 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.BorderLayout());
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14));
+        PanelIzq.setOpaque(false);
+        PanelIzq.setLayout(new java.awt.GridLayout(0, 1));
+
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Modificar bebida        ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 200;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        PanelIzq.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar la bebida a modificar");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        PanelIzq.add(lSubtitulo);
 
-        lPaso.setFont(new java.awt.Font("Arial", 0, 14));
+        cabecera.add(PanelIzq, java.awt.BorderLayout.CENTER);
+
+        PanelDer.setOpaque(false);
+        PanelDer.setLayout(new java.awt.GridLayout(0, 1));
+
+        lPaso.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lPaso.setForeground(new java.awt.Color(80, 98, 143));
         lPaso.setText("Paso 1/2");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.insets = new java.awt.Insets(6, 11, 6, 11);
-        cabecera.add(lPaso, gridBagConstraints);
+        PanelDer.add(lPaso);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 12));
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         bCancelar.setForeground(new java.awt.Color(150, 172, 229));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -395,18 +398,16 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
                 Salir(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
-        cabecera.add(bCancelar, gridBagConstraints);
+        PanelDer.add(bCancelar);
+
+        cabecera.add(PanelDer, java.awt.BorderLayout.EAST);
 
         add(cabecera, java.awt.BorderLayout.NORTH);
 
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bSiguiente.setFont(new java.awt.Font("Arial", 0, 14));
+        bSiguiente.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bSiguiente.setForeground(new java.awt.Color(80, 98, 143));
         bSiguiente.setText("Siguiente");
         bSiguiente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -425,7 +426,7 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 14));
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -566,6 +567,8 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelDer;
+    private javax.swing.JPanel PanelIzq;
     private javax.swing.JButton bAnterior;
     private javax.swing.JButton bCancelar;
     private javax.swing.JButton bSiguiente;
@@ -586,6 +589,11 @@ public class DialogoModificarBedidas extends java.awt.Dialog {
     private javax.swing.JLabel lSubtitulo;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JPanel pAtributoCantidad;
+    private javax.swing.JPanel pImagen;
+    private javax.swing.JPanel pMargen;
+    private javax.swing.JPanel pMargen1;
+    private javax.swing.JPanel pMargen2;
+    private javax.swing.JPanel pNombre;
     private javax.swing.JPanel pPaso1;
     private javax.swing.JPanel pPaso2;
     private javax.swing.JPanel pbebidasDisponibles;

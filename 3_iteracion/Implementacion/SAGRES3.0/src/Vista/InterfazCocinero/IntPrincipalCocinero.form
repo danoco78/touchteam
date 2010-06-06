@@ -73,7 +73,7 @@
             <Component class="javax.swing.JButton" name="bSalir">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Arial" size="14" style="1"/>
+                  <Font name="Arial" size="24" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -148,7 +148,7 @@
         <Component class="javax.swing.JButton" name="bGestionCarta">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -186,7 +186,7 @@
         <Component class="javax.swing.JButton" name="bNotificcarPedido">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -194,7 +194,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Vista/InterfazCocinero/imagenes/NotificarLlegada.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Notificar recepci&#xf3;n de pedido"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;Notificar recepci&#xf3;n&lt;br&gt; de pedido&lt;/body&gt;&lt;/html&gt;"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -224,7 +224,7 @@
         <Component class="javax.swing.JButton" name="bGestionIngredientes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -262,7 +262,7 @@
         <Component class="javax.swing.JButton" name="bEstaditicas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -300,7 +300,7 @@
         <Component class="javax.swing.JButton" name="bImprimirProductosaPedir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8f" green="62" red="50" type="rgb"/>
@@ -308,7 +308,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Vista/InterfazCocinero/imagenes/ImprimirLista.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Imprimir productos a pedir"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;Imprimir &lt;br&gt;productos a pedir&lt;/body&gt;&lt;/html&gt;"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>

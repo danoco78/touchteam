@@ -43,7 +43,13 @@ public class DialogoModificarIngrediente extends javax.swing.JDialog {
         this.almacenProductos = AlmacenProductos;*/
         this.cocina = iCocinero;
         listaIngredientes = this.cocina.obtieneIngredientes();
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            //Hace que las celdas sean no editables
+            @Override
+            public boolean isCellEditable(int x, int y) {
+                return false;
+            }
+        };
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(0));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(1));
         modelo.addColumn(this.tTablaIngredientesDisponibles.getColumnName(2));
