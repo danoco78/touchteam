@@ -3,15 +3,12 @@
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
-import GestionStock.GestionPedidoProveedor.IPedidoProveedor;
-import GestionStock.GestionProductos.IProducto;
 import GestionStock.GestionProductos.Producto;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;

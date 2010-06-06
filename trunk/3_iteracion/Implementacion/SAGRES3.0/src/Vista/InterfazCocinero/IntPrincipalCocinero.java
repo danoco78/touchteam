@@ -72,7 +72,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bSalir.setFont(new java.awt.Font("Arial", 1, 14));
+        bSalir.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bSalir.setForeground(new java.awt.Color(80, 98, 143));
         bSalir.setText("Salir");
         bSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -96,7 +96,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 14));
+        bGestionCarta.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bGestionCarta.setForeground(new java.awt.Color(80, 98, 143));
         bGestionCarta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Libreta.png"))); // NOI18N
         bGestionCarta.setText("Gestión de carta");
@@ -112,10 +112,10 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionCarta, gridBagConstraints);
 
-        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bNotificcarPedido.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bNotificcarPedido.setForeground(new java.awt.Color(80, 98, 143));
         bNotificcarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/NotificarLlegada.png"))); // NOI18N
-        bNotificcarPedido.setText("Notificar recepción de pedido");
+        bNotificcarPedido.setText("<html><body>Notificar recepción<br> de pedido</body></html>");
         bNotificcarPedido.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bNotificcarPedido.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bNotificcarPedido.setMaximumSize(new java.awt.Dimension(300, 200));
@@ -129,7 +129,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarPedido, gridBagConstraints);
 
-        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 14));
+        bGestionIngredientes.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bGestionIngredientes.setForeground(new java.awt.Color(80, 98, 143));
         bGestionIngredientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/GestionIngredientes.png"))); // NOI18N
         bGestionIngredientes.setText("Gestión de Ingredientes");
@@ -145,7 +145,7 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bGestionIngredientes, gridBagConstraints);
 
-        bEstaditicas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bEstaditicas.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bEstaditicas.setForeground(new java.awt.Color(80, 98, 143));
         bEstaditicas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/Estadisticas.png"))); // NOI18N
         bEstaditicas.setText("Estadisticas");
@@ -160,10 +160,10 @@ public class IntPrincipalCocinero extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         cuerpo.add(bEstaditicas, gridBagConstraints);
 
-        bImprimirProductosaPedir.setFont(new java.awt.Font("Arial", 1, 14));
+        bImprimirProductosaPedir.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bImprimirProductosaPedir.setForeground(new java.awt.Color(80, 98, 143));
         bImprimirProductosaPedir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazCocinero/imagenes/ImprimirLista.png"))); // NOI18N
-        bImprimirProductosaPedir.setText("Imprimir productos a pedir");
+        bImprimirProductosaPedir.setText("<html><body>Imprimir <br>productos a pedir</body></html>");
         bImprimirProductosaPedir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bImprimirProductosaPedir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bImprimirProductosaPedir.setMaximumSize(new java.awt.Dimension(300, 200));

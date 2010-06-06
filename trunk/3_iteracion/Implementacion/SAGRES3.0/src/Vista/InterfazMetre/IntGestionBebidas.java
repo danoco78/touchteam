@@ -69,7 +69,7 @@ public class IntGestionBebidas extends javax.swing.JPanel {
         contenedorIzq.setPreferredSize(new java.awt.Dimension(200, 100));
         contenedorIzq.setLayout(new java.awt.GridBagLayout());
 
-        bSalir.setFont(new java.awt.Font("Arial", 1, 14));
+        bSalir.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bSalir.setForeground(new java.awt.Color(80, 98, 143));
         bSalir.setText("Salir");
         bSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,26 +92,30 @@ public class IntGestionBebidas extends javax.swing.JPanel {
         cuerpo.setOpaque(false);
         cuerpo.setLayout(new java.awt.GridBagLayout());
 
-        bAnadirBebida.setFont(new java.awt.Font("Arial", 1, 14));
+        bAnadirBebida.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bAnadirBebida.setForeground(new java.awt.Color(80, 98, 143));
         bAnadirBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/copa.png"))); // NOI18N
         bAnadirBebida.setText("Añadir Bebida");
         bAnadirBebida.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bAnadirBebida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bAnadirBebida.setMaximumSize(new java.awt.Dimension(300, 200));
         bAnadirBebida.setMinimumSize(new java.awt.Dimension(300, 200));
         bAnadirBebida.setPreferredSize(new java.awt.Dimension(300, 200));
+        bAnadirBebida.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bAnadirBebida, gridBagConstraints);
 
-        bNotificcarIncidencia.setFont(new java.awt.Font("Arial", 1, 14));
+        bNotificcarIncidencia.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bNotificcarIncidencia.setForeground(new java.awt.Color(80, 98, 143));
         bNotificcarIncidencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/incidencia.png"))); // NOI18N
         bNotificcarIncidencia.setText("Notificar incidencia");
         bNotificcarIncidencia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        bNotificcarIncidencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bNotificcarIncidencia.setMaximumSize(new java.awt.Dimension(300, 200));
         bNotificcarIncidencia.setMinimumSize(new java.awt.Dimension(300, 200));
         bNotificcarIncidencia.setPreferredSize(new java.awt.Dimension(300, 200));
+        bNotificcarIncidencia.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -119,7 +123,7 @@ public class IntGestionBebidas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bNotificcarIncidencia, gridBagConstraints);
 
-        bEliminarBebida.setFont(new java.awt.Font("Arial", 1, 14));
+        bEliminarBebida.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bEliminarBebida.setForeground(new java.awt.Color(80, 98, 143));
         bEliminarBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/PedirBebida.png"))); // NOI18N
         bEliminarBebida.setText("Eliminar Bebida");
@@ -133,7 +137,7 @@ public class IntGestionBebidas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         cuerpo.add(bEliminarBebida, gridBagConstraints);
 
-        bModificarBebida.setFont(new java.awt.Font("Arial", 1, 14));
+        bModificarBebida.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         bModificarBebida.setForeground(new java.awt.Color(80, 98, 143));
         bModificarBebida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/InterfazMetre/imagenes/ModificarBebida.png"))); // NOI18N
         bModificarBebida.setText("Modificar Bebida");

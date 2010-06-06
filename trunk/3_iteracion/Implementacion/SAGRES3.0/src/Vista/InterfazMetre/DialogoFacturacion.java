@@ -65,7 +65,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
     }
 
 
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) g.create();
@@ -73,7 +73,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249) ,getWidth() ,0.0f, new Color(255, 255, 255) ));
         g2.fillRect(clip.x, clip.y, clip.width, clip.height);
         super.paint(g);
-    }
+    }*/
 
     public boolean isAceptado(){
         return this.estado;
@@ -81,13 +81,12 @@ public class DialogoFacturacion extends java.awt.Dialog {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pie = new javax.swing.JPanel();
         bCancelar1 = new javax.swing.JButton();
         bImprimir = new javax.swing.JButton();
         bAceptar = new javax.swing.JButton();
-        cabecera = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
         cuerpo = new javax.swing.JPanel();
@@ -113,7 +112,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         pie.setPreferredSize(new java.awt.Dimension(478, 85));
         pie.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 5));
 
-        bCancelar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bCancelar1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bCancelar1.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar1.setText("Cancelar");
         bCancelar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -127,7 +126,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         });
         pie.add(bCancelar1);
 
-        bImprimir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bImprimir.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bImprimir.setForeground(new java.awt.Color(80, 98, 143));
         bImprimir.setText("Imprimir");
         bImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -140,7 +139,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         });
         pie.add(bImprimir);
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -159,35 +158,18 @@ public class DialogoFacturacion extends java.awt.Dialog {
         cabecera.setMinimumSize(new java.awt.Dimension(150, 100));
         cabecera.setOpaque(false);
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
-        cabecera.setLayout(new java.awt.GridBagLayout());
+        cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Confirmación");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 355;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 6, 6);
-        cabecera.add(lTitulo, gridBagConstraints);
+        cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Facturar pedido");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        cabecera.add(lSubtitulo, gridBagConstraints);
+        cabecera.add(lSubtitulo);
 
         add(cabecera, java.awt.BorderLayout.NORTH);
 
@@ -205,7 +187,7 @@ public class DialogoFacturacion extends java.awt.Dialog {
         pCentral.setLayout(new java.awt.BorderLayout());
 
         lConfirma.setBackground(new java.awt.Color(255, 255, 255));
-        lConfirma.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lConfirma.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lConfirma.setForeground(new java.awt.Color(80, 98, 143));
         lConfirma.setText("¿Desea marcar la factura como pagada?");
         lConfirma.setOpaque(true);
@@ -215,14 +197,14 @@ public class DialogoFacturacion extends java.awt.Dialog {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 480));
 
         tConfirma.setColumns(20);
+        tConfirma.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         tConfirma.setRows(5);
-        tConfirma.setPreferredSize(new java.awt.Dimension(164, 400));
         jScrollPane1.setViewportView(tConfirma);
 
         pCentral.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         ltotal.setBackground(new java.awt.Color(255, 255, 255));
-        ltotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ltotal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         ltotal.setForeground(new java.awt.Color(80, 98, 143));
         ltotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         ltotal.setText("Total:");

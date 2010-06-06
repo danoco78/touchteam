@@ -97,6 +97,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
 
         TextoListaComida.setBorder(null);
         TextoListaComida.setEditable(false);
+        TextoListaComida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ScrollListaComida.setViewportView(TextoListaComida);
 
         PanelListas.add(ScrollListaComida, java.awt.BorderLayout.CENTER);
@@ -107,7 +108,7 @@ public class PanelListaPedido extends javax.swing.JPanel {
         pMargenSup.setBackground(new java.awt.Color(255, 255, 255));
         pBotonModificar.add(pMargenSup, java.awt.BorderLayout.NORTH);
 
-        BotonModificar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        BotonModificar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         BotonModificar.setForeground(new java.awt.Color(80, 98, 143));
         BotonModificar.setText("Modificar");
         BotonModificar.setPreferredSize(new java.awt.Dimension(103, 40));
