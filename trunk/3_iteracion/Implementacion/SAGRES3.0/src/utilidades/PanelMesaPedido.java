@@ -139,7 +139,7 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             for (int i = 0; i < lista.size(); ++i) {
                 if ((filtro == BAR && lista.get(i) instanceof ElementoColaBar && lista.get(i).getEstado() == ElementoColaBar.ENCOLA)
                         || (filtro == COCINA && lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.ENCOLA)) {
-                    boton = new BotonElementoPedidoComentario(lista.get(i));
+                    boton = new BotonElementoPedidoComentario(lista.get(i), 0);
                     boton.setName(String.valueOf(i));
                     boton.addActionListener(new ManejaEventos(boton));
 

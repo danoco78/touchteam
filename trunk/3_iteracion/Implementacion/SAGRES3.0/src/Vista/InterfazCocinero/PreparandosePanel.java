@@ -15,6 +15,7 @@ import ControladorPrincipal.ICocinero;
 import GestionPedidos.ElementoColaCocina;
 import GestionPedidos.ElementoPedido;
 import GestionPedidos.Pedido;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -28,8 +29,10 @@ import utilidades.PanelPedidoPorMesa;
 public class PreparandosePanel extends javax.swing.JPanel {
 
     private Vector<Vector<Integer> > pedidosMostrandose;
+    //private Vector<Vector<Long> > tickElementos;
     public ICocinero icocinero;
     public InterfazCocinero ventana;
+    public long tick;
 
     
     /** Creates new form PanelMesaPedido */
@@ -38,6 +41,8 @@ public class PreparandosePanel extends javax.swing.JPanel {
         this.icocinero = icocinero;
         this.ventana = ventana;
         pedidosMostrandose = null;
+        tick = 0;
+        //tickElementos = new Vector<Vector<Long>>();
         this.actualizar();
     }
 
@@ -74,7 +79,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         //Actualizamos la etiqueta de platos preparándose
         for(int i=0; i<listaPedidos.size(); ++i){
             if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
-               this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this));
+               this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this, this.tick));
                this.pPanelesPedido.add(new PanelEspacioVertical());
             }
         }
@@ -293,4 +298,12 @@ public class PreparandosePanel extends javax.swing.JPanel {
         return false;
     }
 
+    public void repintaBotones(long ticks) {
+        Component[] components = this.pPanelesPedido.getComponents();
+        for(int i=0; i<components.length; ++i){
+            if(components[i] instanceof PanelPedidoPorMesa){
+                ((PanelPedidoPorMesa)components[i]).repintar(ticks);
+            }
+        }
+    }
 }

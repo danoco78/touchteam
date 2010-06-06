@@ -17,6 +17,7 @@ import GestionPedidos.Pedido;
 import Vista.DialogoConfirmacion;
 import Vista.InterfazCocinero.InterfazCocinero;
 import Vista.InterfazCocinero.PreparandosePanel;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,11 +32,13 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     Pedido ped;
     public PreparandosePanel prepPanel;
+    private final long tick;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre) {
+    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, long tick) {
         this.prepPanel = padre;
         this.ped = ped;
+        this.tick = tick;
         initComponents();
 
         if(ped.getCodMesa() <= 1000){
@@ -44,6 +47,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
             this.tPedido.setText("    Habitacion "+(ped.getCodMesa()-1000)+", pedido "+ped.getCodPedido());
         }
         this.autoCompletar();
+
     }
 
     public void autoCompletar() {
@@ -51,10 +55,19 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         ArrayList<ElementoPedido> lista = ped.obtieneElementos();
         for (int i = 0; i < lista.size(); ++i) {
             if (lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE) {
-                BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i));
+                BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i), tick);
                 b.addActionListener(new ManejaEventos(this, b));
                 pPedidos.add(b);
                 this.pPedidos.add(new PanelEspacioVertical());
+            }
+        }
+    }
+
+    public void repintar(long ticks) {
+        Component[] components = this.pPedidos.getComponents();
+        for(int i=0; i<components.length; ++i){
+            if(components[i] instanceof BotonElementoPedidoComentario){
+                ((BotonElementoPedidoComentario)components[i]).repintar(ticks);
             }
         }
     }
