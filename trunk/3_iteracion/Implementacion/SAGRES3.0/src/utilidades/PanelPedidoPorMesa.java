@@ -37,8 +37,12 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         this.prepPanel = padre;
         this.ped = ped;
         initComponents();
-        
-        this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
+
+        if(ped.getCodMesa() <= 1000){
+            this.tPedido.setText("    Mesa "+ped.getCodMesa()+", pedido "+ped.getCodPedido());
+        }else{
+            this.tPedido.setText("    Habitacion "+(ped.getCodMesa()-1000)+", pedido "+ped.getCodPedido());
+        }
         this.autoCompletar();
     }
 

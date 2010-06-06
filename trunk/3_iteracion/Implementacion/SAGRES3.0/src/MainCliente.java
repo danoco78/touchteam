@@ -70,14 +70,12 @@ public class MainCliente {
             try{
                 codMesa = Integer.parseInt((String)properties.getProperty("mesa"));
                 if(codMesa == null){
-                    // TODO Escribir el nuevo codigo en el fichero
                     codMesa = 1;
                     //FileWriter config = new FileWriter(fichero);
                     //properties.list(config);
                     //config.close();
                 }
             }catch (Exception ex){
-                // TODO Escribir un nuevo codigo en el fichero
                 codMesa = 1;
                 //FileWriter config = new FileWriter(fichero);
                 //config.write("mesa = "+codMesa);

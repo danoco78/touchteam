@@ -127,7 +127,11 @@ public class PanelMesaPedido extends javax.swing.JPanel {
             infoMesaPedido.setText("");
             this.centro.setVisible(false);
         }else{
-            infoMesaPedido.setText("Mesa "+String.valueOf(pedActual.getCodMesa())+", pedido "+String.valueOf(pedActual.getCodPedido()));
+            if(ped.getCodMesa() <= 1000){
+                this.infoMesaPedido.setText("    Mesa "+pedActual.getCodMesa()+", pedido "+pedActual.getCodPedido());
+            }else{
+                this.infoMesaPedido.setText("    Habitacion "+(pedActual.getCodMesa()-1000)+", pedido "+pedActual.getCodPedido());
+            }
 
             ArrayList<ElementoPedido> lista = pedActual.obtieneElementos();
             BotonElementoPedidoComentario boton;
