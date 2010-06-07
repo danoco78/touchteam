@@ -32,13 +32,13 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
     Pedido ped;
     public PreparandosePanel prepPanel;
-    private final long tick;
+    private final ArrayList<Long> lTicks;
 
     /** Creates new form PanelPedidoPorMesa */
-    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, long tick) {
+    public PanelPedidoPorMesa(Pedido ped, PreparandosePanel padre, ArrayList<Long> lTicks) {
         this.prepPanel = padre;
         this.ped = ped;
-        this.tick = tick;
+        this.lTicks = lTicks;
         initComponents();
 
         if(ped.getCodMesa() <= 1000){
@@ -55,6 +55,14 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
         ArrayList<ElementoPedido> lista = ped.obtieneElementos();
         for (int i = 0; i < lista.size(); ++i) {
             if (lista.get(i) instanceof ElementoColaCocina && lista.get(i).getEstado() == ElementoColaCocina.PREPARANDOSE) {
+                long tick = 0;
+                boolean encontrado = false;
+                for(int j=0; j<this.lTicks.size() && !encontrado; j+=2){
+                    if(lTicks.get(j).intValue() == lista.get(i).getCodElementoPedido()){
+                        encontrado = true;
+                        tick = lTicks.get(j+1);
+                    }
+                }
                 BotonElementoPedidoComentario b = new BotonElementoPedidoComentario(lista.get(i), tick);
                 b.addActionListener(new ManejaEventos(this, b));
                 pPedidos.add(b);
