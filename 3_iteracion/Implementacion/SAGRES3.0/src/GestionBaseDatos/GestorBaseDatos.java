@@ -1427,9 +1427,15 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
     public Factura getFactura(int codMesa){
         Factura fac = null;
         boolean hayFactura = false;
+        Statement consulta = null;
+        ResultSet factura = null;
+        Statement consulta2 = null;
+        ResultSet tablaElementosPedido = null;
+        ResultSet codigoElemento = null;
+        Statement consulta3 = null;
         try{
-            Statement consulta = (Statement) this.Conexion.createStatement();
-            ResultSet factura = consulta.executeQuery("SELECT factura_id,factura.estado,factura.fecha,pedido.pedido_id,pedido.mesa_id,pedido.estado,pedido.fecha FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND pedido.estado = 1");
+            consulta = (Statement) this.Conexion.createStatement();
+            factura = consulta.executeQuery("SELECT factura_id,factura.estado,factura.fecha,pedido.pedido_id,pedido.mesa_id,pedido.estado,pedido.fecha FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND mesa_id = "+codMesa+" AND pedido.estado = 1");
             HashSet<Elemento> elementosCarta = this.obtieneElementos();
             Pedido ped = null;
             hayFactura = factura.next();
@@ -1438,15 +1444,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 do {
                     // Obtengo los elementoPedido asociados al pedido
                     ped = new Pedido(factura.getInt(5), factura.getInt(4), factura.getInt(6), factura.getTimestamp(7));
-                    Statement consulta2 = (Statement) this.Conexion.createStatement();
-                    ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = " + factura.getInt(4) + " AND elementoPedido_elementoPedido_id = elementoPedido_id");
-                    ResultSet codigoElemento;
+                    consulta2 = (Statement) this.Conexion.createStatement();
+                    tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = " + factura.getInt(4) + " AND elementoPedido_elementoPedido_id = elementoPedido_id");
                     ElementoColaBar eleCB;
                     ElementoColaCocina eleCC;
                     boolean encontrado;
                     Iterator<Elemento> it;
                     Elemento ele = null;
-                    Statement consulta3 = (Statement) this.Conexion.createStatement();
+                    consulta3 = (Statement) this.Conexion.createStatement();
                     while (tablaElementosPedido.next()) {
                         //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
                         codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = " + tablaElementosPedido.getInt(1));
@@ -1488,35 +1493,53 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(factura != null) factura.close();
+                if(consulta2 != null) consulta2.close();
+                if(tablaElementosPedido != null) tablaElementosPedido.close();
+                if(codigoElemento != null) codigoElemento.close();
+                if(consulta3 != null) consulta3.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return fac;
     }
 
     public ArrayList<Pedido> getPedidosModificablesMesa(int codMesa){
         ArrayList<Pedido> pedidos = new ArrayList();
+        Statement consultaPedidos = null;
+        ResultSet resultado = null;
+        Statement consultaElemPed = null;
+        ResultSet resElemPed = null;
+        ResultSet resElem = null;
+        ResultSet resProds = null;
+        Statement consultaIngredientes = null;
+        Statement consultaBebidas = null;
+        Statement consultaElem = null;
         try {
-            Statement consultaPedidos = (Statement) this.Conexion.createStatement();
-            ResultSet resultado = consultaPedidos.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where estado = 0 AND mesa_id = " + codMesa);
+            consultaPedidos = (Statement) this.Conexion.createStatement();
+            resultado = consultaPedidos.executeQuery(" select pedido_id,mesa_id,estado,fecha from pedido where estado = 0 AND mesa_id = " + codMesa);
             while (resultado.next()) {
                 Pedido pedido = new Pedido(resultado.getInt(1), resultado.getInt(2), resultado.getInt(3), resultado.getTimestamp(4));
-                Statement consultaElemPed = (Statement) this.Conexion.createStatement();
-                ResultSet resElemPed = consultaElemPed.executeQuery(" select elementoPedido_id,estado,comentario from elementoPedido where elementoPedido_id IN " +
+                consultaElemPed = (Statement) this.Conexion.createStatement();
+                resElemPed = consultaElemPed.executeQuery(" select elementoPedido_id,estado,comentario from elementoPedido where elementoPedido_id IN " +
                         "(select elementoPedido_elementoPedido_id from tieneElemento where pedido_pedido_id = " + pedido.getCodPedido() + ")");
                 while (resElemPed.next()) {
                     ElementoPedido elemPed = new ElementoPedido(resElemPed.getInt(1), resElemPed.getInt(2), resElemPed.getString(3));
-                    ResultSet resElem;
-                    ResultSet resProds;
                     Elemento elem;
 
                     //Comprobamos si es un PLATO
-                    Statement consultaElem = (Statement) this.Conexion.createStatement();
+                    consultaElem = (Statement) this.Conexion.createStatement();
                     resElem = consultaElem.executeQuery(" SELECT elemento_id, nombre, descripcion, disponible, foto, divi, divi_max, precio FROM elemento WHERE elemento_id IN " + "(SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = " + elemPed.getCodElementoPedido() + ")");
 
                     if(resElem.next()){
                         elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int) resElem.getBlob(1).length())), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
 
                         //Asociamos los ingredientes
-                        Statement consultaIngredientes = (Statement) this.Conexion.createStatement();
+                        consultaIngredientes = (Statement) this.Conexion.createStatement();
                         resProds = consultaIngredientes.executeQuery("SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " + "( SELECT productoIngrediente_producto_producto_id FROM tieneIngrediente WHERE elementoComida_elemento_elemento_id IN " + "(SELECT elemento_elemento_id FROM elementoPlato WHERE elemento_elemento_id = " + resElem.getInt(1) + ")) ");
                         HashMap<Ingrediente,Float> temp = new HashMap();
                         while (resProds.next()) {
@@ -1533,7 +1556,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                         resElem.next();
                         elem = new Elemento(resElem.getInt(1), resElem.getString(2), resElem.getString(3), resElem.getBoolean(4), Imagen.blobToImageIcon(new SerialBlob(resElem.getBlob(6)).getBytes(1, (int) resElem.getBlob(1).length())), resElem.getInt(6), resElem.getInt(7), resElem.getFloat(8));
                         //Asociamos las bebidas
-                        Statement consultaBebidas = (Statement) this.Conexion.createStatement();
+                        consultaBebidas = (Statement) this.Conexion.createStatement();
                         resProds = consultaBebidas.executeQuery("SELECT producto_id, nombre, cantidad, maximo, minimo, foto FROM producto WHERE producto_id IN " + "( SELECT productoBebida_producto_producto_id FROM tieneBebida WHERE elementoBebida_elemento_elemento_id IN " + "(SELECT elemento_elemento_id FROM elementoBebida WHERE elemento_elemento_id = " + resElem.getInt(1) + ")) ");
                         HashMap<Bebida,Float> temp = new HashMap();
                         while (resProds.next()) {
@@ -1551,6 +1574,20 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consultaPedidos != null) consultaPedidos.close();
+                if(resultado != null) resultado.close();
+                if(consultaElemPed != null) consultaElemPed.close();
+                if(resElemPed != null) resElemPed.close();
+                if(resElem != null) resElem.close();
+                if(resProds != null) resProds.close();
+                if(consultaIngredientes != null) consultaIngredientes.close();
+                if(consultaBebidas != null) consultaBebidas.close();
+                if(consultaElem != null) consultaElem.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return pedidos;
@@ -1558,37 +1595,52 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     // Actualiza el estado de la factura
     public void actualizaFactura(Factura f){
+        java.sql.PreparedStatement accion = null;
         try {
-            java.sql.PreparedStatement accion = this.Conexion.prepareStatement("UPDATE factura SET estado=? WHERE factura_id='"+ f.getCodFactura()+"'");
+            accion = this.Conexion.prepareStatement("UPDATE factura SET estado=? WHERE factura_id='"+ f.getCodFactura()+"'");
             accion.setInt(1, f.getEstado());
             accion.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(accion != null) accion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     public boolean nuevoPedido(Pedido pedido) {
+        boolean exito = false;
+        java.sql.PreparedStatement insercionPedido = null;
+        java.sql.PreparedStatement insercionTieneElemento = null;
+        java.sql.PreparedStatement insercionElementoPedido = null;
+        java.sql.PreparedStatement insercionColaCocina = null;
+        java.sql.PreparedStatement insercionColaBar = null;
+        java.sql.PreparedStatement insercionAsociaPlato = null;
+        java.sql.PreparedStatement insercionAsociaBebida = null;
         try {
             // Inserción para pedido
-            java.sql.PreparedStatement insercionPedido = this.Conexion.prepareStatement(
+            insercionPedido = this.Conexion.prepareStatement(
                     "INSERT INTO pedido(pedido_id,mesa_id,estado,fecha) VALUES (?,?,?,?)");
             // Inserción para tieneelemento
-            java.sql.PreparedStatement insercionTieneElemento = this.Conexion.prepareStatement(
+            insercionTieneElemento = this.Conexion.prepareStatement(
                     "INSERT INTO tieneElemento(elementoPedido_elementoPedido_id,pedido_pedido_id) VALUES(?,?)");
             //Inserción para elementopedido
-            java.sql.PreparedStatement insercionElementoPedido = this.Conexion.prepareStatement(
+            insercionElementoPedido = this.Conexion.prepareStatement(
                     "INSERT INTO elementoPedido(elementoPedido_id,estado,comentario) VALUES(?,?,?)");
             //Inserción para elementocolacocina
-            java.sql.PreparedStatement insercionColaCocina = this.Conexion.prepareStatement(
+            insercionColaCocina = this.Conexion.prepareStatement(
                     "INSERT INTO elementoColaCocina VALUES(?)");
             //Inserción para elementocolabar
-            java.sql.PreparedStatement insercionColaBar = this.Conexion.prepareStatement(
+            insercionColaBar = this.Conexion.prepareStatement(
                     "INSERT INTO elementoColaBar VALUES(?)");
             //Inserción para asociaplato
-            java.sql.PreparedStatement insercionAsociaPlato = this.Conexion.prepareStatement(
+            insercionAsociaPlato = this.Conexion.prepareStatement(
                     "INSERT INTO asociaPlato VALUES(?,?)");
             //Inserción para asociabebida
-            java.sql.PreparedStatement insercionAsociaBebida = this.Conexion.prepareStatement(
+            insercionAsociaBebida = this.Conexion.prepareStatement(
                     "INSERT INTO asociaBebida VALUES(?,?)");
 
             //Insertamos el pedido
@@ -1637,32 +1689,50 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
             }
 
-            return true;
+            exito = true;
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        }finally {
+            try {
+                if(insercionPedido != null) insercionPedido.close();
+                if(insercionTieneElemento != null) insercionTieneElemento.close();
+                if(insercionElementoPedido != null) insercionElementoPedido.close();
+                if(insercionColaCocina != null) insercionColaCocina.close();
+                if(insercionColaBar != null) insercionColaBar.close();
+                if(insercionAsociaPlato != null) insercionAsociaPlato.close();
+                if(insercionAsociaBebida != null) insercionAsociaBebida.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return exito;
     }
 
     public Pedido getSiguientePedidoBar() {
         Pedido ped = null;
+        Statement consulta = null;
+        ResultSet tablaPedidos = null;
+        ResultSet tablaElementosPedido = null;
+        ResultSet codigoElemento = null;
+        Statement consulta2 = null;
+        Statement consulta3 = null;
         try {
-            Statement consulta = (Statement) this.Conexion.createStatement();
+            consulta = (Statement) this.Conexion.createStatement();
             // Obtengo los pedidos cuyo estado es distinto de Facturado y tiene elementosColaBar en Cola
-            ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha FROM pedido, tieneElemento, elementoPedido, elementoColaBar WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id AND elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id AND elementoPedido.estado =0 GROUP BY pedido_id HAVING COUNT( elementoColaBar.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
+            tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha FROM pedido, tieneElemento, elementoPedido, elementoColaBar WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id AND elementoPedido_id = elementoColaBar.elementoPedido_elementoPedido_id AND elementoPedido.estado =0 GROUP BY pedido_id HAVING COUNT( elementoColaBar.elementoPedido_elementoPedido_id ) >0 ORDER BY fecha;");
             if (tablaPedidos.next()){
                 HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
                 ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getTimestamp(4));
-                Statement consulta2 = (Statement) this.Conexion.createStatement();
-                ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
-                ResultSet codigoElemento;
+                consulta2 = (Statement) this.Conexion.createStatement();
+                tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
                 ElementoColaBar eleCB;
                 ElementoColaCocina eleCC;
                 boolean encontrado;
                 Iterator<Elemento> it;
                 Elemento ele = null;
-                Statement consulta3 = (Statement) this.Conexion.createStatement();
+                consulta3 = (Statement) this.Conexion.createStatement();
                 while (tablaElementosPedido.next()){
                     //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
                     codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
@@ -1701,6 +1771,17 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(tablaPedidos != null) tablaPedidos.close();
+                if(tablaElementosPedido != null) tablaElementosPedido.close();
+                if(codigoElemento != null) codigoElemento.close();
+                if(consulta2 != null) consulta2.close();
+                if(consulta3 != null) consulta3.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return ped;
@@ -1708,10 +1789,16 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     public Pedido getSiguientePedidoCocina() {
         Pedido ped = null;
+        Statement consulta = null;
+        ResultSet tablaPedidos = null;
+        Statement consulta2 = null;
+        ResultSet tablaElementosPedido = null;
+        ResultSet codigoElemento = null;
+        Statement consulta3 = null;
         try {
-            Statement consulta = (Statement) this.Conexion.createStatement();
+            consulta = (Statement) this.Conexion.createStatement();
             // Obtengo los pedidos cuyo estado es distinto de Facturado y tiene elementosColaCocina en Cola
-            ResultSet tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha " +
+            tablaPedidos = consulta.executeQuery("SELECT pedido_id, mesa_id, pedido.estado, fecha " +
                                                             "FROM pedido, tieneElemento, elementoPedido, elementoColaCocina " +
                                                             "WHERE pedido.estado <> 2 AND pedido_id = pedido_pedido_id " +
                                                             "AND tieneElemento.elementoPedido_elementoPedido_id = elementoPedido_id " +
@@ -1722,15 +1809,14 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
                 HashSet<Elemento> elementosCarta = this.obtieneElementos();
                 // Obtengo los elementoPedido asociados al pedido
                 ped = new Pedido(tablaPedidos.getInt(2),tablaPedidos.getInt(1),tablaPedidos.getInt(3),tablaPedidos.getTimestamp(4));
-                Statement consulta2 = (Statement) this.Conexion.createStatement();
-                ResultSet tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
-                ResultSet codigoElemento;
+                consulta2 = (Statement) this.Conexion.createStatement();
+                tablaElementosPedido = consulta2.executeQuery("SELECT elementoPedido_id,estado,comentario FROM tieneElemento,elementoPedido WHERE pedido_pedido_id = "+tablaPedidos.getInt(1)+" AND elementoPedido_elementoPedido_id = elementoPedido_id");
                 ElementoColaBar eleCB;
                 ElementoColaCocina eleCC;
                 boolean encontrado;
                 Iterator<Elemento> it;
                 Elemento ele = null;
-                Statement consulta3 = (Statement) this.Conexion.createStatement();
+                consulta3 = (Statement) this.Conexion.createStatement();
                 while (tablaElementosPedido.next()){
                     //Obtengo SOLO EL CODIGO del elemento de la carta asociado al elementoPedido. Comprueba si es un plato
                     codigoElemento = consulta3.executeQuery("SELECT elementoPlato_elemento_elemento_id FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+tablaElementosPedido.getInt(1));
@@ -1769,46 +1855,78 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(tablaPedidos != null) tablaPedidos.close();
+                if(tablaElementosPedido != null) tablaElementosPedido.close();
+                if(codigoElemento != null) codigoElemento.close();
+                if(consulta2 != null) consulta2.close();
+                if(consulta3 != null) consulta3.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return ped;
     }
 
     public int getCodigoPedido(){
+        int retorno = -1;
+        java.sql.Statement consulta = null;
+        ResultSet resultado = null;
         try {
             // Obtenemos el último id que se insertó
-            java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet resultado = consulta.executeQuery("SELECT MAX(pedido_id) FROM pedido");
+            consulta = this.Conexion.createStatement();
+            resultado = consulta.executeQuery("SELECT MAX(pedido_id) FROM pedido");
             resultado.next();
             int codPedido = resultado.getInt(1)+1;
-            return codPedido;
+            retorno = codPedido;
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(resultado != null) resultado.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return retorno;
     }
 
     public int getCodigoElementoPedido(){
+        int retorno = -1;
+        java.sql.Statement consulta = null;
+        ResultSet resultado = null;
         try {
             // Obtenemos el último id que se insertó
-            java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet resultado = consulta.executeQuery("SELECT MAX(elementoPedido_id) FROM elementoPedido");
+            consulta = this.Conexion.createStatement();
+            resultado = consulta.executeQuery("SELECT MAX(elementoPedido_id) FROM elementoPedido");
             resultado.next();
             int codEP = resultado.getInt(1)+1;
-            return codEP;
+            retorno = codEP;
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(resultado != null) resultado.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return retorno;
     }
 
     public boolean eliminaPedido(int codPedido){
+        boolean exito = false;
+        java.sql.PreparedStatement borrado = null;
+        java.sql.Statement consulta = null;
+        ResultSet resultado = null;
         try {
-            java.sql.PreparedStatement borrado;
-
             //Obtenemos el id de cada elementoPedido
-            java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet resultado;
+            consulta = this.Conexion.createStatement();
             resultado = consulta.executeQuery("SELECT elementoPedido_elementoPedido_id FROM tieneElemento WHERE pedido_pedido_id = "+codPedido);
             ArrayList<Integer> listaId = new ArrayList();
 
@@ -1819,6 +1937,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             //Borramos tienelemeneto
             borrado = this.Conexion.prepareStatement("DELETE tieneElemento FROM tieneElemento WHERE pedido_pedido_id = "+codPedido);
             borrado.executeUpdate();
+            borrado.close();
 
             //Borramos asociaplato y asociabebida
             for(int i=0; i<listaId.size(); ++i){
@@ -1826,8 +1945,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
                 borrado = this.Conexion.prepareStatement("DELETE asociaPlato FROM asociaPlato WHERE elementoColaCocina_elementoPedido_elementoPedido_id = "+codElementoPedido);
                 borrado.executeUpdate();
+                borrado.close();
                 borrado = this.Conexion.prepareStatement("DELETE asociaBebida FROM asociaBebida WHERE elementoColaBar_elementoPedido_elementoPedido_id = "+codElementoPedido);
                 borrado.executeUpdate();
+                borrado.close();
             }
 
             resultado = consulta.executeQuery("SELECT elementoPedido_elementoPedido_id FROM tieneElemento WHERE pedido_pedido_id = "+codPedido);
@@ -1837,8 +1958,10 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
                 borrado = this.Conexion.prepareStatement("DELETE elementoColaCocina FROM elementoColaCocina WHERE elementoPedido_elementoPedido_id = "+codElementoPedido);
                 borrado.executeUpdate();
+                borrado.close();
                 borrado = this.Conexion.prepareStatement("DELETE elementoColaBar FROM elementoColaBar WHERE elementoPedido_elementoPedido_id = "+codElementoPedido);
                 borrado.executeUpdate();
+                borrado.close();
             }
 
             resultado = consulta.executeQuery("SELECT elementoPedido_elementoPedido_id FROM tieneElemento WHERE pedido_pedido_id = "+codPedido);
@@ -1848,34 +1971,54 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
                 borrado = this.Conexion.prepareStatement("DELETE elementoPedido FROM elementoPedido WHERE elementoPedido_id = "+codElementoPedido);
                 borrado.executeUpdate();
+                borrado.close();
             }
 
             //Borramos el pedido de la factura asociada
             borrado = this.Conexion.prepareStatement("DELETE facturaPedido FROM facturaPedido WHERE pedido_pedido_id = "+codPedido);
             borrado.executeUpdate();
+            borrado.close();
 
 
             //Borramos el pedido
             borrado = this.Conexion.prepareStatement("DELETE pedido FROM pedido WHERE pedido_id = "+codPedido);
             borrado.executeUpdate();
+            borrado.close();
 
-            return true;
+            exito = true;
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(resultado != null) resultado.close();
+                if(borrado != null) borrado.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return exito;
 
     }
 
     public ArrayList<Integer> getFacturasEnCola(){
         ArrayList<Integer> mesas = new ArrayList();
+        ResultSet codigosMesas = null;
+        java.sql.Statement consulta = null;
         try{
-            java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=0");
+            consulta = this.Conexion.createStatement();
+            codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=0");
             while (codigosMesas.next())
                 mesas.add(codigosMesas.getInt(1));
         }catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(codigosMesas != null) codigosMesas.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return mesas;
@@ -1883,13 +2026,22 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
 
     public ArrayList<Integer> getFacturasImprimidas() {
         ArrayList<Integer> mesas = new ArrayList();
+        java.sql.Statement consulta = null;
+        ResultSet codigosMesas = null;
         try{
-            java.sql.Statement consulta = this.Conexion.createStatement();
-            ResultSet codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=1");
+            consulta = this.Conexion.createStatement();
+            codigosMesas = consulta.executeQuery("SELECT DISTINCT( pedido.mesa_id ) FROM factura,facturaPedido,pedido WHERE factura_id = factura_factura_id AND pedido_pedido_id = pedido_id AND factura.estado=1");
             while (codigosMesas.next())
                 mesas.add(codigosMesas.getInt(1));
         }catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            try {
+                if(consulta != null) consulta.close();
+                if(codigosMesas != null) codigosMesas.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return mesas;
