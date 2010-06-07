@@ -29,7 +29,7 @@ import utilidades.PanelPedidoPorMesa;
 public class PreparandosePanel extends javax.swing.JPanel {
 
     private Vector<Vector<Integer> > pedidosMostrandose;
-    //private Vector<Vector<Long> > tickElementos;
+    private ArrayList<Long> tickElementos;
     public ICocinero icocinero;
     public InterfazCocinero ventana;
     public long tick;
@@ -42,7 +42,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
         this.ventana = ventana;
         pedidosMostrandose = null;
         tick = 0;
-        //tickElementos = new Vector<Vector<Long>>();
+        tickElementos = new ArrayList<Long>();
         this.actualizar();
     }
 
@@ -55,11 +55,8 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 this.autoCompletar(pedidosCocinaPreparandose);
             }else{
                 System.gc();
-                //System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
             }
         } catch (Exception ex) {
-            //System.out.println("No se actualiza"+System.currentTimeMillis()/1000);
-            //Logger.getLogger(PreparandosePanel.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error en preparandose panel, al obtener pedidos cocina preparandose: "+ex.getMessage());
         }
     }
@@ -78,9 +75,9 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         //Actualizamos la etiqueta de platos preparándose
         for(int i=0; i<listaPedidos.size(); ++i){
-            if(!listaPedidos.get(i).obtieneElementos().isEmpty()){
-               this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i),this, this.tick));
-               this.pPanelesPedido.add(new PanelEspacioVertical());
+            if (!listaPedidos.get(i).obtieneElementos().isEmpty()) {
+                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), this, this.tickElementos));
+                this.pPanelesPedido.add(new PanelEspacioVertical());
             }
         }
 
@@ -92,7 +89,8 @@ public class PreparandosePanel extends javax.swing.JPanel {
     }
 
     /**
-     * Copia un pedido y lo devuelve en forma de vector de codigos y estados.
+     * Copia un pedido y lo devuelve en forma de vector de codigos y estados. Además
+     * completa los tiempos de los elementos de pedido.
      * @param ped Pedido a copiar
      * @return Nuevo pedido sin referencias a ped
      */
@@ -100,13 +98,32 @@ public class PreparandosePanel extends javax.swing.JPanel {
 
         Vector<Vector<Integer> > copiaPeds = new Vector(peds.size());
         Iterator<Pedido> itPeds = peds.iterator();
-        
+
+        // Comenzamos eliminando todos los elementos que no se encuentran en los tiempos
+        for(int i=0; i<tickElementos.size(); i+=2){
+            boolean encontrado = false;
+            while(itPeds.hasNext() && !encontrado){
+                Iterator<ElementoPedido> itElem = itPeds.next().obtieneElementos().iterator();
+                while(itElem.hasNext() && !encontrado){
+                    if(itElem.next().getCodElementoPedido() == tickElementos.get(i).intValue()){
+                        encontrado = true;
+                    }
+                }
+            }
+            if(!encontrado){
+                tickElementos.remove(i);
+                tickElementos.remove(i);
+            }
+        }
+
+        // Añadimos ahora todos los que queremos
         while(itPeds.hasNext()){
             Pedido ped = itPeds.next();
             Vector<Integer> copia = new Vector<Integer>(ped.getElementos().size()*2 +2);
             copia.add(ped.getCodPedido());
             copia.add(ped.getEstado());
 
+            // Lo introducimos en la copia
             Iterator<ElementoPedido> it = ped.getElementos().iterator();
             while(it.hasNext()){
                 ElementoPedido next = it.next();
@@ -114,8 +131,22 @@ public class PreparandosePanel extends javax.swing.JPanel {
                     copia.add(next.getCodElementoPedido());
                     copia.add(next.getEstado());
                 }
+
+                // Lo buscamos en el vector de tiempos
+                boolean encontrado = false;
+                for(int i=0; i< tickElementos.size() && !encontrado; i+=2){
+                    if(tickElementos.get(i).intValue() == next.getCodElementoPedido()){
+                        encontrado = true;
+                    }
+                }
+                if(!encontrado){
+                    tickElementos.add(new Long(next.getCodElementoPedido()));
+                    tickElementos.add(new Long(tick));
+                }
+
             }
             copiaPeds.add(copia);
+            
         }
         return copiaPeds;
     }
