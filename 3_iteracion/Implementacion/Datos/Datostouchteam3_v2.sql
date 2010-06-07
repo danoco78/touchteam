@@ -303,6 +303,7 @@ INSERT INTO productoIngrediente (producto_producto_id) VALUES
 (17),
 (18),
 (20),
+(21),
 (22),
 (29);
 
@@ -379,6 +380,7 @@ INSERT INTO `tieneingrediente` VALUES (9, 11, 100);
 INSERT INTO `tieneingrediente` VALUES (9, 12, 3);
 INSERT INTO `tieneingrediente` VALUES (10, 12, 3);
 INSERT INTO `tieneingrediente` VALUES (11, 12, 3);
+INSERT INTO `tieneingrediente` VALUES (13, 21, 20);
 
 --
 -- Volcar la base de datos para la tabla 'tienepedido'
