@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
-    Pedido ped;
+    private Pedido ped;
     public PreparandosePanel prepPanel;
     private final ArrayList<Long> lTicks;
 
@@ -58,7 +58,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                 long tick = 0;
                 boolean encontrado = false;
                 for(int j=0; j<this.lTicks.size() && !encontrado; j+=2){
-                    if(lTicks.get(j).intValue() == lista.get(i).getCodElementoPedido()){
+                    if(lTicks.get(j).intValue() == lista.get(i).getCodElementoPedido().intValue()){
                         encontrado = true;
                         tick = lTicks.get(j+1);
                     }

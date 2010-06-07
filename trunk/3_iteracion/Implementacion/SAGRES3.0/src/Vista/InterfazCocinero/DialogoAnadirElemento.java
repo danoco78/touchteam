@@ -888,6 +888,7 @@ public class DialogoAnadirElemento extends java.awt.Dialog {
                 lista = new ArrayList<Elemento>(((SeccionComida)seccion).getListaElementoPlato());
             DefaultTableModel modelo = new DefaultTableModel(){
                 //Hace que las celdas sean no editables
+                @Override
                 public boolean isCellEditable(int x, int y) {
                     return false;
                 }
