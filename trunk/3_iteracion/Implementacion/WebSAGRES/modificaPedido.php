@@ -31,8 +31,9 @@
             $sagres = new ControladorPrincipal();
             $ip = $_SERVER['REMOTE_ADDR'];
             preg_match_all("/\d+.\d+.(\d+).(\d+)/", $ip, $exp);
-            $valor1 = 0+$exp[1][0];
-            $valor2 = (valor1%10)*1000;
+            $valor1 = 0+$exp[2][0];
+            $valor2 = 0+$exp[1][0];
+            $valor2 = ($valor2%10)*1000;
             $codmesa = 1000+$valor1+$valor2;
             $pedidos = $sagres->getPedidosModificablesMesa($codmesa);
             for($i=0; $i<count($pedidos); $i++) {
