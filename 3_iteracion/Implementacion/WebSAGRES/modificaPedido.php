@@ -29,7 +29,12 @@
             <?php
             include_once 'ControladorPrincipal.php';
             $sagres = new ControladorPrincipal();
-            $pedidos = $sagres->getPedidosModificablesMesa($codmesa = 1);
+            $ip = $_SERVER['REMOTE_ADDR'];
+            preg_match_all("/\d+.\d+.(\d+).(\d+)/", $ip, $exp);
+            $valor1 = 0+$exp[1][0];
+            $valor2 = (valor1%10)*1000;
+            $codmesa = 1000+$valor1+$valor2;
+            $pedidos = $sagres->getPedidosModificablesMesa($codmesa);
             for($i=0; $i<count($pedidos); $i++) {
                 echo "<div class=\"elemento\">";
                 echo "<h4>Habitacion: ".$pedidos[$i]->getMesa()."</h4>";
