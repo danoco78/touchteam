@@ -407,7 +407,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 break;
             case 2:
                 if (((Float) this.tTablaIngredientesDisponibles.getValueAt(this.tTablaIngredientesDisponibles.getSelectedRow(), 1))
-                        > (Float) this.tCantidadAfectada.getValue()) {
+                        >= (Float) this.tCantidadAfectada.getValue()) {
                     String subtitulo = this.lSubtitulo.getText();
                     String pregunta = "¿Confirma que desea Notificar la incidencia?";
                     String texto = "<font face=\"Arial\">Nombre: <strong>" + this.lNombre.getText() + "</strong><br />"
@@ -434,6 +434,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                         dispose();
                     }
                 }else{
+                    this.dispose();
                     JOptionPane.showMessageDialog(this, "La cantidad afectada no puede ser superior a "+
                             ((Float) this.tTablaIngredientesDisponibles.getValueAt(this.tTablaIngredientesDisponibles.getSelectedRow(), 1)) +
                             "(Cantidad disponible en stock)");
