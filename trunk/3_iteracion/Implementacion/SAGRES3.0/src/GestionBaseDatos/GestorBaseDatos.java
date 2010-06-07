@@ -887,26 +887,29 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
         try {
             Statement pedido = (Statement) this.Conexion.createStatement();
             ResultSet infoPedido = pedido.executeQuery("select pedido_proveedor_id, fecha_pedido, recibido "
-                    + "from pedidoProveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoProveedor where recibido = false) mini "
-                    + "where n.pedido_proveedor_id = mini.min_id;");
+                    + " from pedidoProveedor n , (select  MIN(pedido_proveedor_id) min_id from pedidoProveedor where recibido = false) mini "
+                    + " where n.pedido_proveedor_id = mini.min_id");
+
             if(infoPedido.next()){
+                int id = infoPedido.getInt(1);
+                Timestamp fecha = infoPedido.getTimestamp(2);
+                Boolean recibido = ( infoPedido.getInt(3) != 0 );
                 ResultSet tablaproductos = pedido.executeQuery("select producto_id, nombre, producto.cantidad, maximo,minimo, foto, tienePedido.cantidad"
                         + " from producto, tienePedido"
-                        + " where pedidoProveedor_pedido_proveedor_id = '" + infoPedido.getInt(1)
-                        + "' and producto_producto_id = producto_id;");
+                        + " where pedidoProveedor_pedido_proveedor_id = '" + id
+                        + "' and producto_producto_id = producto_id");
                 HashMap<Producto, Float> productosCantidad = new HashMap<Producto, Float>();
                 while (tablaproductos.next()) {
                     Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)), tablaproductos.getString(2),
                             tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
                     productosCantidad.put(producto, tablaproductos.getFloat(7));
                 }
-                Boolean recibido = infoPedido.getInt(3) != 0;
-                return new PedidoProveedor(infoPedido.getInt(1), productosCantidad, infoPedido.getTimestamp(2), recibido);
+                return new PedidoProveedor(id, productosCantidad, fecha, recibido);
             }else
                 return null;
 
         } catch (SQLException ex) {
-            Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error en obtenerPrimerPedidoPendiente");
         }
         return null;
     }

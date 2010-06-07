@@ -1,4 +1,3 @@
-
 package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
@@ -11,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import utilidades.ImageRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,8 +36,9 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         initComponents();
         this.cocina = iCocinero;
         listaIngredientes = this.cocina.obtieneIngredientes();
-        DefaultTableModel modelo = new DefaultTableModel(){
+        DefaultTableModel modelo = new DefaultTableModel() {
             //Hace que las celdas sean no editables
+
             @Override
             public boolean isCellEditable(int x, int y) {
                 return false;
@@ -53,13 +54,13 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         Iterator iterador = listaIngredientes.iterator();
         Producto p;
         int i = 0;
-	while (iterador.hasNext()) {
-            p = (Producto)iterador.next();
+        while (iterador.hasNext()) {
+            p = (Producto) iterador.next();
             this.tTablaIngredientesDisponibles.setValueAt(p.getNombre(), i, 0);
             this.tTablaIngredientesDisponibles.setValueAt(p.getCantidad(), i, 1);
             this.tTablaIngredientesDisponibles.setValueAt(p.getImagen(), i, 2);
             ++i;
-	}
+        }
         this.bSiguiente.setEnabled(false);
         this.estado = 1;
         this.bAnterior.setEnabled(false);
@@ -68,14 +69,13 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
 
     /*@Override
     public void paint(Graphics g) {
-        super.paintComponents(g);
-        Graphics2D g2 = (Graphics2D) g.create();
-        Rectangle clip = g2.getClipBounds();
-        g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249), getWidth(), 0.0f, new Color(255, 255, 255)));
-        g2.fillRect(clip.x, clip.y, clip.width, clip.height);
-        super.paint(g);
+    super.paintComponents(g);
+    Graphics2D g2 = (Graphics2D) g.create();
+    Rectangle clip = g2.getClipBounds();
+    g2.setPaint(new GradientPaint(0.0f, 0.0f, new Color(170, 192, 249), getWidth(), 0.0f, new Color(255, 255, 255)));
+    g2.fillRect(clip.x, clip.y, clip.width, clip.height);
+    super.paint(g);
     }*/
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
@@ -204,7 +204,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pCentro.setOpaque(false);
         pCentro.setLayout(new java.awt.BorderLayout(0, 15));
 
-        lNombre.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lNombre.setFont(new java.awt.Font("Arial", 0, 24));
         lNombre.setForeground(new java.awt.Color(80, 98, 143));
         lNombre.setText("[Nombre Producto]");
         pCentro.add(lNombre, java.awt.BorderLayout.NORTH);
@@ -218,7 +218,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pTexto.setOpaque(false);
         pTexto.setLayout(new java.awt.BorderLayout());
 
-        lDescripcion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lDescripcion.setFont(new java.awt.Font("Arial", 0, 18));
         lDescripcion.setForeground(new java.awt.Color(80, 98, 143));
         lDescripcion.setText("Descripción breve");
         pTexto.add(lDescripcion, java.awt.BorderLayout.NORTH);
@@ -226,7 +226,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pCentro3.add(pTexto, java.awt.BorderLayout.WEST);
 
         tDescripcion.setColumns(20);
-        tDescripcion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tDescripcion.setFont(new java.awt.Font("Arial", 0, 18));
         tDescripcion.setForeground(new java.awt.Color(80, 98, 143));
         tDescripcion.setRows(2);
         tDescripcion.setAutoscrolls(false);
@@ -240,19 +240,19 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pSur.setOpaque(false);
         pSur.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        lPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lPrecio.setFont(new java.awt.Font("Arial", 0, 18));
         lPrecio.setForeground(new java.awt.Color(80, 98, 143));
         lPrecio.setText("Cantidad afectada");
         pSur.add(lPrecio);
 
         tCantidadAfectada.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         tCantidadAfectada.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tCantidadAfectada.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tCantidadAfectada.setFont(new java.awt.Font("Tahoma", 0, 18));
         tCantidadAfectada.setMinimumSize(new java.awt.Dimension(150, 20));
         tCantidadAfectada.setPreferredSize(new java.awt.Dimension(150, 20));
         pSur.add(tCantidadAfectada);
 
-        €.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        €.setFont(new java.awt.Font("Arial", 0, 18));
         €.setForeground(new java.awt.Color(80, 98, 143));
         €.setText("(gr/litros/...)");
         pSur.add(€);
@@ -268,7 +268,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pAlertas.setPreferredSize(new java.awt.Dimension(114, 150));
         pAlertas.setLayout(new java.awt.BorderLayout());
 
-        lAlertas.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lAlertas.setFont(new java.awt.Font("Arial", 0, 18));
         lAlertas.setForeground(new java.awt.Color(80, 98, 143));
         lAlertas.setText("No habilitado");
         pAlertas.add(lAlertas, java.awt.BorderLayout.NORTH);
@@ -302,12 +302,12 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pIzq1.setOpaque(false);
         pIzq1.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("<html><body>Notificar incidencia con<br> ingrediente</body></html>");
         pIzq1.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Seleccionar el ingrediente afectado");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -318,12 +318,12 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pDer1.setOpaque(false);
         pDer1.setLayout(new java.awt.GridLayout(0, 1));
 
-        lPaso.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lPaso.setFont(new java.awt.Font("Arial", 0, 18));
         lPaso.setForeground(new java.awt.Color(80, 98, 143));
         lPaso.setText("Paso 1/2");
         pDer1.add(lPaso);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 18));
         bCancelar.setForeground(new java.awt.Color(150, 172, 229));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -344,7 +344,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bSiguiente.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bSiguiente.setFont(new java.awt.Font("Arial", 0, 24));
         bSiguiente.setForeground(new java.awt.Color(80, 98, 143));
         bSiguiente.setText("Siguiente");
         bSiguiente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -363,7 +363,7 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bSiguiente, gridBagConstraints);
 
-        bAnterior.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bAnterior.setFont(new java.awt.Font("Arial", 0, 24));
         bAnterior.setForeground(new java.awt.Color(80, 98, 143));
         bAnterior.setText("Anterior");
         bAnterior.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -406,29 +406,37 @@ public class DialogoNotificarIncidencia extends javax.swing.JDialog {
                 cl.next(this.cuerpo);
                 break;
             case 2:
-                String subtitulo = this.lSubtitulo.getText();
-                String pregunta = "¿Confirma que desea Notificar la incidencia?";
-                String texto = "<font face=\"Arial\">Nombre: <strong>" + this.lNombre.getText() + "</strong><br />"
-                        + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
-                        + "<font face=\"Arial\">Cantidad Afectada: <strong>" + (Float) this.tCantidadAfectada.getValue() + "</strong> gr.";
-                DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
-                confirmar.setLocationRelativeTo(this);
-                confirmar.setVisible(true);
-                if (confirmar.isAceptado()) {
-                Iterator iterador = listaIngredientes.iterator();
-                int i = 0;
-                int select = this.tTablaIngredientesDisponibles.getSelectedRow();
-                boolean noencontrado = true;
-                    while (noencontrado) {
-                        accidentado = (Ingrediente)iterador.next();
-                        if(i == select){
-                            noencontrado = false;
+                if (((Float) this.tTablaIngredientesDisponibles.getValueAt(this.tTablaIngredientesDisponibles.getSelectedRow(), 1))
+                        > (Float) this.tCantidadAfectada.getValue()) {
+                    String subtitulo = this.lSubtitulo.getText();
+                    String pregunta = "¿Confirma que desea Notificar la incidencia?";
+                    String texto = "<font face=\"Arial\">Nombre: <strong>" + this.lNombre.getText() + "</strong><br />"
+                            + "<font face=\"Arial\">Descripción: <strong>" + this.tDescripcion.getText() + "</strong><br />"
+                            + "<font face=\"Arial\">Cantidad Afectada: <strong>" + (Float) this.tCantidadAfectada.getValue() + "</strong> gr.";
+                    DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
+                    confirmar.setLocationRelativeTo(this);
+                    confirmar.setVisible(true);
+                    if (confirmar.isAceptado()) {
+                        Iterator iterador = listaIngredientes.iterator();
+                        int i = 0;
+                        int select = this.tTablaIngredientesDisponibles.getSelectedRow();
+                        boolean noencontrado = true;
+                        while (noencontrado) {
+                            accidentado = (Ingrediente) iterador.next();
+                            if (i == select) {
+                                noencontrado = false;
+                            } else {
+                                ++i;
+                            }
                         }
-                        else ++i;
+                        this.cocina.nuevaIncidencia(new Incidencia(accidentado, (Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()));
+                        setVisible(false);
+                        dispose();
                     }
-                    this.cocina.nuevaIncidencia(new Incidencia( accidentado,(Float) this.tCantidadAfectada.getValue(), this.tDescripcion.getText()) );
-                    setVisible(false);
-                    dispose();
+                }else{
+                    JOptionPane.showMessageDialog(this, "La cantidad afectada no puede ser superior a "+
+                            ((Float) this.tTablaIngredientesDisponibles.getValueAt(this.tTablaIngredientesDisponibles.getSelectedRow(), 1)) +
+                            "(Cantidad disponible en stock)");
                 }
                 break;
         }
