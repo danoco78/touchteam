@@ -14,6 +14,9 @@ import java.awt.CardLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -717,9 +720,12 @@ public class DialogoModificarElemento extends java.awt.Dialog {
                         + "<font face=\"Arial\">Porciones: <strong>" + ((Integer) this.tPorciones.getValue()) + "</strong><br />"
                         + "<font face=\"Arial\">Tiempo de elaboración: <strong>" + ((Integer) this.tTiempo.getValue()) + "</strong><br />"
                         + "<font face=\"Arial\">Esta compuesto por los ingredientes: " + "<br /><br />";
-                for (int i = 0; i < seleccionados.size(); i++) {
-                    Producto producto = (Producto) seleccionados.get(i);
-                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + producto.getCantidad()+ "</strong> gr./l<br />";
+                HashMap<Producto,Float> selec = this.elemento.getProductos();
+                Iterator<Entry<Producto,Float> > it = selec.entrySet().iterator();
+                while(it.hasNext()) {
+                    Entry<Producto,Float> par = it.next();
+                    Producto producto = par.getKey();
+                    texto += "<font face=\"Arial\">&nbsp;- Nombre: <strong>" + producto.getNombre() + "</strong>, Cantidad: <strong>" + par.getValue() + "</strong> gr./l<br />";
                 }
                 DialogoConfirmacion confirmar = new DialogoConfirmacion(null, subtitulo, pregunta, texto);
                 confirmar.setLocationRelativeTo(this);
