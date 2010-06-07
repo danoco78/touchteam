@@ -30,6 +30,9 @@ if(!isset($_POST["confirmado"])) {
                 echo "<h4 class=\"descripcion\">".$elems[$j]->getDescripcion()."</h4>";
                 echo "<p class=\"precio\">Precio: ".$elems[$j]->getPrecio()." euros<p>";
                 echo "</div>";
+                if(isset($_POST["codpedido"])) {
+                echo "<input name=\"codpedido\" type=\"hidden\" value=\"".$_POST["codpedido"]."\">";
+                }
                 echo '<input type="hidden" name="'.$elems[$j]->getId().'" value="'.$_POST[(string)($elems[$j]->getId())].'"/>';
                 echo '<input type="hidden" name="confirmado" value="1"/>';
                 echo "<div class=\"comentario\">";
@@ -49,11 +52,11 @@ if(!isset($_POST["confirmado"])) {
 else {
     include_once 'ControladorPrincipal.php';
     $sagres = new ControladorPrincipal();
-    
     $ip = $_SERVER['REMOTE_ADDR'];
     preg_match_all("/\d+.\d+.(\d+).(\d+)/", $ip, $exp);
-    $valor1 = 0+$exp[1][0];
-    $valor2 = (valor1%10)*1000;
+    $valor1 = 0+$exp[2][0];
+    $valor2 = 0+$exp[1][0];
+    $valor2 = ($valor2%10)*1000;
     $codmesa = 1000+$valor1+$valor2;
     $secciones = $sagres->getSecciones();
     $elementos = array(); // Array que pasaremos como parametro
