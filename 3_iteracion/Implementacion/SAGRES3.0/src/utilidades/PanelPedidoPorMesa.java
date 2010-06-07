@@ -187,20 +187,20 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
                     padre.prepPanel.icocinero.seleccionaPlato(padre.getPedido(),
                             (ElementoColaCocina) boton.getAsociado());
                     boton.getAsociado().setEstado(ElementoColaCocina.PREPARADO);
+                    padre.prepPanel.actualizar();
                 } catch (Exception ex) {
                     Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                padre.prepPanel.actualizar();
             } else { //Es el ultimo
                 if (cerrarPedido(padre.getPedido(), padre.prepPanel.ventana)) {
                     try {
                         padre.prepPanel.icocinero.seleccionaPlato(padre.getPedido(),
                                 (ElementoColaCocina) boton.getAsociado());
                         boton.getAsociado().setEstado(ElementoColaCocina.PREPARADO);
+                        padre.prepPanel.actualizar();
                     } catch (Exception ex) {
                         Logger.getLogger(PanelPedidoPorMesa.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    padre.prepPanel.actualizar();
                 }
             }
         }
@@ -226,7 +226,7 @@ public class PanelPedidoPorMesa extends javax.swing.JPanel {
 
         private boolean hayMasPreparandose(Pedido p, int codElem) {
             ArrayList<ElementoPedido> elementos = p.obtieneElementos();
-            for (int i = 0; i < elementos.size(); i++) {
+            for (int i = 0; i < elementos.size(); ++i) {
                 if (elementos.get(i).getCodElementoPedido() != codElem // No comprobar el elemento que se esta cambiando de estado
                         && elementos.get(i) instanceof ElementoColaCocina
                         && elementos.get(i).getEstado() != ElementoColaCocina.PREPARADO) {

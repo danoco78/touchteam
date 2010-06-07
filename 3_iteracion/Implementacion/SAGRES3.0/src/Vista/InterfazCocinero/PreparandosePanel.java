@@ -76,8 +76,10 @@ public class PreparandosePanel extends javax.swing.JPanel {
         //Actualizamos la etiqueta de platos preparándose
         for(int i=0; i<listaPedidos.size(); ++i){
             if (!listaPedidos.get(i).obtieneElementos().isEmpty()) {
-                this.pPanelesPedido.add(new PanelPedidoPorMesa(listaPedidos.get(i), this, this.tickElementos));
+                PanelPedidoPorMesa panelPedidoPorMesa = new PanelPedidoPorMesa(listaPedidos.get(i), this, this.tickElementos);
+                this.pPanelesPedido.add(panelPedidoPorMesa);
                 this.pPanelesPedido.add(new PanelEspacioVertical());
+                panelPedidoPorMesa.repintar(tick);
             }
         }
 
@@ -286,7 +288,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 (!peds.isEmpty() && pedsMostrandose.isEmpty())){
             return true;
         }
-        if(peds.isEmpty() && pedsMostrandose.isEmpty()) return false;
+        if(peds.isEmpty() && pedsMostrandose.isEmpty()) return true;
 
         if(pedsMostrandose.size() != peds.size()) return true;
         Iterator<Vector<Integer> > itMostrandose = pedsMostrandose.iterator();
