@@ -71,7 +71,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             Map.Entry entrada = (Map.Entry)iterador.next();
             p = (Producto)entrada.getKey();
             cantidad = (Float)entrada.getValue();
-            p.actualizarCantidad(cantidad);
+            p.actualizarCantidad(p.getCantidad()+cantidad);
             codigoProducto = p.getCodPro();
             java.sql.PreparedStatement actualizacion = null;
             try {
@@ -1151,7 +1151,7 @@ public class GestorBaseDatos implements ICartaBD, IStockBD, IPedidosBD, IEstadis
             while (tablaproductos.next()) {
                 Producto producto = new Producto(Imagen.blobToImageIcon(tablaproductos.getBytes(6)), tablaproductos.getString(2),
                         tablaproductos.getFloat(5), tablaproductos.getFloat(4), tablaproductos.getFloat(3), tablaproductos.getInt(1));
-                listaProductos.put(producto, producto.getMaximo()-producto.getCantidad());
+                listaProductos.put(producto, producto.getMaximo()- producto.getCantidad());
             }
         } catch (SQLException ex) {
             Logger.getLogger(GestorBaseDatos.class.getName()).log(Level.SEVERE, null, ex);
