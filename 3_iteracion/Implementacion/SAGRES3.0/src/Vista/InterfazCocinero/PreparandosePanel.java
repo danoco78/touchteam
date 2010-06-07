@@ -107,7 +107,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
             while(itPeds.hasNext() && !encontrado){
                 Iterator<ElementoPedido> itElem = itPeds.next().obtieneElementos().iterator();
                 while(itElem.hasNext() && !encontrado){
-                    if(itElem.next().getCodElementoPedido() == tickElementos.get(i).intValue()){
+                    if(itElem.next().getCodElementoPedido().intValue() == tickElementos.get(i).intValue()){
                         encontrado = true;
                     }
                 }
@@ -115,6 +115,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
             if(!encontrado){
                 tickElementos.remove(i);
                 tickElementos.remove(i);
+                i -= 2;
             }
         }
 
@@ -132,18 +133,18 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 if(next instanceof ElementoColaCocina){
                     copia.add(next.getCodElementoPedido());
                     copia.add(next.getEstado());
-                }
-
-                // Lo buscamos en el vector de tiempos
-                boolean encontrado = false;
-                for(int i=0; i< tickElementos.size() && !encontrado; i+=2){
-                    if(tickElementos.get(i).intValue() == next.getCodElementoPedido()){
-                        encontrado = true;
+                    
+                    // Lo buscamos en el vector de tiempos
+                    boolean encontrado = false;
+                    for(int i=0; i< tickElementos.size() && !encontrado; i+=2){
+                        if(tickElementos.get(i).intValue() == next.getCodElementoPedido().intValue()){
+                            encontrado = true;
+                        }
                     }
-                }
-                if(!encontrado){
-                    tickElementos.add(new Long(next.getCodElementoPedido()));
-                    tickElementos.add(new Long(tick));
+                    if(!encontrado && next.getEstado().intValue() == ElementoColaCocina.PREPARANDOSE){
+                        tickElementos.add(new Long(next.getCodElementoPedido().intValue()));
+                        tickElementos.add(new Long(tick));
+                    }
                 }
 
             }

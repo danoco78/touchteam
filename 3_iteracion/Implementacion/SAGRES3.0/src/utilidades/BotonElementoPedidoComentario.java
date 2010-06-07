@@ -18,9 +18,9 @@ import java.awt.Rectangle;
  * @author Sergio
  */
 public class BotonElementoPedidoComentario extends javax.swing.JButton {
-    ElementoPedido elem;
-    double porcentaje;
-    int maxtics;
+    private ElementoPedido elem;
+    private double porcentaje;
+    private int maxtics;
     private final long tickIni;
 
     public BotonElementoPedidoComentario(ElementoPedido ele, long tickIni){
@@ -35,7 +35,7 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
         setBackground(new java.awt.Color(211, 223, 253));
         setFont(new java.awt.Font("Arial", 0, 18));
         setForeground(new java.awt.Color(80, 98, 143));
-        setText("<html><body>"+ el.getNombre() +"<br><font color=\"#000000\">" +
+        setText("<html><body>"+ el.getNombre()/*+" "+ele.getCodElementoPedido() */+"<br><font color=\"#000000\">" +
                 ele.getComentario() +"</font><br></body></html>");
         setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         this.setFocusPainted(false);
@@ -45,7 +45,7 @@ public class BotonElementoPedidoComentario extends javax.swing.JButton {
 
     public void repintar(long tick){
         if(this.maxtics >= 0){
-            this.porcentaje = ((double)(tick-tickIni))/(double)this.maxtics;
+            this.porcentaje = ((double)(tick-tickIni))/((double)this.maxtics+0.01);
             if(porcentaje > 1)
                 porcentaje = 1;
             this.repaint();

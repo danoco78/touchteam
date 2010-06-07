@@ -130,7 +130,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
                 Pedido pedido = (Pedido) itPedidos.next();
                 ArrayList<ElementoPedido> listaElementosPedido = pedido.obtieneElementos();
 
-                ArrayList<Elemento> listaElementos = new ArrayList();
+                ArrayList<Elemento> listaElementos = new ArrayList<Elemento>();
                 Iterator itElementos = listaElementosPedido.iterator();
                 while (itElementos.hasNext()) {
                     ElementoPedido elementoPedido = (ElementoPedido) itElementos.next();
@@ -247,7 +247,7 @@ public class PanelPedidoRealizado extends javax.swing.JPanel {
      */
     private Vector<Vector<Integer> > copiarPedido(ArrayList<Pedido> peds){
 
-        Vector<Vector<Integer> > copiaPeds = new Vector(peds.size());
+        Vector<Vector<Integer> > copiaPeds = new Vector<Vector<Integer> >(peds.size());
         Iterator<Pedido> itPeds = peds.iterator();
 
         while(itPeds.hasNext()){
