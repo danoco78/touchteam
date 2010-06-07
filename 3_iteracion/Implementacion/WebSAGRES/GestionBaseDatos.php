@@ -20,7 +20,7 @@ class GestionBaseDatos implements ICartaBD, IPedidosBD {
     }
 
     private function conectaMySQL() {
-        $this->bd = new mysqli("localhost", "root", "elpeluesendesa", "touchteam"); // Cambiar aqui usuario y contraseña
+        $this->bd = new mysqli("localhost", "touch", "team", "touchteam"); // Cambiar aqui usuario y contraseña
         if(mysqli_connect_errno()) {
             echo "Error. No se pudo conectar a la base de datos.";
             exit;
