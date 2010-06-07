@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
   <NonVisualComponents>
@@ -616,9 +616,6 @@
                                 </TitledBorder>
                               </Border>
                             </Property>
-                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="8f" green="62" red="50" type="rgb"/>
-                            </Property>
                             <Property name="opaque" type="boolean" value="false"/>
                           </Properties>
                           <Constraints>
@@ -1034,6 +1031,9 @@
           <Dimension value="[150, 100]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new utilidades.PanelCabeceras()"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="North"/>

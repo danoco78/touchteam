@@ -133,7 +133,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         pAtributoPlato2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tProductosAsociados = new javax.swing.JTable();
-        cabecera = new javax.swing.JPanel();
+        cabecera = new utilidades.PanelCabeceras();
         pIzq1 = new javax.swing.JPanel();
         lTitulo = new javax.swing.JLabel();
         lSubtitulo = new javax.swing.JLabel();
@@ -313,13 +313,13 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         pImagen.setOpaque(false);
         pImagen.setLayout(new java.awt.BorderLayout(5, 0));
 
-        TImgen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TImgen.setFont(new java.awt.Font("Arial", 0, 18));
         TImgen.setForeground(new java.awt.Color(80, 98, 143));
         TImgen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 172, 229), 3, true));
         TImgen.setEnabled(false);
         pImagen.add(TImgen, java.awt.BorderLayout.CENTER);
 
-        bImagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        bImagen.setFont(new java.awt.Font("Arial", 0, 18));
         bImagen.setForeground(new java.awt.Color(80, 98, 143));
         bImagen.setText("Examinar");
         bImagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -388,7 +388,6 @@ public class DialogoModificarElemento extends java.awt.Dialog {
 
         pAtributoPlato.setBackground(new java.awt.Color(255, 255, 255));
         pAtributoPlato.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 253)), "Atributos del plato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18), new java.awt.Color(150, 172, 229))); // NOI18N
-        pAtributoPlato.setForeground(new java.awt.Color(80, 98, 143));
         pAtributoPlato.setOpaque(false);
         pAtributoPlato.setLayout(new java.awt.BorderLayout());
 
@@ -586,7 +585,7 @@ public class DialogoModificarElemento extends java.awt.Dialog {
         lTitulo.setText("Modificar elemento de carta");
         pIzq1.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18));
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Sección a la que pertenece");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
