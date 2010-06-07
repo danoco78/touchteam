@@ -3,8 +3,13 @@ package Vista.InterfazCocinero;
 
 import ControladorPrincipal.ICocinero;
 import GestionStock.GestionPedidoProveedor.PedidoProveedor;
+import GestionStock.GestionProductos.Producto;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +26,33 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         super(parent, true);
         initComponents();
         this.gestorPedido = GestorPedido;
+        PedidoProveedor pedido = this.gestorPedido.obtienePedidoProveedor();
+        if(pedido != null){
+            HashMap<Producto,Float> p = pedido.obtenerInfoPedido();
+            DefaultTableModel modelo = new DefaultTableModel() {
+                //Hace que las celdas sean no editables
+                @Override
+                public boolean isCellEditable(int x, int y) {
+                    return false;
+                }
+            };
+            modelo.addColumn(this.tTablaProductosRecibidos.getColumnName(0));
+            modelo.addColumn(this.tTablaProductosRecibidos.getColumnName(1));
+            modelo.setRowCount(p.size());
+            Iterator<Entry<Producto,Float> > it = p.entrySet().iterator();
+            int i = 0;
+            while(it.hasNext()){
+                Entry<Producto,Float> e = it.next();
+                modelo.setValueAt(e.getKey().getNombre(), i, 0);
+                modelo.setValueAt(e.getValue(), i, 1);
+                i++;
+            }
+            this.tTablaProductosRecibidos.setModel(modelo);
+            this.repaint();
+        }else{
+            this.dispose();
+            JOptionPane.showMessageDialog(parent, "No hay ningun pedido por recibir");
+        }
     }
 
 
@@ -67,12 +99,12 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         cabecera.setPreferredSize(new java.awt.Dimension(150, 100));
         cabecera.setLayout(new java.awt.GridLayout(0, 1));
 
-        lTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lTitulo.setFont(new java.awt.Font("Arial", 1, 24));
         lTitulo.setForeground(new java.awt.Color(80, 98, 143));
         lTitulo.setText("Notificación");
         cabecera.add(lTitulo);
 
-        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lSubtitulo.setFont(new java.awt.Font("Arial", 0, 18));
         lSubtitulo.setForeground(new java.awt.Color(80, 98, 143));
         lSubtitulo.setText("Llegada de producotos pedido");
         lSubtitulo.setPreferredSize(new java.awt.Dimension(175, 50));
@@ -83,7 +115,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         pie.setBackground(new java.awt.Color(255, 255, 255));
         pie.setLayout(new java.awt.GridBagLayout());
 
-        bAceptar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bAceptar.setFont(new java.awt.Font("Arial", 0, 24));
         bAceptar.setForeground(new java.awt.Color(80, 98, 143));
         bAceptar.setText("Aceptar");
         bAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -102,7 +134,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         gridBagConstraints.insets = new java.awt.Insets(9, 80, 9, 9);
         pie.add(bAceptar, gridBagConstraints);
 
-        bCancelar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        bCancelar.setFont(new java.awt.Font("Arial", 0, 24));
         bCancelar.setForeground(new java.awt.Color(80, 98, 143));
         bCancelar.setText("Cancelar");
         bCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -145,14 +177,14 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
         tTablaProductosRecibidos.setForeground(new java.awt.Color(80, 98, 143));
         tTablaProductosRecibidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"NO HABILITADO", null}
+                {"NO HAY PEDIDOS POR RECIBIR", null}
             },
             new String [] {
-                "Nombre", "Sección"
+                "Nombre", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false
@@ -192,7 +224,7 @@ public class DialogoNotificarLlegadaProductos extends java.awt.Dialog {
 
         jScrollPane3.setOpaque(false);
 
-        tPlatosHabilitados.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tPlatosHabilitados.setFont(new java.awt.Font("Arial", 0, 18));
         tPlatosHabilitados.setForeground(new java.awt.Color(80, 98, 143));
         tPlatosHabilitados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
