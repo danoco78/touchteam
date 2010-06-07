@@ -117,6 +117,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
                 tickElementos.remove(i);
                 i -= 2;
             }
+            itPeds = peds.iterator();
         }
 
         // Añadimos ahora todos los que queremos
@@ -141,7 +142,7 @@ public class PreparandosePanel extends javax.swing.JPanel {
                             encontrado = true;
                         }
                     }
-                    if(!encontrado && next.getEstado().intValue() == ElementoColaCocina.PREPARANDOSE){
+                    if(!encontrado && next.getEstado() == ElementoColaCocina.PREPARANDOSE){
                         tickElementos.add(new Long(next.getCodElementoPedido().intValue()));
                         tickElementos.add(new Long(tick));
                     }

@@ -13,6 +13,7 @@ package Vista.InterfazCliente;
 
 import GestionCarta.Elemento;
 import GestionCarta.Seccion;
+import GestionStock.GestionProductos.Producto;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -20,6 +21,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.Icon;
@@ -45,7 +48,21 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         initComponents();
 
         this.LabelNombre.setText(elemento.getNombre());
-        this.TextoDescripcion.setText(elemento.getDescripcion());
+
+        ArrayList<Producto> prods = new ArrayList<Producto>(elemento.getProductos().keySet());
+        Collections.sort(prods);
+        Iterator<Producto> iterator = prods.iterator();
+        String str = "<html><body><span style=\"font-size:18px\">"+elemento.getDescripcion()+"<br>Ingredientes:<br><font color=\"#717182\"> ";
+        while(iterator.hasNext()){
+            str += iterator.next().getNombre();
+            if(iterator.hasNext()){
+                str+= ", ";
+            }else{
+                str+= ".";
+            }
+        }
+        str += "</font></span></body></html>";
+        this.TextoDescripcion.setText(str);
         this.LabelPrecio.setText(Double.toString(elemento.getPrecio())+"€");
         ImageIcon foto = new ImageIcon();
         foto.setImage(new BufferedImage(175,175, BufferedImage.TYPE_INT_RGB));
@@ -104,6 +121,7 @@ public class PanelElementoCarta extends javax.swing.JPanel {
         ScrollDescripcion.setOpaque(false);
 
         TextoDescripcion.setBorder(null);
+        TextoDescripcion.setContentType("text/html");
         TextoDescripcion.setEditable(false);
         TextoDescripcion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TextoDescripcion.setMaximumSize(new java.awt.Dimension(10, 10));
