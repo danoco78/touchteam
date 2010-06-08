@@ -38,7 +38,7 @@
             $pedidos = $sagres->getPedidosModificablesMesa($codmesa);
             for($i=0; $i<count($pedidos); $i++) {
                 echo "<div class=\"elemento\">";
-                echo "<h4>Habitacion: ".$pedidos[$i]->getMesa()."</h4>";
+                echo "<h4>Habitacion: ".($pedidos[$i]->getMesa()-1000)."</h4>";
                 echo "<h4>Fecha: ".$pedidos[$i]->getFecha()."</h4>";
                 echo "<form method=\"post\" action=\"modificaPedido.php\">";
                 echo "<input name=\"codpedido\" type=\"hidden\" value=\"".$pedidos[$i]->getId()."\">";
