@@ -1,0 +1,6 @@
+Seccion: Refresco
+
+Nombre: Tinto de Verano
+Descripcion: Refrescante vino tinto mezclado con limón 
+
+Seleccionar: Limon (20), Tinto(40), Mora(10).

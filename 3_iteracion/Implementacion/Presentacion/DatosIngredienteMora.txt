@@ -1,0 +1,6 @@
+Nombre: Mora
+Maximo: 200
+Minimo: 100
+Disponible: 110
+
+Imagen: Imagen Mora
