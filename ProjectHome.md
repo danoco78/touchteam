@@ -1,0 +1,3 @@
+Sistema gestor de restaurantes informatizados, usando terminales táctiles, e interfaz web en PHP. El sistema ha sido acabado, aunque con una serie de errores mostrados en el documento de presentación 3º iteración. Si alguien desea continuar el proyecto, no dude en ponerse en contacto con algún miembro del equipo. Todo el código y la documentación están disponibles en el SVN.
+
+Restaurants computerized management system, using touch terminals, and web interface in PHP. The system has been completed, although a number of errors have been displayed in the presentation document on the 3rd iteration. If someone wants to continue the project, please contact a team member. All code and documentation are available at the SVN.
